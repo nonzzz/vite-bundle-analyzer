@@ -6,11 +6,12 @@
       "esModuleInterop": true,
       "skipLibCheck": true,
       "target": "ESNext",
-      "lib": ["esnext"],
+      "lib": ["esnext","DOM","DOM.Iterable"],
       "resolveJsonModule": true,
       "module": "ESNext",
       "moduleResolution": "node",
-      "outDir": "dist"
+      "jsx": "react",
+      "strict": true
     },
   }
   

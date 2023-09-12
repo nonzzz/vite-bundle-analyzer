@@ -1,4 +1,23 @@
 {
   "name": "vite-plugin-analyzer",
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "scripts": {
+    "dev":"vite src/client",
+    "build:client":"vite build src/client"
+  },
+  "devDependencies": {
+    "@geist-ui/core": "^2.3.8",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@vitejs/plugin-react": "^4.0.4",
+    "eslint": "^8.49.0",
+    "eslint-config-kagura": "^1.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9"
+  },
+  "license":"MIT",
+  "author": "kanno"
 }
