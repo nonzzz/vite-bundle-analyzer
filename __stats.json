@@ -1,0 +1,273 @@
+{
+  "version": 2,
+  "tree": {
+    "name": "root",
+    "children": [
+      {
+        "name": "assets/index-4ae55ca1.js",
+        "children": [
+          {
+            "name": "\u0000vite/modulepreload-polyfill",
+            "uid": "1f34-1"
+          },
+          {
+            "name": "E:/self/vite-plugin-analyzer",
+            "children": [
+              {
+                "name": "node_modules/@vue",
+                "children": [
+                  {
+                    "name": "shared/dist/shared.esm-bundler.js",
+                    "uid": "1f34-3"
+                  },
+                  {
+                    "name": "reactivity/dist/reactivity.esm-bundler.js",
+                    "uid": "1f34-5"
+                  },
+                  {
+                    "name": "runtime-core/dist/runtime-core.esm-bundler.js",
+                    "uid": "1f34-7"
+                  },
+                  {
+                    "name": "runtime-dom/dist/runtime-dom.esm-bundler.js",
+                    "uid": "1f34-9"
+                  }
+                ]
+              },
+              {
+                "name": "src/client",
+                "children": [
+                  {
+                    "uid": "1f34-11",
+                    "name": "app.vue"
+                  },
+                  {
+                    "uid": "1f34-13",
+                    "name": "_m.ts"
+                  },
+                  {
+                    "uid": "1f34-15",
+                    "name": "index.html"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "isRoot": true
+  },
+  "nodeParts": {
+    "1f34-1": {
+      "renderedLength": 1548,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-0"
+    },
+    "1f34-3": {
+      "renderedLength": 5549,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-2"
+    },
+    "1f34-5": {
+      "renderedLength": 24768,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-4"
+    },
+    "1f34-7": {
+      "renderedLength": 106683,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-6"
+    },
+    "1f34-9": {
+      "renderedLength": 10815,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-8"
+    },
+    "1f34-11": {
+      "renderedLength": 268,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-10"
+    },
+    "1f34-13": {
+      "renderedLength": 35,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-12"
+    },
+    "1f34-15": {
+      "renderedLength": 0,
+      "gzipLength": 0,
+      "brotliLength": 0,
+      "metaUid": "1f34-14"
+    }
+  },
+  "nodeMetas": {
+    "1f34-0": {
+      "id": "\u0000vite/modulepreload-polyfill",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-1"
+      },
+      "imported": [],
+      "importedBy": [
+        {
+          "uid": "1f34-14"
+        }
+      ]
+    },
+    "1f34-2": {
+      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/shared/dist/shared.esm-bundler.js",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-3"
+      },
+      "imported": [],
+      "importedBy": [
+        {
+          "uid": "1f34-8"
+        },
+        {
+          "uid": "1f34-6"
+        },
+        {
+          "uid": "1f34-4"
+        }
+      ]
+    },
+    "1f34-4": {
+      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-5"
+      },
+      "imported": [
+        {
+          "uid": "1f34-2"
+        }
+      ],
+      "importedBy": [
+        {
+          "uid": "1f34-6"
+        }
+      ]
+    },
+    "1f34-6": {
+      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-7"
+      },
+      "imported": [
+        {
+          "uid": "1f34-4"
+        },
+        {
+          "uid": "1f34-2"
+        }
+      ],
+      "importedBy": [
+        {
+          "uid": "1f34-8"
+        }
+      ]
+    },
+    "1f34-8": {
+      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-9"
+      },
+      "imported": [
+        {
+          "uid": "1f34-6"
+        },
+        {
+          "uid": "1f34-2"
+        }
+      ],
+      "importedBy": [
+        {
+          "uid": "1f34-16"
+        }
+      ]
+    },
+    "1f34-10": {
+      "id": "E:/self/vite-plugin-analyzer/src/client/app.vue",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-11"
+      },
+      "imported": [
+        {
+          "uid": "1f34-16"
+        }
+      ],
+      "importedBy": [
+        {
+          "uid": "1f34-12"
+        }
+      ]
+    },
+    "1f34-12": {
+      "id": "E:/self/vite-plugin-analyzer/src/client/_m.ts",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-13"
+      },
+      "imported": [
+        {
+          "uid": "1f34-16"
+        },
+        {
+          "uid": "1f34-10"
+        }
+      ],
+      "importedBy": [
+        {
+          "uid": "1f34-14"
+        }
+      ]
+    },
+    "1f34-14": {
+      "id": "E:/self/vite-plugin-analyzer/src/client/index.html",
+      "moduleParts": {
+        "assets/index-4ae55ca1.js": "1f34-15"
+      },
+      "imported": [
+        {
+          "uid": "1f34-0"
+        },
+        {
+          "uid": "1f34-12"
+        }
+      ],
+      "importedBy": [],
+      "isEntry": true
+    },
+    "1f34-16": {
+      "id": "E:/self/vite-plugin-analyzer/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "moduleParts": {},
+      "imported": [
+        {
+          "uid": "1f34-8"
+        }
+      ],
+      "importedBy": [
+        {
+          "uid": "1f34-12"
+        },
+        {
+          "uid": "1f34-10"
+        }
+      ]
+    }
+  },
+  "env": {
+    "rollup": "3.29.1"
+  },
+  "options": {
+    "gzip": false,
+    "brotli": false,
+    "sourcemap": false
+  }
+}

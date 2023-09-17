@@ -1,0 +1,349 @@
+{
+  "default": [
+    {
+      "label": "assets/index-71591772.js",
+      "isAsset": true,
+      "statSize": 150553,
+      "parsedSize": 143740,
+      "gzipSize": 45928,
+      "groups": [
+        {
+          "label": "\u0000vite",
+          "path": "\u0000vite",
+          "statSize": 1548,
+          "parsedSize": 724,
+          "groups": [
+            {
+              "id": "\u0000vite/modulepreload-polyfill",
+              "label": "modulepreload-polyfill",
+              "path": "modulepreload-polyfill",
+              "statSize": 1548,
+              "parsedSize": 724,
+              "gzipSize": 414
+            }
+          ],
+          "gzipSize": 414
+        },
+        {
+          "id": "\u0000commonjsHelpers.js",
+          "label": "\u0000commonjsHelpers.js",
+          "path": "\u0000commonjsHelpers.js",
+          "statSize": 1294,
+          "parsedSize": 122,
+          "gzipSize": 129
+        },
+        {
+          "label": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store",
+          "path": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store",
+          "statSize": 607,
+          "parsedSize": 247,
+          "groups": [
+            {
+              "label": "react-npm-18.2.0-1eae08fee2/node_modules/react",
+              "path": "react-npm-18.2.0-1eae08fee2/node_modules/react",
+              "statSize": 282,
+              "parsedSize": 117,
+              "groups": [
+                {
+                  "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/jsx-runtime.js?commonjs-module",
+                  "label": "jsx-runtime.js?commonjs-module",
+                  "path": "jsx-runtime.js?commonjs-module",
+                  "statSize": 63,
+                  "parsedSize": 28,
+                  "gzipSize": 48
+                },
+                {
+                  "label": "cjs",
+                  "path": "cjs",
+                  "statSize": 166,
+                  "parsedSize": 66,
+                  "groups": [
+                    {
+                      "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react-jsx-runtime.production.min.js?commonjs-exports",
+                      "label": "react-jsx-runtime.production.min.js?commonjs-exports",
+                      "path": "react-jsx-runtime.production.min.js?commonjs-exports",
+                      "statSize": 93,
+                      "parsedSize": 38,
+                      "gzipSize": 58
+                    },
+                    {
+                      "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react.production.min.js?commonjs-exports",
+                      "label": "react.production.min.js?commonjs-exports",
+                      "path": "react.production.min.js?commonjs-exports",
+                      "statSize": 73,
+                      "parsedSize": 28,
+                      "gzipSize": 48
+                    }
+                  ],
+                  "gzipSize": 63
+                },
+                {
+                  "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/index.js?commonjs-module",
+                  "label": "index.js?commonjs-module",
+                  "path": "index.js?commonjs-module",
+                  "statSize": 53,
+                  "parsedSize": 23,
+                  "gzipSize": 43
+                }
+              ],
+              "gzipSize": 82
+            },
+            {
+              "label": "react-dom-virtual-37d311063d/node_modules/react-dom",
+              "path": "react-dom-virtual-37d311063d/node_modules/react-dom",
+              "statSize": 183,
+              "parsedSize": 71,
+              "groups": [
+                {
+                  "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/client.js?commonjs-exports",
+                  "label": "client.js?commonjs-exports",
+                  "path": "client.js?commonjs-exports",
+                  "statSize": 45,
+                  "parsedSize": 14,
+                  "gzipSize": 34
+                },
+                {
+                  "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/index.js?commonjs-module",
+                  "label": "index.js?commonjs-module",
+                  "path": "index.js?commonjs-module",
+                  "statSize": 59,
+                  "parsedSize": 26,
+                  "gzipSize": 46
+                },
+                {
+                  "label": "cjs",
+                  "path": "cjs",
+                  "statSize": 79,
+                  "parsedSize": 31,
+                  "groups": [
+                    {
+                      "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/cjs/react-dom.production.min.js?commonjs-exports",
+                      "label": "react-dom.production.min.js?commonjs-exports",
+                      "path": "react-dom.production.min.js?commonjs-exports",
+                      "statSize": 79,
+                      "parsedSize": 31,
+                      "gzipSize": 51
+                    }
+                  ],
+                  "gzipSize": 51
+                }
+              ],
+              "gzipSize": 75
+            },
+            {
+              "label": "scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler",
+              "path": "scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler",
+              "statSize": 142,
+              "parsedSize": 59,
+              "groups": [
+                {
+                  "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/index.js?commonjs-module",
+                  "label": "index.js?commonjs-module",
+                  "path": "index.js?commonjs-module",
+                  "statSize": 61,
+                  "parsedSize": 27,
+                  "gzipSize": 47
+                },
+                {
+                  "label": "cjs",
+                  "path": "cjs",
+                  "statSize": 81,
+                  "parsedSize": 32,
+                  "groups": [
+                    {
+                      "id": "\u0000E:/self/vite-plugin-analyzer/node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/cjs/scheduler.production.min.js?commonjs-exports",
+                      "label": "scheduler.production.min.js?commonjs-exports",
+                      "path": "scheduler.production.min.js?commonjs-exports",
+                      "statSize": 81,
+                      "parsedSize": 32,
+                      "gzipSize": 52
+                    }
+                  ],
+                  "gzipSize": 52
+                }
+              ],
+              "gzipSize": 69
+            }
+          ],
+          "gzipSize": 115
+        },
+        {
+          "label": "E:/self/vite-plugin-analyzer",
+          "path": "E:/self/vite-plugin-analyzer",
+          "statSize": 147104,
+          "parsedSize": 142647,
+          "groups": [
+            {
+              "label": "node_modules/.store",
+              "path": "node_modules/.store",
+              "statSize": 146328,
+              "parsedSize": 142418,
+              "groups": [
+                {
+                  "label": "react-npm-18.2.0-1eae08fee2/node_modules/react",
+                  "path": "react-npm-18.2.0-1eae08fee2/node_modules/react",
+                  "statSize": 8176,
+                  "parsedSize": 8637,
+                  "groups": [
+                    {
+                      "label": "cjs",
+                      "path": "cjs",
+                      "statSize": 7772,
+                      "parsedSize": 8430,
+                      "groups": [
+                        {
+                          "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react.production.min.js",
+                          "label": "react.production.min.js",
+                          "path": "react.production.min.js",
+                          "statSize": 6913,
+                          "parsedSize": 7515,
+                          "gzipSize": 2721
+                        },
+                        {
+                          "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react-jsx-runtime.production.min.js",
+                          "label": "react-jsx-runtime.production.min.js",
+                          "path": "react-jsx-runtime.production.min.js",
+                          "statSize": 859,
+                          "parsedSize": 915,
+                          "gzipSize": 543
+                        }
+                      ],
+                      "gzipSize": 2914
+                    },
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/index.js",
+                      "label": "index.js",
+                      "path": "index.js",
+                      "statSize": 190,
+                      "parsedSize": 116,
+                      "gzipSize": 97
+                    },
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/jsx-runtime.js",
+                      "label": "jsx-runtime.js",
+                      "path": "jsx-runtime.js",
+                      "statSize": 214,
+                      "parsedSize": 91,
+                      "gzipSize": 77
+                    }
+                  ],
+                  "gzipSize": 2970
+                },
+                {
+                  "label": "scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler",
+                  "path": "scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler",
+                  "statSize": 4433,
+                  "parsedSize": 4156,
+                  "groups": [
+                    {
+                      "label": "cjs",
+                      "path": "cjs",
+                      "statSize": 4235,
+                      "parsedSize": 4074,
+                      "groups": [
+                        {
+                          "id": "E:/self/vite-plugin-analyzer/node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/cjs/scheduler.production.min.js",
+                          "label": "scheduler.production.min.js",
+                          "path": "scheduler.production.min.js",
+                          "statSize": 4235,
+                          "parsedSize": 4074,
+                          "gzipSize": 1746
+                        }
+                      ],
+                      "gzipSize": 1746
+                    },
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/index.js",
+                      "label": "index.js",
+                      "path": "index.js",
+                      "statSize": 198,
+                      "parsedSize": 82,
+                      "gzipSize": 69
+                    }
+                  ],
+                  "gzipSize": 1768
+                },
+                {
+                  "label": "react-dom-virtual-37d311063d/node_modules/react-dom",
+                  "path": "react-dom-virtual-37d311063d/node_modules/react-dom",
+                  "statSize": 133719,
+                  "parsedSize": 129625,
+                  "groups": [
+                    {
+                      "label": "cjs",
+                      "path": "cjs",
+                      "statSize": 131737,
+                      "parsedSize": 129235,
+                      "groups": [
+                        {
+                          "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/cjs/react-dom.production.min.js",
+                          "label": "react-dom.production.min.js",
+                          "path": "react-dom.production.min.js",
+                          "statSize": 131737,
+                          "parsedSize": 129235,
+                          "gzipSize": 41616
+                        }
+                      ],
+                      "gzipSize": 41616
+                    },
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/index.js",
+                      "label": "index.js",
+                      "path": "index.js",
+                      "statSize": 1363,
+                      "parsedSize": 304,
+                      "gzipSize": 185
+                    },
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/client.js",
+                      "label": "client.js",
+                      "path": "client.js",
+                      "statSize": 619,
+                      "parsedSize": 86,
+                      "gzipSize": 73
+                    }
+                  ],
+                  "gzipSize": 41702
+                }
+              ],
+              "gzipSize": 45432
+            },
+            {
+              "label": "src/client",
+              "path": "src/client",
+              "statSize": 776,
+              "parsedSize": 229,
+              "groups": [
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/application.tsx",
+                  "label": "application.tsx",
+                  "path": "application.tsx",
+                  "statSize": 125,
+                  "parsedSize": 68,
+                  "gzipSize": 87
+                },
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/main.tsx",
+                  "label": "main.tsx",
+                  "path": "main.tsx",
+                  "statSize": 314,
+                  "parsedSize": 161,
+                  "gzipSize": 142
+                },
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/index.html",
+                  "label": "index.html",
+                  "path": "index.html",
+                  "statSize": 337,
+                  "parsedSize": 0
+                }
+              ],
+              "gzipSize": 170
+            }
+          ],
+          "gzipSize": 45521
+        }
+      ]
+    }
+  ]
+}

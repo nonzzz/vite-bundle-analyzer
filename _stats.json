@@ -1,0 +1,302 @@
+{
+  "lib": [
+    {
+      "label": "library",
+      "isAsset": true,
+      "statSize": 336874,
+      "parsedSize": 65839,
+      "gzipSize": 21955,
+      "groups": [
+        {
+          "label": "\u0000vite",
+          "path": "\u0000vite",
+          "statSize": 1548,
+          "parsedSize": 724,
+          "groups": [
+            {
+              "id": "\u0000vite/modulepreload-polyfill",
+              "label": "modulepreload-polyfill",
+              "path": "modulepreload-polyfill",
+              "statSize": 1548,
+              "parsedSize": 724,
+              "gzipSize": 414
+            }
+          ],
+          "gzipSize": 414
+        },
+        {
+          "label": "E:/self/vite-plugin-analyzer",
+          "path": "E:/self/vite-plugin-analyzer",
+          "statSize": 335326,
+          "parsedSize": 65115,
+          "groups": [
+            {
+              "label": "node_modules/@vue",
+              "path": "node_modules/@vue",
+              "statSize": 334365,
+              "parsedSize": 64883,
+              "groups": [
+                {
+                  "label": "shared/dist",
+                  "path": "shared/dist",
+                  "statSize": 18312,
+                  "parsedSize": 3403,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/shared/dist/shared.esm-bundler.js",
+                      "label": "shared.esm-bundler.js",
+                      "path": "shared.esm-bundler.js",
+                      "statSize": 18312,
+                      "parsedSize": 3403,
+                      "gzipSize": 1515
+                    }
+                  ],
+                  "gzipSize": 1515
+                },
+                {
+                  "label": "reactivity/dist",
+                  "path": "reactivity/dist",
+                  "statSize": 34248,
+                  "parsedSize": 13056,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js",
+                      "label": "reactivity.esm-bundler.js",
+                      "path": "reactivity.esm-bundler.js",
+                      "statSize": 34248,
+                      "parsedSize": 13056,
+                      "gzipSize": 3985
+                    }
+                  ],
+                  "gzipSize": 3985
+                },
+                {
+                  "label": "runtime-core/dist",
+                  "path": "runtime-core/dist",
+                  "statSize": 235859,
+                  "parsedSize": 42969,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js",
+                      "label": "runtime-core.esm-bundler.js",
+                      "path": "runtime-core.esm-bundler.js",
+                      "statSize": 235859,
+                      "parsedSize": 42969,
+                      "gzipSize": 14772
+                    }
+                  ],
+                  "gzipSize": 14772
+                },
+                {
+                  "label": "runtime-dom/dist",
+                  "path": "runtime-dom/dist",
+                  "statSize": 45946,
+                  "parsedSize": 5455,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js",
+                      "label": "runtime-dom.esm-bundler.js",
+                      "path": "runtime-dom.esm-bundler.js",
+                      "statSize": 45946,
+                      "parsedSize": 5455,
+                      "gzipSize": 2299
+                    }
+                  ],
+                  "gzipSize": 2299
+                }
+              ],
+              "gzipSize": 21533
+            },
+            {
+              "label": "src/client",
+              "path": "src/client",
+              "statSize": 961,
+              "parsedSize": 232,
+              "groups": [
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/app.vue",
+                  "label": "app.vue",
+                  "path": "app.vue",
+                  "statSize": 535,
+                  "parsedSize": 197,
+                  "gzipSize": 171
+                },
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/_m.ts",
+                  "label": "_m.ts",
+                  "path": "_m.ts",
+                  "statSize": 92,
+                  "parsedSize": 35,
+                  "gzipSize": 55
+                },
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/index.html",
+                  "label": "index.html",
+                  "path": "index.html",
+                  "statSize": 334,
+                  "parsedSize": 0
+                }
+              ],
+              "gzipSize": 191
+            }
+          ],
+          "gzipSize": 21630
+        }
+      ]
+    },
+    {
+      "label": "project",
+      "isAsset": true,
+      "statSize": 0,
+      "parsedSize": 0,
+      "gzipSize": 0,
+      "groups": []
+    }
+  ],
+  "default": [
+    {
+      "label": "assets/index-4ae55ca1.js",
+      "isAsset": true,
+      "statSize": 336874,
+      "parsedSize": 65839,
+      "gzipSize": 21955,
+      "groups": [
+        {
+          "label": "\u0000vite",
+          "path": "\u0000vite",
+          "statSize": 1548,
+          "parsedSize": 724,
+          "groups": [
+            {
+              "id": "\u0000vite/modulepreload-polyfill",
+              "label": "modulepreload-polyfill",
+              "path": "modulepreload-polyfill",
+              "statSize": 1548,
+              "parsedSize": 724,
+              "gzipSize": 414
+            }
+          ],
+          "gzipSize": 414
+        },
+        {
+          "label": "E:/self/vite-plugin-analyzer",
+          "path": "E:/self/vite-plugin-analyzer",
+          "statSize": 335326,
+          "parsedSize": 65115,
+          "groups": [
+            {
+              "label": "node_modules/@vue",
+              "path": "node_modules/@vue",
+              "statSize": 334365,
+              "parsedSize": 64883,
+              "groups": [
+                {
+                  "label": "shared/dist",
+                  "path": "shared/dist",
+                  "statSize": 18312,
+                  "parsedSize": 3403,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/shared/dist/shared.esm-bundler.js",
+                      "label": "shared.esm-bundler.js",
+                      "path": "shared.esm-bundler.js",
+                      "statSize": 18312,
+                      "parsedSize": 3403,
+                      "gzipSize": 1515
+                    }
+                  ],
+                  "gzipSize": 1515
+                },
+                {
+                  "label": "reactivity/dist",
+                  "path": "reactivity/dist",
+                  "statSize": 34248,
+                  "parsedSize": 13056,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js",
+                      "label": "reactivity.esm-bundler.js",
+                      "path": "reactivity.esm-bundler.js",
+                      "statSize": 34248,
+                      "parsedSize": 13056,
+                      "gzipSize": 3985
+                    }
+                  ],
+                  "gzipSize": 3985
+                },
+                {
+                  "label": "runtime-core/dist",
+                  "path": "runtime-core/dist",
+                  "statSize": 235859,
+                  "parsedSize": 42969,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js",
+                      "label": "runtime-core.esm-bundler.js",
+                      "path": "runtime-core.esm-bundler.js",
+                      "statSize": 235859,
+                      "parsedSize": 42969,
+                      "gzipSize": 14772
+                    }
+                  ],
+                  "gzipSize": 14772
+                },
+                {
+                  "label": "runtime-dom/dist",
+                  "path": "runtime-dom/dist",
+                  "statSize": 45946,
+                  "parsedSize": 5455,
+                  "groups": [
+                    {
+                      "id": "E:/self/vite-plugin-analyzer/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js",
+                      "label": "runtime-dom.esm-bundler.js",
+                      "path": "runtime-dom.esm-bundler.js",
+                      "statSize": 45946,
+                      "parsedSize": 5455,
+                      "gzipSize": 2299
+                    }
+                  ],
+                  "gzipSize": 2299
+                }
+              ],
+              "gzipSize": 21533
+            },
+            {
+              "label": "src/client",
+              "path": "src/client",
+              "statSize": 961,
+              "parsedSize": 232,
+              "groups": [
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/app.vue",
+                  "label": "app.vue",
+                  "path": "app.vue",
+                  "statSize": 535,
+                  "parsedSize": 197,
+                  "gzipSize": 171
+                },
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/_m.ts",
+                  "label": "_m.ts",
+                  "path": "_m.ts",
+                  "statSize": 92,
+                  "parsedSize": 35,
+                  "gzipSize": 55
+                },
+                {
+                  "id": "E:/self/vite-plugin-analyzer/src/client/index.html",
+                  "label": "index.html",
+                  "path": "index.html",
+                  "statSize": 334,
+                  "parsedSize": 0
+                }
+              ],
+              "gzipSize": 191
+            }
+          ],
+          "gzipSize": 21630
+        }
+      ]
+    }
+  ]
+}
