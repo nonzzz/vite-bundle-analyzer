@@ -3,7 +3,8 @@
   "packageManager": "yarn@3.6.3",
   "scripts": {
     "dev": "vite src/client",
-    "build:client": "vite build src/client"
+    "build:client": "vite build src/client",
+    "build:plugin": "tsup"
   },
   "devDependencies": {
     "@geist-ui/core": "^2.3.8",

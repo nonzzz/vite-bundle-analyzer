@@ -12,8 +12,7 @@ export function noop() { /** noop**/ }
 
 export function createGzip(options: ZlibOptions = {}) {
   options = Object.assign(defaultGzipOptions, options)
-  return (input: string | Buffer) => {
-    const buf = typeof input === 'string' ? Buffer.from(input, 'utf8') : input
+  return (buf: Buffer) => {
     return gzip(buf, options)
   }
 }

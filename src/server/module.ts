@@ -1,15 +1,17 @@
-// import path from 'path'
-import { pick, slash } from './shared'
-import type { OutputChunk, PluginContext, RenderedModule } from './interface'
+import path from 'path'
+import { createGzip, pick, slash } from './shared'
+import type { AnalyzerPluginOptions, OutputChunk, PluginContext, RenderedModule } from './interface'
 
 type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 
-type MoudleMeta = Pick<ModuleInfo, 'dynamicallyImportedIds' | 'code' | 'id'> & Pick<RenderedModule, 'originalLength' | 'renderedLength'>
+type MoudleMeta = Pick<ModuleInfo, 'code' | 'id'> & Pick<RenderedModule, 'originalLength' | 'renderedLength'>
 
-// id
-// pairs [Array? Or Map?]
-// meta [contain gzip size renderSize(stat size?)]
-// children []Node
+interface PrettyNode {
+  id: string
+  statSize: number
+  parsedSize: number
+  gzipSize?: number
+}
 
 export const EMPTY_IDENTIFIER = '__empty__'
 
@@ -23,46 +25,53 @@ function getAbsPath(p: string) {
 class Node implements MoudleMeta {
   code: string | null = null
   id: string = EMPTY_IDENTIFIER
-  dynamicallyImportedIds: readonly string[] = []
-  renderedLength: number = 0
-  originalLength: number = 0
-  children: MoudleMeta[]
+  renderedLength = 0
+  originalLength = 0
+  // eslint-disable-next-line no-use-before-define
+  children: Array<Record<string, Array<Node>>>
   binary: Buffer
+  compress: ReturnType<typeof createGzip> | null
   constructor() {
     this.children = []
     this.binary = Buffer.alloc(0)
+    this.compress = null
   }
 
   fill(attrs: MoudleMeta) {
-    const { renderedLength, originalLength, id, dynamicallyImportedIds, code } = attrs
+    const { renderedLength, originalLength, id, code } = attrs
     this.renderedLength = renderedLength
     this.originalLength = originalLength
     this.id = getAbsPath(id)
-    this.dynamicallyImportedIds = dynamicallyImportedIds
     this.binary = Buffer.from(code || '', 'utf8')
   }
-  // get parentPath() {
-  //   return path.dirname(this.id)
-  // }
-}
 
-// In long process task(memory is precious)
-// So Node shouldn't contain too many functions.
-// processModule inner func (convertAsTree should be inline.The compiler will optimize it)
+  async pretty() {
+    const info: PrettyNode = {
+      id: this.id,
+      statSize: this.originalLength || this.binary.byteLength,
+      parsedSize: this.renderedLength || this.binary.byteLength
+    }
+    if (this.compress) info.gzipSize = (await this.compress(this.binary)).byteLength
+    return info
+  }
+}
 
 class Module {
   children: Array<Node>
   pluginContext: PluginContext
-  constructor() {
+  compress: ReturnType<typeof createGzip>
+  constructor(opts: AnalyzerPluginOptions) {
     this.children = []
     this.pluginContext = Object.create(null)
+    this.compress = createGzip(opts.gzipOptions)
   }
 
   private bindModuleMeta(id: string, renderedModule: RenderedModule) {
     const moduleInfo = this.pluginContext.getModuleInfo(id)
     const node = new Node()
     if (moduleInfo) {
-      node.fill({ ...pick(moduleInfo, ['dynamicallyImportedIds', 'code', 'id']), ...pick(renderedModule, ['originalLength', 'renderedLength']) })
+      node.compress = this.compress
+      node.fill({ ...pick(moduleInfo, ['code', 'id']), ...pick(renderedModule, ['originalLength', 'renderedLength']) })
     }
     return node
   }
@@ -70,20 +79,50 @@ class Module {
   processModule(bundleName: string, bundle: OutputChunk) {
     const node = new Node()
     node.id = bundleName
+    node.compress = this.compress
+    node.binary = Buffer.from(bundle.code, 'utf8')
     node.children = (() => {
       const original = Object.entries(bundle.modules).map((argvs) => this.bindModuleMeta(...argvs))
-      return original
+      const store: Record<string, Array<Node>> = {}
+      for (const meta of original) {
+        const { id } = meta
+        const relative = path.isAbsolute(id) ? id.replace('/', '') : id
+        const dir  = path.dirname(relative)
+        const uId = dir === '.' ? id : dir
+        if (!store[uId]) store[uId] = []
+        store[uId].push(meta)
+      }
+      return Object.entries(store).map(([key, v]) => ({ [key]: v }))
     })()
-    // this.prepareModule(original)
-    // node.children = Object.entries(bundle.modules).map((argvs) => this.bindModuleMeta(...argvs))
     this.children.push(node)
-    // ;((module:Array<Node>) => {
-    //   // 
-    // })()
+  }
+
+  pretty() {
+    if (!this.children.length) throw new Error('Can\'t generator anything with empty chunks')
+   
+    const prettyChild = async (child: Record<string, Node[]>) => {
+      for (const k in child) {
+        const node = child[k]
+        return  { [k]: await Promise.all(node.map(n => n.pretty())) }
+      }
+      return {}
+    }
+
+    return Promise.all(this.children.map(async (node) => {
+      const { children } = node
+      const result: Array<Record<string, PrettyNode[]>> = []
+      if (children.length) {
+        for (const child of children) {
+          const s = await prettyChild(child)
+          result.push(s)
+        }
+      }
+      return { ...await node.pretty(), children: result }
+    }))
   }
 }
 
 
-export function createModule() {
-  return new Module()
+export function createModule(opts: AnalyzerPluginOptions) {
+  return new Module(opts)
 }
