@@ -1,5 +1,9 @@
 import React from 'react'
 
+import { SideBar } from './components/side-bar'
+
 export function App() {
-  return <div>111</div>
+  return <div>
+    <SideBar />
+  </div>
 }

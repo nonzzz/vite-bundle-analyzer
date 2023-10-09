@@ -7,7 +7,9 @@
     "build:plugin": "tsup"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.23.1",
     "@geist-ui/core": "^2.3.8",
+    "@geist-ui/icons": "^1.0.2",
     "@types/node": "^20.7.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -22,6 +24,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "style9": "^0.18.2",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"
