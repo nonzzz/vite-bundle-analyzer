@@ -4,6 +4,8 @@ import type { ZlibOptions } from 'zlib'
 
 const gzip = utils.promisify(zlib.gzip)
 
+export const defaultWd = process.cwd()
+
 const defaultGzipOptions = <ZlibOptions>{
   level: zlib.constants.Z_DEFAULT_LEVEL
 }

@@ -26,10 +26,12 @@ export type AnalyzerMode = 'static' | 'json'
 // `stat` This is the `input` size of your file, before any transformations like minification.
 // `parsed` This is the `output` size of your bundle files. (In vite's, vite will using terser or esbuild to minified size of your code.)
 // `gzip` This is the size of running the parsed bundles/modules through gzip compression.
+export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
 export interface BasicAnalyzerPluginOptions {
     analyzerMode?: AnalyzerMode
     statsFilename?: string
+    reportFileName?: string
     gzipOptions?: ZlibOptions
 }
 

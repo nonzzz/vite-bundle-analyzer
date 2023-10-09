@@ -2,13 +2,14 @@ import fsp from 'fs/promises'
 import path from 'path'
 import type{ Plugin } from 'vite'
 import { name } from '../../package.json'
+import { defaultWd } from './shared'
 import type { AnalyzerPluginOptions,  OutputBundle, PluginContext  } from './interface'
 import { createModule } from './module'
+import { renderView } from './render'
 
-const defaultWd = process.cwd()
 
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
-  const { analyzerMode = 'json',  statsFilename  = 'stats.json' } = opts
+  const { analyzerMode = 'static',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
   const wrapper = createModule(opts)
   
  
@@ -36,8 +37,16 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
           fsp.writeFile(p, JSON.stringify(json, null, 2), 'utf8')
           break
         }
-        case 'static':
+        case 'static': {
+          // const prettyModule = await wrapper.pretty()
+          // wrapper.nested()
+          const p = path.join(defaultWd, reportFileName)
+          const html = await renderView(wrapper, { title: name, mode: 'stat' })
+          fsp.writeFile(p, html, 'utf8')
           break
+        }
+        default:
+          throw new Error('Invalidate Option `analyzerMode`')
       }
     }
   }

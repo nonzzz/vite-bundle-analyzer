@@ -78,5 +78,8 @@
     "unbox-primitive": "npm:@nolyfill/unbox-primitive@latest",
     "which-boxed-primitive": "npm:@nolyfill/which-boxed-primitive@latest",
     "which-typed-array": "npm:@nolyfill/which-typed-array@latest"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.1"
   }
 }

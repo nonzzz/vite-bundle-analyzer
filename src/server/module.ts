@@ -56,7 +56,7 @@ class Node implements MoudleMeta {
   }
 }
 
-class Module {
+export class Module {
   children: Array<Node>
   pluginContext: PluginContext
   compress: ReturnType<typeof createGzip>
@@ -119,6 +119,10 @@ class Module {
       }
       return { ...await node.pretty(), children: result }
     }))
+  }
+
+  nested() {
+    // convert a nested struct for viewers
   }
 }
 
