@@ -2,8 +2,11 @@ export function tuple<T extends string[]>(...elements: T) {
   return elements
 }
 
-export function convertByte(bit: number, unit: string) {
-  // 
+export function convertBytes(bit: number) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+  const i = parseInt(`${Math.floor(Math.log(bit) / Math.log(1024))}`)
+  const converted = bit / (1 << (i * 10)) 
+  return converted.toFixed(2) + ' ' + sizes[i]
 }
 
 export function pick<T extends object, A extends keyof T>(data: T, attrs: A[]) {

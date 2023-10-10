@@ -10,6 +10,12 @@ import { FileList } from './file-list'
 const styles = style9.create({
   visible: {
     visibility: 'hidden'
+  },
+  float: {
+    position: 'fixed',
+    top: '10px',
+    left: '10px',
+    zIndex: 10
   }
 })
 
@@ -45,8 +51,8 @@ export function SideBar() {
   }
 
   return <>
-    <Button className={styles(visible && 'visible')} auto scale={0.25} icon={<Menu />} onClick={() => setVisible(pre => !pre)} />
-    <Drawer visible={visible} placement='left' onClose={handleDrawerClose} w='350px'>
+    <Button className={styles(visible && 'visible', 'float')} auto scale={0.25} icon={<Menu />} onClick={() => setVisible(pre => !pre)} />
+    <Drawer visible={visible} placement='left' onClose={handleDrawerClose} w='400px'>
       <Drawer.Content>
         <div>
           <Text p b font='14px'>Treemap Sizes</Text>

@@ -417,6 +417,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carrotsearch/foamtree@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "@carrotsearch/foamtree@npm:3.5.1"
+  checksum: ef83aaa04a9ad33ffd258ab45dac518349feca008e60aac1310e75dc66b9715533b0dfc18588d53e5ac66cb3d71b486f61b09c805a2b51fef90e1db9cce51e55
+  languageName: node
+  linkType: hard
+
 "@esbuild/android-arm64@npm:0.18.20":
   version: 0.18.20
   resolution: "@esbuild/android-arm64@npm:0.18.20"
@@ -4850,6 +4857,7 @@ __metadata:
   resolution: "vite-plugin-analyzer@workspace:."
   dependencies:
     "@babel/runtime": ^7.23.1
+    "@carrotsearch/foamtree": ^3.5.1
     "@geist-ui/core": ^2.3.8
     "@geist-ui/icons": ^1.0.2
     "@types/node": ^20.7.0
