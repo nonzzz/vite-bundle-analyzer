@@ -22,6 +22,8 @@ export async function renderView(module: Module, options: RenderOptions) {
   const js = clientAssets.filter(v => v.fileType === 'js')
   const css = clientAssets.filter(v => v.fileType === 'css')
 
+  const prettyModule = await module.pretty()
+
   return `<!DOCTYPE html>
         <html lang="en">
             <head>
@@ -34,6 +36,10 @@ export async function renderView(module: Module, options: RenderOptions) {
             </head>
             <body>
                 <div id="app" />
+                <script>
+                    window.defaultSizes = '${options.mode}';
+                    window.prettyModule = ${JSON.stringify(prettyModule)}
+                </script>
             </body>
         </html>`
 }
