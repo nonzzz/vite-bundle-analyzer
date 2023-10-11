@@ -31,8 +31,8 @@ export async function renderView(module: Module, options: RenderOptions) {
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>${options.title}</title>
-                <style>${css[0].content}</style>
-                <script>${js[0].content}</script>
+                ${css.map(({ content }) => `<style>${content}</style>`)}
+                ${js.map(({ content }) => `<script>${content}</script>`)}
             </head>
             <body>
                 <div id="app" />

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef } from 'react'
 import style9 from 'style9'
 import { FoamTree } from '@carrotsearch/foamtree'
-import { omit, pick } from '../shared'
-import { mock } from './mock-pretty'
+import { omit } from '../shared'
+import { useApplicationContext } from '../context'
 
 const styles = style9.create({
   container: {
@@ -12,12 +12,18 @@ const styles = style9.create({
   }
 })
 
+interface TitleBarDecoratorVariables {
+  titleBarText?: string
+  titleBarShown: boolean
+}
+
 export function TreeMap() {
+  const { prettyModule } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<any>(null)
 
   const mockPretty = useMemo(() => {
-    return mock.map((item) => {
+    return prettyModule.map((item) => {
       const latest = omit(item, ['children'])
       latest.groups = item.children.flatMap(child => {
         return  Object.entries(child).map(([subDir, node]) => ({
@@ -27,9 +33,7 @@ export function TreeMap() {
       })
       return latest
     })
-  }, [])
-
-  console.log(mockPretty)
+  }, [prettyModule])
 
   useEffect(() => {
     if (!foamTreeInstance.current) {
@@ -53,6 +57,9 @@ export function TreeMap() {
         openCloseDuration: 200,
         dataObject: {
           groups: mockPretty
+        },
+        titleBarDecorator(_, __, variables: TitleBarDecoratorVariables) {
+          variables.titleBarShown = false
         }
       })
     }
@@ -60,7 +67,7 @@ export function TreeMap() {
       foamTreeInstance.current.dispose()
       foamTreeInstance.current = null
     }
-  }, [])
+  }, [mockPretty])
 
   return <div className={styles('container')} ref={containerRef} />
 }

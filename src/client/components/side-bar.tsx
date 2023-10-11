@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Button, Drawer, Input, Radio, Spacer, Text } from '@geist-ui/core'
 import style9 from 'style9'
-import { Menu } from '@geist-ui/icons'
+import Menu from '@geist-ui/icons/menu'
 import { omit, tuple } from '../shared'
-import { mock } from './mock-pretty'
+import { useApplicationContext } from '../context'
 import { FileList } from './file-list'
 
 
@@ -31,17 +31,15 @@ const MODE_RECORD: Record<typeof window['defaultSizes'], ModeType> = {
 
 // props: SideBarProps
 export function SideBar() {
-  // const { pinned, ...rest } = props
+  const { defaultSizes, prettyModule: initialPrettyModule } = useApplicationContext()
   const [visible, setVisible] = useState<boolean>(false)
   const [mode, setMode] = useState<ModeType | number | string & NonNullable<unknown>>()
-  const [prettyModule, setPrettyModule] = useState<typeof window['prettyModule']>([...mock])
+  const [prettyModule, setPrettyModule] = useState<typeof window['prettyModule']>([])
 
   useEffect(() => {
-    if (window.defaultSizes) setMode(MODE_RECORD[window.defaultSizes])
-    if (window.prettyModule) {
-      setPrettyModule((pre) => ([...pre, ...window.prettyModule])) 
-    }
-  }, [])
+    setMode(MODE_RECORD[defaultSizes])
+    setPrettyModule(() => [...initialPrettyModule])
+  }, [defaultSizes, initialPrettyModule])
 
 
   const allChunks = useMemo(() => prettyModule.map(m => omit(m, ['children'])), [prettyModule])
