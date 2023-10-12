@@ -2,7 +2,7 @@ import fsp from 'fs/promises'
 import path from 'path'
 import fg from 'fast-glob'
 import { defaultWd, slash } from './shared'
-import { Module } from './module'
+import { Module } from './analyzer-module'
 import type { DefaultSizes } from './interface'
 
 export interface RenderOptions {

@@ -1,4 +1,4 @@
-import { Module } from 'src/server/module'
+import { Module } from 'src/server/analyzer-module'
 import { DefaultSizes } from '../server/interface'
 
 declare global {

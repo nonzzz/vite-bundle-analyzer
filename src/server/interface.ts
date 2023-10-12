@@ -20,6 +20,8 @@ export type OutputBundle = Parameters<typeof generateBundle>[1]
 
 export type OutputChunk = Extract<OutputBundle[0], {type: 'chunk'}>
 
+export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
+
 export type AnalyzerMode = 'static' | 'json' 
 // `vite-plugin-analyzer` reports three values of size. (Same as `webpack-bundle-analyzer`)
 // But still have to retell it here

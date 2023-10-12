@@ -120,10 +120,6 @@ export class Module {
       return { ...await node.pretty(), children: result }
     }))
   }
-
-  nested() {
-    // convert a nested struct for viewers
-  }
 }
 
 
