@@ -13,3 +13,5 @@ pnpm-debug.log*
 
 .yarn/cache
 .yarn/install-state.gz
+
+analyzer.html

@@ -1,11 +1,10 @@
-import { Module } from 'src/server/analyzer-module'
+import { Foram } from 'src/server/interface'
 import { DefaultSizes } from '../server/interface'
 
 declare global {
-    type PrettyModule = Awaited<ReturnType<Module['pretty']>>[number]
     interface Window {
         defaultSizes: DefaultSizes
-        prettyModule: Array<Omit<PrettyModule, 'children'> & Partial<Pick<PrettyModule, 'children'>>>
+        foramModule: Array<Foram>
     }
 }
 

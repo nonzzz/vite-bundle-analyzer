@@ -1,6 +1,6 @@
 import path from 'path'
-import { createGzip, slash } from './shared'
-import type { AnalyzerPluginOptions, OutputChunk, PluginContext, RenderedModule } from './interface'
+import { createGzip, pick, slash } from './shared'
+import type { AnalyzerPluginOptions, Foram, OutputChunk, PluginContext, RenderedModule } from './interface'
 
 
 const defaultWd = slash(process.cwd())
@@ -22,7 +22,8 @@ function lexPaths(p: string) {
   return [total, fileName]
 }
 
-class AnalyzerNode {
+
+export class AnalyzerNode {
   id: string
   label: string
   path: string
@@ -32,7 +33,6 @@ class AnalyzerNode {
   code: Buffer
   // eslint-disable-next-line no-use-before-define
   children: Array<AnalyzerNode>
-  parent?: unknown
   // eslint-disable-next-line no-use-before-define
   paris: Record<string, AnalyzerNode>
   constructor(id: string, chunk: OutputChunk | RenderedModule) {
@@ -55,47 +55,6 @@ class AnalyzerNode {
     }
   }
 
-  // private processTreeNode(node: AnalyzerNode) {
-  //   const { id } = node
-  //   const paths = lexPaths(id)
-  //   // let scenceRef = scence
-  //   // for (let i = 0; i < paths.length; i++) {
-  //   //   const current = paths[i]
-  //   //   if (!scenceRef[current]) {
-  //   //     scenceRef[current] = {}
-  //   //     if (i + 1 === paths.length) {
-  //   //       console.log(node)
-  //   //       scenceRef[current] = node.hah()
-  //   //     } 
-  //   //   } else {
-  //   //     // has
-
-  //   //     // scenceRef[current].groups.push(node.hah())
-  //   //   }
-  //   //   scenceRef = scenceRef[current]
-  //   // }
-  //   // // for (const p of paths) {
-  //   // //   if (!scenceRef[p]) {
-  //   // //     scenceRef[p] = { groups: [] }
-  //   // //     scenceRef[p].groups.push(node)
-  //   // //   } else {
-  //   // //     scenceRef[p].groups.push(node)
-  //   // //   }
-  //   // //   scenceRef = scenceRef[p]
-  //   // //   //   scence[p] = {}
-  //   // //   //   scence[p].id = id
-  //   // //   //   scence[p].label = node.label
-  //   // //   //   scence[p].groups = node.children
-  //   // //   // } else {
-  //   // //   //   scence[p].groups.push(node.hah())
-  //   // //   // }
-  //   // //   //  else {
-  //   // //   //   scence[p].groups = []
-  //   // //   //   scence[p].groups.push(node)
-  //   // //   // }
-  //   // // }
-  // }
-
   private getChild(name: string) {
     return this.paris[name]
   }
@@ -105,10 +64,18 @@ class AnalyzerNode {
     return node
   }
 
+  private addPairsNode(key: string, node: AnalyzerNode) {
+    const currentPairs = this.paris[key]
+    if (currentPairs) return
+    node.label = key
+    node.path = key
+    this.paris[key] = node
+  }
+
   private processTreeNode(node: AnalyzerNode) {
     const paths = lexPaths(node.id)
     if (paths.length === 1) {
-      this.paris[node.id] = node
+      this.addPairsNode(node.id, node)
       return
     }
     const [folders, fileName] = paths as [string[], string]
@@ -116,17 +83,15 @@ class AnalyzerNode {
     let references: AnalyzerNode = this
     folders.forEach((folder) => {
       let childNode = references.getChild(folder)
-      if (!childNode) {
-        childNode = references.addPairs(createAnalyzerNode(folder, {} as any))
-      }
+      if (!childNode) childNode = references.addPairs(createAnalyzerNode(folder, { code: '' } as any))
       references = childNode
-      if (fileName) {
-        references.children.push(node)
-      }
     })
+    if (fileName) {
+      references.addPairsNode(fileName, node)
+    }
   }
 
-  setup(pluginContext: PluginContext, modules: Record<string, RenderedModule>) {
+  setup(modules: Record<string, RenderedModule>) {
     for (const moduleId in modules) {
       const info =  modules[moduleId]
       this.children.push(createAnalyzerNode(moduleId, info))
@@ -134,24 +99,36 @@ class AnalyzerNode {
       this.parsedSize += info.renderedLength
     }
     while (this.children.length) {
-      const current =  this.children.shift()
+      const current = this.children.shift()
       if (!current) return
       this.processTreeNode(current)
     }
-    console.log(JSON.stringify(this.paris))
+    this.walk(this)
+    this.paris = {}
+  }
+
+  private walk(node: AnalyzerNode) {
+    if (!Object.keys(node.paris).length) return
+    for (const name in this.paris) {
+      const ref = this.paris[name]
+      ref.walk(ref)
+      ref.paris = {}
+      ref.code = Buffer.from('')
+      this.children.push(ref)
+    }
   }
 }
 
 
 function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
   const abs = getAbsPath(id)
-  return new  AnalyzerNode(path.isAbsolute(abs) ? abs.replace('/', '') : abs, chunk)
+  return new AnalyzerNode(path.isAbsolute(abs) ? abs.replace('/', '') : abs, chunk)
 }
 
-class AnalyzerModule {
+export class AnalyzerModule {
   compress: ReturnType<typeof createGzip>
   pluginContext: PluginContext
-  modules: any[]
+  modules: AnalyzerNode[]
   constructor(opts: AnalyzerPluginOptions) {
     this.compress = createGzip(opts.gzipOptions)
     this.pluginContext = Object.create(null)
@@ -160,8 +137,19 @@ class AnalyzerModule {
 
   addModule(bundleName: string, bundle: OutputChunk) {
     const node = createAnalyzerNode(bundleName, bundle)
-    node.setup(this.pluginContext, bundle.modules)
+    node.setup(bundle.modules)
+    node.paris = {}
     this.modules.push(node)
+  }
+
+  processForamModule() {
+    return this.modules.map((node) => this.traverse(node))
+  }
+
+  private traverse(node: AnalyzerNode) {
+    const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize'])
+    if (node.children.length) Object.assign(base, { groups: node.children.map((child) => this.traverse(child)) })
+    return base as Foram
   }
 }
 

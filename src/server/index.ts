@@ -21,7 +21,8 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
       if (bundle.type !== 'chunk') continue
       analyzerModule.addModule(bundleName, bundle)
     }
-    console.log(analyzerModule.modules[0].children)
+    // console.log(analyzerModule.modules)
+    // console.log(analyzerModule.modules[0].children)
   }
 
   const plugin = <Plugin>{
@@ -34,15 +35,14 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
     async closeBundle() {
       switch (analyzerMode) {
         case 'json': {
-          // const p = path.join(defaultWd, statsFilename)
-          // const json = await wrapper.pretty()
-          // fsp.writeFile(p, JSON.stringify(json, null, 2), 'utf8')
+          const p = path.join(defaultWd, statsFilename)
+          fsp.writeFile(p, JSON.stringify(analyzerModule.processForamModule(), null, 2), 'utf8')
           break
         }
         case 'static': {
-          // const p = path.join(defaultWd, reportFileName)
-          // const html = await renderView(wrapper, { title: name, mode: 'stat' })
-          // fsp.writeFile(p, html, 'utf8')
+          const p = path.join(defaultWd, reportFileName)
+          const html = await renderView(analyzerModule, { title: name, mode: 'stat' })
+          fsp.writeFile(p, html, 'utf8')
           break
         }
         default:

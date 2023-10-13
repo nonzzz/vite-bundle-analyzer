@@ -30,6 +30,17 @@ export type AnalyzerMode = 'static' | 'json'
 // `gzip` This is the size of running the parsed bundles/modules through gzip compression.
 export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
+
+export interface Foram {
+    id: string
+    label: string
+    path: string
+    statSize: number
+    parsedSize: number
+    gzipSize: number
+    groups: Array<Foram>
+}
+
 export interface BasicAnalyzerPluginOptions {
     analyzerMode?: AnalyzerMode
     statsFilename?: string
