@@ -9,7 +9,7 @@ import { analyzer } from '../server'
 
 export default defineConfig(async ({ mode }) => {
   const base = <UserConfig>{
-    plugins: [react(), style9({ fileName: 'style.css' }), analyzer()],
+    plugins: [react(), style9({ fileName: 'style.css' }), analyzer({ analyzerMode: 'static' })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       minify: false,
@@ -19,9 +19,10 @@ export default defineConfig(async ({ mode }) => {
   }
   if (mode === 'development') {
     const mock = await import('./data.json')
+    console.log(mock.default)
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
-      'window.prettyModule': JSON.stringify(mock.default)
+      'window.foamModule': JSON.stringify(mock.default)
     }
   }
   return base

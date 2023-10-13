@@ -18,22 +18,22 @@ interface TitleBarDecoratorVariables {
 }
 
 export function TreeMap() {
-  const { prettyModule } = useApplicationContext()
+  const { foamModule } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<any>(null)
 
-  const mockPretty = useMemo(() => {
-    return prettyModule.map((item) => {
-      const latest = omit(item, ['children'])
-      latest.groups = item.children.flatMap(child => {
-        return  Object.entries(child).map(([subDir, node]) => ({
-          label: subDir,
-          groups: node.map(s => ({ label: s.id }))
-        }))
-      })
-      return latest
-    })
-  }, [prettyModule])
+  // const mockPretty = useMemo(() => {
+  //   return prettyModule.map((item) => {
+  //     const latest = omit(item, ['children'])
+  //     latest.groups = item.children.flatMap(child => {
+  //       return  Object.entries(child).map(([subDir, node]) => ({
+  //         label: subDir,
+  //         groups: node.map(s => ({ label: s.id }))
+  //       }))
+  //     })
+  //     return latest
+  //   })
+  // }, [prettyModule])
 
   useEffect(() => {
     if (!foamTreeInstance.current) {
@@ -56,7 +56,7 @@ export function TreeMap() {
         zoomMouseWheelDuration: 300,
         openCloseDuration: 200,
         dataObject: {
-          groups: mockPretty
+          groups: foamModule
         },
         titleBarDecorator(_, __, variables: TitleBarDecoratorVariables) {
           variables.titleBarShown = false
@@ -67,7 +67,7 @@ export function TreeMap() {
       foamTreeInstance.current.dispose()
       foamTreeInstance.current = null
     }
-  }, [mockPretty])
+  }, [foamModule])
 
   return <div className={styles('container')} ref={containerRef} />
 }

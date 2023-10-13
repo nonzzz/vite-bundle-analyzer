@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Button, Drawer, Input, Radio, Spacer, Text } from '@geist-ui/core'
 import style9 from 'style9'
 import Menu from '@geist-ui/icons/menu'
-import { omit, tuple } from '../shared'
+import { tuple } from '../shared'
 import { useApplicationContext } from '../context'
 import { FileList } from './file-list'
 
@@ -31,18 +31,18 @@ const MODE_RECORD: Record<typeof window['defaultSizes'], ModeType> = {
 
 // props: SideBarProps
 export function SideBar() {
-  const { defaultSizes, prettyModule: initialPrettyModule } = useApplicationContext()
+  const { defaultSizes, foamModule: initialfoamModule } = useApplicationContext()
   const [visible, setVisible] = useState<boolean>(false)
   const [mode, setMode] = useState<ModeType | number | string & NonNullable<unknown>>()
-  const [prettyModule, setPrettyModule] = useState<typeof window['prettyModule']>([])
+  const [prettyModule, setPrettyModule] = useState<typeof window['foamModule']>([])
 
   useEffect(() => {
     setMode(MODE_RECORD[defaultSizes])
-    setPrettyModule(() => [...initialPrettyModule])
-  }, [defaultSizes, initialPrettyModule])
+    setPrettyModule(() => [...initialfoamModule])
+  }, [defaultSizes, initialfoamModule])
 
 
-  const allChunks = useMemo(() => prettyModule.map(m => omit(m, ['children'])), [prettyModule])
+  const allChunks = useMemo(() => prettyModule.map(m => m), [prettyModule])
 
   const handleDrawerClose = () => {
     setVisible(false)
