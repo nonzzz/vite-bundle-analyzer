@@ -2,15 +2,14 @@ import fsp from 'fs/promises'
 import path from 'path'
 import fg from 'fast-glob'
 import { defaultWd, slash } from './shared'
-import { AnalyzerModule } from './analyzer-module'
-import type { DefaultSizes } from './interface'
+import type { DefaultSizes, Foam } from './interface'
 
 export interface RenderOptions {
     title: string
     mode: DefaultSizes
 }
 
-export async function renderView(module: AnalyzerModule, options: RenderOptions) {
+export async function renderView(foamModule: Foam[], options: RenderOptions) {
   // 
   const clientAssetsPaths = fg.sync(slash(path.join(defaultWd, 'dist', 'client', 'assets', '*')))
   const clientAssets = await Promise.all(clientAssetsPaths.map(async (p) => {
@@ -22,9 +21,7 @@ export async function renderView(module: AnalyzerModule, options: RenderOptions)
   const js = clientAssets.filter(v => v.fileType === 'js')
   const css = clientAssets.filter(v => v.fileType === 'css')
 
-  const foramModule = module.processForamModule()
 
-  console.log(foramModule)
 
   return `<!DOCTYPE html>
         <html lang="en">
@@ -40,7 +37,7 @@ export async function renderView(module: AnalyzerModule, options: RenderOptions)
                 <div id="app" />
                 <script>
                     window.defaultSizes = '${options.mode}';
-                    window.foramModule = ${JSON.stringify(foramModule)}
+                    window.foamModule = ${JSON.stringify(foamModule)}
                 </script>
             </body>
         </html>`

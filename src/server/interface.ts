@@ -31,14 +31,14 @@ export type AnalyzerMode = 'static' | 'json'
 export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
 
-export interface Foram {
+export interface Foam {
     id: string
     label: string
     path: string
     statSize: number
     parsedSize: number
     gzipSize: number
-    groups: Array<Foram>
+    groups: Array<Foam>
 }
 
 export interface BasicAnalyzerPluginOptions {

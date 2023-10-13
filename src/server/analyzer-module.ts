@@ -1,6 +1,6 @@
 import path from 'path'
 import { createGzip, pick, slash } from './shared'
-import type { AnalyzerPluginOptions, Foram, OutputChunk, PluginContext, RenderedModule } from './interface'
+import type { AnalyzerPluginOptions, Foam, OutputChunk, PluginContext, RenderedModule } from './interface'
 
 
 const defaultWd = slash(process.cwd())
@@ -13,15 +13,14 @@ function getAbsPath(p: string) {
 function lexPaths(p: string) {
   const dirs = p.split('/')
   if (dirs.length === 1) return dirs
-  const total: string[] = []
+  const paths: string[] = []
   const fileName = dirs.pop()!
   while (dirs.length) {
     const latest = dirs.shift()!
-    total.push(latest)
+    paths.push(latest)
   }
-  return [total, fileName]
+  return [paths, fileName]
 }
-
 
 export class AnalyzerNode {
   id: string
@@ -34,13 +33,13 @@ export class AnalyzerNode {
   // eslint-disable-next-line no-use-before-define
   children: Array<AnalyzerNode>
   // eslint-disable-next-line no-use-before-define
-  paris: Record<string, AnalyzerNode>
+  pairs: Record<string, AnalyzerNode>
   constructor(id: string, chunk: OutputChunk | RenderedModule) {
     this.id = id
     this.label = id
     this.path = id
     this.children = []
-    this.paris = Object.create(null)
+    this.pairs = Object.create(null)
     this.code = Buffer.from(chunk.code ?? '', 'utf8')
     this.parsedSize = 0
     this.statSize = 0
@@ -56,20 +55,20 @@ export class AnalyzerNode {
   }
 
   private getChild(name: string) {
-    return this.paris[name]
+    return this.pairs[name]
   }
 
   private addPairs(node: AnalyzerNode) {
-    this.paris[node.id] = node
+    this.pairs[node.id] = node
     return node
   }
 
   private addPairsNode(key: string, node: AnalyzerNode) {
-    const currentPairs = this.paris[key]
+    const currentPairs = this.pairs[key]
     if (currentPairs) return
     node.label = key
     node.path = key
-    this.paris[key] = node
+    this.pairs[key] = node
   }
 
   private processTreeNode(node: AnalyzerNode) {
@@ -86,6 +85,7 @@ export class AnalyzerNode {
       if (!childNode) childNode = references.addPairs(createAnalyzerNode(folder, { code: '' } as any))
       references = childNode
     })
+    
     if (fileName) {
       references.addPairsNode(fileName, node)
     }
@@ -93,7 +93,7 @@ export class AnalyzerNode {
 
   setup(modules: Record<string, RenderedModule>) {
     for (const moduleId in modules) {
-      const info =  modules[moduleId]
+      const info = modules[moduleId]
       this.children.push(createAnalyzerNode(moduleId, info))
       this.statSize += info.originalLength
       this.parsedSize += info.renderedLength
@@ -104,16 +104,15 @@ export class AnalyzerNode {
       this.processTreeNode(current)
     }
     this.walk(this)
-    this.paris = {}
+    this.pairs = {}
   }
 
   private walk(node: AnalyzerNode) {
-    if (!Object.keys(node.paris).length) return
-    for (const name in this.paris) {
-      const ref = this.paris[name]
+    if (!Object.keys(node.pairs).length) return
+    for (const name in this.pairs) {
+      const ref = this.pairs[name]
       ref.walk(ref)
-      ref.paris = {}
-      ref.code = Buffer.from('')
+      ref.pairs = {}
       this.children.push(ref)
     }
   }
@@ -138,18 +137,27 @@ export class AnalyzerModule {
   addModule(bundleName: string, bundle: OutputChunk) {
     const node = createAnalyzerNode(bundleName, bundle)
     node.setup(bundle.modules)
-    node.paris = {}
+    node.pairs = {}
     this.modules.push(node)
   }
 
-  processForamModule() {
-    return this.modules.map((node) => this.traverse(node))
+  async processfoamModule() {
+    return Promise.all(this.modules.map(async (node) => ({ ...await this.traverse(node), isAsset: true })))
   }
 
-  private traverse(node: AnalyzerNode) {
-    const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize'])
-    if (node.children.length) Object.assign(base, { groups: node.children.map((child) => this.traverse(child)) })
-    return base as Foram
+  private async traverse(node: AnalyzerNode) {
+    const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize', 'gzipSize'])
+    base.gzipSize =  (await this.compress(node.code)).byteLength
+    if (node.children.length) {
+      const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
+      const { statSize, parsedSize } = groups.reduce((acc, cur) => {
+        acc.statSize += cur.statSize
+        acc.parsedSize += cur.parsedSize
+        return acc
+      }, { statSize: 0, parsedSize: 0 })
+      Object.assign(base, { groups, statSize, parsedSize })
+    }
+    return base as Foam
   }
 }
 

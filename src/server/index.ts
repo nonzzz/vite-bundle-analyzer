@@ -9,7 +9,7 @@ import { renderView } from './render'
 
 
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
-  const { analyzerMode = 'static',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
+  const { analyzerMode = 'json',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
   const analyzerModule = createAnalyzerModule(opts)
   
  
@@ -21,8 +21,6 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
       if (bundle.type !== 'chunk') continue
       analyzerModule.addModule(bundleName, bundle)
     }
-    // console.log(analyzerModule.modules)
-    // console.log(analyzerModule.modules[0].children)
   }
 
   const plugin = <Plugin>{
@@ -36,12 +34,14 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
       switch (analyzerMode) {
         case 'json': {
           const p = path.join(defaultWd, statsFilename)
-          fsp.writeFile(p, JSON.stringify(analyzerModule.processForamModule(), null, 2), 'utf8')
+          const foamModule = await analyzerModule.processfoamModule()
+          fsp.writeFile(p, JSON.stringify(foamModule, null, 2), 'utf8')
           break
         }
         case 'static': {
           const p = path.join(defaultWd, reportFileName)
-          const html = await renderView(analyzerModule, { title: name, mode: 'stat' })
+          const foamModule = await analyzerModule.processfoamModule()
+          const html = await renderView(foamModule, { title: name, mode: 'stat' })
           fsp.writeFile(p, html, 'utf8')
           break
         }

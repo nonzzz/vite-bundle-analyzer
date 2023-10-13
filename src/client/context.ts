@@ -2,12 +2,12 @@ import { createContext, useContext } from 'react'
 
 export interface ApplicationConfig {
     defaultSizes: typeof window.defaultSizes
-    foramModule: typeof window.foramModule
+    foamModule: typeof window.foamModule
 }
 
 const defaultApplicationContext = <ApplicationConfig>{
   defaultSizes: 'stat',
-  foramModule: []
+  foamModule: []
 }
 
 export const ApplicationContext = createContext<ApplicationConfig>(defaultApplicationContext)

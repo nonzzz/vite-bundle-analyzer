@@ -17,10 +17,10 @@ const styles = style9.create({
 
 export function App() {
   const [defaultSizes] = useState<ApplicationConfig['defaultSizes']>(window.defaultSizes)
-  const [foramModule] = useState<ApplicationConfig['foramModule']>(() => window.foramModule)
+  const [foamModule] = useState<ApplicationConfig['foamModule']>(() => window.foamModule)
 
   return <GeistProvider>
-    <ApplicationContext.Provider value={{ defaultSizes, foramModule }}>
+    <ApplicationContext.Provider value={{ defaultSizes, foamModule }}>
       <div className={styles('app')}>
         <SideBar />
         <TreeMap />

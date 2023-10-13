@@ -18,7 +18,7 @@ interface TitleBarDecoratorVariables {
 }
 
 export function TreeMap() {
-  const { foramModule } = useApplicationContext()
+  const { foamModule } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<any>(null)
 
@@ -56,7 +56,7 @@ export function TreeMap() {
         zoomMouseWheelDuration: 300,
         openCloseDuration: 200,
         dataObject: {
-          groups: foramModule
+          groups: foamModule
         },
         titleBarDecorator(_, __, variables: TitleBarDecoratorVariables) {
           variables.titleBarShown = false
@@ -67,7 +67,7 @@ export function TreeMap() {
       foamTreeInstance.current.dispose()
       foamTreeInstance.current = null
     }
-  }, [foramModule])
+  }, [foamModule])
 
   return <div className={styles('container')} ref={containerRef} />
 }

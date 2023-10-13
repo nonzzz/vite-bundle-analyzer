@@ -31,15 +31,15 @@ const MODE_RECORD: Record<typeof window['defaultSizes'], ModeType> = {
 
 // props: SideBarProps
 export function SideBar() {
-  const { defaultSizes, foramModule: initialForamModule } = useApplicationContext()
+  const { defaultSizes, foamModule: initialfoamModule } = useApplicationContext()
   const [visible, setVisible] = useState<boolean>(false)
   const [mode, setMode] = useState<ModeType | number | string & NonNullable<unknown>>()
-  const [prettyModule, setPrettyModule] = useState<typeof window['foramModule']>([])
+  const [prettyModule, setPrettyModule] = useState<typeof window['foamModule']>([])
 
   useEffect(() => {
     setMode(MODE_RECORD[defaultSizes])
-    setPrettyModule(() => [...initialForamModule])
-  }, [defaultSizes, initialForamModule])
+    setPrettyModule(() => [...initialfoamModule])
+  }, [defaultSizes, initialfoamModule])
 
 
   const allChunks = useMemo(() => prettyModule.map(m => m), [prettyModule])
