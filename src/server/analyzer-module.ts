@@ -148,12 +148,13 @@ export class AnalyzerModule {
     base.gzipSize =  (await this.compress(node.code)).byteLength
     if (node.children.length) {
       const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
-      const { statSize, parsedSize } = groups.reduce((acc, cur) => {
+      const { statSize, parsedSize, gzipSize } = groups.reduce((acc, cur) => {
         acc.statSize += cur.statSize
         acc.parsedSize += cur.parsedSize
+        acc.gzipSize += cur.gzipSize
         return acc
-      }, { statSize: 0, parsedSize: 0 })
-      Object.assign(base, { groups, statSize, parsedSize })
+      }, { statSize: 0, parsedSize: 0, gzipSize: 0 })
+      Object.assign(base, { groups, statSize, parsedSize, gzipSize })
     }
     return base as Foam
   }

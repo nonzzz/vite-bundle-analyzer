@@ -1,17 +1,17 @@
 [
   {
-    "id": "assets/index-036ceeb7.js",
-    "label": "assets/index-036ceeb7.js",
-    "path": "assets/index-036ceeb7.js",
-    "gzipSize": 152411,
-    "statSize": 518183,
-    "parsedSize": 656641,
+    "id": "assets/index-ee1f3ea3.js",
+    "label": "assets/index-ee1f3ea3.js",
+    "path": "assets/index-ee1f3ea3.js",
+    "gzipSize": 181260,
+    "statSize": 518265,
+    "parsedSize": 656669,
     "groups": [
       {
         "id": "vite",
         "label": "vite",
         "path": "vite",
-        "gzipSize": 20,
+        "gzipSize": 586,
         "statSize": 1548,
         "parsedSize": 1548,
         "groups": [
@@ -29,17 +29,17 @@
         "id": "src",
         "label": "src",
         "path": "src",
-        "gzipSize": 20,
-        "statSize": 9496,
-        "parsedSize": 7165,
+        "gzipSize": 3033,
+        "statSize": 9578,
+        "parsedSize": 7193,
         "groups": [
           {
             "id": "client",
             "label": "client",
             "path": "client",
-            "gzipSize": 20,
-            "statSize": 9496,
-            "parsedSize": 7165,
+            "gzipSize": 3033,
+            "statSize": 9578,
+            "parsedSize": 7193,
             "groups": [
               {
                 "id": "src/client/index.html?html-proxy&inline-css&index=0.css",
@@ -69,9 +69,9 @@
                 "id": "components",
                 "label": "components",
                 "path": "components",
-                "gzipSize": 20,
-                "statSize": 5756,
-                "parsedSize": 5524,
+                "gzipSize": 1998,
+                "statSize": 5838,
+                "parsedSize": 5552,
                 "groups": [
                   {
                     "id": "src/client/components/file-list.tsx",
@@ -93,9 +93,9 @@
                     "id": "src/client/components/tree-map.tsx",
                     "label": "tree-map.tsx",
                     "path": "tree-map.tsx",
-                    "gzipSize": 698,
-                    "statSize": 2125,
-                    "parsedSize": 1685
+                    "gzipSize": 701,
+                    "statSize": 2207,
+                    "parsedSize": 1713
                   }
                 ]
               },
@@ -147,7 +147,7 @@
         "id": "node_modules",
         "label": "node_modules",
         "path": "node_modules",
-        "gzipSize": 20,
+        "gzipSize": 177499,
         "statSize": 505845,
         "parsedSize": 647788,
         "groups": [
@@ -155,7 +155,7 @@
             "id": ".store",
             "label": ".store",
             "path": ".store",
-            "gzipSize": 20,
+            "gzipSize": 177499,
             "statSize": 505845,
             "parsedSize": 647788,
             "groups": [
@@ -163,7 +163,7 @@
                 "id": "react-npm-18.2.0-1eae08fee2",
                 "label": "react-npm-18.2.0-1eae08fee2",
                 "path": "react-npm-18.2.0-1eae08fee2",
-                "gzipSize": 20,
+                "gzipSize": 3992,
                 "statSize": 8458,
                 "parsedSize": 11074,
                 "groups": [
@@ -171,7 +171,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 3992,
                     "statSize": 8458,
                     "parsedSize": 11074,
                     "groups": [
@@ -179,7 +179,7 @@
                         "id": "react",
                         "label": "react",
                         "path": "react",
-                        "gzipSize": 20,
+                        "gzipSize": 3992,
                         "statSize": 8458,
                         "parsedSize": 11074,
                         "groups": [
@@ -195,7 +195,7 @@
                             "id": "cjs",
                             "label": "cjs",
                             "path": "cjs",
-                            "gzipSize": 20,
+                            "gzipSize": 3692,
                             "statSize": 7938,
                             "parsedSize": 10770,
                             "groups": [
@@ -267,7 +267,7 @@
                 "id": "react-dom-virtual-37d311063d",
                 "label": "react-dom-virtual-37d311063d",
                 "path": "react-dom-virtual-37d311063d",
-                "gzipSize": 20,
+                "gzipSize": 49442,
                 "statSize": 133902,
                 "parsedSize": 197018,
                 "groups": [
@@ -275,7 +275,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 49442,
                     "statSize": 133902,
                     "parsedSize": 197018,
                     "groups": [
@@ -283,7 +283,7 @@
                         "id": "react-dom",
                         "label": "react-dom",
                         "path": "react-dom",
-                        "gzipSize": 20,
+                        "gzipSize": 49442,
                         "statSize": 133902,
                         "parsedSize": 197018,
                         "groups": [
@@ -307,7 +307,7 @@
                             "id": "cjs",
                             "label": "cjs",
                             "path": "cjs",
-                            "gzipSize": 20,
+                            "gzipSize": 48866,
                             "statSize": 131816,
                             "parsedSize": 196129,
                             "groups": [
@@ -355,7 +355,7 @@
                 "id": "scheduler-npm-0.23.0-a379a6bc3b",
                 "label": "scheduler-npm-0.23.0-a379a6bc3b",
                 "path": "scheduler-npm-0.23.0-a379a6bc3b",
-                "gzipSize": 20,
+                "gzipSize": 2263,
                 "statSize": 4575,
                 "parsedSize": 6298,
                 "groups": [
@@ -363,7 +363,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 2263,
                     "statSize": 4575,
                     "parsedSize": 6298,
                     "groups": [
@@ -371,7 +371,7 @@
                         "id": "scheduler",
                         "label": "scheduler",
                         "path": "scheduler",
-                        "gzipSize": 20,
+                        "gzipSize": 2263,
                         "statSize": 4575,
                         "parsedSize": 6298,
                         "groups": [
@@ -387,7 +387,7 @@
                             "id": "cjs",
                             "label": "cjs",
                             "path": "cjs",
-                            "gzipSize": 20,
+                            "gzipSize": 2137,
                             "statSize": 4316,
                             "parsedSize": 6174,
                             "groups": [
@@ -427,7 +427,7 @@
                 "id": "@babel-runtime-npm-7.22.15-b21c55a700",
                 "label": "@babel-runtime-npm-7.22.15-b21c55a700",
                 "path": "@babel-runtime-npm-7.22.15-b21c55a700",
-                "gzipSize": 20,
+                "gzipSize": 2605,
                 "statSize": 4780,
                 "parsedSize": 3940,
                 "groups": [
@@ -435,7 +435,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 2605,
                     "statSize": 4780,
                     "parsedSize": 3940,
                     "groups": [
@@ -443,7 +443,7 @@
                         "id": "@babel",
                         "label": "@babel",
                         "path": "@babel",
-                        "gzipSize": 20,
+                        "gzipSize": 2605,
                         "statSize": 4780,
                         "parsedSize": 3940,
                         "groups": [
@@ -451,7 +451,7 @@
                             "id": "runtime",
                             "label": "runtime",
                             "path": "runtime",
-                            "gzipSize": 20,
+                            "gzipSize": 2605,
                             "statSize": 4780,
                             "parsedSize": 3940,
                             "groups": [
@@ -459,7 +459,7 @@
                                 "id": "helpers",
                                 "label": "helpers",
                                 "path": "helpers",
-                                "gzipSize": 20,
+                                "gzipSize": 2605,
                                 "statSize": 4780,
                                 "parsedSize": 3940,
                                 "groups": [
@@ -467,7 +467,7 @@
                                     "id": "esm",
                                     "label": "esm",
                                     "path": "esm",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2605,
                                     "statSize": 4780,
                                     "parsedSize": 3940,
                                     "groups": [
@@ -599,7 +599,7 @@
                 "id": "@geist-ui-core-virtual-72bc5e1fd8",
                 "label": "@geist-ui-core-virtual-72bc5e1fd8",
                 "path": "@geist-ui-core-virtual-72bc5e1fd8",
-                "gzipSize": 20,
+                "gzipSize": 58181,
                 "statSize": 210123,
                 "parsedSize": 190726,
                 "groups": [
@@ -607,7 +607,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 58181,
                     "statSize": 210123,
                     "parsedSize": 190726,
                     "groups": [
@@ -615,7 +615,7 @@
                         "id": "@geist-ui",
                         "label": "@geist-ui",
                         "path": "@geist-ui",
-                        "gzipSize": 20,
+                        "gzipSize": 58181,
                         "statSize": 210123,
                         "parsedSize": 190726,
                         "groups": [
@@ -623,7 +623,7 @@
                             "id": "core",
                             "label": "core",
                             "path": "core",
-                            "gzipSize": 20,
+                            "gzipSize": 58181,
                             "statSize": 210123,
                             "parsedSize": 190726,
                             "groups": [
@@ -631,7 +631,7 @@
                                 "id": "esm",
                                 "label": "esm",
                                 "path": "esm",
-                                "gzipSize": 20,
+                                "gzipSize": 58181,
                                 "statSize": 210123,
                                 "parsedSize": 190726,
                                 "groups": [
@@ -647,7 +647,7 @@
                                     "id": "themes",
                                     "label": "themes",
                                     "path": "themes",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2499,
                                     "statSize": 6987,
                                     "parsedSize": 6540,
                                     "groups": [
@@ -655,7 +655,7 @@
                                         "id": "presets",
                                         "label": "presets",
                                         "path": "presets",
-                                        "gzipSize": 20,
+                                        "gzipSize": 1738,
                                         "statSize": 4321,
                                         "parsedSize": 4097,
                                         "groups": [
@@ -699,7 +699,7 @@
                                     "id": "use-theme",
                                     "label": "use-theme",
                                     "path": "use-theme",
-                                    "gzipSize": 20,
+                                    "gzipSize": 151,
                                     "statSize": 270,
                                     "parsedSize": 199,
                                     "groups": [
@@ -717,7 +717,7 @@
                                     "id": "input",
                                     "label": "input",
                                     "path": "input",
-                                    "gzipSize": 20,
+                                    "gzipSize": 6631,
                                     "statSize": 24430,
                                     "parsedSize": 22797,
                                     "groups": [
@@ -807,7 +807,7 @@
                                     "id": "use-classes",
                                     "label": "use-classes",
                                     "path": "use-classes",
-                                    "gzipSize": 20,
+                                    "gzipSize": 394,
                                     "statSize": 1059,
                                     "parsedSize": 999,
                                     "groups": [
@@ -825,7 +825,7 @@
                                     "id": "use-scale",
                                     "label": "use-scale",
                                     "path": "use-scale",
-                                    "gzipSize": 20,
+                                    "gzipSize": 3221,
                                     "statSize": 11163,
                                     "parsedSize": 10894,
                                     "groups": [
@@ -859,7 +859,7 @@
                                     "id": "utils",
                                     "label": "utils",
                                     "path": "utils",
-                                    "gzipSize": 20,
+                                    "gzipSize": 3391,
                                     "statSize": 11675,
                                     "parsedSize": 8040,
                                     "groups": [
@@ -933,7 +933,7 @@
                                     "id": "textarea",
                                     "label": "textarea",
                                     "path": "textarea",
-                                    "gzipSize": 20,
+                                    "gzipSize": 1723,
                                     "statSize": 6802,
                                     "parsedSize": 6272,
                                     "groups": [
@@ -951,7 +951,7 @@
                                     "id": "shared",
                                     "label": "shared",
                                     "path": "shared",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2942,
                                     "statSize": 10477,
                                     "parsedSize": 9570,
                                     "groups": [
@@ -985,7 +985,7 @@
                                     "id": "loading",
                                     "label": "loading",
                                     "path": "loading",
-                                    "gzipSize": 20,
+                                    "gzipSize": 1305,
                                     "statSize": 6045,
                                     "parsedSize": 5692,
                                     "groups": [
@@ -1003,7 +1003,7 @@
                                     "id": "use-current-state",
                                     "label": "use-current-state",
                                     "path": "use-current-state",
-                                    "gzipSize": 20,
+                                    "gzipSize": 296,
                                     "statSize": 759,
                                     "parsedSize": 678,
                                     "groups": [
@@ -1021,7 +1021,7 @@
                                     "id": "button",
                                     "label": "button",
                                     "path": "button",
-                                    "gzipSize": 20,
+                                    "gzipSize": 5584,
                                     "statSize": 20739,
                                     "parsedSize": 19215,
                                     "groups": [
@@ -1079,7 +1079,7 @@
                                     "id": "button-group",
                                     "label": "button-group",
                                     "path": "button-group",
-                                    "gzipSize": 20,
+                                    "gzipSize": 164,
                                     "statSize": 296,
                                     "parsedSize": 259,
                                     "groups": [
@@ -1097,7 +1097,7 @@
                                     "id": "use-body-scroll",
                                     "label": "use-body-scroll",
                                     "path": "use-body-scroll",
-                                    "gzipSize": 20,
+                                    "gzipSize": 818,
                                     "statSize": 2426,
                                     "parsedSize": 2276,
                                     "groups": [
@@ -1115,7 +1115,7 @@
                                     "id": "use-keyboard",
                                     "label": "use-keyboard",
                                     "path": "use-keyboard",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2152,
                                     "statSize": 7602,
                                     "parsedSize": 7342,
                                     "groups": [
@@ -1149,7 +1149,7 @@
                                     "id": "drawer",
                                     "label": "drawer",
                                     "path": "drawer",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2709,
                                     "statSize": 11688,
                                     "parsedSize": 10411,
                                     "groups": [
@@ -1191,7 +1191,7 @@
                                     "id": "modal",
                                     "label": "modal",
                                     "path": "modal",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2235,
                                     "statSize": 7235,
                                     "parsedSize": 6327,
                                     "groups": [
@@ -1225,7 +1225,7 @@
                                     "id": "use-all-themes",
                                     "label": "use-all-themes",
                                     "path": "use-all-themes",
-                                    "gzipSize": 20,
+                                    "gzipSize": 122,
                                     "statSize": 317,
                                     "parsedSize": 146,
                                     "groups": [
@@ -1243,7 +1243,7 @@
                                     "id": "geist-provider",
                                     "label": "geist-provider",
                                     "path": "geist-provider",
-                                    "gzipSize": 20,
+                                    "gzipSize": 1067,
                                     "statSize": 3809,
                                     "parsedSize": 3139,
                                     "groups": [
@@ -1269,7 +1269,7 @@
                                     "id": "use-toasts",
                                     "label": "use-toasts",
                                     "path": "use-toasts",
-                                    "gzipSize": 20,
+                                    "gzipSize": 3210,
                                     "statSize": 11789,
                                     "parsedSize": 10860,
                                     "groups": [
@@ -1303,7 +1303,7 @@
                                     "id": "radio",
                                     "label": "radio",
                                     "path": "radio",
-                                    "gzipSize": 20,
+                                    "gzipSize": 4007,
                                     "statSize": 15850,
                                     "parsedSize": 14279,
                                     "groups": [
@@ -1361,7 +1361,7 @@
                                     "id": "spacer",
                                     "label": "spacer",
                                     "path": "spacer",
-                                    "gzipSize": 20,
+                                    "gzipSize": 582,
                                     "statSize": 1823,
                                     "parsedSize": 1553,
                                     "groups": [
@@ -1379,7 +1379,7 @@
                                     "id": "text",
                                     "label": "text",
                                     "path": "text",
-                                    "gzipSize": 20,
+                                    "gzipSize": 2037,
                                     "statSize": 6777,
                                     "parsedSize": 6232,
                                     "groups": [
@@ -1405,7 +1405,7 @@
                                     "id": "tree",
                                     "label": "tree",
                                     "path": "tree",
-                                    "gzipSize": 20,
+                                    "gzipSize": 6130,
                                     "statSize": 20135,
                                     "parsedSize": 17732,
                                     "groups": [
@@ -1505,7 +1505,7 @@
                 "id": "@geist-ui-icons-virtual-50b3f90566",
                 "label": "@geist-ui-icons-virtual-50b3f90566",
                 "path": "@geist-ui-icons-virtual-50b3f90566",
-                "gzipSize": 20,
+                "gzipSize": 599,
                 "statSize": 1118,
                 "parsedSize": 1305,
                 "groups": [
@@ -1513,7 +1513,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 599,
                     "statSize": 1118,
                     "parsedSize": 1305,
                     "groups": [
@@ -1521,7 +1521,7 @@
                         "id": "@geist-ui",
                         "label": "@geist-ui",
                         "path": "@geist-ui",
-                        "gzipSize": 20,
+                        "gzipSize": 599,
                         "statSize": 1118,
                         "parsedSize": 1305,
                         "groups": [
@@ -1529,7 +1529,7 @@
                             "id": "icons",
                             "label": "icons",
                             "path": "icons",
-                            "gzipSize": 20,
+                            "gzipSize": 599,
                             "statSize": 1118,
                             "parsedSize": 1305,
                             "groups": [
@@ -1561,7 +1561,7 @@
                 "id": "@babel-runtime-npm-7.23.1-9b8781107c",
                 "label": "@babel-runtime-npm-7.23.1-9b8781107c",
                 "path": "@babel-runtime-npm-7.23.1-9b8781107c",
-                "gzipSize": 20,
+                "gzipSize": 1518,
                 "statSize": 2357,
                 "parsedSize": 3240,
                 "groups": [
@@ -1569,7 +1569,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 1518,
                     "statSize": 2357,
                     "parsedSize": 3240,
                     "groups": [
@@ -1577,7 +1577,7 @@
                         "id": "@babel",
                         "label": "@babel",
                         "path": "@babel",
-                        "gzipSize": 20,
+                        "gzipSize": 1518,
                         "statSize": 2357,
                         "parsedSize": 3240,
                         "groups": [
@@ -1585,7 +1585,7 @@
                             "id": "runtime",
                             "label": "runtime",
                             "path": "runtime",
-                            "gzipSize": 20,
+                            "gzipSize": 1518,
                             "statSize": 2357,
                             "parsedSize": 3240,
                             "groups": [
@@ -1593,7 +1593,7 @@
                                 "id": "helpers",
                                 "label": "helpers",
                                 "path": "helpers",
-                                "gzipSize": 20,
+                                "gzipSize": 1518,
                                 "statSize": 2357,
                                 "parsedSize": 3240,
                                 "groups": [
@@ -1675,7 +1675,7 @@
                 "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
                 "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
                 "path": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
-                "gzipSize": 20,
+                "gzipSize": 58899,
                 "statSize": 140532,
                 "parsedSize": 234187,
                 "groups": [
@@ -1683,7 +1683,7 @@
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 20,
+                    "gzipSize": 58899,
                     "statSize": 140532,
                     "parsedSize": 234187,
                     "groups": [
@@ -1691,7 +1691,7 @@
                         "id": "@carrotsearch",
                         "label": "@carrotsearch",
                         "path": "@carrotsearch",
-                        "gzipSize": 20,
+                        "gzipSize": 58899,
                         "statSize": 140532,
                         "parsedSize": 234187,
                         "groups": [
@@ -1699,7 +1699,7 @@
                             "id": "foamtree",
                             "label": "foamtree",
                             "path": "foamtree",
-                            "gzipSize": 20,
+                            "gzipSize": 58899,
                             "statSize": 140532,
                             "parsedSize": 234187,
                             "groups": [
