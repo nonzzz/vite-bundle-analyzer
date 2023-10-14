@@ -1,6 +1,6 @@
 import path from 'path'
 import { createGzip, pick, slash } from './shared'
-import type { AnalyzerPluginOptions, Foam, OutputChunk, PluginContext, RenderedModule } from './interface'
+import type { AnalyzerPluginOptions, Foam, OutputChunk, RenderedModule } from './interface'
 
 
 const defaultWd = slash(process.cwd())
@@ -126,11 +126,9 @@ function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
 
 export class AnalyzerModule {
   compress: ReturnType<typeof createGzip>
-  pluginContext: PluginContext
   modules: AnalyzerNode[]
   constructor(opts: AnalyzerPluginOptions) {
     this.compress = createGzip(opts.gzipOptions)
-    this.pluginContext = Object.create(null)
     this.modules = []
   }
 

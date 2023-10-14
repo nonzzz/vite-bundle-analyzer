@@ -10,7 +10,6 @@ export interface RenderOptions {
 }
 
 export async function renderView(foamModule: Foam[], options: RenderOptions) {
-  // 
   const clientAssetsPaths = fg.sync(slash(path.join(defaultWd, 'dist', 'client', 'assets', '*')))
   const clientAssets = await Promise.all(clientAssetsPaths.map(async (p) => {
     const fileType = path.extname(p).replace('.', '')
@@ -20,8 +19,6 @@ export async function renderView(foamModule: Foam[], options: RenderOptions) {
 
   const js = clientAssets.filter(v => v.fileType === 'js')
   const css = clientAssets.filter(v => v.fileType === 'css')
-
-
 
   return `<!DOCTYPE html>
         <html lang="en">

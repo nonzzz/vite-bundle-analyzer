@@ -19,7 +19,6 @@ export default defineConfig(async ({ mode }) => {
   }
   if (mode === 'development') {
     const mock = await import('./data.json')
-    console.log(mock.default)
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
       'window.foamModule': JSON.stringify(mock.default)
