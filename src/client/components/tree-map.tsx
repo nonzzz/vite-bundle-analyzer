@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect,  useMemo, useRef } from 'react'
 import style9 from 'style9'
 import { FoamTree } from '@carrotsearch/foamtree'
-import { omit } from '../shared'
 import { useApplicationContext } from '../context'
+import { Foam, Sizes } from '../interface'
 
 const styles = style9.create({
   container: {
@@ -17,23 +17,22 @@ interface TitleBarDecoratorVariables {
   titleBarShown: boolean
 }
 
+interface VisibleFoam extends Foam{
+  weight: number
+}
+
+function travseVisibleModule(foamModule: Foam, sizes: Sizes): VisibleFoam {
+  if (foamModule.groups)  foamModule.groups = foamModule.groups.map((module) => travseVisibleModule(module, sizes))
+  return { ...foamModule, weight: foamModule[sizes] }
+}
+
 export function TreeMap() {
-  const { foamModule } = useApplicationContext()
+  const { foamModule, sizes } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<any>(null)
 
-  // const mockPretty = useMemo(() => {
-  //   return prettyModule.map((item) => {
-  //     const latest = omit(item, ['children'])
-  //     latest.groups = item.children.flatMap(child => {
-  //       return  Object.entries(child).map(([subDir, node]) => ({
-  //         label: subDir,
-  //         groups: node.map(s => ({ label: s.id }))
-  //       }))
-  //     })
-  //     return latest
-  //   })
-  // }, [prettyModule])
+  // travseVisibleModule(foamModule, sizes)
+  const visibleChunks = useMemo(() => foamModule.map((module) => travseVisibleModule(module, sizes)), [foamModule, sizes])
 
   useEffect(() => {
     if (!foamTreeInstance.current) {
@@ -56,7 +55,7 @@ export function TreeMap() {
         zoomMouseWheelDuration: 300,
         openCloseDuration: 200,
         dataObject: {
-          groups: foamModule
+          groups: visibleChunks
         },
         titleBarDecorator(_, __, variables: TitleBarDecoratorVariables) {
           variables.titleBarShown = false
@@ -67,7 +66,7 @@ export function TreeMap() {
       foamTreeInstance.current.dispose()
       foamTreeInstance.current = null
     }
-  }, [foamModule])
+  }, [visibleChunks])
 
   return <div className={styles('container')} ref={containerRef} />
 }

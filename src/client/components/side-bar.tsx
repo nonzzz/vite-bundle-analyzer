@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Button, Drawer, Input, Radio, Spacer, Text } from '@geist-ui/core'
 import style9 from 'style9'
 import Menu from '@geist-ui/icons/menu'
 import { tuple } from '../shared'
 import { useApplicationContext } from '../context'
+import type { Sizes } from '../interface'
 import { FileList } from './file-list'
-
 
 const styles = style9.create({
   visible: {
@@ -23,29 +23,30 @@ const MODE = tuple('Stat', 'Parsed', 'Gzipped')
 
 export type ModeType = typeof MODE[number]
 
-const MODE_RECORD: Record<typeof window['defaultSizes'], ModeType> = {
-  stat: 'Stat',
-  parsed: 'Parsed',
-  gzip: 'Gzipped'
+const MODE_RECORD: Record<Sizes, ModeType> = {
+  statSize: 'Stat',
+  parsedSize: 'Parsed',
+  gzipSize: 'Gzipped'
 }
 
-// props: SideBarProps
 export function SideBar() {
-  const { defaultSizes, foamModule: initialfoamModule } = useApplicationContext()
+  const { sizes, updateSizes, foamModule } = useApplicationContext()
   const [visible, setVisible] = useState<boolean>(false)
-  const [mode, setMode] = useState<ModeType | number | string & NonNullable<unknown>>()
-  const [prettyModule, setPrettyModule] = useState<typeof window['foamModule']>([])
+  const [mode, setMode] = useState<ModeType>(() => MODE_RECORD[sizes])
 
-  useEffect(() => {
-    setMode(MODE_RECORD[defaultSizes])
-    setPrettyModule(() => [...initialfoamModule])
-  }, [defaultSizes, initialfoamModule])
-
-
-  const allChunks = useMemo(() => prettyModule.map(m => m), [prettyModule])
+  const allChunks = useMemo(() => foamModule.sort((a, b) => b[sizes] - a[sizes]), [foamModule, sizes])
 
   const handleDrawerClose = () => {
     setVisible(false)
+  }
+
+  const handleRadioChange = (type: ModeType) => {
+    setMode(type)
+    updateSizes(() => {
+      if (type === 'Gzipped') return 'gzipSize'
+      if (type === 'Stat') return 'statSize'
+      return 'parsedSize'
+    })
   }
 
   return <>
@@ -54,7 +55,7 @@ export function SideBar() {
       <Drawer.Content>
         <div>
           <Text p b font='14px'>Treemap Sizes</Text>
-          <Radio.Group value={mode} onChange={(s) => setMode(s)} useRow>
+          <Radio.Group value={mode} onChange={(s: any) => handleRadioChange(s)} useRow>
             {MODE.map(radio => <Radio value={radio} key={radio}>{radio}</Radio>)}
           </Radio.Group>
         </div>
@@ -66,7 +67,7 @@ export function SideBar() {
         <Spacer h='1.5' />
         <div>
           <Text p b font='14px'>Show Chunks</Text>
-          <FileList initialExpand files={allChunks} />
+          <FileList initialExpand files={allChunks} extra={sizes} />
         </div>
       </Drawer.Content>
     </Drawer>

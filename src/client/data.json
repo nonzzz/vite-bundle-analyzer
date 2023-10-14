@@ -1,25 +1,25 @@
 [
   {
-    "id": "assets/index-c0f9dc17.js",
-    "label": "assets/index-c0f9dc17.js",
-    "path": "assets/index-c0f9dc17.js",
-    "gzipSize": 0,
-    "statSize": 518171,
-    "parsedSize": 656488,
+    "id": "assets/index-036ceeb7.js",
+    "label": "assets/index-036ceeb7.js",
+    "path": "assets/index-036ceeb7.js",
+    "gzipSize": 152411,
+    "statSize": 518183,
+    "parsedSize": 656641,
     "groups": [
       {
         "id": "vite",
         "label": "vite",
         "path": "vite",
-        "gzipSize": 0,
-        "statSize": 0,
-        "parsedSize": 0,
+        "gzipSize": 20,
+        "statSize": 1548,
+        "parsedSize": 1548,
         "groups": [
           {
             "id": "vite/modulepreload-polyfill",
             "label": "modulepreload-polyfill",
             "path": "modulepreload-polyfill",
-            "gzipSize": 0,
+            "gzipSize": 586,
             "statSize": 1548,
             "parsedSize": 1548
           }
@@ -29,23 +29,23 @@
         "id": "src",
         "label": "src",
         "path": "src",
-        "gzipSize": 0,
-        "statSize": 0,
-        "parsedSize": 0,
+        "gzipSize": 20,
+        "statSize": 9496,
+        "parsedSize": 7165,
         "groups": [
           {
             "id": "client",
             "label": "client",
             "path": "client",
-            "gzipSize": 0,
-            "statSize": 0,
-            "parsedSize": 0,
+            "gzipSize": 20,
+            "statSize": 9496,
+            "parsedSize": 7165,
             "groups": [
               {
                 "id": "src/client/index.html?html-proxy&inline-css&index=0.css",
                 "label": "index.html?html-proxy&inline-css&index=0.css",
                 "path": "index.html?html-proxy&inline-css&index=0.css",
-                "gzipSize": 0,
+                "gzipSize": 20,
                 "statSize": 168,
                 "parsedSize": 0
               },
@@ -53,49 +53,49 @@
                 "id": "src/client/shared.ts",
                 "label": "shared.ts",
                 "path": "shared.ts",
-                "gzipSize": 0,
-                "statSize": 749,
-                "parsedSize": 292
+                "gzipSize": 234,
+                "statSize": 827,
+                "parsedSize": 347
               },
               {
                 "id": "src/client/context.ts",
                 "label": "context.ts",
                 "path": "context.ts",
-                "gzipSize": 0,
-                "statSize": 477,
-                "parsedSize": 253
+                "gzipSize": 207,
+                "statSize": 808,
+                "parsedSize": 364
               },
               {
                 "id": "components",
                 "label": "components",
                 "path": "components",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 5756,
+                "parsedSize": 5524,
                 "groups": [
                   {
                     "id": "src/client/components/file-list.tsx",
                     "label": "file-list.tsx",
                     "path": "file-list.tsx",
-                    "gzipSize": 0,
-                    "statSize": 1751,
-                    "parsedSize": 1278
+                    "gzipSize": 408,
+                    "statSize": 1304,
+                    "parsedSize": 808
                   },
                   {
                     "id": "src/client/components/side-bar.tsx",
                     "label": "side-bar.tsx",
                     "path": "side-bar.tsx",
-                    "gzipSize": 0,
-                    "statSize": 2323,
-                    "parsedSize": 2963
+                    "gzipSize": 889,
+                    "statSize": 2327,
+                    "parsedSize": 3031
                   },
                   {
                     "id": "src/client/components/tree-map.tsx",
                     "label": "tree-map.tsx",
                     "path": "tree-map.tsx",
-                    "gzipSize": 0,
-                    "statSize": 2138,
-                    "parsedSize": 1333
+                    "gzipSize": 698,
+                    "statSize": 2125,
+                    "parsedSize": 1685
                   }
                 ]
               },
@@ -103,7 +103,7 @@
                 "id": "src/client/init.css",
                 "label": "init.css",
                 "path": "init.css",
-                "gzipSize": 0,
+                "gzipSize": 36,
                 "statSize": 107,
                 "parsedSize": 16
               },
@@ -111,15 +111,15 @@
                 "id": "src/client/application.tsx",
                 "label": "application.tsx",
                 "path": "application.tsx",
-                "gzipSize": 0,
-                "statSize": 894,
-                "parsedSize": 623
+                "gzipSize": 323,
+                "statSize": 953,
+                "parsedSize": 660
               },
               {
                 "id": "src/client/main.tsx",
                 "label": "main.tsx",
                 "path": "main.tsx",
-                "gzipSize": 0,
+                "gzipSize": 195,
                 "statSize": 352,
                 "parsedSize": 254
               },
@@ -127,7 +127,7 @@
                 "id": "src/client/index.html",
                 "label": "index.html",
                 "path": "index.html",
-                "gzipSize": 0,
+                "gzipSize": 20,
                 "statSize": 525,
                 "parsedSize": 0
               }
@@ -139,7 +139,7 @@
         "id": "commonjsHelpers.js",
         "label": "commonjsHelpers.js",
         "path": "commonjsHelpers.js",
-        "gzipSize": 0,
+        "gzipSize": 142,
         "statSize": 1294,
         "parsedSize": 140
       },
@@ -147,47 +147,47 @@
         "id": "node_modules",
         "label": "node_modules",
         "path": "node_modules",
-        "gzipSize": 0,
-        "statSize": 0,
-        "parsedSize": 0,
+        "gzipSize": 20,
+        "statSize": 505845,
+        "parsedSize": 647788,
         "groups": [
           {
             "id": ".store",
             "label": ".store",
             "path": ".store",
-            "gzipSize": 0,
-            "statSize": 0,
-            "parsedSize": 0,
+            "gzipSize": 20,
+            "statSize": 505845,
+            "parsedSize": 647788,
             "groups": [
               {
                 "id": "react-npm-18.2.0-1eae08fee2",
                 "label": "react-npm-18.2.0-1eae08fee2",
                 "path": "react-npm-18.2.0-1eae08fee2",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 8458,
+                "parsedSize": 11074,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 8458,
+                    "parsedSize": 11074,
                     "groups": [
                       {
                         "id": "react",
                         "label": "react",
                         "path": "react",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 8458,
+                        "parsedSize": 11074,
                         "groups": [
                           {
                             "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/jsx-runtime.js?commonjs-module",
                             "label": "jsx-runtime.js?commonjs-module",
                             "path": "jsx-runtime.js?commonjs-module",
-                            "gzipSize": 0,
+                            "gzipSize": 51,
                             "statSize": 63,
                             "parsedSize": 31
                           },
@@ -195,15 +195,15 @@
                             "id": "cjs",
                             "label": "cjs",
                             "path": "cjs",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 7938,
+                            "parsedSize": 10770,
                             "groups": [
                               {
                                 "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react-jsx-runtime.production.min.js?commonjs-exports",
                                 "label": "react-jsx-runtime.production.min.js?commonjs-exports",
                                 "path": "react-jsx-runtime.production.min.js?commonjs-exports",
-                                "gzipSize": 0,
+                                "gzipSize": 60,
                                 "statSize": 93,
                                 "parsedSize": 40
                               },
@@ -211,7 +211,7 @@
                                 "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react.production.min.js?commonjs-exports",
                                 "label": "react.production.min.js?commonjs-exports",
                                 "path": "react.production.min.js?commonjs-exports",
-                                "gzipSize": 0,
+                                "gzipSize": 50,
                                 "statSize": 73,
                                 "parsedSize": 30
                               },
@@ -219,7 +219,7 @@
                                 "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react.production.min.js",
                                 "label": "react.production.min.js",
                                 "path": "react.production.min.js",
-                                "gzipSize": 0,
+                                "gzipSize": 2990,
                                 "statSize": 6913,
                                 "parsedSize": 9585
                               },
@@ -227,7 +227,7 @@
                                 "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/cjs/react-jsx-runtime.production.min.js",
                                 "label": "react-jsx-runtime.production.min.js",
                                 "path": "react-jsx-runtime.production.min.js",
-                                "gzipSize": 0,
+                                "gzipSize": 592,
                                 "statSize": 859,
                                 "parsedSize": 1115
                               }
@@ -237,7 +237,7 @@
                             "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/index.js?commonjs-module",
                             "label": "index.js?commonjs-module",
                             "path": "index.js?commonjs-module",
-                            "gzipSize": 0,
+                            "gzipSize": 46,
                             "statSize": 53,
                             "parsedSize": 26
                           },
@@ -245,7 +245,7 @@
                             "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/index.js",
                             "label": "index.js",
                             "path": "index.js",
-                            "gzipSize": 0,
+                            "gzipSize": 119,
                             "statSize": 190,
                             "parsedSize": 144
                           },
@@ -253,7 +253,7 @@
                             "id": "node_modules/.store/react-npm-18.2.0-1eae08fee2/node_modules/react/jsx-runtime.js",
                             "label": "jsx-runtime.js",
                             "path": "jsx-runtime.js",
-                            "gzipSize": 0,
+                            "gzipSize": 84,
                             "statSize": 214,
                             "parsedSize": 103
                           }
@@ -267,31 +267,31 @@
                 "id": "react-dom-virtual-37d311063d",
                 "label": "react-dom-virtual-37d311063d",
                 "path": "react-dom-virtual-37d311063d",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 133902,
+                "parsedSize": 197018,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 133902,
+                    "parsedSize": 197018,
                     "groups": [
                       {
                         "id": "react-dom",
                         "label": "react-dom",
                         "path": "react-dom",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 133902,
+                        "parsedSize": 197018,
                         "groups": [
                           {
                             "id": "node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/client.js?commonjs-exports",
                             "label": "client.js?commonjs-exports",
                             "path": "client.js?commonjs-exports",
-                            "gzipSize": 0,
+                            "gzipSize": 36,
                             "statSize": 45,
                             "parsedSize": 16
                           },
@@ -299,7 +299,7 @@
                             "id": "node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/index.js?commonjs-module",
                             "label": "index.js?commonjs-module",
                             "path": "index.js?commonjs-module",
-                            "gzipSize": 0,
+                            "gzipSize": 49,
                             "statSize": 59,
                             "parsedSize": 29
                           },
@@ -307,15 +307,15 @@
                             "id": "cjs",
                             "label": "cjs",
                             "path": "cjs",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 131816,
+                            "parsedSize": 196129,
                             "groups": [
                               {
                                 "id": "node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/cjs/react-dom.production.min.js?commonjs-exports",
                                 "label": "react-dom.production.min.js?commonjs-exports",
                                 "path": "react-dom.production.min.js?commonjs-exports",
-                                "gzipSize": 0,
+                                "gzipSize": 53,
                                 "statSize": 79,
                                 "parsedSize": 33
                               },
@@ -323,7 +323,7 @@
                                 "id": "node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/cjs/react-dom.production.min.js",
                                 "label": "react-dom.production.min.js",
                                 "path": "react-dom.production.min.js",
-                                "gzipSize": 0,
+                                "gzipSize": 48813,
                                 "statSize": 131737,
                                 "parsedSize": 196096
                               }
@@ -333,7 +333,7 @@
                             "id": "node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/index.js",
                             "label": "index.js",
                             "path": "index.js",
-                            "gzipSize": 0,
+                            "gzipSize": 408,
                             "statSize": 1363,
                             "parsedSize": 742
                           },
@@ -341,7 +341,7 @@
                             "id": "node_modules/.store/react-dom-virtual-37d311063d/node_modules/react-dom/client.js",
                             "label": "client.js",
                             "path": "client.js",
-                            "gzipSize": 0,
+                            "gzipSize": 83,
                             "statSize": 619,
                             "parsedSize": 102
                           }
@@ -355,31 +355,31 @@
                 "id": "scheduler-npm-0.23.0-a379a6bc3b",
                 "label": "scheduler-npm-0.23.0-a379a6bc3b",
                 "path": "scheduler-npm-0.23.0-a379a6bc3b",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 4575,
+                "parsedSize": 6298,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 4575,
+                    "parsedSize": 6298,
                     "groups": [
                       {
                         "id": "scheduler",
                         "label": "scheduler",
                         "path": "scheduler",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 4575,
+                        "parsedSize": 6298,
                         "groups": [
                           {
                             "id": "node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/index.js?commonjs-module",
                             "label": "index.js?commonjs-module",
                             "path": "index.js?commonjs-module",
-                            "gzipSize": 0,
+                            "gzipSize": 50,
                             "statSize": 61,
                             "parsedSize": 30
                           },
@@ -387,15 +387,15 @@
                             "id": "cjs",
                             "label": "cjs",
                             "path": "cjs",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 4316,
+                            "parsedSize": 6174,
                             "groups": [
                               {
                                 "id": "node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/cjs/scheduler.production.min.js?commonjs-exports",
                                 "label": "scheduler.production.min.js?commonjs-exports",
                                 "path": "scheduler.production.min.js?commonjs-exports",
-                                "gzipSize": 0,
+                                "gzipSize": 54,
                                 "statSize": 81,
                                 "parsedSize": 34
                               },
@@ -403,7 +403,7 @@
                                 "id": "node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/cjs/scheduler.production.min.js",
                                 "label": "scheduler.production.min.js",
                                 "path": "scheduler.production.min.js",
-                                "gzipSize": 0,
+                                "gzipSize": 2083,
                                 "statSize": 4235,
                                 "parsedSize": 6140
                               }
@@ -413,7 +413,7 @@
                             "id": "node_modules/.store/scheduler-npm-0.23.0-a379a6bc3b/node_modules/scheduler/index.js",
                             "label": "index.js",
                             "path": "index.js",
-                            "gzipSize": 0,
+                            "gzipSize": 76,
                             "statSize": 198,
                             "parsedSize": 94
                           }
@@ -427,55 +427,55 @@
                 "id": "@babel-runtime-npm-7.22.15-b21c55a700",
                 "label": "@babel-runtime-npm-7.22.15-b21c55a700",
                 "path": "@babel-runtime-npm-7.22.15-b21c55a700",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 4780,
+                "parsedSize": 3940,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 4780,
+                    "parsedSize": 3940,
                     "groups": [
                       {
                         "id": "@babel",
                         "label": "@babel",
                         "path": "@babel",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 4780,
+                        "parsedSize": 3940,
                         "groups": [
                           {
                             "id": "runtime",
                             "label": "runtime",
                             "path": "runtime",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 4780,
+                            "parsedSize": 3940,
                             "groups": [
                               {
                                 "id": "helpers",
                                 "label": "helpers",
                                 "path": "helpers",
-                                "gzipSize": 0,
-                                "statSize": 0,
-                                "parsedSize": 0,
+                                "gzipSize": 20,
+                                "statSize": 4780,
+                                "parsedSize": 3940,
                                 "groups": [
                                   {
                                     "id": "esm",
                                     "label": "esm",
                                     "path": "esm",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 4780,
+                                    "parsedSize": 3940,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/extends.js",
                                         "label": "extends.js",
                                         "path": "extends.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 239,
                                         "statSize": 416,
                                         "parsedSize": 407
                                       },
@@ -483,7 +483,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js",
                                         "label": "arrayWithHoles.js",
                                         "path": "arrayWithHoles.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 80,
                                         "statSize": 86,
                                         "parsedSize": 71
                                       },
@@ -491,7 +491,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js",
                                         "label": "iterableToArrayLimit.js",
                                         "path": "iterableToArrayLimit.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 356,
                                         "statSize": 687,
                                         "parsedSize": 672
                                       },
@@ -499,7 +499,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js",
                                         "label": "arrayLikeToArray.js",
                                         "path": "arrayLikeToArray.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 153,
                                         "statSize": 200,
                                         "parsedSize": 187
                                       },
@@ -507,7 +507,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js",
                                         "label": "unsupportedIterableToArray.js",
                                         "path": "unsupportedIterableToArray.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 268,
                                         "statSize": 495,
                                         "parsedSize": 434
                                       },
@@ -515,7 +515,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js",
                                         "label": "nonIterableRest.js",
                                         "path": "nonIterableRest.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 168,
                                         "statSize": 210,
                                         "parsedSize": 195
                                       },
@@ -523,7 +523,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/slicedToArray.js",
                                         "label": "slicedToArray.js",
                                         "path": "slicedToArray.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 134,
                                         "statSize": 409,
                                         "parsedSize": 162
                                       },
@@ -531,7 +531,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
                                         "label": "objectWithoutPropertiesLoose.js",
                                         "path": "objectWithoutPropertiesLoose.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 221,
                                         "statSize": 348,
                                         "parsedSize": 333
                                       },
@@ -539,7 +539,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js",
                                         "label": "objectWithoutProperties.js",
                                         "path": "objectWithoutProperties.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 284,
                                         "statSize": 632,
                                         "parsedSize": 540
                                       },
@@ -547,7 +547,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/typeof.js",
                                         "label": "typeof.js",
                                         "path": "typeof.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 176,
                                         "statSize": 350,
                                         "parsedSize": 335
                                       },
@@ -555,7 +555,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js",
                                         "label": "arrayWithoutHoles.js",
                                         "path": "arrayWithoutHoles.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 93,
                                         "statSize": 161,
                                         "parsedSize": 95
                                       },
@@ -563,7 +563,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/iterableToArray.js",
                                         "label": "iterableToArray.js",
                                         "path": "iterableToArray.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 139,
                                         "statSize": 175,
                                         "parsedSize": 160
                                       },
@@ -571,7 +571,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js",
                                         "label": "nonIterableSpread.js",
                                         "path": "nonIterableSpread.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 164,
                                         "statSize": 207,
                                         "parsedSize": 192
                                       },
@@ -579,7 +579,7 @@
                                         "id": "node_modules/.store/@babel-runtime-npm-7.22.15-b21c55a700/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js",
                                         "label": "toConsumableArray.js",
                                         "path": "toConsumableArray.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 130,
                                         "statSize": 404,
                                         "parsedSize": 157
                                       }
@@ -599,47 +599,47 @@
                 "id": "@geist-ui-core-virtual-72bc5e1fd8",
                 "label": "@geist-ui-core-virtual-72bc5e1fd8",
                 "path": "@geist-ui-core-virtual-72bc5e1fd8",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 210123,
+                "parsedSize": 190726,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 210123,
+                    "parsedSize": 190726,
                     "groups": [
                       {
                         "id": "@geist-ui",
                         "label": "@geist-ui",
                         "path": "@geist-ui",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 210123,
+                        "parsedSize": 190726,
                         "groups": [
                           {
                             "id": "core",
                             "label": "core",
                             "path": "core",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 210123,
+                            "parsedSize": 190726,
                             "groups": [
                               {
                                 "id": "esm",
                                 "label": "esm",
                                 "path": "esm",
-                                "gzipSize": 0,
-                                "statSize": 0,
-                                "parsedSize": 0,
+                                "gzipSize": 20,
+                                "statSize": 210123,
+                                "parsedSize": 190726,
                                 "groups": [
                                   {
                                     "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/styled-jsx.es.js",
                                     "label": "styled-jsx.es.js",
                                     "path": "styled-jsx.es.js",
-                                    "gzipSize": 0,
+                                    "gzipSize": 4811,
                                     "statSize": 19970,
                                     "parsedSize": 19274
                                   },
@@ -647,23 +647,23 @@
                                     "id": "themes",
                                     "label": "themes",
                                     "path": "themes",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 6987,
+                                    "parsedSize": 6540,
                                     "groups": [
                                       {
                                         "id": "presets",
                                         "label": "presets",
                                         "path": "presets",
-                                        "gzipSize": 0,
-                                        "statSize": 0,
-                                        "parsedSize": 0,
+                                        "gzipSize": 20,
+                                        "statSize": 4321,
+                                        "parsedSize": 4097,
                                         "groups": [
                                           {
                                             "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/themes/presets/shared.js",
                                             "label": "shared.js",
                                             "path": "shared.js",
-                                            "gzipSize": 0,
+                                            "gzipSize": 490,
                                             "statSize": 1077,
                                             "parsedSize": 1056
                                           },
@@ -671,7 +671,7 @@
                                             "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/themes/presets/default.js",
                                             "label": "default.js",
                                             "path": "default.js",
-                                            "gzipSize": 0,
+                                            "gzipSize": 641,
                                             "statSize": 1657,
                                             "parsedSize": 1568
                                           },
@@ -679,7 +679,7 @@
                                             "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/themes/presets/dark.js",
                                             "label": "dark.js",
                                             "path": "dark.js",
-                                            "gzipSize": 0,
+                                            "gzipSize": 607,
                                             "statSize": 1587,
                                             "parsedSize": 1473
                                           }
@@ -689,7 +689,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/themes/themes.js",
                                         "label": "themes.js",
                                         "path": "themes.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 761,
                                         "statSize": 2666,
                                         "parsedSize": 2443
                                       }
@@ -699,15 +699,15 @@
                                     "id": "use-theme",
                                     "label": "use-theme",
                                     "path": "use-theme",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 270,
+                                    "parsedSize": 199,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-theme/theme-context.js",
                                         "label": "theme-context.js",
                                         "path": "theme-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 151,
                                         "statSize": 270,
                                         "parsedSize": 199
                                       }
@@ -717,15 +717,15 @@
                                     "id": "input",
                                     "label": "input",
                                     "path": "input",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 24430,
+                                    "parsedSize": 22797,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/input-label.js",
                                         "label": "input-label.js",
                                         "path": "input-label.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 619,
                                         "statSize": 2101,
                                         "parsedSize": 1994
                                       },
@@ -733,7 +733,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/input-block-label.js",
                                         "label": "input-block-label.js",
                                         "path": "input-block-label.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 433,
                                         "statSize": 984,
                                         "parsedSize": 884
                                       },
@@ -741,7 +741,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/input-icon.js",
                                         "label": "input-icon.js",
                                         "path": "input-icon.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 602,
                                         "statSize": 1569,
                                         "parsedSize": 1496
                                       },
@@ -749,7 +749,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/input-icon-clear.js",
                                         "label": "input-icon-clear.js",
                                         "path": "input-icon-clear.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 919,
                                         "statSize": 3204,
                                         "parsedSize": 3056
                                       },
@@ -757,7 +757,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/styles.js",
                                         "label": "styles.js",
                                         "path": "styles.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 255,
                                         "statSize": 792,
                                         "parsedSize": 787
                                       },
@@ -765,7 +765,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/input-props.js",
                                         "label": "input-props.js",
                                         "path": "input-props.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 159,
                                         "statSize": 229,
                                         "parsedSize": 224
                                       },
@@ -773,7 +773,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/input.js",
                                         "label": "input.js",
                                         "path": "input.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 2418,
                                         "statSize": 12082,
                                         "parsedSize": 11426
                                       },
@@ -781,7 +781,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/password-icon.js",
                                         "label": "password-icon.js",
                                         "path": "password-icon.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 479,
                                         "statSize": 1121,
                                         "parsedSize": 1100
                                       },
@@ -789,7 +789,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/password.js",
                                         "label": "password.js",
                                         "path": "password.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 684,
                                         "statSize": 2163,
                                         "parsedSize": 1764
                                       },
@@ -797,7 +797,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/input/index.js",
                                         "label": "index.js",
                                         "path": "index.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 63,
                                         "statSize": 185,
                                         "parsedSize": 66
                                       }
@@ -807,15 +807,15 @@
                                     "id": "use-classes",
                                     "label": "use-classes",
                                     "path": "use-classes",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 1059,
+                                    "parsedSize": 999,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-classes/use-classes.js",
                                         "label": "use-classes.js",
                                         "path": "use-classes.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 394,
                                         "statSize": 1059,
                                         "parsedSize": 999
                                       }
@@ -825,15 +825,15 @@
                                     "id": "use-scale",
                                     "label": "use-scale",
                                     "path": "use-scale",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 11163,
+                                    "parsedSize": 10894,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-scale/scale-context.js",
                                         "label": "scale-context.js",
                                         "path": "scale-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 407,
                                         "statSize": 1313,
                                         "parsedSize": 1267
                                       },
@@ -841,7 +841,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-scale/utils.js",
                                         "label": "utils.js",
                                         "path": "utils.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1093,
                                         "statSize": 2961,
                                         "parsedSize": 3203
                                       },
@@ -849,7 +849,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-scale/with-scale.js",
                                         "label": "with-scale.js",
                                         "path": "with-scale.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1721,
                                         "statSize": 6889,
                                         "parsedSize": 6424
                                       }
@@ -859,15 +859,15 @@
                                     "id": "utils",
                                     "label": "utils",
                                     "path": "utils",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 11675,
+                                    "parsedSize": 8040,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/collections.js",
                                         "label": "collections.js",
                                         "path": "collections.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 709,
                                         "statSize": 4589,
                                         "parsedSize": 1944
                                       },
@@ -875,7 +875,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/prop-types.js",
                                         "label": "prop-types.js",
                                         "path": "prop-types.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 322,
                                         "statSize": 1185,
                                         "parsedSize": 846
                                       },
@@ -883,7 +883,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/use-ssr.js",
                                         "label": "use-ssr.js",
                                         "path": "use-ssr.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 207,
                                         "statSize": 497,
                                         "parsedSize": 357
                                       },
@@ -891,7 +891,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/use-portal.js",
                                         "label": "use-portal.js",
                                         "path": "use-portal.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 468,
                                         "statSize": 1239,
                                         "parsedSize": 1062
                                       },
@@ -899,7 +899,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/use-warning.js",
                                         "label": "use-warning.js",
                                         "path": "use-warning.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 225,
                                         "statSize": 444,
                                         "parsedSize": 364
                                       },
@@ -907,7 +907,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/color.js",
                                         "label": "color.js",
                                         "path": "color.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 610,
                                         "statSize": 1570,
                                         "parsedSize": 1469
                                       },
@@ -915,7 +915,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/use-real-shape.js",
                                         "label": "use-real-shape.js",
                                         "path": "use-real-shape.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 539,
                                         "statSize": 1466,
                                         "parsedSize": 1361
                                       },
@@ -923,7 +923,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/utils/use-geist-ui-context.js",
                                         "label": "use-geist-ui-context.js",
                                         "path": "use-geist-ui-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 311,
                                         "statSize": 685,
                                         "parsedSize": 637
                                       }
@@ -933,15 +933,15 @@
                                     "id": "textarea",
                                     "label": "textarea",
                                     "path": "textarea",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 6802,
+                                    "parsedSize": 6272,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/textarea/textarea.js",
                                         "label": "textarea.js",
                                         "path": "textarea.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1723,
                                         "statSize": 6802,
                                         "parsedSize": 6272
                                       }
@@ -951,15 +951,15 @@
                                     "id": "shared",
                                     "label": "shared",
                                     "path": "shared",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 10477,
+                                    "parsedSize": 9570,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/shared/css-transition.js",
                                         "label": "css-transition.js",
                                         "path": "css-transition.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 736,
                                         "statSize": 2384,
                                         "parsedSize": 2135
                                       },
@@ -967,7 +967,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/shared/expand.js",
                                         "label": "expand.js",
                                         "path": "expand.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 996,
                                         "statSize": 3410,
                                         "parsedSize": 3230
                                       },
@@ -975,7 +975,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/shared/backdrop.js",
                                         "label": "backdrop.js",
                                         "path": "backdrop.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1210,
                                         "statSize": 4683,
                                         "parsedSize": 4205
                                       }
@@ -985,15 +985,15 @@
                                     "id": "loading",
                                     "label": "loading",
                                     "path": "loading",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 6045,
+                                    "parsedSize": 5692,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/loading/loading.js",
                                         "label": "loading.js",
                                         "path": "loading.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1305,
                                         "statSize": 6045,
                                         "parsedSize": 5692
                                       }
@@ -1003,15 +1003,15 @@
                                     "id": "use-current-state",
                                     "label": "use-current-state",
                                     "path": "use-current-state",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 759,
+                                    "parsedSize": 678,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-current-state/use-current-state.js",
                                         "label": "use-current-state.js",
                                         "path": "use-current-state.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 296,
                                         "statSize": 759,
                                         "parsedSize": 678
                                       }
@@ -1021,15 +1021,15 @@
                                     "id": "button",
                                     "label": "button",
                                     "path": "button",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 20739,
+                                    "parsedSize": 19215,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button/button.drip.js",
                                         "label": "button.drip.js",
                                         "path": "button.drip.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 780,
                                         "statSize": 2472,
                                         "parsedSize": 2405
                                       },
@@ -1037,7 +1037,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button/button-loading.js",
                                         "label": "button-loading.js",
                                         "path": "button-loading.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 326,
                                         "statSize": 652,
                                         "parsedSize": 555
                                       },
@@ -1045,7 +1045,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button/button-icon.js",
                                         "label": "button-icon.js",
                                         "path": "button-icon.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 695,
                                         "statSize": 1923,
                                         "parsedSize": 1667
                                       },
@@ -1053,7 +1053,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button/utils.js",
                                         "label": "utils.js",
                                         "path": "utils.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 654,
                                         "statSize": 1850,
                                         "parsedSize": 1628
                                       },
@@ -1061,7 +1061,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button/styles.js",
                                         "label": "styles.js",
                                         "path": "styles.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 942,
                                         "statSize": 4988,
                                         "parsedSize": 4839
                                       },
@@ -1069,7 +1069,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button/button.js",
                                         "label": "button.js",
                                         "path": "button.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 2187,
                                         "statSize": 8854,
                                         "parsedSize": 8121
                                       }
@@ -1079,15 +1079,15 @@
                                     "id": "button-group",
                                     "label": "button-group",
                                     "path": "button-group",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 296,
+                                    "parsedSize": 259,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/button-group/button-group-context.js",
                                         "label": "button-group-context.js",
                                         "path": "button-group-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 164,
                                         "statSize": 296,
                                         "parsedSize": 259
                                       }
@@ -1097,15 +1097,15 @@
                                     "id": "use-body-scroll",
                                     "label": "use-body-scroll",
                                     "path": "use-body-scroll",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 2426,
+                                    "parsedSize": 2276,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-body-scroll/use-body-scroll.js",
                                         "label": "use-body-scroll.js",
                                         "path": "use-body-scroll.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 818,
                                         "statSize": 2426,
                                         "parsedSize": 2276
                                       }
@@ -1115,15 +1115,15 @@
                                     "id": "use-keyboard",
                                     "label": "use-keyboard",
                                     "path": "use-keyboard",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 7602,
+                                    "parsedSize": 7342,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-keyboard/codes.js",
                                         "label": "codes.js",
                                         "path": "codes.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1064,
                                         "statSize": 4057,
                                         "parsedSize": 4040
                                       },
@@ -1131,7 +1131,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-keyboard/helper.js",
                                         "label": "helper.js",
                                         "path": "helper.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 292,
                                         "statSize": 677,
                                         "parsedSize": 583
                                       },
@@ -1139,7 +1139,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-keyboard/use-keyboard.js",
                                         "label": "use-keyboard.js",
                                         "path": "use-keyboard.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 796,
                                         "statSize": 2868,
                                         "parsedSize": 2719
                                       }
@@ -1149,15 +1149,15 @@
                                     "id": "drawer",
                                     "label": "drawer",
                                     "path": "drawer",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 11688,
+                                    "parsedSize": 10411,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/drawer/helper.js",
                                         "label": "helper.js",
                                         "path": "helper.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 233,
                                         "statSize": 806,
                                         "parsedSize": 734
                                       },
@@ -1165,7 +1165,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/drawer/drawer-wrapper.js",
                                         "label": "drawer-wrapper.js",
                                         "path": "drawer-wrapper.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1602,
                                         "statSize": 7867,
                                         "parsedSize": 7412
                                       },
@@ -1173,7 +1173,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/drawer/drawer.js",
                                         "label": "drawer.js",
                                         "path": "drawer.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 801,
                                         "statSize": 2720,
                                         "parsedSize": 2163
                                       },
@@ -1181,7 +1181,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/drawer/index.js",
                                         "label": "index.js",
                                         "path": "index.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 73,
                                         "statSize": 295,
                                         "parsedSize": 102
                                       }
@@ -1191,15 +1191,15 @@
                                     "id": "modal",
                                     "label": "modal",
                                     "path": "modal",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 7235,
+                                    "parsedSize": 6327,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/modal/modal-title.js",
                                         "label": "modal-title.js",
                                         "path": "modal-title.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 796,
                                         "statSize": 2516,
                                         "parsedSize": 2212
                                       },
@@ -1207,7 +1207,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/modal/modal-subtitle.js",
                                         "label": "modal-subtitle.js",
                                         "path": "modal-subtitle.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 710,
                                         "statSize": 2216,
                                         "parsedSize": 1915
                                       },
@@ -1215,7 +1215,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/modal/modal-content.js",
                                         "label": "modal-content.js",
                                         "path": "modal-content.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 729,
                                         "statSize": 2503,
                                         "parsedSize": 2200
                                       }
@@ -1225,15 +1225,15 @@
                                     "id": "use-all-themes",
                                     "label": "use-all-themes",
                                     "path": "use-all-themes",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 317,
+                                    "parsedSize": 146,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-all-themes/all-themes-context.js",
                                         "label": "all-themes-context.js",
                                         "path": "all-themes-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 122,
                                         "statSize": 317,
                                         "parsedSize": 146
                                       }
@@ -1243,15 +1243,15 @@
                                     "id": "geist-provider",
                                     "label": "geist-provider",
                                     "path": "geist-provider",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 3809,
+                                    "parsedSize": 3139,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/geist-provider/theme-provider.js",
                                         "label": "theme-provider.js",
                                         "path": "theme-provider.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 519,
                                         "statSize": 1639,
                                         "parsedSize": 1330
                                       },
@@ -1259,7 +1259,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/geist-provider/geist-provider.js",
                                         "label": "geist-provider.js",
                                         "path": "geist-provider.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 548,
                                         "statSize": 2170,
                                         "parsedSize": 1809
                                       }
@@ -1269,15 +1269,15 @@
                                     "id": "use-toasts",
                                     "label": "use-toasts",
                                     "path": "use-toasts",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 11789,
+                                    "parsedSize": 10860,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-toasts/helpers.js",
                                         "label": "helpers.js",
                                         "path": "helpers.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 783,
                                         "statSize": 2286,
                                         "parsedSize": 2131
                                       },
@@ -1285,7 +1285,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-toasts/toast-item.js",
                                         "label": "toast-item.js",
                                         "path": "toast-item.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1126,
                                         "statSize": 4448,
                                         "parsedSize": 4209
                                       },
@@ -1293,7 +1293,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/use-toasts/toast-container.js",
                                         "label": "toast-container.js",
                                         "path": "toast-container.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1301,
                                         "statSize": 5055,
                                         "parsedSize": 4520
                                       }
@@ -1303,15 +1303,15 @@
                                     "id": "radio",
                                     "label": "radio",
                                     "path": "radio",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 15850,
+                                    "parsedSize": 14279,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/radio/radio-context.js",
                                         "label": "radio-context.js",
                                         "path": "radio-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 162,
                                         "statSize": 269,
                                         "parsedSize": 232
                                       },
@@ -1319,7 +1319,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/radio/radio-description.js",
                                         "label": "radio-description.js",
                                         "path": "radio-description.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 661,
                                         "statSize": 2328,
                                         "parsedSize": 2030
                                       },
@@ -1327,7 +1327,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/radio/styles.js",
                                         "label": "styles.js",
                                         "path": "styles.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 218,
                                         "statSize": 701,
                                         "parsedSize": 694
                                       },
@@ -1335,7 +1335,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/radio/radio.js",
                                         "label": "radio.js",
                                         "path": "radio.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1855,
                                         "statSize": 8535,
                                         "parsedSize": 7874
                                       },
@@ -1343,7 +1343,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/radio/radio-group.js",
                                         "label": "radio-group.js",
                                         "path": "radio-group.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1045,
                                         "statSize": 3780,
                                         "parsedSize": 3343
                                       },
@@ -1351,7 +1351,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/radio/index.js",
                                         "label": "index.js",
                                         "path": "index.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 66,
                                         "statSize": 237,
                                         "parsedSize": 106
                                       }
@@ -1361,15 +1361,15 @@
                                     "id": "spacer",
                                     "label": "spacer",
                                     "path": "spacer",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 1823,
+                                    "parsedSize": 1553,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/spacer/spacer.js",
                                         "label": "spacer.js",
                                         "path": "spacer.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 582,
                                         "statSize": 1823,
                                         "parsedSize": 1553
                                       }
@@ -1379,15 +1379,15 @@
                                     "id": "text",
                                     "label": "text",
                                     "path": "text",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 6777,
+                                    "parsedSize": 6232,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/text/child.js",
                                         "label": "child.js",
                                         "path": "child.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1111,
                                         "statSize": 3932,
                                         "parsedSize": 3646
                                       },
@@ -1395,7 +1395,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/text/text.js",
                                         "label": "text.js",
                                         "path": "text.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 926,
                                         "statSize": 2845,
                                         "parsedSize": 2586
                                       }
@@ -1405,15 +1405,15 @@
                                     "id": "tree",
                                     "label": "tree",
                                     "path": "tree",
-                                    "gzipSize": 0,
-                                    "statSize": 0,
-                                    "parsedSize": 0,
+                                    "gzipSize": 20,
+                                    "statSize": 20135,
+                                    "parsedSize": 17732,
                                     "groups": [
                                       {
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-file-icon.js",
                                         "label": "tree-file-icon.js",
                                         "path": "tree-file-icon.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 523,
                                         "statSize": 1380,
                                         "parsedSize": 1277
                                       },
@@ -1421,7 +1421,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-context.js",
                                         "label": "tree-context.js",
                                         "path": "tree-context.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 161,
                                         "statSize": 272,
                                         "parsedSize": 231
                                       },
@@ -1429,7 +1429,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-indents.js",
                                         "label": "tree-indents.js",
                                         "path": "tree-indents.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 425,
                                         "statSize": 922,
                                         "parsedSize": 771
                                       },
@@ -1437,7 +1437,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-help.js",
                                         "label": "tree-help.js",
                                         "path": "tree-help.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 334,
                                         "statSize": 742,
                                         "parsedSize": 694
                                       },
@@ -1445,7 +1445,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-file.js",
                                         "label": "tree-file.js",
                                         "path": "tree-file.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1094,
                                         "statSize": 4219,
                                         "parsedSize": 3722
                                       },
@@ -1453,7 +1453,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-folder-icon.js",
                                         "label": "tree-folder-icon.js",
                                         "path": "tree-folder-icon.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 666,
                                         "statSize": 1487,
                                         "parsedSize": 1386
                                       },
@@ -1461,7 +1461,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-status-icon.js",
                                         "label": "tree-status-icon.js",
                                         "path": "tree-status-icon.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 557,
                                         "statSize": 1623,
                                         "parsedSize": 1520
                                       },
@@ -1469,7 +1469,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree-folder.js",
                                         "label": "tree-folder.js",
                                         "path": "tree-folder.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 1419,
                                         "statSize": 6584,
                                         "parsedSize": 5819
                                       },
@@ -1477,7 +1477,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/tree.js",
                                         "label": "tree.js",
                                         "path": "tree.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 895,
                                         "statSize": 2735,
                                         "parsedSize": 2257
                                       },
@@ -1485,7 +1485,7 @@
                                         "id": "node_modules/.store/@geist-ui-core-virtual-72bc5e1fd8/node_modules/@geist-ui/core/esm/tree/index.js",
                                         "label": "index.js",
                                         "path": "index.js",
-                                        "gzipSize": 0,
+                                        "gzipSize": 56,
                                         "statSize": 171,
                                         "parsedSize": 55
                                       }
@@ -1505,39 +1505,39 @@
                 "id": "@geist-ui-icons-virtual-50b3f90566",
                 "label": "@geist-ui-icons-virtual-50b3f90566",
                 "path": "@geist-ui-icons-virtual-50b3f90566",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 1118,
+                "parsedSize": 1305,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 1118,
+                    "parsedSize": 1305,
                     "groups": [
                       {
                         "id": "@geist-ui",
                         "label": "@geist-ui",
                         "path": "@geist-ui",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 1118,
+                        "parsedSize": 1305,
                         "groups": [
                           {
                             "id": "icons",
                             "label": "icons",
                             "path": "icons",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 1118,
+                            "parsedSize": 1305,
                             "groups": [
                               {
                                 "id": "node_modules/.store/@geist-ui-icons-virtual-50b3f90566/node_modules/@geist-ui/icons/menu.js?commonjs-exports",
                                 "label": "menu.js?commonjs-exports",
                                 "path": "menu.js?commonjs-exports",
-                                "gzipSize": 0,
+                                "gzipSize": 34,
                                 "statSize": 41,
                                 "parsedSize": 14
                               },
@@ -1545,7 +1545,7 @@
                                 "id": "node_modules/.store/@geist-ui-icons-virtual-50b3f90566/node_modules/@geist-ui/icons/menu.js",
                                 "label": "menu.js",
                                 "path": "menu.js",
-                                "gzipSize": 0,
+                                "gzipSize": 565,
                                 "statSize": 1077,
                                 "parsedSize": 1291
                               }
@@ -1561,47 +1561,47 @@
                 "id": "@babel-runtime-npm-7.23.1-9b8781107c",
                 "label": "@babel-runtime-npm-7.23.1-9b8781107c",
                 "path": "@babel-runtime-npm-7.23.1-9b8781107c",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 2357,
+                "parsedSize": 3240,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 2357,
+                    "parsedSize": 3240,
                     "groups": [
                       {
                         "id": "@babel",
                         "label": "@babel",
                         "path": "@babel",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 2357,
+                        "parsedSize": 3240,
                         "groups": [
                           {
                             "id": "runtime",
                             "label": "runtime",
                             "path": "runtime",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 2357,
+                            "parsedSize": 3240,
                             "groups": [
                               {
                                 "id": "helpers",
                                 "label": "helpers",
                                 "path": "helpers",
-                                "gzipSize": 0,
-                                "statSize": 0,
-                                "parsedSize": 0,
+                                "gzipSize": 20,
+                                "statSize": 2357,
+                                "parsedSize": 3240,
                                 "groups": [
                                   {
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/interopRequireDefault.js?commonjs-module",
                                     "label": "interopRequireDefault.js?commonjs-module",
                                     "path": "interopRequireDefault.js?commonjs-module",
-                                    "gzipSize": 0,
+                                    "gzipSize": 62,
                                     "statSize": 85,
                                     "parsedSize": 42
                                   },
@@ -1609,7 +1609,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/interopRequireDefault.js",
                                     "label": "interopRequireDefault.js",
                                     "path": "interopRequireDefault.js",
-                                    "gzipSize": 0,
+                                    "gzipSize": 180,
                                     "statSize": 224,
                                     "parsedSize": 347
                                   },
@@ -1617,7 +1617,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/extends.js?commonjs-module",
                                     "label": "extends.js?commonjs-module",
                                     "path": "extends.js?commonjs-module",
-                                    "gzipSize": 0,
+                                    "gzipSize": 49,
                                     "statSize": 59,
                                     "parsedSize": 29
                                   },
@@ -1625,7 +1625,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/extends.js",
                                     "label": "extends.js",
                                     "path": "extends.js",
-                                    "gzipSize": 0,
+                                    "gzipSize": 346,
                                     "statSize": 601,
                                     "parsedSize": 831
                                   },
@@ -1633,7 +1633,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/objectWithoutProperties.js?commonjs-module",
                                     "label": "objectWithoutProperties.js?commonjs-module",
                                     "path": "objectWithoutProperties.js?commonjs-module",
-                                    "gzipSize": 0,
+                                    "gzipSize": 64,
                                     "statSize": 89,
                                     "parsedSize": 44
                                   },
@@ -1641,7 +1641,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js?commonjs-module",
                                     "label": "objectWithoutPropertiesLoose.js?commonjs-module",
                                     "path": "objectWithoutPropertiesLoose.js?commonjs-module",
-                                    "gzipSize": 0,
+                                    "gzipSize": 69,
                                     "statSize": 99,
                                     "parsedSize": 49
                                   },
@@ -1649,7 +1649,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
                                     "label": "objectWithoutPropertiesLoose.js",
                                     "path": "objectWithoutPropertiesLoose.js",
-                                    "gzipSize": 0,
+                                    "gzipSize": 337,
                                     "statSize": 459,
                                     "parsedSize": 825
                                   },
@@ -1657,7 +1657,7 @@
                                     "id": "node_modules/.store/@babel-runtime-npm-7.23.1-9b8781107c/node_modules/@babel/runtime/helpers/objectWithoutProperties.js",
                                     "label": "objectWithoutProperties.js",
                                     "path": "objectWithoutProperties.js",
-                                    "gzipSize": 0,
+                                    "gzipSize": 411,
                                     "statSize": 741,
                                     "parsedSize": 1073
                                   }
@@ -1675,39 +1675,39 @@
                 "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
                 "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
                 "path": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
-                "gzipSize": 0,
-                "statSize": 0,
-                "parsedSize": 0,
+                "gzipSize": 20,
+                "statSize": 140532,
+                "parsedSize": 234187,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules",
                     "path": "node_modules",
-                    "gzipSize": 0,
-                    "statSize": 0,
-                    "parsedSize": 0,
+                    "gzipSize": 20,
+                    "statSize": 140532,
+                    "parsedSize": 234187,
                     "groups": [
                       {
                         "id": "@carrotsearch",
                         "label": "@carrotsearch",
                         "path": "@carrotsearch",
-                        "gzipSize": 0,
-                        "statSize": 0,
-                        "parsedSize": 0,
+                        "gzipSize": 20,
+                        "statSize": 140532,
+                        "parsedSize": 234187,
                         "groups": [
                           {
                             "id": "foamtree",
                             "label": "foamtree",
                             "path": "foamtree",
-                            "gzipSize": 0,
-                            "statSize": 0,
-                            "parsedSize": 0,
+                            "gzipSize": 20,
+                            "statSize": 140532,
+                            "parsedSize": 234187,
                             "groups": [
                               {
                                 "id": "node_modules/.store/@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
                                 "label": "foamtree.js",
                                 "path": "foamtree.js",
-                                "gzipSize": 0,
+                                "gzipSize": 58899,
                                 "statSize": 140532,
                                 "parsedSize": 234187
                               }
@@ -1723,6 +1723,7 @@
           }
         ]
       }
-    ]
+    ],
+    "isAsset": true
   }
 ]

@@ -1,27 +1,21 @@
 import React, { useMemo } from 'react'
 import { Tree } from '@geist-ui/core'
-import style9 from 'style9'
 import type { TreeProps } from '@geist-ui/core'
 import { convertBytes } from '../shared'
+import type { Foam, Sizes } from '../interface'
 
 type TreeFile = NonNullable<TreeProps['value']>
 
-// type TreeFileType = NonNullable<TreeFile[number]['type']>
 
 type TreeFileItem = TreeFile[number]
 
-//  = typeof window['prettyModule']
 export interface FileListProps<F> {
     files: F[]
     initialExpand?: boolean
+    extra: Sizes
 }
 
-const styles = style9.create({
-  container: {
-  }
-})
-
-const traverseFile = <F extends typeof window['prettyModule'][number], >(directory: string, files: F[]) => {
+const traverseFile = <F extends typeof window['foamModule'][number], >(directory: string, files: F[], extra: Sizes) => {
   if (!files.length) return []
   const baseDirecotry: TreeFileItem = {
     type: 'directory',
@@ -29,27 +23,20 @@ const traverseFile = <F extends typeof window['prettyModule'][number], >(directo
     extra: convertBytes(files.reduce((acc, cur) => acc += cur.statSize, 0))
   }
 
-  const traverse = (file: F) => {
-    const base: TreeFileItem  = { type: file.children ? 'directory' : 'file', name: file.id, extra: convertBytes(file.statSize) }
-    if (file.children) {
-      base.files = file.children.flatMap(child => {
-        return Object.entries(child).map(([subDir, node]) => {
-          return { type: 'directory', name: subDir, files: node.map((s) => ({ type: 'file', name: s.id, extra: convertBytes(file.statSize) })) }
-        })
-      })
-    }
-    return base
-  }
-  baseDirecotry.files = files.map(traverse)
+  baseDirecotry.files = files.map<TreeFileItem>((file) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return { type: 'file', name: file.id, extra: convertBytes(file[extra]) }
+  })
   return [baseDirecotry]
 }
 
-export function FileList<F extends typeof window['prettyModule'][number]>(props: FileListProps<F>) {
-  const { files: userFiles, initialExpand = true  } = props
+export function FileList<F extends Foam>(props: FileListProps<F>) {
+  const { files: userFiles, initialExpand = true, extra = 'statSize' } = props
 
-  const files = useMemo<TreeFile>(() => traverseFile('All', userFiles), [userFiles])
+  const files = useMemo<TreeFile>(() => traverseFile('All', userFiles, extra), [userFiles, extra])
 
-  return <div className={styles('container')}>
+  return <div>
     <Tree initialExpand={initialExpand} value={files} />
   </div>
 }
