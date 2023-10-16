@@ -126,15 +126,30 @@ export function TreeMap() {
             l: 50,
             a: 0.9
           }
+        },
+        onGroupDoubleClick(event) {
+          event.preventDefault()
+        },
+        onGroupClick(event) {
+          event.preventDefault()
+          this.zoom(event.group)
+        },
+        onGroupMouseWheel(event) {
+          const { scale } = this.get<{scale: number}>('viewport')!
+          const isZoomOut = event.delta < 0
+          if (isZoomOut) {
+            if (scale < 1) {
+              event.preventDefault()
+            }
+          }
         }
       })
     }
     return () => {
       if (foamTreeInstance.current) {
-        // 
+        foamTreeInstance.current.dispose()
+        foamTreeInstance.current = null
       }
-      // foamTreeInstance.current.dispose()
-      // foamTreeInstance.current = null
     }
   }, [visibleChunks, chunkNamePartIndex])
 

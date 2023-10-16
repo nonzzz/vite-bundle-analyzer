@@ -37,7 +37,13 @@ declare module '@carrotsearch/foamtree' {
       // eslint-disable-next-line no-use-before-define
       groupColorDecorator: FoamGroupColorDecorator
       // eslint-disable-next-line no-use-before-define
-      onGroupClick: FoamGroupClickEvent
+      onGroupClick: FoamGroupEvent 
+      // eslint-disable-next-line no-use-before-define
+      onGroupDoubleClick: FoamGroupEvent
+      // eslint-disable-next-line no-use-before-define
+      onGroupMouseWheel: FoamGroupEvent
+      // eslint-disable-next-line no-use-before-define
+      onGroupHover: FoamGroupEvent
     }
 
     interface Properties {
@@ -49,7 +55,7 @@ declare module '@carrotsearch/foamtree' {
     export abstract class FoamContext {
       zoom(group: FoamDataObject): void
       resize(): void
-      discope(): void
+      dispose(): void
       get<T>(): T & Properties
       get<T>(prop: string): T & Properties | undefined
       get<T>(prop: string, ...args: unknown[]): T & Properties | undefined
@@ -110,7 +116,7 @@ declare module '@carrotsearch/foamtree' {
       allowOriginalEventDefault(): void
     }
 
-    export type FoamGroupClickEvent = (this: FoamContext, event: FoamEventObject)=> void
+    export type FoamGroupEvent = (this: FoamContext, event: FoamEventObject)=> void
 
     export class FoamTree extends FoamContext {
       constructor(opts: Partial<FoamTreeOptions>)
