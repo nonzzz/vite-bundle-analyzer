@@ -46,7 +46,7 @@ declare module '@carrotsearch/foamtree' {
       hasChildren: boolean
     }
 
-    export interface FoamContext {
+    export abstract class FoamContext {
       zoom(group: FoamDataObject): void
       resize(): void
       discope(): void
@@ -112,10 +112,9 @@ declare module '@carrotsearch/foamtree' {
 
     export type FoamGroupClickEvent = (this: FoamContext, event: FoamEventObject)=> void
 
-    declare class FoamTree implements FoamContext {
+    export class FoamTree extends FoamContext {
       constructor(opts: Partial<FoamTreeOptions>)
     }
-
-    export { FoamTree }
+    
     export default FoamTree
 } 

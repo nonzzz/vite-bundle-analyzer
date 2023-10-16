@@ -43,7 +43,7 @@ function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
 export function TreeMap() {
   const { foamModule, sizes } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
-  const foamTreeInstance = useRef<FoamTree>(null)
+  const foamTreeInstance = useRef<FoamTree | null>(null)
 
   const [chunkNamePartIndex, setChunkNamePartIndex] = useState<number>(0)
 
