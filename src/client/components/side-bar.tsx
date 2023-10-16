@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { Button, Drawer, Input, Radio, Spacer, Text } from '@geist-ui/core'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Button, Drawer, Radio, Spacer, Text } from '@geist-ui/core'
 import style9 from 'style9'
 import Menu from '@geist-ui/icons/menu'
 import { tuple } from '../shared'
@@ -12,7 +12,6 @@ const styles = style9.create({
     visibility: 'hidden'
   },
   float: {
-    position: 'fixed',
     top: '10px',
     left: '10px',
     zIndex: 10
@@ -30,15 +29,12 @@ const MODE_RECORD: Record<Sizes, ModeType> = {
 }
 
 export function SideBar() {
-  const { sizes, updateSizes, foamModule } = useApplicationContext()
-  const [visible, setVisible] = useState<boolean>(false)
+  const { sizes, scence, drawerVisible, foamModule, updateScence, updateSizes, updateDrawerVisible } = useApplicationContext()
   const [mode, setMode] = useState<ModeType>(() => MODE_RECORD[sizes])
 
   const allChunks = useMemo(() => foamModule.sort((a, b) => b[sizes] - a[sizes]), [foamModule, sizes])
 
-  const handleDrawerClose = () => {
-    setVisible(false)
-  }
+  useEffect(() => updateScence(() => new Set(allChunks.map(v => v.id))), [allChunks, updateScence])
 
   const handleRadioChange = (type: ModeType) => {
     setMode(type)
@@ -50,8 +46,8 @@ export function SideBar() {
   }
 
   return <>
-    <Button className={styles(visible && 'visible', 'float')} auto scale={0.25} icon={<Menu />} onClick={() => setVisible(pre => !pre)} />
-    <Drawer visible={visible} placement='left' onClose={handleDrawerClose} w='400px'>
+    <Button className={styles(drawerVisible && 'visible', 'float')} style={{ position: 'absolute' }} auto scale={0.25} icon={<Menu />} onClick={() => updateDrawerVisible((pre) => !pre)} />
+    <Drawer visible={drawerVisible} placement='left' onClose={() => updateDrawerVisible(false)} w='400px'>
       <Drawer.Content>
         <div>
           <Text p b font='14px'>Treemap Sizes</Text>
@@ -61,13 +57,8 @@ export function SideBar() {
         </div>
         <Spacer h='1.5' />
         <div>
-          <Text p b font='14px'>Search Modules</Text>
-          <Input crossOrigin='true' clearable placeholder='Enter regexp' font='12px' w='300px' h='30px' />
-        </div>
-        <Spacer h='1.5' />
-        <div>
           <Text p b font='14px'>Show Chunks</Text>
-          <FileList initialExpand files={allChunks} extra={sizes} />
+          <FileList files={allChunks} extra={sizes} scence={scence} onChange={(v) => updateScence(() => new Set(v))} />
         </div>
       </Drawer.Content>
     </Drawer>

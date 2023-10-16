@@ -1,42 +1,58 @@
-import React, { useMemo } from 'react'
-import { Tree } from '@geist-ui/core'
-import type { TreeProps } from '@geist-ui/core'
-import { convertBytes } from '../shared'
+import React, { useMemo, useState } from 'react'
+import { Checkbox, Spacer } from '@geist-ui/core'
+import style9 from 'style9'
+import { convertBytes, noop } from '../shared'
 import type { Foam, Sizes } from '../interface'
-
-type TreeFile = NonNullable<TreeProps['value']>
-
-
-type TreeFileItem = TreeFile[number]
 
 export interface FileListProps<F> {
     files: F[]
-    initialExpand?: boolean
     extra: Sizes
+    scence: Set<string>
+    onChange(values: string[]): void
 }
 
-const traverseFile = <F extends typeof window['foamModule'][number], >(directory: string, files: F[], extra: Sizes) => {
-  if (!files.length) return []
-  const baseDirecotry: TreeFileItem = {
-    type: 'directory',
-    name: directory,
-    extra: convertBytes(files.reduce((acc, cur) => acc += cur.statSize, 0))
+const styles = style9.create({
+  container: {
+    width: '320px',
+    overflow: 'hidden'
+  },
+  text: {
+    maxWidth: '300px',
+    marginRight: '5px'
   }
-
-  baseDirecotry.files = files.map<TreeFileItem>((file) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return { type: 'file', name: file.id, extra: convertBytes(file[extra]) }
-  })
-  return [baseDirecotry]
-}
+})
 
 export function FileList<F extends Foam>(props: FileListProps<F>) {
-  const { files: userFiles, initialExpand = true, extra = 'statSize' } = props
+  const { scence, files: userFiles, extra = 'statSize', onChange = noop } = props
+  const [checkAll, setCheckAll] = useState<boolean>(() => scence.size === userFiles.length)
 
-  const files = useMemo<TreeFile>(() => traverseFile('All', userFiles, extra), [userFiles, extra])
+  const files = useMemo(() => userFiles.map((file) => ({ name: file.id, extra: convertBytes(file[extra]) })), [userFiles, extra])
 
-  return <div>
-    <Tree initialExpand={initialExpand} value={files} />
+  const groupValues = useMemo(() => {
+    if (checkAll) return userFiles.map(v => v.id)
+    if (scence.size) return [...scence]
+    return []
+  }, [checkAll, scence, userFiles])
+
+  return <div className={styles('container')}>
+    <div>
+      <Checkbox font='12px' scale={0.85} checked={checkAll} value={'All'} onChange={(event) => {
+        const state = event.target.checked
+        onChange(state ? userFiles.map(v => v.id) : [])
+        setCheckAll(state)
+      }}>
+        <span className={styles('text')}>All</span>
+      </Checkbox>
+      <Spacer h={0.5} />
+    </div>
+    <Checkbox.Group font='12px' scale={0.85} value={groupValues} onChange={onChange}>
+      {files.map(file => <div key={file.name}>
+        <Checkbox value={file.name}>
+          <span className={styles('text')}>{file.name}</span>
+          {file.extra}
+        </Checkbox>
+        <Spacer h={0.5} />
+      </div>)}
+    </Checkbox.Group>
   </div>
 }

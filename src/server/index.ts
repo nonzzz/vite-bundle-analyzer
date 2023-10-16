@@ -8,7 +8,7 @@ import { renderView } from './render'
 
 
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
-  const { analyzerMode = 'json',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
+  const { analyzerMode = 'static',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
   const analyzerModule = createAnalyzerModule(opts)
   let defaultWd = process.cwd()
   
@@ -54,5 +54,5 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
 export { analyzer }
 
 export { analyzer as default }
-export * from './interface'
+export { AnalyzerPluginOptions } from './interface'
 
