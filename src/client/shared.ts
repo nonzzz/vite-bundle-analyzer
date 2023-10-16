@@ -22,3 +22,13 @@ export function omit<T extends object, K extends keyof T>(data: T, attrs: K[]) {
     {} as Omit<T, K>
   )
 }
+
+export function hashCode(str: string) {
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    const code = str.charCodeAt(i)
+    hash = (hash << 5) - hash + code
+    hash = hash & hash
+  }
+  return hash
+}

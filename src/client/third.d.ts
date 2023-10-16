@@ -39,12 +39,20 @@ declare module '@carrotsearch/foamtree' {
       // eslint-disable-next-line no-use-before-define
       onGroupClick: FoamGroupClickEvent
     }
+
+    interface Properties {
+      attribution: boolean
+      description: boolean
+      hasChildren: boolean
+    }
+
     export interface FoamContext {
       zoom(group: FoamDataObject): void
       resize(): void
-      get(): FoamContext
-      get(prop: string): FoamContext | undefined
-      get(prop: string, ...args: unknown[]): FoamContext | undefined
+      discope(): void
+      get<T>(): T & Properties
+      get<T>(prop: string): T & Properties | undefined
+      get<T>(prop: string, ...args: unknown[]): T & Properties | undefined
     }
 
     export interface TitleBarDecoratorVariables {
@@ -76,9 +84,9 @@ declare module '@carrotsearch/foamtree' {
       labelColor?: 'auto'
     }
 
-    export type FoamTitleBarDecorator = (this: FoamContext, options: FoamTreeOptions, properties: NonNullable<unknown>, variables: TitleBarDecoratorVariables)=> void
+    export type FoamTitleBarDecorator = (this: FoamContext, options: FoamTreeOptions, properties: any, variables: TitleBarDecoratorVariables)=> void
 
-    export type FoamGroupColorDecorator = (this: FoamContext, options: FoamTreeOptions, properties: NonNullable<unknown>, variables: GroupColorVariables)=> void
+    export type FoamGroupColorDecorator = (this: FoamContext, options: FoamTreeOptions, properties: any, variables: GroupColorVariables)=> void
 
     export interface FoamEventObject {
       type: 'click' | 'dragstart'
@@ -104,7 +112,7 @@ declare module '@carrotsearch/foamtree' {
 
     export type FoamGroupClickEvent = (this: FoamContext, event: FoamEventObject)=> void
 
-    declare class FoamTree {
+    declare class FoamTree implements FoamContext {
       constructor(opts: Partial<FoamTreeOptions>)
     }
 
