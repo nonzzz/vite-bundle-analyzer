@@ -1,0 +1,22 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install berry
+        run: corepack enable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install Dependices
+        run: yarn install
+
+      - name: Run Test
+        run: yarn test
+
+      - name: Report Coverage
+        uses: codecov/codecov-action@v2

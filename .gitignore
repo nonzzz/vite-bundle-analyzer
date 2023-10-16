@@ -17,3 +17,5 @@ pnpm-debug.log*
 analyzer.html
 
 stats.json
+
+coverage

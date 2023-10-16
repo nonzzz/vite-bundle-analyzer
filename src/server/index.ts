@@ -2,7 +2,6 @@ import fsp from 'fs/promises'
 import path from 'path'
 import type{ Plugin } from 'vite'
 import { name } from '../../package.json'
-import { defaultWd } from './shared'
 import type { AnalyzerPluginOptions } from './interface'
 import { createAnalyzerModule } from './analyzer-module'
 import { renderView } from './render'
@@ -11,11 +10,15 @@ import { renderView } from './render'
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
   const { analyzerMode = 'json',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
   const analyzerModule = createAnalyzerModule(opts)
+  let defaultWd = process.cwd()
   
   const plugin = <Plugin>{
     name,
     apply: 'build',
     enforce: 'post',
+    configResolved(config) {
+      defaultWd = config.root
+    },
     generateBundle(_, outputBundle) {
       // After consider. I trust process chunk is enougth. (If you don't think it's right. PR welcome.)
       for (const bundleName in outputBundle) {
@@ -51,3 +54,5 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
 export { analyzer }
 
 export { analyzer as default }
+export * from './interface'
+

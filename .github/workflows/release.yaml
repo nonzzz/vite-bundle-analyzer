@@ -1,0 +1,28 @@
+name: releaser
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  releaser:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extra Changelog
+        run: |
+          CHANGELOG=$(awk -v ver=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' package.json) '/^## / { if (p) { exit }; if ($2 == ver) { p=1; next} } p' CHANGELOG.md)
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Github Releaser
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          body: ${{ env.CHANGELOG }}
+          draft: false
+          prerelease: false
