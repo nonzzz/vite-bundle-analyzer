@@ -143,18 +143,20 @@ export class AnalyzerModule {
     const res = await Promise.all(this.modules.map(async (node) => ({ ...await this.traverse(node), isAsset: true })))
 
     const mergeNodes = (node: Foam) => {
-      if (Array.isArray(node.groups) && node.groups.length === 1) {
-        const childNode = node.groups[0]
-        node.id = `${node.id}/${childNode.id}`
-        node.label = `${node.label}/${childNode.label}`
-        node.path = `${node.path}/${childNode.path}`
-        node.gzipSize = childNode.gzipSize
-        node.statSize = childNode.statSize
-        node.parsedSize = childNode.parsedSize
-        node.groups = childNode.groups
-        mergeNodes(node)
-      } else if (Array.isArray(node.groups)) {
-        node.groups.forEach(mergeNodes)
+      if (Array.isArray(node.groups)) {
+        if (node.groups.length === 1 && !path.extname(node.id)) {
+          const childNode = node.groups[0]
+          node.id = `${node.id}/${childNode.id}`
+          node.label = `${node.label}/${childNode.label}`
+          node.path = `${node.path}/${childNode.path}`
+          node.gzipSize = childNode.gzipSize
+          node.statSize = childNode.statSize
+          node.parsedSize = childNode.parsedSize
+          node.groups = childNode.groups
+          mergeNodes(node)
+        } else {
+          node.groups.forEach(mergeNodes)
+        }
       }
     }
     res.forEach(mergeNodes)

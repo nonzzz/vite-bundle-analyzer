@@ -16,12 +16,14 @@ const styles = style9.create({
 })
 
 export function App() {
-  // window.defaultSizes
   const [sizes, setSizes] = useState<ApplicationConfig['sizes']>(SIZE_RECORD[window.defaultSizes])
   const [foamModule] = useState<ApplicationConfig['foamModule']>(() => window.foamModule)
+  const [scence, setScence] = useState<Set<string>>(new Set())
+  const [drawerVisible, setDrawerVisible] = useState<boolean>(false)
 
   return <GeistProvider>
-    <ApplicationContext.Provider value={{ sizes, foamModule, updateSizes: setSizes }}>
+    <ApplicationContext.Provider 
+      value={{ sizes, scence, foamModule, drawerVisible, updateSizes: setSizes, updateScence: setScence, updateDrawerVisible: setDrawerVisible }}>
       <div className={styles('app')}>
         <SideBar />
         <TreeMap />

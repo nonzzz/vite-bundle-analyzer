@@ -1,34 +1,42 @@
 {
-  "name": "vite-plugin-analyzer",
+  "name": "vite-bundle-analyzer",
   "packageManager": "yarn@3.6.3",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "dev": "vite src/client",
+    "build": "yarn build:client & yarn build:plugin",
     "build:client": "vite build src/client",
     "build:plugin": "tsup",
-    "test": "c8 -r=lcov mocha"
+    "test": "c8 -r=lcov ava __tests__/*.spec.ts"
   },
   "devDependencies": {
     "@babel/runtime": "^7.23.1",
     "@carrotsearch/foamtree": "^3.5.1",
     "@geist-ui/core": "^2.3.8",
     "@geist-ui/icons": "^1.0.2",
-    "@types/chai": "^4.3.8",
-    "@types/mocha": "^10.0.2",
     "@types/node": "^20.7.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "@vitejs/plugin-react": "^4.0.4",
+    "ava": "^5.3.1",
     "c8": "^8.0.1",
-    "chai": "^4.3.10",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^1.2.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "mocha": "^10.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "style9": "^0.18.2",
@@ -90,11 +98,32 @@
   "dependencies": {
     "fast-glob": "^3.3.1"
   },
-  "mocha": {
-    "extension": [
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nonzzz/vite-bundle-analyzer.git"
+  },
+  "keywords": [
+    "vite",
+    "rollup",
+    "rollup-plugin",
+    "vite-plugin",
+    "bundle-analyzer"
+  ],
+  "ava": {
+    "files": [
+      "__tests__/*.spec.ts",
+      "e2e/**/*.spec.ts"
+    ],
+    "extensions": [
       "ts"
     ],
-    "spec": "__tests__/*.spec.ts",
-    "require": "tsx/cjs"
+    "require": [
+      "tsx/cjs"
+    ]
   }
 }

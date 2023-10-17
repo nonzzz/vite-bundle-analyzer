@@ -18,5 +18,7 @@ jobs:
       - name: Run Test
         run: yarn test
 
-      - name: Report Coverage
-        uses: codecov/codecov-action@v2
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
