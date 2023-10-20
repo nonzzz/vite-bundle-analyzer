@@ -1,14 +1,13 @@
 import fsp from 'fs/promises'
 import path from 'path'
-import type{ Plugin } from 'vite'
+import type { Plugin } from 'vite'
 import { name } from '../../package.json'
 import type { AnalyzerPluginOptions } from './interface'
 import { createAnalyzerModule } from './analyzer-module'
 import { renderView } from './render'
 
-
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
-  const { analyzerMode = 'static',  statsFilename  = 'stats.json', reportFileName = 'analyzer.html' } = opts
+  const { analyzerMode = 'static', statsFilename = 'stats.json', reportFileName = 'analyzer.html' } = opts
   const analyzerModule = createAnalyzerModule(opts)
   let defaultWd = process.cwd()
   
@@ -55,4 +54,3 @@ export { analyzer }
 
 export { analyzer as default }
 export { AnalyzerPluginOptions } from './interface'
-

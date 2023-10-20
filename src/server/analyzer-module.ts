@@ -2,7 +2,6 @@ import path from 'path'
 import { createGzip, pick, slash } from './shared'
 import type { AnalyzerPluginOptions, Foam, OutputChunk, RenderedModule } from './interface'
 
-
 const defaultWd = slash(process.cwd())
 
 function getAbsPath(p: string) {
@@ -78,7 +77,6 @@ export class AnalyzerNode {
       return
     }
     const [folders, fileName] = paths as [string[], string]
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let references: AnalyzerNode = this
     folders.forEach((folder) => {
       let childNode = references.getChild(folder)
@@ -117,7 +115,6 @@ export class AnalyzerNode {
     }
   }
 }
-
 
 function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
   const abs = getAbsPath(id)
@@ -165,7 +162,7 @@ export class AnalyzerModule {
 
   private async traverse(node: AnalyzerNode) {
     const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize', 'gzipSize'])
-    base.gzipSize =  (await this.compress(node.code)).byteLength
+    base.gzipSize = (await this.compress(node.code)).byteLength
     if (node.children.length) {
       const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
       const { statSize, parsedSize, gzipSize } = groups.reduce((acc, cur) => {

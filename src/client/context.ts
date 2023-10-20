@@ -4,13 +4,13 @@ import type { Sizes } from './interface'
 import { noop } from './shared'
 
 export interface ApplicationConfig {
-    sizes: Sizes
-    scence: Set<string>
-    foamModule: typeof window.foamModule
-    drawerVisible: boolean
-    updateSizes: Dispatch<SetStateAction<ApplicationConfig['sizes']>>
-    updateScence: Dispatch<SetStateAction<ApplicationConfig['scence']>>
-    updateDrawerVisible: Dispatch<SetStateAction<ApplicationConfig['drawerVisible']>>
+  sizes: Sizes
+  scence: Set<string>
+  foamModule: typeof window.foamModule
+  drawerVisible: boolean
+  updateSizes: Dispatch<SetStateAction<ApplicationConfig['sizes']>>
+  updateScence: Dispatch<SetStateAction<ApplicationConfig['scence']>>
+  updateDrawerVisible: Dispatch<SetStateAction<ApplicationConfig['drawerVisible']>>
 }
 
 export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {

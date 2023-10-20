@@ -34,7 +34,6 @@ async function createBuildServer(fixtureName: string, options?: AnalyzerPluginOp
   return entry
 }
 
-
 test.after(async () => {
   await fsp.rm(bundlePath, { recursive: true })
 })

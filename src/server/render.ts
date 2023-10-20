@@ -6,8 +6,8 @@ import { slash } from './shared'
 import type { DefaultSizes, Foam } from './interface'
 
 export interface RenderOptions {
-    title: string
-    mode: DefaultSizes
+  title: string
+  mode: DefaultSizes
 }
 
 const ___filename = url.fileURLToPath(import.meta.url)

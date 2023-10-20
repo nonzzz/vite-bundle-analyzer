@@ -5,8 +5,6 @@ import style9 from 'style9/vite'
 import type { UserConfig } from 'vite'
 import { analyzer } from '../server'
 
-
-
 export default defineConfig(async ({ mode }) => {
   const base = <UserConfig>{
     plugins: [react(), style9({ fileName: 'style.css' }), analyzer({ analyzerMode: 'static' })],

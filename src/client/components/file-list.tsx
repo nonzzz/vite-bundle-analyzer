@@ -5,10 +5,10 @@ import { convertBytes, noop } from '../shared'
 import type { Foam, Sizes } from '../interface'
 
 export interface FileListProps<F> {
-    files: F[]
-    extra: Sizes
-    scence: Set<string>
-    onChange(values: string[]): void
+  files: F[]
+  extra: Sizes
+  scence: Set<string>
+  onChange(values: string[]): void
 }
 
 const styles = style9.create({

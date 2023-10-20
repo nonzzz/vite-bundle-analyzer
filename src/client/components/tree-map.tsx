@@ -1,15 +1,14 @@
-import React, { useEffect,  useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import style9 from 'style9'
 import { FoamTree } from '@carrotsearch/foamtree'
 import { Spacer, Text } from '@geist-ui/core'
-import type { FoamContext, FoamDataObject, FoamEventObject  } from '@carrotsearch/foamtree'
+import type { FoamContext, FoamDataObject, FoamEventObject } from '@carrotsearch/foamtree'
 import { useApplicationContext } from '../context'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, hashCode } from '../shared'
 import { Tooltip } from './tooltip'
 
-
-type FoamGroup = Omit<Foam, 'groups'> & {isAsset?: boolean}
+type FoamGroup = Omit<Foam, 'groups'> & { isAsset?: boolean }
 
 const styles = style9.create({
   container: {
@@ -19,7 +18,7 @@ const styles = style9.create({
   }
 })
 
-interface VisibleFoam extends Foam{
+interface VisibleFoam extends Foam {
   weight: number
 }
 
@@ -32,7 +31,7 @@ function travseVisibleModule(foamModule: Foam, sizes: Sizes): VisibleFoam {
 function findGroupRoot(group: FoamGroup, foamContext: FoamContext): FoamGroup {
   if (group.isAsset) return group
   while (!group.isAsset) {
-    const prop = foamContext.get<{parent: Foam}>('hierarchy', group)!
+    const prop = foamContext.get<{ parent: Foam }>('hierarchy', group)!
     return findGroupRoot(prop.parent, foamContext)
   }
   return group
@@ -42,7 +41,7 @@ function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
   return chunkLabel.split(/[^a-z0-9]/iu)[chunkNamePartIndex] || chunkLabel
 }
 
-function ModuleSize(props: {module: FoamDataObject, sizes: Sizes, checkedSizes: Sizes}) {
+function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checkedSizes: Sizes }) {
   const { module, sizes, checkedSizes } = props
   if (!module[sizes]) return null
   return <Text p font='12px'>
@@ -96,7 +95,6 @@ export function TreeMap() {
     return namePart.index
   }, [visibleChunks])
 
-
   const resize = () => {
     if (!foamTreeInstance.current) return 
     foamTreeInstance.current.resize()
@@ -137,8 +135,8 @@ export function TreeMap() {
         },
         groupColorDecorator(_, properties, variables) {
           if (!foamTreeInstance.current) return
-          const root =  findGroupRoot(properties.group, foamTreeInstance.current)
-          const chunkName =  getChunkNamePart(root.label, chunkNamePartIndex)
+          const root = findGroupRoot(properties.group, foamTreeInstance.current)
+          const chunkName = getChunkNamePart(root.label, chunkNamePartIndex)
           const hash = /[^0-9]/.test(chunkName) ? hashCode(chunkName) : (parseInt(chunkName) / 1000) * 360
           variables.groupColor = {
             model: 'hsla',
@@ -165,7 +163,7 @@ export function TreeMap() {
           handleGroupHover(event)
         },
         onGroupMouseWheel(event) {
-          const { scale } = this.get<{scale: number}>('viewport')!
+          const { scale } = this.get<{ scale: number }>('viewport')!
           const isZoomOut = event.delta < 0
           if (isZoomOut) {
             if (zoomOutDisabled.current) return event.preventDefault()

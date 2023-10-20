@@ -18,7 +18,7 @@ export type RenderedModule = RenderChunk['modules'][string]
 
 export type OutputBundle = Parameters<typeof generateBundle>[1]
 
-export type OutputChunk = Extract<OutputBundle[0], {type: 'chunk'}>
+export type OutputChunk = Extract<OutputBundle[0], { type: 'chunk' }>
 
 export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 
@@ -30,23 +30,21 @@ export type AnalyzerMode = 'static' | 'json'
 // `gzip` This is the size of running the parsed bundles/modules through gzip compression.
 export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
-
 export interface Foam {
-    id: string
-    label: string
-    path: string
-    statSize: number
-    parsedSize: number
-    gzipSize: number
-    groups: Array<Foam>
+  id: string
+  label: string
+  path: string
+  statSize: number
+  parsedSize: number
+  gzipSize: number
+  groups: Array<Foam>
 }
 
 export interface BasicAnalyzerPluginOptions {
-    analyzerMode?: AnalyzerMode
-    statsFilename?: string
-    reportFileName?: string
-    gzipOptions?: ZlibOptions
+  analyzerMode?: AnalyzerMode
+  statsFilename?: string
+  reportFileName?: string
+  gzipOptions?: ZlibOptions
 }
-
 
 export type AnalyzerPluginOptions = BasicAnalyzerPluginOptions
