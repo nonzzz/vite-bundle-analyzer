@@ -1,6 +1,7 @@
 import path from 'path'
+import type { ZlibOptions } from 'zlib'
 import { createGzip, pick, slash } from './shared'
-import type { AnalyzerPluginOptions, Foam, OutputChunk, RenderedModule } from './interface'
+import type { Foam, OutputChunk, RenderedModule } from './interface'
 
 const defaultWd = slash(process.cwd())
 
@@ -124,8 +125,8 @@ function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
 export class AnalyzerModule {
   compress: ReturnType<typeof createGzip>
   modules: AnalyzerNode[]
-  constructor(opts: AnalyzerPluginOptions) {
-    this.compress = createGzip(opts.gzipOptions)
+  constructor(opt?: ZlibOptions) {
+    this.compress = createGzip(opt)
     this.modules = []
   }
 
@@ -177,6 +178,6 @@ export class AnalyzerModule {
   }
 }
 
-export function createAnalyzerModule(opts: AnalyzerPluginOptions) {
-  return new AnalyzerModule(opts)
+export function createAnalyzerModule(opt?: ZlibOptions) {
+  return new AnalyzerModule(opt)
 }

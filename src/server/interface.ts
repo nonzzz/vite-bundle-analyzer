@@ -42,12 +42,19 @@ export interface Foam {
 
 export interface BasicAnalyzerPluginOptions {
   analyzerMode?: AnalyzerMode
-  statsFilename?: string
-  reportFileName?: string
-  analyzerPort?: number | 'atuo'
   reportTitle?: string
-  openAnalyzer?: boolean
   gzipOptions?: ZlibOptions
 }
 
-export type AnalyzerPluginOptions = BasicAnalyzerPluginOptions
+export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOptions {
+  analyzerMode: 'server'
+  analyzerPort?: number | 'atuo'
+  openAnalyzer?: boolean
+}
+
+export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOptions {
+  analyzerMode: 'static' | 'json'
+  fileName?: string
+}
+
+export type AnalyzerPluginOptions = AnalyzerPluginOptionsWithServer | AnalyzerPluginOptionsWithStatic

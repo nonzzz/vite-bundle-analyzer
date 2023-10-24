@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import style9 from 'style9'
 import { GeistProvider } from '@geist-ui/core'
 import { SideBar } from './components/side-bar'
@@ -21,13 +21,19 @@ export function App() {
   const [scence, setScence] = useState<Set<string>>(new Set())
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false)
 
-  return <GeistProvider>
-    <ApplicationContext.Provider 
-      value={{ sizes, scence, foamModule, drawerVisible, updateSizes: setSizes, updateScence: setScence, updateDrawerVisible: setDrawerVisible }}>
-      <div className={styles('app')}>
-        <SideBar />
-        <TreeMap />
-      </div>
-    </ApplicationContext.Provider>
-  </GeistProvider>
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const initialValue = { sizes, scence, foamModule, drawerVisible, updateSizes: setSizes, updateScence: setScence, updateDrawerVisible: setDrawerVisible }
+
+  return (
+    <GeistProvider>
+      <ApplicationContext.Provider 
+        value={initialValue}
+      >
+        <div className={styles('app')}>
+          <SideBar />
+          <TreeMap />
+        </div>
+      </ApplicationContext.Provider>
+    </GeistProvider>
+  )
 }

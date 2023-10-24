@@ -11,8 +11,8 @@
       "resolveJsonModule": true,
       "module": "ESNext",
       "moduleResolution": "node",
-      "jsx": "react",
+      "jsx": "react-jsx",
       "strict": true
-    },
+    }
   }
   

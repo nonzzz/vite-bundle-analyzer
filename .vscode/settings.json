@@ -1,3 +1,8 @@
 {
-  "eslint.experimental.useFlatConfig": true
+  "eslint.experimental.useFlatConfig": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "[markdown]":{
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

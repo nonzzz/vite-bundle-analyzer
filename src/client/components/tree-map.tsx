@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import style9 from 'style9'
 import { FoamTree } from '@carrotsearch/foamtree'
 import { Spacer, Text } from '@geist-ui/core'
@@ -44,9 +44,14 @@ function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
 function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checkedSizes: Sizes }) {
   const { module, sizes, checkedSizes } = props
   if (!module[sizes]) return null
-  return <Text p font='12px'>
-    {checkedSizes === sizes ? <Text span b font='12px'>{sizes}</Text> : <Text span>{sizes}</Text>} : <Text b font='12px'>{convertBytes(module[sizes])}</Text>
-  </Text>
+  return (
+    <Text p font="12px">
+      {checkedSizes === sizes ? <Text span b font="12px">{sizes}</Text> : <Text span>{sizes}</Text>}
+      {' '}
+      :
+      <Text b font="12px">{convertBytes(module[sizes])}</Text>
+    </Text>
+  )
 }
 
 export function TreeMap() {
@@ -152,9 +157,11 @@ export function TreeMap() {
         onGroupClick(event) {
           event.preventDefault()
           zoomOutDisabled.current = false
+          // eslint-disable-next-line react/no-this-in-sfc
           this.zoom(event.group)
         },
         onGroupHover(event) {
+          // eslint-disable-next-line react/no-this-in-sfc
           if (event.group && (event.group.attribution || event.group === this.get<FoamDataObject>('dataObject'))) {
             event.preventDefault()
             setVisible(false)
@@ -163,6 +170,7 @@ export function TreeMap() {
           handleGroupHover(event)
         },
         onGroupMouseWheel(event) {
+          // eslint-disable-next-line react/no-this-in-sfc
           const { scale } = this.get<{ scale: number }>('viewport')!
           const isZoomOut = event.delta < 0
           if (isZoomOut) {
@@ -191,19 +199,25 @@ export function TreeMap() {
     if (drawerVisible) setVisible(false)
   }, [scence, drawerVisible])
 
-  return <>
-    <div className={styles('container')} ref={containerRef} />
-    <Tooltip visible={visible}>
-      {module && <div>
-        <Text p b font='14px'>{module.label}</Text>
-        <Spacer h={0.5} />
-        <ModuleSize module={module} sizes={'statSize'} checkedSizes={sizes} />
-        <ModuleSize module={module} sizes={'parsedSize'} checkedSizes={sizes} />
-        <ModuleSize module={module} sizes={'gzipSize'} checkedSizes={sizes} />
-        <Text>
-          path: {module.id}
-        </Text>
-      </div>}
-    </Tooltip>
-  </>
+  return (
+    <>
+      <div className={styles('container')} ref={containerRef} />
+      <Tooltip visible={visible}>
+        {module && (
+          <div>
+            <Text p b font="14px">{module.label}</Text>
+            <Spacer h={0.5} />
+            <ModuleSize module={module} sizes="statSize" checkedSizes={sizes} />
+            <ModuleSize module={module} sizes="parsedSize" checkedSizes={sizes} />
+            <ModuleSize module={module} sizes="gzipSize" checkedSizes={sizes} />
+            <Text p font="12px">
+              path: 
+              {' '}
+              {module.id}
+            </Text>
+          </div>
+        )}
+      </Tooltip>
+    </>
+  )
 }
