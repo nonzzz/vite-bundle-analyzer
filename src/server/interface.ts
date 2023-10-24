@@ -45,6 +45,8 @@ export interface BasicAnalyzerPluginOptions {
   statsFilename?: string
   reportFileName?: string
   analyzerPort?: number | 'atuo'
+  reportTitle?: string
+  openAnalyzer?: boolean
   gzipOptions?: ZlibOptions
 }
 

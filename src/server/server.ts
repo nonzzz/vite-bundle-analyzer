@@ -30,14 +30,21 @@ export function createServer(port = 0) {
         if (req.url === '/') {
           res.setHeader('Content-Type', 'text/html; charset=utf8;')
           let html = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf8')
-          html = html.replace(/<\/div>/, `</div>\r\n<script>window.defaultSizes = '${options.mode}';\r\nwindow.foamModule = ${JSON.stringify(foamModule)};</script>`)
+          html = html
+            .replace(/<title>(.*?)<\/title>/, `<title>${options.title}</title>`)
+            .replace(/<\/div>/, `</div>\r\n<script>window.defaultSizes = '${options.mode}';\r\nwindow.foamModule = ${JSON.stringify(foamModule)};</script>`)
           res.end(html)
         } else {
-          previousListerner.forEach(listen => listen.call(server, req, res))
+          previousListerner.map(listen => listen.call(server, req, res))
         }
       })
     })
   }
 
-  return { setup }
+  return {
+    setup,
+    get port() {
+      return (server.address() as AddressInfo).port
+    }
+  }
 }

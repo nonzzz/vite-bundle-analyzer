@@ -7,8 +7,20 @@ import { createAnalyzerModule } from './analyzer-module'
 import { renderView } from './render'
 import { createServer } from './server'
 
+const isCI = !!process.env.CI
+
+async function openBrowser(address: string) {
+  await import('open').then((module) => module.default(address, { newInstance: true })).catch(() => {})
+}
+
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
-  const { analyzerMode = 'server', statsFilename = 'stats.json', reportFileName = 'analyzer.html', analyzerPort = 8888 } = opts
+  const { analyzerMode = 'server',
+    statsFilename = 'stats.json',
+    reportFileName = 'analyzer.html', 
+    analyzerPort = 8888,
+    openAnalyzer = true,
+    reportTitle = name
+  } = opts
   const analyzerModule = createAnalyzerModule(opts)
   let defaultWd = process.cwd()
   
@@ -38,15 +50,18 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
         case 'static': {
           const p = path.join(defaultWd, reportFileName)
           const foamModule = await analyzerModule.processfoamModule()
-          const html = await renderView(foamModule, { title: name, mode: 'stat' })
+          const html = await renderView(foamModule, { title: reportTitle, mode: 'stat' })
           fsp.writeFile(p, html, 'utf8')
           break
         }
         case 'server': {
           const foamModule = await analyzerModule.processfoamModule()
-          const port = analyzerPort === 'atuo' ? 0 : analyzerPort
-          const { setup } = createServer(port)
-          setup(foamModule, { title: name, mode: 'stat' })
+          const { setup, port } = createServer(analyzerPort === 'atuo' ? 0 : analyzerPort)
+          setup(foamModule, { title: reportTitle, mode: 'stat' })
+          if (openAnalyzer && !isCI) {
+            const address = `http://localhost:${port}`
+            await openBrowser(address)
+          }
           break
         }
         default:
