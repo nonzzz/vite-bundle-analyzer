@@ -19,3 +19,5 @@ analyzer.html
 stats.json
 
 coverage
+
+components.d.ts

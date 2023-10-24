@@ -1,0 +1,16 @@
+{
+  "name": "analyzer-exmaple-vue",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@varlet/ui": "^2.18.0",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "unplugin-vue-components": "^0.24.1",
+    "vite": "^4.4.9",
+    "vite-bundle-analyzer": "workspace: *",
+    "vite-plugin-cdn2": "^0.13.0",
+    "vue": "^3.3.6"
+  }
+}

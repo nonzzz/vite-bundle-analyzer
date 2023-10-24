@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "workspaces": [
+    "examples/**/*"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -90,7 +93,8 @@
     "typed-array-length": "npm:@nolyfill/typed-array-length@latest",
     "unbox-primitive": "npm:@nolyfill/unbox-primitive@latest",
     "which-boxed-primitive": "npm:@nolyfill/which-boxed-primitive@latest",
-    "which-typed-array": "npm:@nolyfill/which-typed-array@latest"
+    "which-typed-array": "npm:@nolyfill/which-typed-array@latest",
+    "vite": "^4.4.9"
   },
   "dependencies": {
     "fast-glob": "^3.3.1",
