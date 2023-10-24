@@ -22,7 +22,7 @@ export type OutputChunk = Extract<OutputBundle[0], { type: 'chunk' }>
 
 export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 
-export type AnalyzerMode = 'static' | 'json' 
+export type AnalyzerMode = 'static' | 'json' | 'server'
 // `vite-plugin-analyzer` reports three values of size. (Same as `webpack-bundle-analyzer`)
 // But still have to retell it here
 // `stat` This is the `input` size of your file, before any transformations like minification.
@@ -44,6 +44,7 @@ export interface BasicAnalyzerPluginOptions {
   analyzerMode?: AnalyzerMode
   statsFilename?: string
   reportFileName?: string
+  analyzerPort?: number | 'atuo'
   gzipOptions?: ZlibOptions
 }
 

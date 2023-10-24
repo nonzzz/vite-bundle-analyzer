@@ -5,9 +5,10 @@ import { name } from '../../package.json'
 import type { AnalyzerPluginOptions } from './interface'
 import { createAnalyzerModule } from './analyzer-module'
 import { renderView } from './render'
+import { createServer } from './server'
 
 function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
-  const { analyzerMode = 'static', statsFilename = 'stats.json', reportFileName = 'analyzer.html' } = opts
+  const { analyzerMode = 'server', statsFilename = 'stats.json', reportFileName = 'analyzer.html', analyzerPort = 8888 } = opts
   const analyzerModule = createAnalyzerModule(opts)
   let defaultWd = process.cwd()
   
@@ -39,6 +40,13 @@ function analyzer(opts: AnalyzerPluginOptions = {}): Plugin {
           const foamModule = await analyzerModule.processfoamModule()
           const html = await renderView(foamModule, { title: name, mode: 'stat' })
           fsp.writeFile(p, html, 'utf8')
+          break
+        }
+        case 'server': {
+          const foamModule = await analyzerModule.processfoamModule()
+          const port = analyzerPort === 'atuo' ? 0 : analyzerPort
+          const { setup } = createServer(port)
+          setup(foamModule, { title: name, mode: 'stat' })
           break
         }
         default:
