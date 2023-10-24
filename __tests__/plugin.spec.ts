@@ -4,7 +4,7 @@ import fsp from 'fs/promises'
 import test from 'ava'
 import { build } from 'vite'
 import react from '@vitejs/plugin-react'
-import { analyzer } from '../src/server'
+import { analyzer } from '../dist'
 import type { AnalyzerPluginOptions } from '../src/server'
 
 const defaultWd = __dirname
