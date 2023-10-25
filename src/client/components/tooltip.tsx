@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import style9 from 'style9'
 
 export type TooltipProps = React.PropsWithChildren<{
@@ -57,7 +57,9 @@ export function Tooltip(props: TooltipProps) {
     }
   }, [handleMouseEvent])
 
-  return <div className={styles('container', !visible && 'hidden')} ref={containerRef} style={position}>
-    {children}
-  </div>
+  return (
+    <div className={styles('container', !visible && 'hidden')} ref={containerRef} style={position}>
+      {children}
+    </div>
+  )
 }

@@ -1,5 +1,6 @@
 import zlib from 'zlib'
 import utils from 'util'
+import path from 'path'
 import type { ZlibOptions } from 'zlib'
 
 const gzip = utils.promisify(zlib.gzip)
@@ -7,6 +8,10 @@ const gzip = utils.promisify(zlib.gzip)
 const defaultGzipOptions = <ZlibOptions>{
   level: zlib.constants.Z_DEFAULT_LEVEL
 }
+
+export const clientPath = slash(path.join(__dirname, 'client'))
+
+export const clientAssetsPath = path.join(clientPath, 'assets')
 
 export function noop() { /** noop**/ }
 

@@ -4,7 +4,7 @@ import fsp from 'fs/promises'
 import test from 'ava'
 import { build } from 'vite'
 import react from '@vitejs/plugin-react'
-import { analyzer } from '../src/server'
+import { analyzer } from '../dist'
 import type { AnalyzerPluginOptions } from '../src/server'
 
 const defaultWd = __dirname
@@ -47,7 +47,7 @@ test('generator JSON', async (t) => {
 
 test('generator Static Page', async (t) => {
   const id = await createBuildServer('normal', { analyzerMode: 'static' })
-  const analyzerPath = path.join(id, 'analyzer.html')
+  const analyzerPath = path.join(id, 'stats.html')
   await sleep(3000)
   t.is(fs.existsSync(analyzerPath), true)
 })
