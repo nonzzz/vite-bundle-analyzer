@@ -21,13 +21,13 @@ function analyzer(opts: AnalyzerPluginOptions = defaultAnalyzerOptions): Plugin 
   const { reportTitle = name } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   let defaultWd = process.cwd()
-  
+
   const plugin = <Plugin>{
     name,
     apply: 'build',
     enforce: 'post',
     configResolved(config) {
-      defaultWd = config.root
+      defaultWd = config.build.outDir ?? config.root
     },
     generateBundle(_, outputBundle) {
       // After consider. I trust process chunk is enougth. (If you don't think it's right. PR welcome.)
@@ -41,19 +41,19 @@ function analyzer(opts: AnalyzerPluginOptions = defaultAnalyzerOptions): Plugin 
       switch (opts.analyzerMode) {
         case 'json': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')
-          const foamModule = await analyzerModule.processfoamModule()
+          const foamModule = await analyzerModule.processFoamModule()
           fsp.writeFile(p, JSON.stringify(foamModule, null, 2), 'utf8')
           break
         }
         case 'static': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
-          const foamModule = await analyzerModule.processfoamModule()
+          const foamModule = await analyzerModule.processFoamModule()
           const html = await renderView(foamModule, { title: reportTitle, mode: 'stat' })
           fsp.writeFile(p, html, 'utf8')
           break
         }
         case 'server': {
-          const foamModule = await analyzerModule.processfoamModule()
+          const foamModule = await analyzerModule.processFoamModule()
           const { setup, port } = createServer((opts.analyzerPort === 'atuo' ? 0 : opts.analyzerPort) ?? 8888)
           setup(foamModule, { title: reportTitle, mode: 'stat' })
           if ((opts.openAnalyzer ?? true) && !isCI) {

@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Checkbox, Spacer } from '@geist-ui/core'
+import { useMemo } from 'react'
+import { Checkbox, Spacer, Text } from '@geist-ui/core'
 import style9 from 'style9'
 import { convertBytes, noop } from '../shared'
 import type { Foam, Sizes } from '../interface'
@@ -8,59 +8,83 @@ export interface FileListProps<F> {
   files: F[]
   extra: Sizes
   scence: Set<string>
+
   onChange(values: string[]): void
 }
 
 const styles = style9.create({
   container: {
-    width: '320px',
     overflow: 'hidden'
   },
+  textContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
   text: {
-    maxWidth: '300px',
-    marginRight: '5px'
+    flex: '1',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 })
 
 export function FileList<F extends Foam>(props: FileListProps<F>) {
   const { scence, files: userFiles, extra = 'statSize', onChange = noop } = props
-  const [checkAll, setCheckAll] = useState<boolean>(() => scence.size === userFiles.length)
 
-  const files = useMemo(() => userFiles.map((file) => ({ name: file.id, extra: convertBytes(file[extra]) })), [userFiles, extra])
+  const [all, ...files] = useMemo(
+    () => userFiles
+      .reduce((acc, file) => {
+        const meta = { name: file.id, extra: file[extra] }
+        acc[0].extra += meta.extra
+        acc.push(meta)
+        return acc
+      }, [{ name: 'All', extra: 0 }])
+      .map(meta => ({ ...meta, extra: convertBytes(meta.extra) })),
+    [userFiles, extra]
+  )
+
+  const checkAll = useMemo(
+    () => userFiles.length === scence.size,
+    [scence, userFiles]
+  )
 
   const groupValues = useMemo(() => {
     if (checkAll) return userFiles.map(v => v.id)
-    if (scence.size) return [...scence]
-    return []
+    return Array.from(scence)
   }, [checkAll, scence, userFiles])
 
   return (
     <div className={styles('container')}>
-      <div>
+      <div className={styles('textContainer')}>
         <Checkbox
+          value={all.name}
           font="14px"
           scale={0.85}
           checked={checkAll}
-          value="All"
-          onChange={(event) => {
-            const state = event.target.checked
-            onChange(state ? userFiles.map(v => v.id) : [])
-            setCheckAll(state)
-          }}
-        >
-          <span className={styles('text')}>All</span>
-        </Checkbox>
-        <Spacer h={0.5} />
+          onChange={() => onChange(checkAll ? [] : userFiles.map(v => v.id))}
+        />
+        <div className={styles('text')}>{all.name}</div>
+        <Text b>
+          (
+          {all.extra}
+          )
+        </Text>
       </div>
+      <Spacer h={0.75} />
       <Checkbox.Group font="14px" scale={0.85} value={groupValues} onChange={onChange}>
         {files.map(file => (
-          <div key={file.name}>
-            <Checkbox value={file.name}>
-              <span className={styles('text')}>{file.name}</span>
-              {file.extra}
-            </Checkbox>
+          <span key={file.name}>
+            <div className={styles('textContainer')}>
+              <Checkbox value={file.name} />
+              <div className={styles('text')}>{file.name}</div>
+              <Text b>
+                (
+                {file.extra}
+                )
+              </Text>
+            </div>
             <Spacer h={0.5} />
-          </div>
+          </span>
         ))}
       </Checkbox.Group>
     </div>

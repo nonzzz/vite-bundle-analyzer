@@ -33,11 +33,13 @@ export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 export interface Foam {
   id: string
   label: string
+  isEntry: boolean
   path: string
   statSize: number
   parsedSize: number
   gzipSize: number
   groups: Array<Foam>
+  imports: Array<string>
 }
 
 export interface BasicAnalyzerPluginOptions {
