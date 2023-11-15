@@ -22,16 +22,17 @@ function sleep(delay: number) {
 async function createBuildServer(fixtureName: string, options?: AnalyzerPluginOptions) {
   const entry = path.join(fixturePath, fixtureName)
   const id = getId()
+  const outDir = path.join(bundlePath, id)
   await build({
     root: entry,
     logLevel: 'silent',
     configFile: false,
     plugins: [react(), analyzer(options)],
     build: {
-      outDir: path.join(bundlePath, id)
+      outDir
     }
   })
-  return entry
+  return outDir
 }
 
 test.after(async () => {
