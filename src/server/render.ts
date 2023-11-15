@@ -1,7 +1,7 @@
 import fsp from 'fs/promises'
 import path from 'path'
 import fg from 'fast-glob'
-import { clientAssetsPath } from './shared'
+import { clientAssetsPath, slash } from './shared'
 import type { DefaultSizes, Foam } from './interface'
 
 export interface RenderOptions {
@@ -10,7 +10,7 @@ export interface RenderOptions {
 }
 
 export async function renderView(foamModule: Foam[], options: RenderOptions) {
-  const clientAssetsPaths = fg.sync(path.join(clientAssetsPath, '*'))
+  const clientAssetsPaths = fg.sync(slash(path.join(clientAssetsPath, '*')))
   const clientAssets = await Promise.all(clientAssetsPaths.map(async (p) => {
     const fileType = path.extname(p).replace('.', '')
     const content = await fsp.readFile(p, 'utf8')

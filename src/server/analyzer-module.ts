@@ -25,6 +25,7 @@ function lexPaths(p: string) {
 export class AnalyzerNode {
   id: string
   label: string
+  isEntry: boolean
   path: string
   statSize: number
   parsedSize: number
@@ -34,13 +35,17 @@ export class AnalyzerNode {
   children: Array<AnalyzerNode>
   // eslint-disable-next-line no-use-before-define
   pairs: Record<string, AnalyzerNode>
-  constructor(id: string, chunk: OutputChunk | RenderedModule) {
+  imports: Set<string>
+
+  constructor(id: string, chunk: OutputChunk | RenderedModule & { isEntry?: boolean }) {
     this.id = id
     this.label = id
     this.path = id
     this.children = []
     this.pairs = Object.create(null)
     this.code = Buffer.from(chunk.code ?? '', 'utf8')
+    this.isEntry = Boolean(chunk.isEntry)
+    this.imports = new Set()
     this.parsedSize = 0
     this.statSize = 0
     this.gzipSize = 0
@@ -84,10 +89,14 @@ export class AnalyzerNode {
       if (!childNode) childNode = references.addPairs(createAnalyzerNode(folder, { code: '' } as any))
       references = childNode
     })
-    
+
     if (fileName) {
       references.addPairsNode(fileName, node)
     }
+  }
+
+  addImports(...imports: string[]) {
+    imports.forEach((imp) => this.imports.add(imp))
   }
 
   setup(modules: Record<string, RenderedModule>) {
@@ -117,14 +126,19 @@ export class AnalyzerNode {
   }
 }
 
-function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
+function generateNodeId(id: string): string {
   const abs = getAbsPath(id)
-  return new AnalyzerNode(path.isAbsolute(abs) ? abs.replace('/', '') : abs, chunk)
+  return path.isAbsolute(abs) ? abs.replace('/', '') : abs
+}
+
+function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
+  return new AnalyzerNode(generateNodeId(id), chunk)
 }
 
 export class AnalyzerModule {
   compress: ReturnType<typeof createGzip>
   modules: AnalyzerNode[]
+
   constructor(opt?: ZlibOptions) {
     this.compress = createGzip(opt)
     this.modules = []
@@ -132,14 +146,37 @@ export class AnalyzerModule {
 
   addModule(bundleName: string, bundle: OutputChunk) {
     const node = createAnalyzerNode(bundleName, bundle)
+    node.addImports(...bundle.imports, ...bundle.dynamicImports)
     node.setup(bundle.modules)
     node.pairs = {}
     this.modules.push(node)
   }
 
-  async processfoamModule() {
-    const res = await Promise.all(this.modules.map(async (node) => ({ ...await this.traverse(node), isAsset: true })))
+  async processFoamModule() {
+    let foams: Foam[] = await Promise.all(this.modules.map(async (node) => ({ ...await this.traverse(node), isAsset: true })))
 
+    const findEntrypointsRelatedNodes = (nodes: Foam[]): Record<string, Set<string>> => {
+      const mapImports = (entry: Foam, exclude: string[] = []): Foam[] => {
+        const processed = entry.imports.flatMap(id => foams
+          .filter(foam => !exclude.includes(foam.id) && foam.id === generateNodeId(id)))
+        const newExclude = processed.map(foam => foam.id).concat(exclude)
+        return processed.flatMap(foam => mapImports(foam, newExclude)).concat(processed)
+      }
+
+      return nodes.filter(node => node.isEntry)
+        .reduce((acc, entry) => {
+          mapImports(entry).forEach(relative => {
+            if (!acc[relative.id]) {
+              acc[relative.id] = new Set()
+            }
+            acc[relative.id].add(entry.id)
+          })
+          return acc
+        }, {} as Record<string, Set<string>>)
+    }
+
+    const entrypointsMap = findEntrypointsRelatedNodes(foams)
+    foams = foams.map(node => ({ ...node, imports: Array.from(entrypointsMap[node.id] ?? []) }))
     const mergeNodes = (node: Foam) => {
       if (Array.isArray(node.groups)) {
         if (node.groups.length === 1 && !path.extname(node.id)) {
@@ -157,12 +194,14 @@ export class AnalyzerModule {
         }
       }
     }
-    res.forEach(mergeNodes)
-    return res
+    foams.forEach(mergeNodes)
+    return foams
   }
 
   private async traverse(node: AnalyzerNode) {
-    const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize', 'gzipSize'])
+    const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize', 'gzipSize', 'imports', 'isEntry'])
+    // @ts-ignore
+    base.imports = Array.from(base.imports)
     base.gzipSize = (await this.compress(node.code)).byteLength
     if (node.children.length) {
       const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
@@ -174,6 +213,7 @@ export class AnalyzerModule {
       }, { statSize: 0, parsedSize: 0, gzipSize: 0 })
       Object.assign(base, { groups, statSize, parsedSize, gzipSize })
     }
+    // @ts-ignore
     return base as Foam
   }
 }

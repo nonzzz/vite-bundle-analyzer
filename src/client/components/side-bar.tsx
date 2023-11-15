@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import style9 from 'style9'
-import { Button, Drawer, Radio, Spacer, Text } from '@geist-ui/core'
+import { Button, Drawer, Grid, Select, Spacer, Text } from '@geist-ui/core'
 import Menu from '@geist-ui/icons/menu'
 import { tuple } from '../shared'
 import { useApplicationContext } from '../context'
@@ -18,9 +18,9 @@ const styles = style9.create({
   }
 })
 
-const MODE = tuple('Stat', 'Parsed', 'Gzipped')
+const MODES = tuple('Stat', 'Parsed', 'Gzipped')
 
-export type ModeType = typeof MODE[number]
+export type ModeType = typeof MODES[number]
 
 const MODE_RECORD: Record<Sizes, ModeType> = {
   statSize: 'Stat',
@@ -29,10 +29,23 @@ const MODE_RECORD: Record<Sizes, ModeType> = {
 }
 
 export function SideBar() {
-  const { sizes, scence, drawerVisible, foamModule, updateScence, updateSizes, updateDrawerVisible } = useApplicationContext()
+  const {
+    sizes,
+    scence,
+    drawerVisible,
+    foamModule,
+    updateScence,
+    updateSizes,
+    updateDrawerVisible
+  } = useApplicationContext()
   const [mode, setMode] = useState<ModeType>(() => MODE_RECORD[sizes])
+  const [entrypoints, setEntrypoints] = useState<string[]>([])
 
-  const allChunks = useMemo(() => foamModule.sort((a, b) => b[sizes] - a[sizes]), [foamModule, sizes])
+  const allChunks = useMemo(() => foamModule
+    .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.id === id || chunk.imports.includes(id)))
+    .sort((a, b) => b[sizes] - a[sizes]), [foamModule, sizes, entrypoints])
+
+  const entrypointChunks = useMemo(() => foamModule.filter(chunk => chunk.isEntry), [foamModule])
 
   useEffect(() => updateScence(() => new Set(allChunks.map(v => v.id))), [allChunks, updateScence])
 
@@ -45,23 +58,69 @@ export function SideBar() {
     })
   }
 
+  const handleFilterByEntrypoints = (entrypoint: string | string[]) => {
+    setEntrypoints(Array.isArray(entrypoint) ? entrypoint : [entrypoint])
+  }
+
   return (
     <>
-      <Button className={styles(drawerVisible && 'visible', 'float')} style={{ position: 'absolute' }} auto scale={0.25} icon={<Menu />} onClick={() => updateDrawerVisible((pre) => !pre)} />
+      <Button
+        className={styles(drawerVisible && 'visible', 'float')}
+        style={{ position: 'absolute' }}
+        auto
+        scale={0.25}
+        icon={<Menu />}
+        onClick={() => updateDrawerVisible((pre) => !pre)}
+      />
       <Drawer visible={drawerVisible} placement="left" onClose={() => updateDrawerVisible(false)} w="400px">
         <Drawer.Content>
           <div>
-            <Text p b font="14px">Treemap Sizes</Text>
+            <Text p b h3>Treemap Sizes:</Text>
             <Spacer h="0.5" />
-            <Radio.Group value={mode} onChange={(s: any) => handleRadioChange(s)} useRow>
-              {MODE.map(radio => <Radio value={radio} key={radio}>{radio}</Radio>)}
-            </Radio.Group>
+            <Grid.Container gap={1} wrap="nowrap">
+              {
+                                MODES.map(button => (
+                                  <Grid key={button}>
+                                    <Button
+                                      onClick={() => handleRadioChange(button)}
+                                      auto
+                                      type={mode === button ? 'secondary' : 'default'}
+                                      scale={0.7}
+                                    >
+                                      {button}
+                                    </Button>
+                                  </Grid>
+                                )
+                                )
+              }
+            </Grid.Container>
           </div>
           <Spacer h="1.5" />
           <div>
-            <Text p b font="14px">Show Chunks</Text>
+            <Text p b h3>Filter by entrypoints:</Text>
             <Spacer h="0.5" />
-            <FileList files={allChunks} extra={sizes} scence={scence} onChange={(v) => updateScence(() => new Set(v))} />
+            <Select
+              pr={5}
+              scale={0.75}
+              placeholder="Select endpoints"
+              multiple
+              onChange={handleFilterByEntrypoints}
+            >
+              {entrypointChunks.map(chunk => (
+                <Select.Option key={chunk.id} value={chunk.id}>{chunk.id}</Select.Option>
+              ))}
+            </Select>
+          </div>
+          <Spacer h="1.5" />
+          <div>
+            <Text p b h3>Show Chunks:</Text>
+            <Spacer h="0.5" />
+            <FileList
+              files={allChunks}
+              extra={sizes}
+              scence={scence}
+              onChange={(v) => updateScence(() => new Set(v))}
+            />
           </div>
         </Drawer.Content>
       </Drawer>
