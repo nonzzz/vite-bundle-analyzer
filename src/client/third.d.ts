@@ -42,7 +42,7 @@ declare module '@carrotsearch/foamtree' {
     // eslint-disable-next-line no-use-before-define
     groupColorDecorator: FoamGroupColorDecorator
     // eslint-disable-next-line no-use-before-define
-    onGroupClick: FoamGroupEvent 
+    onGroupClick: FoamGroupEvent
     // eslint-disable-next-line no-use-before-define
     onGroupDoubleClick: FoamGroupEvent
     // eslint-disable-next-line no-use-before-define
@@ -55,6 +55,8 @@ declare module '@carrotsearch/foamtree' {
     attribution: boolean
     description: boolean
     hasChildren: boolean
+    revealed: boolean
+    parent: FoamDataObject
   }
 
   export abstract class FoamContext {
@@ -73,7 +75,7 @@ declare module '@carrotsearch/foamtree' {
     titleBarShown: boolean
     titleBarMaxFontSize: number
   }
-    
+
   interface RGBGroupColorDecoratoVariables {
     model: 'rgb' | 'rgba'
     r: number
@@ -128,6 +130,6 @@ declare module '@carrotsearch/foamtree' {
   export class FoamTree extends FoamContext {
     constructor(opts: Partial<FoamTreeOptions>)
   }
-    
+
   export default FoamTree
-} 
+}
