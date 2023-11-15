@@ -35,7 +35,7 @@ export class AnalyzerNode {
   children: Array<AnalyzerNode>
   // eslint-disable-next-line no-use-before-define
   pairs: Record<string, AnalyzerNode>
-  imports: Array<string>
+  imports: Set<string>
 
   constructor(id: string, chunk: OutputChunk | RenderedModule & { isEntry?: boolean }) {
     this.id = id
@@ -45,7 +45,7 @@ export class AnalyzerNode {
     this.pairs = Object.create(null)
     this.code = Buffer.from(chunk.code ?? '', 'utf8')
     this.isEntry = Boolean(chunk.isEntry)
-    this.imports = []
+    this.imports = new Set()
     this.parsedSize = 0
     this.statSize = 0
     this.gzipSize = 0
@@ -96,7 +96,7 @@ export class AnalyzerNode {
   }
 
   addImports(...imports: string[]) {
-    this.imports.concat(imports)
+    imports.forEach((imp) => this.imports.add(imp))
   }
 
   setup(modules: Record<string, RenderedModule>) {
@@ -146,7 +146,7 @@ export class AnalyzerModule {
 
   addModule(bundleName: string, bundle: OutputChunk) {
     const node = createAnalyzerNode(bundleName, bundle)
-    node.addImports(...bundle.imports, ...bundle.dynamicImports);
+    node.addImports(...bundle.imports, ...bundle.dynamicImports)
     node.setup(bundle.modules)
     node.pairs = {}
     this.modules.push(node)
@@ -200,6 +200,8 @@ export class AnalyzerModule {
 
   private async traverse(node: AnalyzerNode) {
     const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize', 'gzipSize', 'imports', 'isEntry'])
+    // @ts-ignore
+    base.imports = Array.from(base.imports)
     base.gzipSize = (await this.compress(node.code)).byteLength
     if (node.children.length) {
       const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
@@ -211,6 +213,7 @@ export class AnalyzerModule {
       }, { statSize: 0, parsedSize: 0, gzipSize: 0 })
       Object.assign(base, { groups, statSize, parsedSize, gzipSize })
     }
+    // @ts-ignore
     return base as Foam
   }
 }
