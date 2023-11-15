@@ -95,8 +95,8 @@ export class AnalyzerNode {
     }
   }
 
-  addImports(imports: string[]) {
-    this.imports = Array.from(new Set([this.imports, imports].flat()))
+  addImports(...imports: string[]) {
+    this.imports.concat(imports)
   }
 
   setup(modules: Record<string, RenderedModule>) {
@@ -146,8 +146,7 @@ export class AnalyzerModule {
 
   addModule(bundleName: string, bundle: OutputChunk) {
     const node = createAnalyzerNode(bundleName, bundle)
-    node.addImports(bundle.imports)
-    node.addImports(bundle.dynamicImports)
+    node.addImports(...bundle.imports, ...bundle.dynamicImports);
     node.setup(bundle.modules)
     node.pairs = {}
     this.modules.push(node)
