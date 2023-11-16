@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import style9 from 'style9'
 import { FoamTree } from '@carrotsearch/foamtree'
 import { Spacer, Text } from '@geist-ui/core'
@@ -27,7 +27,7 @@ function travseVisibleModule(foamModule: Foam, sizes: Sizes): VisibleFoam {
   return { ...foamModule, weight: foamModule[sizes] }
 }
 
-// We using keyword `isAsset` to judge the group root 
+// We using keyword `isAsset` to judge the group root
 function findGroupRoot(group: FoamGroup, foamContext: FoamContext): FoamGroup {
   if (group.isAsset) return group
   while (!group.isAsset) {
@@ -54,13 +54,40 @@ function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checkedSizes:
   )
 }
 
-export function TreeMap() {
+export type TreeMapComponent = {
+  zoom: (to: FoamDataObject) => void,
+  check: (to: FoamDataObject) => FoamDataObject | void,
+}
+
+export const TreeMap = forwardRef<TreeMapComponent>(function TreeMap(_, ref) {
   const { foamModule, sizes, scence, drawerVisible } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<FoamTree | null>(null)
   const [visible, setVisible] = useState<boolean>(false)
   const [module, setModule] = useState<FoamDataObject | null>(null)
   const zoomOutDisabled = useRef<boolean>(false)
+
+  const check = (group?: FoamDataObject) => {
+    const instance = foamTreeInstance.current
+    if (instance === null) {
+      return
+    }
+    while (group && !instance.get('state', group)?.revealed) {
+      group = instance.get('hierarchy', group)?.parent
+    }
+    return group
+  }
+
+  useImperativeHandle(ref, () => ({
+    zoom(group?: FoamDataObject) {
+      zoomOutDisabled.current = false
+      group = check(group)
+      if (group) {
+        foamTreeInstance.current?.zoom(group)
+      }
+    },
+    check
+  }))
 
   const visibleChunks = useMemo(() => foamModule.filter((v) => scence.has(v.id)).map((module) => travseVisibleModule(module, sizes)), [foamModule, sizes, scence])
 
@@ -101,7 +128,7 @@ export function TreeMap() {
   }, [visibleChunks])
 
   const resize = () => {
-    if (!foamTreeInstance.current) return 
+    if (!foamTreeInstance.current) return
     foamTreeInstance.current.resize()
   }
 
@@ -211,7 +238,7 @@ export function TreeMap() {
             <ModuleSize module={module} sizes="parsedSize" checkedSizes={sizes} />
             <ModuleSize module={module} sizes="gzipSize" checkedSizes={sizes} />
             <Text p font="12px">
-              path: 
+              path:
               {' '}
               {module.id}
             </Text>
@@ -220,4 +247,4 @@ export function TreeMap() {
       </Tooltip>
     </>
   )
-}
+})

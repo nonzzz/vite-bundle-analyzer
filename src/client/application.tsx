@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { RefObject, useRef, useState } from 'react'
 import style9 from 'style9'
 import { GeistProvider } from '@geist-ui/core'
 import { SideBar } from './components/side-bar'
-import { TreeMap } from './components/tree-map'
+import { TreeMap, TreeMapComponent } from './components/tree-map'
 import { ApplicationContext, SIZE_RECORD } from './context'
 import type { ApplicationConfig } from './context'
 import './init.css'
@@ -16,22 +16,32 @@ const styles = style9.create({
 })
 
 export function App() {
+  const treeMapRef = useRef<TreeMapComponent>()
   const [sizes, setSizes] = useState<ApplicationConfig['sizes']>(SIZE_RECORD[window.defaultSizes])
   const [foamModule] = useState<ApplicationConfig['foamModule']>(() => window.foamModule)
   const [scence, setScence] = useState<Set<string>>(new Set())
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false)
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const initialValue = { sizes, scence, foamModule, drawerVisible, updateSizes: setSizes, updateScence: setScence, updateDrawerVisible: setDrawerVisible }
+  const initialValue = {
+    sizes,
+    scence,
+    foamModule,
+    drawerVisible,
+    updateSizes: setSizes,
+    updateScence: setScence,
+    updateDrawerVisible: setDrawerVisible,
+    treemap: treeMapRef as RefObject<TreeMapComponent>
+  }
 
   return (
     <GeistProvider>
-      <ApplicationContext.Provider 
+      <ApplicationContext.Provider
         value={initialValue}
       >
         <div className={styles('app')}>
           <SideBar />
-          <TreeMap />
+          <TreeMap ref={(instance: any) => treeMapRef.current = instance} />
         </div>
       </ApplicationContext.Provider>
     </GeistProvider>

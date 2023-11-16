@@ -1,7 +1,8 @@
-import { createContext, useContext } from 'react'
+import { RefObject, createContext, useContext } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
 import type { Sizes } from './interface'
 import { noop } from './shared'
+import { TreeMapComponent } from './components/tree-map'
 
 export interface ApplicationConfig {
   sizes: Sizes
@@ -11,6 +12,7 @@ export interface ApplicationConfig {
   updateSizes: Dispatch<SetStateAction<ApplicationConfig['sizes']>>
   updateScence: Dispatch<SetStateAction<ApplicationConfig['scence']>>
   updateDrawerVisible: Dispatch<SetStateAction<ApplicationConfig['drawerVisible']>>
+  treemap: RefObject<TreeMapComponent>
 }
 
 export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
@@ -26,7 +28,8 @@ const defaultApplicationContext = <ApplicationConfig>{
   scence: new Set(),
   updateSizes: noop,
   updateScence: noop,
-  updateDrawerVisible: noop
+  updateDrawerVisible: noop,
+  treemap: { current: null }
 }
 
 export const ApplicationContext = createContext<ApplicationConfig>(defaultApplicationContext)

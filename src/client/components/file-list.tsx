@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
-import { Checkbox, Spacer, Text } from '@geist-ui/core'
+import { Checkbox, Spacer } from '@geist-ui/core'
 import style9 from 'style9'
-import { convertBytes, noop } from '../shared'
+import { noop } from '../shared'
 import type { Foam, Sizes } from '../interface'
+import { ModuleItem } from './module-item'
 
 export interface FileListProps<F> {
   files: F[]
@@ -15,16 +16,6 @@ export interface FileListProps<F> {
 const styles = style9.create({
   container: {
     overflow: 'hidden'
-  },
-  textContainer: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  text: {
-    flex: '1',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
   }
 })
 
@@ -38,8 +29,7 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
         acc[0].extra += meta.extra
         acc.push(meta)
         return acc
-      }, [{ name: 'All', extra: 0 }])
-      .map(meta => ({ ...meta, extra: convertBytes(meta.extra) })),
+      }, [{ name: 'All', extra: 0 }] as { name: string, extra: number }[]),
     [userFiles, extra]
   )
 
@@ -55,7 +45,7 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
 
   return (
     <div className={styles('container')}>
-      <div className={styles('textContainer')}>
+      <ModuleItem name={all.name} size={all.extra}>
         <Checkbox
           value={all.name}
           font="14px"
@@ -63,28 +53,13 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
           checked={checkAll}
           onChange={() => onChange(checkAll ? [] : userFiles.map(v => v.id))}
         />
-        <div className={styles('text')}>{all.name}</div>
-        <Text b>
-          (
-          {all.extra}
-          )
-        </Text>
-      </div>
+      </ModuleItem>
       <Spacer h={0.75} />
       <Checkbox.Group font="14px" scale={0.85} value={groupValues} onChange={onChange}>
         {files.map(file => (
-          <span key={file.name}>
-            <div className={styles('textContainer')}>
-              <Checkbox value={file.name} />
-              <div className={styles('text')}>{file.name}</div>
-              <Text b>
-                (
-                {file.extra}
-                )
-              </Text>
-            </div>
-            <Spacer h={0.5} />
-          </span>
+          <ModuleItem name={file.name} size={file.extra} key={file.name}>
+            <Checkbox value={file.name} />
+          </ModuleItem>
         ))}
       </Checkbox.Group>
     </div>

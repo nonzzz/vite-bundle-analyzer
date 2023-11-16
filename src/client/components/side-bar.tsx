@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import style9 from 'style9'
-import { Button, Drawer, Grid, Select, Spacer, Text } from '@geist-ui/core'
+import { Button, Drawer, Grid, Select, Text } from '@geist-ui/core'
 import Menu from '@geist-ui/icons/menu'
 import { tuple } from '../shared'
 import { useApplicationContext } from '../context'
 import type { Sizes } from '../interface'
 import { FileList } from './file-list'
+import { SearchModules } from './search-modules'
 
 const styles = style9.create({
   visible: {
@@ -15,6 +16,9 @@ const styles = style9.create({
     top: '10px',
     left: '10px',
     zIndex: 10
+  },
+  sideBar: {
+    minWidth: '450px'
   }
 })
 
@@ -72,11 +76,17 @@ export function SideBar() {
         icon={<Menu />}
         onClick={() => updateDrawerVisible((pre) => !pre)}
       />
-      <Drawer visible={drawerVisible} placement="left" onClose={() => updateDrawerVisible(false)} w="400px">
-        <Drawer.Content>
+      <Drawer
+        visible={drawerVisible}
+        placement="left"
+        padding={0}
+        onClose={() => updateDrawerVisible(false)}
+        className={styles('sideBar')}
+        width="15vw"
+      >
+        <Drawer.Content paddingTop={0.25}>
           <div>
             <Text p b h3>Treemap Sizes:</Text>
-            <Spacer h="0.5" />
             <Grid.Container gap={1} wrap="nowrap">
               {
                                 MODES.map(button => (
@@ -92,18 +102,17 @@ export function SideBar() {
                                   </Grid>
                                 )
                                 )
-              }
+                            }
             </Grid.Container>
           </div>
-          <Spacer h="1.5" />
           <div>
             <Text p b h3>Filter by entrypoints:</Text>
-            <Spacer h="0.5" />
             <Select
-              pr={5}
               scale={0.75}
               placeholder="Select endpoints"
               multiple
+              type="secondary"
+              width="95.5%"
               onChange={handleFilterByEntrypoints}
             >
               {entrypointChunks.map(chunk => (
@@ -111,10 +120,12 @@ export function SideBar() {
               ))}
             </Select>
           </div>
-          <Spacer h="1.5" />
+          <div>
+            <Text p b h3>Search modules:</Text>
+            <SearchModules extra={sizes} files={allChunks} />
+          </div>
           <div>
             <Text p b h3>Show Chunks:</Text>
-            <Spacer h="0.5" />
             <FileList
               files={allChunks}
               extra={sizes}
