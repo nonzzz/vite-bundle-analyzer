@@ -88,21 +88,19 @@ export function SideBar() {
           <div>
             <Text p b h3>Treemap Sizes:</Text>
             <Grid.Container gap={1} wrap="nowrap">
-              {
-                                MODES.map(button => (
-                                  <Grid key={button}>
-                                    <Button
-                                      onClick={() => handleRadioChange(button)}
-                                      auto
-                                      type={mode === button ? 'secondary' : 'default'}
-                                      scale={0.7}
-                                    >
-                                      {button}
-                                    </Button>
-                                  </Grid>
-                                )
-                                )
-                            }
+              {MODES.map(button => (
+                <Grid key={button}>
+                  <Button
+                    onClick={() => handleRadioChange(button)}
+                    auto
+                    type={mode === button ? 'secondary' : 'default'}
+                    scale={0.7}
+                  >
+                    {button}
+                  </Button>
+                </Grid>
+              )
+              ) }
             </Grid.Container>
           </div>
           <div>

@@ -1,11 +1,21 @@
+## 0.3.0
+
+# Features
+
+- Client Add Search function. #6
+
+### credits
+
+@a3mitskevich
+
 ## 0.2.0
 
-### Improve & Features
+# Improve & Features
 
-- Client Add Filter by entrypoints. 
+- Client Add Filter by entrypoints.
 - Perf client side-bar styles.
 
-### Minor
+# Minor
 
 - Changed output target to `build.outDir` by default.
 
@@ -19,7 +29,6 @@
 
 This version is a stable version that implements most of the functions of `webpack-bundle-analyzer`.
 Provide a more streamlined configuration.
-
 
 ## 0.0.1
 

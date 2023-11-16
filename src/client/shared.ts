@@ -34,20 +34,19 @@ export function hashCode(str: string) {
 }
 
 export function exists(value: unknown): boolean {
-  return value !== null && value !== undefined;
+  return value !== null && value !== undefined
 }
 
-
-type PredicateFunction<T> = (value: T) => any;
+type PredicateFunction<T> = (value: T) => any
 
 export function uniqBy<T, K extends keyof T = keyof T>(array: T[], predicate: K | PredicateFunction<T>): T[] {
-  const predicateFn = typeof predicate === 'function' ? predicate : ((value: T) => value[predicate]);
+  const predicateFn = typeof predicate === 'function' ? predicate : (value: T) => value[predicate]
   const uniq = array.reduce((acc, value) => {
-    const key = <K>predicateFn(value);
+    const key = <K>predicateFn(value)
     if (!exists(acc[key])) {
-      acc[key] = value;
+      acc[key] = value
     }
-    return acc;
-  }, {} as Record<K, T>);
-  return Object.values(uniq);
+    return acc
+  }, {} as Record<K, T>)
+  return Object.values(uniq)
 }
