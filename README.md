@@ -1,6 +1,17 @@
 <p align="center">
-<img src="https://socialify.git.ci/nonzzz/vite-bundle-analyzer/image?description=1&language=1&logo=https%3A%2F%2Fcamo.githubusercontent.com%2F61e102d7c605ff91efedb9d7e47c1c4a07cef59d3e1da202fd74f4772122ca4e%2F68747470733a2f2f766974656a732e6465762f6c6f676f2e737667&name=1&pattern=Circuit%20Board&theme=Auto" alt="vite-bundle-analyzer" width="640" height="320" />
+  <img src="https://socialify.git.ci/nonzzz/vite-bundle-analyzer/image?description=1&language=1&logo=https%3A%2F%2Fcamo.githubusercontent.com%2F61e102d7c605ff91efedb9d7e47c1c4a07cef59d3e1da202fd74f4772122ca4e%2F68747470733a2f2f766974656a732e6465762f6c6f676f2e737667&name=1&pattern=Circuit%20Board&theme=Auto" alt="vite-bundle-analyzer" width="640" height="320" />
 <p>
+<p align="center">
+  <a href="https://npmjs.com/package/vite-bundle-analyzer">
+    <img src="https://img.shields.io/npm/v/vite-bundle-analyzer.svg">
+  </a>
+  <a href="https://npmjs.com/package/vite-bundle-analyzer">
+    <img src="https://img.shields.io/npm/dm/vite-bundle-analyzer.svg">
+  </a>
+  <a href='https://github.com/sindresorhus/awesome'>
+    <img src='https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg' alt='Awesome'>
+  </a>
+</p>
 
 ## Install
 
@@ -22,19 +33,19 @@ import { defineConfig } from "vite";
 import { analyzer } from "vite-bundle-analyzer";
 
 export default defineConfig({
-  plugins: [
-    // ...your plugin
-    analyzer(),
-  ],
+    plugins: [
+        // ...your plugin
+        analyzer(),
+    ],
 });
 ```
 
 ## Options
 
 | params         | type                   | default       | description                                                          |
-| -------------- | ---------------------- | ------------- | -------------------------------------------------------------------- |
+|----------------|------------------------|---------------|----------------------------------------------------------------------|
 | `analyzerMode` | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                  |
-| `filename`     | `string`               | `stats`       | The name of the static product.（No need extname）                   |
+| `filename`     | `string`               | `stats`       | The name of the static product.（No need extname）                     |
 | `reportTitle`  | `string`               | `plugin name` | Report website title.                                                |
 | `gzipOptions`  | `Record<string,any>`   | `{}`          | Compression options (details see `zlib module`)                      |
 | `analyzerPort` | `number\|'auto'`       | `8888`        | static server port                                                   |
@@ -44,6 +55,19 @@ export default defineConfig({
 
 [MIT](./LICENSE)
 
-### Author
+### Contributions
 
-Kanno
+Contributions are welcome! If you find a bug or want to add a new feature, please open an issue or submit a pull
+request.
+
+### Author and contributors
+
+<p align="center">
+  <a href="https://github.com/nonzzz">
+    <img src="https://avatars.githubusercontent.com/u/52351095?v=4&s=40" width="40" height="40" alt="Kanno">
+  </a>
+  <a href="https://github.com/contributor1">
+    <img src="https://avatars.githubusercontent.com/u/77048647?v=4&s=40" width="40" height="40" alt="Aleksandr Mitskevich">
+  </a>
+  <!-- Add more contributors as needed -->
+</p>
