@@ -9,7 +9,7 @@ export default defineConfig(async ({ mode }) => {
     plugins: [react(), style9({ fileName: 'style.css' })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
-      minify: false,
+      minify: true,
       emptyOutDir: true
     },
     base: './'
