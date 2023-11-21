@@ -39,6 +39,7 @@
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.0.1",
     "minify-html-literals": "^1.3.5",
+    "preact": "^10.19.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "style9": "^0.18.2",

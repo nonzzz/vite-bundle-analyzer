@@ -6,6 +6,14 @@ import type { UserConfig } from 'vite'
 
 export default defineConfig(async ({ mode }) => {
   const base = <UserConfig>{
+    resolve: {
+      alias: [
+        { find: 'react', replacement: 'preact/compat' },
+        { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
+        { find: 'react-dom', replacement: 'preact/compat' },
+        { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
+      ]
+    },
     plugins: [react(), style9({ fileName: 'style.css' })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),

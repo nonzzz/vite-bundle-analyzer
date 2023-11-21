@@ -12,7 +12,7 @@
       "module": "ESNext",
       "moduleResolution": "node",
       "jsx": "react-jsx",
-      "strict": true
+      "strict": true,
     }
   }
   

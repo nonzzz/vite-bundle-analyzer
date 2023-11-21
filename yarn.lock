@@ -4567,6 +4567,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"preact@npm:^10.19.2":
+  version: 10.19.2
+  resolution: "preact@npm:10.19.2"
+  checksum: fec27fa3f14ac2d7a5061818d0cf2973ffaece83126047a47e5a075aa8e40ca56b5fcebc36106ee9cf59be0aeb51f3d996760e158d2a2660b42cbfb2e71f37bf
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -5668,6 +5675,7 @@ __metadata:
     fast-glob: ^3.3.1
     minify-html-literals: ^1.3.5
     open: ^9.1.0
+    preact: ^10.19.2
     react: ^18.2.0
     react-dom: ^18.2.0
     sirv: ^2.0.3
