@@ -1,3 +1,9 @@
+## 0.4.0
+
+# Improve
+
+- Reduce package size.(Three quarters).
+
 ## 0.3.0
 
 # Features
