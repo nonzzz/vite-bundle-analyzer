@@ -160,7 +160,7 @@ export class AnalyzerModule {
         Object.assign(latest, await this.traverse(node))
       } else {
         latest.gzipSize = (await this.compress(node.code)).byteLength
-        Object.assign(latest, pick(node, ['path', 'id', 'label', 'statSize', 'parsedSize', 'statSize']))
+        Object.assign(latest, pick(node, ['path', 'id', 'label', 'statSize', 'parsedSize']))
       }
       latest.isEntry = node.isEntry
       return latest
