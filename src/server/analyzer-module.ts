@@ -153,68 +153,78 @@ export class AnalyzerModule {
   }
 
   async processFoamModule() {
-    let foams: Foam[] = await Promise.all(this.modules.map(async (node) => ({ ...await this.traverse(node), isAsset: true })))
-
-    const findEntrypointsRelatedNodes = (nodes: Foam[]): Record<string, Set<string>> => {
-      const mapImports = (entry: Foam, exclude: string[] = []): Foam[] => {
-        const processed = entry.imports.flatMap(id => foams
-          .filter(foam => !exclude.includes(foam.id) && foam.id === generateNodeId(id)))
-        const newExclude = processed.map(foam => foam.id).concat(exclude)
-        return processed.flatMap(foam => mapImports(foam, newExclude)).concat(processed)
+    // calc phase. skip the top layer.
+    const foams = await Promise.all(this.modules.map(async (node) => {
+      const latest = <Foam>{ isAsset: true }
+      if (node.children.length) {
+        Object.assign(latest, await this.traverse(node))
+      } else {
+        latest.gzipSize = (await this.compress(node.code)).byteLength
+        Object.assign(latest, pick(node, ['path', 'id', 'label', 'statSize', 'parsedSize', 'statSize']))
       }
-
-      return nodes.filter(node => node.isEntry)
-        .reduce((acc, entry) => {
-          mapImports(entry).forEach(relative => {
-            if (!acc[relative.id]) {
-              acc[relative.id] = new Set()
-            }
-            acc[relative.id].add(entry.id)
-          })
-          return acc
-        }, {} as Record<string, Set<string>>)
-    }
-
-    const entrypointsMap = findEntrypointsRelatedNodes(foams)
-    foams = foams.map(node => ({ ...node, imports: Array.from(entrypointsMap[node.id] ?? []) }))
-    const mergeNodes = (node: Foam) => {
-      if (Array.isArray(node.groups)) {
-        if (node.groups.length === 1 && !path.extname(node.id)) {
-          const childNode = node.groups[0]
-          node.id = `${node.id}/${childNode.id}`
-          node.label = `${node.label}/${childNode.label}`
-          node.path = `${node.path}/${childNode.path}`
-          node.gzipSize = childNode.gzipSize
-          node.statSize = childNode.statSize
-          node.parsedSize = childNode.parsedSize
-          node.groups = childNode.groups
-          mergeNodes(node)
-        } else {
-          node.groups.forEach(mergeNodes)
+      latest.isEntry = node.isEntry
+      return latest
+    }))
+    // We only consider top layer entryPointer
+    function findEntrypointsRelatedNodes(nodes: AnalyzerNode[]) {
+      const entries = nodes.filter(node => node.isEntry)
+      const entrypointsMap: Record<string, Set<string>> = {}
+    
+      const mapImports = (entry: AnalyzerNode, exclude: string[] = []) => {
+        const processed: AnalyzerNode[] = []
+        for (const id of entry.imports) {
+          const foam = nodes.find(node => !exclude.includes(node.id) && node.id === generateNodeId(id))
+          if (foam) {
+            processed.push(foam)
+            const newExclude = [...exclude, foam.id]
+            const imports = mapImports(foam, newExclude)
+            processed.push(...imports)
+          }
         }
+        return processed
       }
+    
+      for (const entry of entries) {
+        const imports = mapImports(entry)
+        imports.forEach(relative => {
+          if (!entrypointsMap[relative.id]) {
+            entrypointsMap[relative.id] = new Set()
+          }
+          entrypointsMap[relative.id].add(entry.id)
+        })
+      }
+    
+      return entrypointsMap
     }
-    foams.forEach(mergeNodes)
-    return foams
+    const entrypointsMap = findEntrypointsRelatedNodes(this.modules)
+    return foams.map(node => ({ ...node, imports: Array.from(entrypointsMap[node.id] ?? []) }))
   }
 
-  private async traverse(node: AnalyzerNode) {
-    const base = pick(node, ['id', 'label', 'path', 'gzipSize', 'statSize', 'parsedSize', 'gzipSize', 'imports', 'isEntry'])
-    // @ts-ignore
-    base.imports = Array.from(base.imports)
-    base.gzipSize = (await this.compress(node.code)).byteLength
-    if (node.children.length) {
-      const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
-      const { statSize, parsedSize, gzipSize } = groups.reduce((acc, cur) => {
-        acc.statSize += cur.statSize
-        acc.parsedSize += cur.parsedSize
-        acc.gzipSize += cur.gzipSize
-        return acc
-      }, { statSize: 0, parsedSize: 0, gzipSize: 0 })
-      Object.assign(base, { groups, statSize, parsedSize, gzipSize })
+  private async traverse(node: AnalyzerNode): Promise<Foam> {
+    if (!node.children.length) {
+      return <Foam>{
+        ...pick(node, ['path', 'id', 'label', 'statSize', 'parsedSize']),
+        gzipSize: (await this.compress(node.code)).byteLength
+      }
     }
-    // @ts-ignore
-    return base as Foam
+    const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
+    // merge folder
+    if (groups.length === 1 && !path.extname(node.id)) {
+      const merged = <Foam>{}
+      const childNode = groups[0]
+      merged.id = `${node.id}${childNode.id}`
+      merged.label = `${node.label}/${childNode.label}`
+      merged.path = `${node.path}/${childNode.path}`
+      Object.assign(merged, pick(childNode, ['gzipSize', 'statSize', 'parsedSize', 'groups']))
+      return merged
+    }
+    const { statSize, parsedSize, gzipSize } = groups.reduce((acc, cur) => {
+      acc.statSize += cur.statSize
+      acc.parsedSize += cur.parsedSize
+      acc.gzipSize += cur.gzipSize
+      return acc
+    }, { statSize: 0, parsedSize: 0, gzipSize: 0 })
+    return <Foam>{ ...pick(node, ['path', 'id', 'label']), statSize, parsedSize, gzipSize, groups }
   }
 }
 

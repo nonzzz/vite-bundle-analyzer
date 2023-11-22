@@ -40,6 +40,7 @@ export interface Foam {
   gzipSize: number
   groups: Array<Foam>
   imports: Array<string>
+  isAsset?: boolean
 }
 
 export interface BasicAnalyzerPluginOptions {
