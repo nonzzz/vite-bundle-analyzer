@@ -3,7 +3,7 @@ import fsp from 'fs/promises'
 import type { Plugin } from 'vite'
 import { name } from '../../package.json'
 import { renderView } from './render'
-import type { AnalyzerPluginOptions, AnalyzerPluginOptionsWithServer } from './interface'
+import type { AnalyzerPluginOptions } from './interface'
 import { createAnalyzerModule } from './analyzer-module'
 import { createServer } from './server'
 
@@ -13,11 +13,7 @@ async function openBrowser(address: string) {
   await import('open').then((module) => module.default(address, { newInstance: true })).catch(() => {})
 }
 
-const defaultAnalyzerOptions: AnalyzerPluginOptionsWithServer = {
-  analyzerMode: 'server'
-}
-
-function analyzer(opts: AnalyzerPluginOptions = defaultAnalyzerOptions): Plugin {
+function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plugin {
   const { reportTitle = name } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   let defaultWd = process.cwd()
