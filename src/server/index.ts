@@ -55,12 +55,12 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plu
         : config.build.sourcemap === 'hidden' ? true : false
       hijackViteMinifyPlugin(config)
     },
-    generateBundle(_, outputBundle) {
+    async generateBundle(_, outputBundle) {
       // After consider. I trust process chunk is enougth. (If you don't think it's right. PR welcome.)
       for (const bundleName in outputBundle) {
         const bundle = outputBundle[bundleName]
         if (bundle.type !== 'chunk') continue
-        analyzerModule.addModule(bundleName, bundle)
+        await analyzerModule.addModule(bundleName, bundle)
         if (!previousSourcemapOption && bundle.sourcemapFileName) {
           Reflect.deleteProperty(outputBundle, bundle.sourcemapFileName)
         }
