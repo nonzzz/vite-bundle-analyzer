@@ -6,6 +6,8 @@ import type { OutputChunk, PluginContext } from './interface'
 
 const defaultWd = slash(process.cwd())
 
+type NodeKind = 'stat' | 'source'
+
 function getAbsPath(p: string) {
   p = slash(p)
   return p.replace(defaultWd, '').replace(/\0/, '')
@@ -62,6 +64,7 @@ export class BaseNode {
   path: string
   // eslint-disable-next-line no-use-before-define
   pairs: Record<string, BaseNode>
+  pairIds: Array<string>
   // eslint-disable-next-line no-use-before-define
   children: Array<BaseNode>
   constructor(id: string) {
@@ -70,6 +73,7 @@ export class BaseNode {
     this.path = id
     this.pairs = Object.create(null)
     this.children = []
+    this.pairIds = []
   }
 
   addPairsNode<T extends BaseNode>(key: string, node: T) {
@@ -78,25 +82,17 @@ export class BaseNode {
     node.label = key
     node.path = key
     this.pairs[key] = node
+    this.pairIds.push(key)
   }
 
   addPairs<T extends BaseNode>(node: T) {
     this.pairs[node.id] = node
+    this.pairIds.push(node.id)
     return node
   }
 
   getChild(id: string) {
     return this.pairs[id]
-  }
-
-  walk<T extends BaseNode>(node: T) {
-    if (!Object.keys(node.pairs).length) return
-    for (const name in this.pairs) {
-      const ref = this.pairs[name]
-      ref.walk(ref)
-      ref.pairs = {}
-      this.children.push(ref)
-    }
   }
 }
 
@@ -123,7 +119,7 @@ export class StatNode extends BaseNode {
 }
 
 function createStatNode(id: string, statSize: number) {
-  return new StatNode(id, statSize)
+  return new StatNode(generateNodeId(id), statSize)
 }
 
 export class AnalyzerNode extends BaseNode {
@@ -136,6 +132,7 @@ export class AnalyzerNode extends BaseNode {
   imports: Set<string>
   isAsset: boolean
   isEntry: boolean
+  private currentNodeKind: NodeKind
   constructor(id: string) {
     super(id)
     this.parsedSize = 0
@@ -147,9 +144,10 @@ export class AnalyzerNode extends BaseNode {
     this.imports = new Set()
     this.isAsset = true
     this.isEntry = false
+    this.currentNodeKind = 'stat'
   }
   
-  private processTreeNode<T extends BaseNode>(node: T) {
+  private processTreeNode(node: SourceNode | StatNode, nodeKind: NodeKind) {
     const paths = lexPaths(node.id)
     if (paths.length === 1) {
       this.addPairsNode(node.id, node)
@@ -159,7 +157,9 @@ export class AnalyzerNode extends BaseNode {
     let reference: BaseNode = this
     folders.forEach((folder) => {
       let childNode = reference.getChild(folder)
-      if (!childNode) childNode = reference.addPairs(new BaseNode(folder))
+      if (!childNode) {
+        childNode = reference.addPairs(nodeKind === 'stat' ? createStatNode(folder, 0) : createSourceNode(folder, 0, 0))
+      }
       reference = childNode
     })
     if (fileName) {
@@ -183,6 +183,17 @@ export class AnalyzerNode extends BaseNode {
         this.stats.push(node)
       }
     }
+    // First handle the virtual moudle
+    // Then handle the rest
+    const virtuals = bundle.moduleIds.filter(m => m.startsWith('\0'))
+    await Promise.all(virtuals.map(async (virtual) => {
+      const virtualModule = pluginContext.getModuleInfo(virtual)
+      if (virtualModule) {
+        const code = Buffer.from(virtualModule.code ?? '', 'utf8')
+        const result = await compress(code)
+        this.source.push(createSourceNode(virtualModule.id, code.byteLength, result.byteLength))
+      }
+    }))
     for (const sourceId in source) {
       if (!bundle.moduleIds.length) continue
       const matched = bundle.moduleIds.find(id => id.match(sourceId))
@@ -192,46 +203,85 @@ export class AnalyzerNode extends BaseNode {
         this.source.push(createSourceNode(matched, code.byteLength, result.byteLength))
       }
     }
-    this.stats = this.prepareNestedNodes(this.stats)
-    this.children = []
-    this.source = this.prepareNestedNodes(this.source)
-    this.children = []
+    this.currentNodeKind = 'stat'
+    this.stats = this.prepareNestedNodes(this.stats, this.currentNodeKind) as StatNode[]
+    this.currentNodeKind = 'source'
+    this.source = this.prepareNestedNodes(this.source, this.currentNodeKind) as SourceNode[]
     this.isEntry = bundle.isEntry
-    this.stats = this.stats.map(stat => this.traverse(stat))
-    this.source = this.source.map(s => this.traverse(s))
   }
 
-  private prepareNestedNodes<T extends BaseNode>(nodes: T[]) {
+  private prepareNestedNodes(nodes: Array<StatNode | SourceNode>, kind: NodeKind) {
     while (nodes.length) {
       const current = nodes.shift()
       if (!current) break
-      this.processTreeNode(current)
+      this.processTreeNode(current, kind)
     }
-    this.walk(this)
-    this.pairs = {}
-    return this.children as T[]
+    this.walk(this, (node, parentNode) => {
+      parentNode.children.push(node)
+    })
+    // children is a temporay storage.
+    return this.mergeFolder()
   }
 
-  private traverse<T>(node: BaseNode): T {
-    if (!node.children.length) {
-      if (node instanceof StatNode) {
-        return pick(node, ['id', 'path', 'label', 'statSize']) as T
+  private walk(node: BaseNode, handler: (node: BaseNode, parent: BaseNode) => void) {
+    if (!node.pairIds.length) return 
+    node.pairIds.forEach((id) => {
+      if (id in node.pairs) {
+        const reference = node.pairs[id]
+        handler(reference, node)
+        this.walk(reference, handler)
       }
-      if (node instanceof SourceNode) {
-        return pick(node, ['id', 'path', 'label', 'parsedSize', 'gzipSize']) as T
+    })
+    node.pairIds = []
+    node.pairs = {}
+  }
+
+  private mergeFolder(): SourceNode[] | StatNode[] {
+    const mergeFolderImpl = (node: BaseNode): any => {
+      if (!node.children.length) {
+        if (node instanceof StatNode) {
+          return pick(node, ['id', 'path', 'label', 'statSize'])
+        }
+        if (node instanceof SourceNode) {
+          return pick(node, ['id', 'path', 'label', 'parsedSize', 'gzipSize'])
+        }
+      }
+      const groups = node.children.map(mergeFolderImpl)
+      if (groups.length === 1 && !path.extname(node.id)) {
+        const merged = <StatNode | SourceNode>{}
+        const childNode = groups[0]!
+        merged.id = `${node.id}/${childNode.id}`
+        merged.label = `${node.label}/${childNode.label}`
+        merged.path = `${node.path}/${childNode.path}`
+        if (node instanceof StatNode) {
+          Object.assign(merged, pick(childNode, ['statSize', 'children']))
+          return merged
+        }
+        if (node instanceof SourceNode) {
+          Object.assign(merged, pick(childNode, ['parsedSize', 'gzipSize', 'children']))
+          return merged
+        }
+      }
+      if (this.currentNodeKind === 'stat') {
+        const { statSize } = (groups as StatNode[]).reduce((acc, cur) => {
+          acc.statSize += cur.statSize
+          return acc
+        }, { statSize: 0 })
+        return { ...pick(node, ['id', 'path', 'label']), statSize, children: groups }
+      }
+      if (this.currentNodeKind === 'source') {
+        const { parsedSize, gzipSize } = (groups as SourceNode[]).reduce((acc, cur) => {
+          acc.parsedSize += cur.parsedSize
+          acc.gzipSize += cur.gzipSize
+          return acc
+        }, { parsedSize: 0, gzipSize: 0 })
+        return { ...pick(node, ['id', 'path', 'label']), parsedSize, gzipSize, children: groups }
       }
     }
-    const children = node.children.map(child => this.traverse(child))
-    if (children.length === 1 && !path.extname(node.id)) {
-      const merged = <any>{}
-      const childNode = children[0] as any
-      merged.id = `${node.id}${childNode.id}`
-      merged.label = `${node.label}/${childNode.label}`
-      merged.path = `${node.path}/${childNode.path}`
-      Object.assign(merged, pick(childNode, ['parsedSize', 'gzipSize', 'statSize', 'children']))
-      return merged
-    }
-    return { ...pick(node, ['id', 'path', 'label']), children } as T
+
+    const result = this.children.map(child => mergeFolderImpl(child))
+    this.children = []
+    return result
   }
 }
 
