@@ -1,7 +1,5 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
-
-import { SourceMapConsumer } from 'source-map'
 import { createGzip, pick, slash } from './shared'
 import type { Foam, OutputChunk, RenderedModule } from './interface'
 
@@ -22,34 +20,6 @@ function lexPaths(p: string) {
     paths.push(latest)
   }
   return [paths, fileName]
-}
-
-async function getChunkContent(code: string, sourceMap: any) {
-  if (!sourceMap) return {}
-  const modules: Record<string, string> = {}
-  await SourceMapConsumer.with(sourceMap, null, consumer => {
-    let line = 1
-    let column = 0
-    for (let i = 0; i < code.length; i++, column++) {
-      const { source } = consumer.originalPositionFor({
-        line,
-        column
-      })
-      if (source) {
-        const id = source.replace(/\.\.\//g, '')
-        if (id in modules) {
-          modules[id] += code[i]
-        } else {
-          modules[id] = code[i]
-        }
-      }
-      if (code[i] === '\n') {
-        line += 1
-        column = -1
-      }
-    }
-  })
-  return modules
 }
 
 export class AnalyzerNode {
@@ -129,17 +99,10 @@ export class AnalyzerNode {
     imports.forEach((imp) => this.imports.add(imp))
   }
 
-  async setup(bundle: OutputChunk) {
-    const modules = bundle.modules
-    const modulesWithSourcemap = await getChunkContent(bundle.code, bundle.map)
+  setup(modules: Record<string, RenderedModule>) {
     for (const moduleId in modules) {
       const info = modules[moduleId]
-      const node = createAnalyzerNode(moduleId, info)
-      fixAnalyzerNode(node, modulesWithSourcemap)
-      this.children.push(node)
-      // if (node.id.endsWith('.mjs') || node.id.endsWith('.js')) {
-       
-      // }
+      this.children.push(createAnalyzerNode(moduleId, info))
       this.statSize += info.originalLength
       this.parsedSize += info.renderedLength
     }
@@ -163,22 +126,6 @@ export class AnalyzerNode {
   }
 }
 
-function fixAnalyzerNode(node: AnalyzerNode, modules: Record<string, string>) {
-  // TODO
-  const moduleKeys = Object.keys(modules)
-  if (!moduleKeys.length) return
-  const matched = moduleKeys.find(id => node.id.match(id))
-  if (matched) {
-    node.code = Buffer.from(modules[matched], 'utf8')
-    node.parsedSize = node.code.byteLength
-  } else {
-    const suffix = path.extname(node.id)
-    if (['.cjs', '.mjs', '.js'].includes(suffix)) {
-      node.parsedSize = 0
-    }
-  }
-}
-
 function generateNodeId(id: string): string {
   const abs = getAbsPath(id)
   return path.isAbsolute(abs) ? abs.replace('/', '') : abs
@@ -191,15 +138,16 @@ function createAnalyzerNode(id: string, chunk: OutputChunk | RenderedModule) {
 export class AnalyzerModule {
   compress: ReturnType<typeof createGzip>
   modules: AnalyzerNode[]
+
   constructor(opt?: ZlibOptions) {
     this.compress = createGzip(opt)
     this.modules = []
   }
 
-  async addModule(bundleName: string, bundle: OutputChunk) {
+  addModule(bundleName: string, bundle: OutputChunk) {
     const node = createAnalyzerNode(bundleName, bundle)
     node.addImports(...bundle.imports, ...bundle.dynamicImports)
-    await node.setup(bundle)
+    node.setup(bundle.modules)
     node.pairs = {}
     this.modules.push(node)
   }
@@ -254,16 +202,9 @@ export class AnalyzerModule {
 
   private async traverse(node: AnalyzerNode): Promise<Foam> {
     if (!node.children.length) {
-      if (/\.(js|mjs|cjs|vue)$/.test(node.id)) {
-        return <Foam>{
-          ...pick(node, ['path', 'id', 'label', 'statSize', 'parsedSize']),
-          gzipSize: (await this.compress(node.code)).byteLength
-        }
-      }
       return <Foam>{
-        ...pick(node, ['path', 'id', 'label', 'statSize']),
-        gzipSize: 0,
-        parsedSize: 0
+        ...pick(node, ['path', 'id', 'label', 'statSize', 'parsedSize']),
+        gzipSize: (await this.compress(node.code)).byteLength
       }
     }
     const groups = await Promise.all(node.children.map((child) => this.traverse(child)))
