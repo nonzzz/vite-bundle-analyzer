@@ -173,34 +173,64 @@ export class AnalyzerNode extends BaseNode {
 
   async setup(bundle: OutputChunk, pluginContext: PluginContext, compress: ReturnType<typeof createGzip>) {
     const modules = bundle.modules
+    const code = Buffer.from(bundle.code, 'utf8')
+    const compressed = await compress(code)
+    this.gzipSize = compressed.byteLength
+    this.parsedSize = code.byteLength
     const source = await getSourceMapContent(bundle.code, bundle.map)
     for (const moduleId in modules) {
       const info = pluginContext.getModuleInfo(moduleId)
       if (!info) continue
       const { id } = info
-      if (/\.(js|mjs|cjs)$/.test(id) || id.startsWith('\0')) {
+      if (/\.(mjs|js|ts|vue|jsx|tsx|svelte)(\?.*|)$/.test(id) || id.startsWith('\0')) {
         const node = createStatNode(id, modules[moduleId].originalLength)
+        this.statSize += node.statSize
         this.stats.push(node)
       }
     }
-    // First handle the virtual moudle
+    // Handle the virtual moudle (For some reason we can only merge these chunks)
     // Then handle the rest
     const virtuals = bundle.moduleIds.filter(m => m.startsWith('\0'))
-    await Promise.all(virtuals.map(async (virtual) => {
-      const virtualModule = pluginContext.getModuleInfo(virtual)
-      if (virtualModule) {
-        const code = Buffer.from(virtualModule.code ?? '', 'utf8')
-        const result = await compress(code)
-        this.source.push(createSourceNode(virtualModule.id, code.byteLength, result.byteLength))
-      }
-    }))
+    const fullModuleCalc = {
+      parsedSize: 0,
+      gzipSize: 0
+    }
     for (const sourceId in source) {
       if (!bundle.moduleIds.length) continue
       const matched = bundle.moduleIds.find(id => id.match(sourceId))
       if (matched) {
         const code = Buffer.from(source[sourceId], 'utf8')
         const result = await compress(code)
+        fullModuleCalc.gzipSize += result.byteLength
+        fullModuleCalc.parsedSize += code.byteLength
         this.source.push(createSourceNode(matched, code.byteLength, result.byteLength))
+      }
+    }
+    if (virtuals.length > 0) {
+      const { code } = bundle
+      const sourceId = bundle.map!.sources[0]
+      if (sourceId) {
+        let restCode: Buffer | null = null
+        await SourceMapConsumer.with(bundle.map! as any, null, consumer => {
+          let line = 1
+          let column = 0
+          for (let i = 0; i < code.length; i++, column++) {
+            const { source } = consumer.originalPositionFor({
+              line,
+              column
+            })
+            if (source === sourceId) {
+              restCode = Buffer.from(code.substring(0, column), 'utf8')
+              break
+            }
+            if (code[i] === '\n') {
+              line += 1
+              column = -1
+            }
+          }
+        })
+        const restCompressed = restCode ? (await compress(restCode)).byteLength : 0
+        this.source.push(createSourceNode('\0virtual-chunks', this.parsedSize - fullModuleCalc.parsedSize, restCompressed))
       }
     }
     this.currentNodeKind = 'stat'
