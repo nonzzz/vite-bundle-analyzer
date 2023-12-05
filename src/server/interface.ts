@@ -6,13 +6,9 @@ type RenderChunkFunction = HookHandler<Plugin['renderChunk']>
 
 type GenerateBundle = HookHandler<Plugin['generateBundle']>
 
-type ConfigResolvedFunction = HookHandler<Plugin['configResolved']>
-
 const renderChunk: RenderChunkFunction = noop
 
 const generateBundle: GenerateBundle = noop
-
-const configResolved: ConfigResolvedFunction = noop
 
 export type RenderChunk = Parameters<typeof renderChunk>[1]
 
@@ -23,8 +19,6 @@ export type RenderedModule = RenderChunk['modules'][string]
 export type OutputBundle = Parameters<typeof generateBundle>[1]
 
 export type OutputChunk = Extract<OutputBundle[0], { type: 'chunk' }>
-
-export type ConfigResolveParameter = Parameters<typeof configResolved>[0]
 
 export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 

@@ -3,7 +3,7 @@ import fsp from 'fs/promises'
 import type { Plugin } from 'vite'
 import { name } from '../../package.json'
 import { renderView } from './render'
-import type { AnalyzerPluginOptions, ConfigResolveParameter } from './interface'
+import type { AnalyzerPluginOptions } from './interface'
 import { createAnalyzerModule } from './analyzer-module'
 import { createServer } from './server'
 
@@ -11,31 +11,6 @@ const isCI = !!process.env.CI
 
 async function openBrowser(address: string) {
   await import('open').then((module) => module.default(address, { newInstance: true })).catch(() => {})
-}
-
-// We hijack vite's inernal minify plugin and re set ’sourcemap‘ option for each chunk.
-// Don't worry we'll still respecet user options
-// Or we also want user to use the plugin on rollup.
-function hijackViteMinifyPlugin(conf: ConfigResolveParameter) {
-  // https://vitejs.dev/config/build-options.html#build-sourcemap
-  // ensure `sourcemap` option
-  if (!conf.build.sourcemap) conf.build.sourcemap = 'hidden'
-  // https://github.com/vitejs/vite/blob/716286ef21f4d59786f21341a52a81ee5db58aba/packages/vite/src/node/plugins/esbuild.ts#L289-L307
-  const internalPluginNames = ['vite:esbuild-transpile', 'vite:terser']
-  // Minify logic
-  // https://github.com/vitejs/vite/blob/716286ef21f4d59786f21341a52a81ee5db58aba/packages/vite/src/node/build.ts#L414-L417
-  const { minify } = conf.build
-  const name = [true, 'esbuild'].includes(minify) ? internalPluginNames[0] : minify === 'terser' ? internalPluginNames[1] : ''
-  if (!name) return 
-  const plugin = conf.plugins.find(p => p.name === name)
-  const hook = plugin?.renderChunk
-  if (!hook) return
-  if (typeof hook === 'function') {
-    plugin.renderChunk = async function (this, ...args: any) {
-      const res = await hook.apply(this, args)
-      return res
-    }
-  } 
 }
 
 function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plugin {
@@ -53,7 +28,9 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plu
       previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
         ? config.build.sourcemap
         : config.build.sourcemap === 'hidden' ? true : false
-      hijackViteMinifyPlugin(config)
+      // https://vitejs.dev/config/build-options.html#build-sourcemap
+      // ensure `sourcemap` option
+      if (!config.build.sourcemap) config.build.sourcemap = 'hidden'
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
