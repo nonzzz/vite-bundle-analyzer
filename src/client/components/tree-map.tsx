@@ -23,7 +23,8 @@ interface VisibleFoam extends Foam {
 }
 
 function travseVisibleModule(foamModule: Foam, sizes: Sizes): VisibleFoam {
-  if (foamModule.groups) foamModule.groups = foamModule.groups.map((module) => travseVisibleModule(module, sizes))
+  if (sizes === 'statSize' && foamModule.stats) foamModule.groups = foamModule.stats.map((module) => travseVisibleModule(module, sizes))
+  if ((['parsedSize', 'gzipSize'].includes(sizes)) && foamModule.source) foamModule.groups = foamModule.source.map((module) => travseVisibleModule(module, sizes))
   return { ...foamModule, weight: foamModule[sizes] }
 }
 

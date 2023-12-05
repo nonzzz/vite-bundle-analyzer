@@ -6,5 +6,5 @@ import { analyzer } from 'vite-bundle-analyzer'
 import { cdn } from 'vite-plugin-cdn2'
 
 export default defineConfig({
-  plugins: [vue(), Components({ resolvers: [VarletUIResolver()] }), cdn({ modules: ['vue'] }), analyzer()]
+  plugins: [vue(), Components({ resolvers: [VarletUIResolver()] }), cdn({ modules: ['vue'] }), analyzer({ analyzerMode: 'json' })]
 })

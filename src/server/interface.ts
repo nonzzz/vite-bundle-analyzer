@@ -44,8 +44,10 @@ export interface Foam {
   statSize: number
   parsedSize: number
   gzipSize: number
-  groups: Array<Foam>
+  source: Array<Foam>
+  stats: Array<Foam>
   imports: Array<string>
+  groups: Array<Foam>
   isAsset?: boolean
 }
 
