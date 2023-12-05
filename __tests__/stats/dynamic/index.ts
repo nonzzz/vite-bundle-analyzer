@@ -11,7 +11,9 @@ const code = `const fn = async () => {
    console.log(variable)
 }`
 
-const size = getByteLen(code_a)
+const size = getByteLen(code)
+
+const size_a = getByteLen(code_a)
 
 export default createMockStats('/assets/dynamic.js',
   {
@@ -22,16 +24,20 @@ export default createMockStats('/assets/dynamic.js',
     modules: {
       'a.js': {
         code: code_a,
-        originalLength: size,
-        renderedLength: size
+        originalLength: size_a,
+        renderedLength: size_a
       }
-    }
-  }, { id: 'assets/dynamic.js',
+    },
+    map: null,
+    moduleIds: []
+  },
+  { id: 'assets/dynamic.js',
     label: 'assets/dynamic.js',
     path: 'assets/dynamic.js',
-    statSize: size,
+    statSize: size_a,
     parsedSize: size,
-    groups: [
-      { path: 'a.js', id: 'a.js', label: 'a.js', statSize: size, parsedSize: size }
+    stats: [
+      { id: 'a.js', label: 'a.js', path: 'a.js', statSize: size_a }
     ]
-  })
+  }
+)

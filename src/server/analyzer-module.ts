@@ -183,7 +183,7 @@ export class AnalyzerNode extends BaseNode {
       if (!info) continue
       const { id } = info
       if (/\.(mjs|js|ts|vue|jsx|tsx|svelte)(\?.*|)$/.test(id) || id.startsWith('\0')) {
-        const node = createStatNode(id, modules[moduleId].originalLength)
+        const node = createStatNode(id, modules[moduleId].renderedLength)
         this.statSize += node.statSize
         this.stats.push(node)
       }
@@ -203,8 +203,8 @@ export class AnalyzerNode extends BaseNode {
       }
     }
     if (virtuals.length > 0) {
-      const { code } = bundle
-      const sourceId = bundle.map!.sources[0]
+      const { code, map } = bundle
+      const sourceId = map?.sources?.[0]
       if (sourceId) {
         let restCode: Buffer | null = null
         await SourceMapConsumer.with(bundle.map! as any, null, consumer => {
@@ -342,35 +342,24 @@ export class AnalyzerModule {
 
   processFoamModule() {
     // We only consider top layer entryPointer
-    const findEntrypointsRelatedNodes = (nodes: AnalyzerNode[]) => {
-      const entries = nodes.filter(node => node.isEntry)
-      const entrypointsMap: Record<string, Set<string>> = {}
-  
-      const mapImports = (entry: AnalyzerNode, exclude: string[] = []) => {
-        const processed: AnalyzerNode[] = []
-        for (const id of entry.imports) {
-          const foam = nodes.find(node => !exclude.includes(node.id) && node.id === generateNodeId(id))
-          if (foam) {
-            processed.push(foam)
-            const newExclude = [...exclude, foam.id]
-            const imports = mapImports(foam, newExclude)
-            processed.push(...imports)
-          }
-        }
-        return processed
+    const findEntrypointsRelatedNodes = (nodes: AnalyzerNode[]): Record<string, Set<string>> => {
+      const mapImports = (entry: AnalyzerNode, exclude: string[] = []): AnalyzerNode[] => {
+        const processed = [...entry.imports].flatMap(id => this.modules
+          .filter(foam => !exclude.includes(foam.id) && foam.id === generateNodeId(id)))
+        const newExclude = processed.map(foam => foam.id).concat(exclude)
+        return processed.flatMap(foam => mapImports(foam, newExclude)).concat(processed)
       }
-  
-      for (const entry of entries) {
-        const imports = mapImports(entry)
-        imports.forEach(relative => {
-          if (!entrypointsMap[relative.id]) {
-            entrypointsMap[relative.id] = new Set()
-          }
-          entrypointsMap[relative.id].add(entry.id)
-        })
-      }
-  
-      return entrypointsMap
+
+      return nodes.filter(node => node.isEntry)
+        .reduce((acc, entry) => {
+          mapImports(entry).forEach(relative => {
+            if (!acc[relative.id]) {
+              acc[relative.id] = new Set()
+            }
+            acc[relative.id].add(entry.id)
+          })
+          return acc
+        }, {} as Record<string, Set<string>>)
     }
     const entrypointsMap = findEntrypointsRelatedNodes(this.modules)
     return this.modules.map((module) => ({ ...pick(module, ['id', 'label', 'path', 'statSize', 'parsedSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']), 

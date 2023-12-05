@@ -1,7 +1,7 @@
 import test from 'ava'
 import type { ExecutionContext } from 'ava'
 import { createAnalyzerModule } from '../src/server/analyzer-module'
-import type { Foam } from '../src/server/interface'
+import type { Foam, OutputChunk, PluginContext } from '../src/server/interface'
 import { pick } from '../src/server/shared'
 import normal from './stats/normal'
 import dynamic from './stats/dynamic'
@@ -20,8 +20,8 @@ function assert(act: Foam, expect: Foam, fields: (keyof Foam)[], t: ExecutionCon
 test('normal analyzer', async (t) => {
   const analyzer = createAnalyzerModule({})
   const { chunk, chunkName, expect } = normal
-  analyzer.addModule(chunkName, chunk)
-  const foam = await analyzer.processFoamModule()
+  await analyzer.addModule(chunkName, chunk)
+  const foam = analyzer.processFoamModule()
   if (foam.length > 1) {
     t.fail('normal analyzer process error.')
   }
@@ -31,17 +31,26 @@ test('normal analyzer', async (t) => {
   }
 })
 
+function createMockPluginContext(ctx: OutputChunk) {
+  return <PluginContext>{
+    getModuleInfo(id: string): any {
+      return { ...ctx.modules[id], id }
+    }
+  }
+}
+
 test('dynamic analyzer', async (t) => {
   const analyzer = createAnalyzerModule({})
   const { chunk, chunkName, expect } = dynamic
-  analyzer.addModule(chunkName, chunk)
-  const foam = await analyzer.processFoamModule()
+  analyzer.installPluginContext(createMockPluginContext(chunk))
+  await analyzer.addModule(chunkName, chunk)
+  const foam = analyzer.processFoamModule()
   if (foam.length > 1) {
     t.fail('dynamic analyzer process error.')
   }
   const act = foam[0]
   if (!Array.isArray(expect)) {
     assert(act, expect, ['id', 'label', 'path', 'parsedSize', 'statSize'], t)
-    assert(act.groups[0], expect.groups[0], ['id', 'label', 'path', 'parsedSize', 'statSize'], t)
+    assert(act.stats[0], expect.stats[0], ['id', 'label', 'path', 'statSize'], t)
   } 
 })
