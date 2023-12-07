@@ -25,12 +25,16 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plu
     enforce: 'post',
     configResolved(config) {
       defaultWd = config.build.outDir ?? config.root
-      previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
-        ? config.build.sourcemap
-        : config.build.sourcemap === 'hidden' ? true : false
       // https://vitejs.dev/config/build-options.html#build-sourcemap
       // ensure `sourcemap` option
       if (!config.build.sourcemap) config.build.sourcemap = 'hidden'
+    },
+    config(config) {
+      if (config.build?.sourcemap) {
+        previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
+          ? config.build.sourcemap
+          : config.build.sourcemap === 'hidden' ? true : false
+      }
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
