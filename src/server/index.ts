@@ -18,16 +18,13 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plu
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   let defaultWd = process.cwd()
 
-  let previousSourcemapOption: any = false
+  let previousSourcemapOption: boolean = false
   const plugin = <Plugin>{
     name,
     apply: 'build',
     enforce: 'post',
     configResolved(config) {
       defaultWd = config.build.outDir ?? config.root
-      // https://vitejs.dev/config/build-options.html#build-sourcemap
-      // ensure `sourcemap` option
-      if (!config.build.sourcemap) config.build.sourcemap = 'hidden'
     },
     config(config) {
       if (config.build?.sourcemap) {
@@ -35,6 +32,11 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server' }): Plu
           ? config.build.sourcemap
           : config.build.sourcemap === 'hidden' ? true : false
       }
+      if (!config.build) {
+        config.build = {}
+      }
+      // force set sourcemap to ensure the result as accurate as possible.
+      config.build.sourcemap = 'hidden'
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
