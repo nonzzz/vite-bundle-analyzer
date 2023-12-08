@@ -1,3 +1,12 @@
+## 0.5.0
+
+# Imporve & Features
+
+- Remove unnecessary assets or chunk info.
+- parsed and gzip size closer to the actual size.
+- Modify the data struct for `stats.json`.
+- Full details see #9.
+
 ## 0.4.0
 
 # Improve
