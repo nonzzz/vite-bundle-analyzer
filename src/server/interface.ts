@@ -37,6 +37,7 @@ export interface Foam {
   path: string
   statSize: number
   parsedSize: number
+  mapSize: number
   gzipSize: number
   source: Array<Foam>
   stats: Array<Foam>
@@ -46,6 +47,7 @@ export interface Foam {
 }
 
 export interface BasicAnalyzerPluginOptions {
+  summary?: boolean,
   analyzerMode?: AnalyzerMode
   reportTitle?: string
   gzipOptions?: ZlibOptions

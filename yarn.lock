@@ -5861,6 +5861,7 @@ __metadata:
     foxact: ^0.2.29
     minify-html-literals: ^1.3.5
     open: ^9.1.0
+    picocolors: ^1.0.0
     preact: ^10.19.2
     react: ^18.2.0
     react-dom: ^18.2.0

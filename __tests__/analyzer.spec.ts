@@ -27,7 +27,7 @@ test('normal analyzer', async (t) => {
   }
   const act = foam[0]
   if (Array.isArray(expect)) {
-    assert(act, expect[0], ['id', 'label', 'path', 'parsedSize', 'statSize'], t)
+    assert(act, expect[0], ['id', 'label', 'path', 'parsedSize', 'statSize', 'mapSize'], t)
   }
 })
 
@@ -50,7 +50,7 @@ test('dynamic analyzer', async (t) => {
   }
   const act = foam[0]
   if (!Array.isArray(expect)) {
-    assert(act, expect, ['id', 'label', 'path', 'parsedSize', 'statSize'], t)
-    assert(act.stats[0], expect.stats[0], ['id', 'label', 'path', 'statSize'], t)
-  } 
+    assert(act, expect, ['id', 'label', 'path', 'parsedSize', 'mapSize', 'statSize'], t)
+    assert(act.stats[0], expect.stats[0], ['id', 'label', 'path', 'statSize', 'mapSize'], t)
+  }
 })
