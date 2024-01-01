@@ -51,7 +51,7 @@ export default defineConfig({
 | params         | type                   | default       | description                                                          |
 | -------------- | ---------------------- | ------------- | -------------------------------------------------------------------- |
 | `analyzerMode` | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                  |
-| `filename`     | `string`               | `stats`       | The name of the static product.（No need extname）                   |
+| `fileName`     | `string`               | `stats`       | The name of the static product.（No need to include `.ext` name）    |
 | `reportTitle`  | `string`               | `plugin name` | Report website title.                                                |
 | `gzipOptions`  | `Record<string,any>`   | `{}`          | Compression options (details see `zlib module`)                      |
 | `analyzerPort` | `number\|'auto'`       | `8888`        | static server port                                                   |
