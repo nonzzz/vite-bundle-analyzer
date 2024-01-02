@@ -124,6 +124,7 @@ function createStatNode(id: string, statSize: number) {
 
 export class AnalyzerNode extends BaseNode {
   parsedSize: number
+  mapSize: number
   statSize: number
   gzipSize: number
   source: Array<SourceNode>
@@ -138,6 +139,7 @@ export class AnalyzerNode extends BaseNode {
     this.parsedSize = 0
     this.statSize = 0
     this.gzipSize = 0
+    this.mapSize = 0
     this.source = []
     this.stats = []
     this.pairs = Object.create(null)
@@ -146,7 +148,7 @@ export class AnalyzerNode extends BaseNode {
     this.isEntry = false
     this.currentNodeKind = 'stat'
   }
-  
+
   private processTreeNode(node: SourceNode | StatNode, nodeKind: NodeKind) {
     const paths = lexPaths(node.id)
     if (paths.length === 1) {
@@ -177,6 +179,9 @@ export class AnalyzerNode extends BaseNode {
     const compressed = await compress(code)
     this.gzipSize = compressed.byteLength
     this.parsedSize = code.byteLength
+    if (bundle.map) {
+      this.mapSize = Buffer.from(bundle.map.toString()).byteLength
+    }
     const source = await getSourceMapContent(bundle.code, bundle.map)
     for (const moduleId in modules) {
       const info = pluginContext.getModuleInfo(moduleId)
@@ -253,7 +258,7 @@ export class AnalyzerNode extends BaseNode {
   }
 
   private walk(node: BaseNode, handler: (node: BaseNode, parent: BaseNode) => void) {
-    if (!node.pairIds.length) return 
+    if (!node.pairIds.length) return
     node.pairIds.forEach((id) => {
       if (id in node.pairs) {
         const reference = node.pairs[id]
@@ -329,7 +334,7 @@ export class AnalyzerModule {
   }
 
   installPluginContext(context: PluginContext) {
-    if (this.pluginContext) return 
+    if (this.pluginContext) return
     this.pluginContext = context
   }
 
@@ -362,8 +367,13 @@ export class AnalyzerModule {
         }, {} as Record<string, Set<string>>)
     }
     const entrypointsMap = findEntrypointsRelatedNodes(this.modules)
-    return this.modules.map((module) => ({ ...pick(module, ['id', 'label', 'path', 'statSize', 'parsedSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']), 
-      imports: Array.from(entrypointsMap[module.id] ?? []) })) as unknown as Foam[]
+    return this.modules.map((module) => ({
+      ...pick(
+        module,
+        ['id', 'label', 'path', 'statSize', 'parsedSize', 'mapSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']
+      ),
+      imports: Array.from(entrypointsMap[module.id] ?? [])
+    })) as unknown as Foam[]
   }
 }
 

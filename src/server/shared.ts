@@ -3,6 +3,8 @@ import utils from 'util'
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
 
+export * from '../shared'
+
 const gzip = utils.promisify(zlib.gzip)
 
 const defaultGzipOptions = <ZlibOptions>{
@@ -27,7 +29,7 @@ export function pick<T extends object, A extends keyof T>(data: T, attrs: A[]) {
 // MIT License
 // Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 export function slash(path: string) {
-  const isExtendedLengthPath = /^\\\\\?\\/.test(path) 
+  const isExtendedLengthPath = /^\\\\\?\\/.test(path)
   if (isExtendedLengthPath) return path
-  return path.replace(/\\/g, '/') 
+  return path.replace(/\\/g, '/')
 }

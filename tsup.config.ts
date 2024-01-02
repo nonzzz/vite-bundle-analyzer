@@ -34,5 +34,6 @@ export const tsup: Options = {
   format: ['esm', 'cjs'],
   shims: true,
   minify: true,
-  esbuildPlugins: [minifyTempalteLiteral()]
+  esbuildPlugins: [minifyTempalteLiteral()],
+  external: ['picocolors']
 }
