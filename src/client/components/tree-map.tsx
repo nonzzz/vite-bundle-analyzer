@@ -1,16 +1,16 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
-import style9 from 'style9'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import stylex from '@stylexjs/stylex'
 import { FoamTree } from '@carrotsearch/foamtree'
-import { Spacer, Text } from '@geist-ui/core'
+import { Text } from '@geist-ui/core'
 import type { FoamContext, FoamDataObject, FoamEventObject } from '@carrotsearch/foamtree'
+import { noop } from 'foxact/noop'
 import { useApplicationContext } from '../context'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, hashCode } from '../shared'
-import { Tooltip } from './tooltip'
 
 type FoamGroup = Omit<Foam, 'groups'> & { isAsset?: boolean }
 
-const styles = style9.create({
+const styles = stylex.create({
   container: {
     height: '100%',
     width: '100%',
@@ -42,7 +42,7 @@ function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
   return chunkLabel.split(/[^a-z0-9]/iu)[chunkNamePartIndex] || chunkLabel
 }
 
-function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checkedSizes: Sizes }) {
+export function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checkedSizes: Sizes }) {
   const { module, sizes, checkedSizes } = props
   if (!module[sizes]) return null
   return (
@@ -60,12 +60,14 @@ export type TreeMapComponent = {
   check: (to: FoamDataObject) => FoamDataObject | void,
 }
 
-export const TreeMap = forwardRef<TreeMapComponent>(function TreeMap(_, ref) {
-  const { foamModule, sizes, scence, drawerVisible } = useApplicationContext()
+export interface TreeMapProps {
+  onGroupHover?(group: FoamDataObject | null): void
+}
+
+export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeMap({ onGroupHover = noop }, ref) {
+  const { foamModule, sizes, scence } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<FoamTree | null>(null)
-  const [visible, setVisible] = useState<boolean>(false)
-  const [module, setModule] = useState<FoamDataObject | null>(null)
   const zoomOutDisabled = useRef<boolean>(false)
 
   const check = (group?: FoamDataObject) => {
@@ -133,13 +135,10 @@ export const TreeMap = forwardRef<TreeMapComponent>(function TreeMap(_, ref) {
     foamTreeInstance.current.resize()
   }
 
-  const handleGroupHover = (event: FoamEventObject) => {
+  const handleGroupHover = useCallback((event: FoamEventObject) => {
     const { group } = event
-    if (!group) return setVisible(false)
-    setVisible(true)
-    setModule(() => group)
-  }
-
+    onGroupHover?.(group)
+  }, [onGroupHover])
   useEffect(() => {
     if (!foamTreeInstance.current && containerRef.current) {
       foamTreeInstance.current = new FoamTree({
@@ -192,7 +191,7 @@ export const TreeMap = forwardRef<TreeMapComponent>(function TreeMap(_, ref) {
           // eslint-disable-next-line react/no-this-in-sfc
           if (event.group && (event.group.attribution || event.group === this.get<FoamDataObject>('dataObject'))) {
             event.preventDefault()
-            setVisible(false)
+            handleGroupHover(Object.create(null))
             return
           }
           handleGroupHover(event)
@@ -220,32 +219,9 @@ export const TreeMap = forwardRef<TreeMapComponent>(function TreeMap(_, ref) {
       foamTreeInstance.current = null
       window.removeEventListener('resize', resize)
     }
-  }, [chunkNamePartIndex, visibleChunks])
-
-  useEffect(() => {
-    if (!scence.size) setVisible(false)
-    if (drawerVisible) setVisible(false)
-  }, [scence, drawerVisible])
+  }, [chunkNamePartIndex, visibleChunks, handleGroupHover])
 
   return (
-    <>
-      <div className={styles('container')} ref={containerRef} />
-      <Tooltip visible={visible}>
-        {module && (
-          <div>
-            <Text p b font="14px">{module.label}</Text>
-            <Spacer h={0.5} />
-            <ModuleSize module={module} sizes="statSize" checkedSizes={sizes} />
-            <ModuleSize module={module} sizes="parsedSize" checkedSizes={sizes} />
-            <ModuleSize module={module} sizes="gzipSize" checkedSizes={sizes} />
-            <Text p font="12px">
-              path:
-              {' '}
-              {module.id}
-            </Text>
-          </div>
-        )}
-      </Tooltip>
-    </>
+    <div ref={containerRef} {...stylex.props(styles.container)} />
   )
 })

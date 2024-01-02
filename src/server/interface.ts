@@ -1,6 +1,6 @@
 import type { ZlibOptions } from 'zlib'
 import type { HookHandler, Plugin } from 'vite'
-import { noop } from './shared'
+import { noop } from 'foxact/noop'
 
 type RenderChunkFunction = HookHandler<Plugin['renderChunk']>
 

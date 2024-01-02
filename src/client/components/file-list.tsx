@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Checkbox, Spacer } from '@geist-ui/core'
-import style9 from 'style9'
-import { noop } from '../shared'
+import stylex from '@stylexjs/stylex'
+import { noop } from 'foxact/noop'
 import type { Foam, Sizes } from '../interface'
 import { ModuleItem } from './module-item'
 
@@ -13,7 +13,7 @@ export interface FileListProps<F> {
   onChange(values: string[]): void
 }
 
-const styles = style9.create({
+const styles = stylex.create({
   container: {
     overflow: 'hidden'
   }
@@ -44,7 +44,7 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
   }, [checkAll, scence, userFiles])
 
   return (
-    <div className={styles('container')}>
+    <div {...stylex.props(styles.container)}>
       <ModuleItem name={all.name} size={all.extra}>
         <Checkbox
           value={all.name}

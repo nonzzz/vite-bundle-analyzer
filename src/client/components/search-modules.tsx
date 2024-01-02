@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useMemo, useState } from 'react'
-import style9 from 'style9'
+import { ChangeEvent, useMemo, useState } from 'react'
+import stylex from '@stylexjs/stylex'
 import { Input, Spacer, Text } from '@geist-ui/core'
 import Folder from '@geist-ui/icons/folder'
 import File from '@geist-ui/icons/file'
-import { Foam, Sizes } from '../interface'
+import type { Foam, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useApplicationContext } from '../context'
 import { ModuleItem } from './module-item'
@@ -13,7 +13,7 @@ export interface SearchModulesProps {
   extra: Sizes
 }
 
-const styles = style9.create({
+const styles = stylex.create({
   foamName: {
     fontWeight: 'bold'
   },
@@ -84,6 +84,7 @@ export function SearchModules(props: SearchModulesProps) {
   return (
     <>
       <Input
+        crossOrigin
         placeholder="Enter RegExp"
         clearable
         width="100%"
@@ -115,7 +116,7 @@ export function SearchModules(props: SearchModulesProps) {
                     <div key={find.foam.id}>
                       <ModuleItem
                         name={find.foam.label}
-                        className={styles('foamName')}
+                        {...stylex.props(styles.foamName)}
                       />
                       <div>
                         {find.modules.map(module => (
@@ -124,9 +125,9 @@ export function SearchModules(props: SearchModulesProps) {
                             name={module.id}
                             size={module[extra]}
                             pointer={availableMap[module.id]}
-                            className={styles('moduleName')}
                             onMouseEnter={() => handleMouseEnter(module)}
                             onClick={() => treemap.current?.zoom(module)}
+                            {...stylex.props(styles.moduleName)}
                           >
                             {module.groups?.length ? <File size={14} /> : <Folder size={14} />}
                             <Spacer inline />
@@ -136,7 +137,7 @@ export function SearchModules(props: SearchModulesProps) {
                     </div>
                   ))
                   : (
-                    <div className={styles('noFoundMessage')}>
+                    <div {...stylex.props(styles.noFoundMessage)}>
                       <Text span b width="100%">&quot;No modules found&quot;</Text>
                     </div>
                     )

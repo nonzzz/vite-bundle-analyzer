@@ -1,17 +1,14 @@
 import { RefObject, createContext, useContext } from 'react'
 import type { Dispatch, SetStateAction } from 'react'
+import { noop } from 'foxact/noop'
 import type { Sizes } from './interface'
-import { noop } from './shared'
 import { TreeMapComponent } from './components/tree-map'
 
 export interface ApplicationConfig {
   sizes: Sizes
   scence: Set<string>
   foamModule: typeof window.foamModule
-  drawerVisible: boolean
-  updateSizes: Dispatch<SetStateAction<ApplicationConfig['sizes']>>
   updateScence: Dispatch<SetStateAction<ApplicationConfig['scence']>>
-  updateDrawerVisible: Dispatch<SetStateAction<ApplicationConfig['drawerVisible']>>
   treemap: RefObject<TreeMapComponent>
 }
 
@@ -24,11 +21,8 @@ export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
 const defaultApplicationContext = <ApplicationConfig>{
   sizes: SIZE_RECORD.stat,
   foamModule: [],
-  drawerVisible: false,
   scence: new Set(),
-  updateSizes: noop,
   updateScence: noop,
-  updateDrawerVisible: noop,
   treemap: { current: null }
 }
 

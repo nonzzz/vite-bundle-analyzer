@@ -11,7 +11,7 @@
     "unplugin-vue-components": "^0.24.1",
     "vite": "^4.4.9",
     "vite-bundle-analyzer": "workspace: *",
-    "vite-plugin-cdn2": "^0.13.0",
+    "vite-plugin-cdn2": "^1.0.0",
     "vue": "^3.3.6"
   }
 }

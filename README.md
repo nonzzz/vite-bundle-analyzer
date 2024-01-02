@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://socialify.git.ci/nonzzz/vite-bundle-analyzer/image?description=1&language=1&logo=https%3A%2F%2Fcamo.githubusercontent.com%2F61e102d7c605ff91efedb9d7e47c1c4a07cef59d3e1da202fd74f4772122ca4e%2F68747470733a2f2f766974656a732e6465762f6c6f676f2e737667&name=1&pattern=Circuit%20Board&theme=Auto" alt="vite-bundle-analyzer" width="640" height="320" />
+  <img src="https://socialify.git.ci/nonzzz/vite-bundle-analyzer/image?font=KoHo&language=1&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F65625612%3Fs%3D200%26v%3D4&name=1&owner=1&pattern=Circuit%20Board&theme=Auto" alt="vite-bundle-analyzer" width="640" height="320" />
 <p>
 <p align="center">
   <a href="https://npmjs.com/package/vite-bundle-analyzer">

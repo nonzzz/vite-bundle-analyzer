@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import style9 from 'style9'
+import stylex from '@stylexjs/stylex'
 
 export type TooltipProps = React.PropsWithChildren<{
   visible: boolean
@@ -10,7 +10,7 @@ const offset = {
   y: 30
 }
 
-const styles = style9.create({
+const styles = stylex.create({
   container: {
     position: 'absolute',
     fontSize: '11px',
@@ -58,7 +58,7 @@ export function Tooltip(props: TooltipProps) {
   }, [handleMouseEvent])
 
   return (
-    <div className={styles('container', !visible && 'hidden')} ref={containerRef} style={position}>
+    <div ref={containerRef} style={position} {...stylex.props(styles.container, !visible && styles.hidden)}>
       {children}
     </div>
   )
