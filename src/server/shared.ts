@@ -22,10 +22,6 @@ export function createGzip(options: ZlibOptions = {}) {
   }
 }
 
-export function pick<T extends object, A extends keyof T>(data: T, attrs: A[]) {
-  return attrs.reduce((acc, cur) => ((acc[cur] = data[cur]), acc), {} as Pick<T, A>)
-}
-
 // MIT License
 // Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 export function slash(path: string) {

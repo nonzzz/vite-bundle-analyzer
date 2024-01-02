@@ -1,3 +1,13 @@
+## 0.6.0
+
+# Improve & Features
+
+- Support `summary` option details see #10.
+
+### credits
+
+@a3mitskevich
+
 ## 0.5.0
 
 # Imporve & Features

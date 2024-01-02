@@ -5,3 +5,7 @@ export function convertBytes(bit: number) {
   const converted = bit / (1 << (i * 10))
   return converted.toFixed(2) + ' ' + sizes[i]
 }
+
+export function pick<T extends object, A extends keyof T>(data: T, attrs: A[]) {
+  return attrs.reduce((acc, cur) => ((acc[cur] = data[cur]), acc), {} as Pick<T, A>)
+}
