@@ -1,13 +1,17 @@
 import { RefObject, useRef, useState } from 'react'
-import style9 from 'style9'
+import { Spacer, Text } from '@geist-ui/core'
+import stylex from '@stylexjs/stylex'
 import { GeistProvider } from '@geist-ui/core'
-import { SideBar } from './components/side-bar'
-import { TreeMap, TreeMapComponent } from './components/tree-map'
+import { FoamDataObject } from '@carrotsearch/foamtree'
+import { ModuleSize, TreeMap, TreeMapComponent } from './components/tree-map'
 import { ApplicationContext, SIZE_RECORD } from './context'
 import type { ApplicationConfig } from './context'
 import './init.css'
+import { Sidebar, SidebarProvider } from './components/side-bar'
+import type { ModeType } from './components/side-bar/side-bar'
+import { Tooltip } from './components/tooltip'
 
-const styles = style9.create({
+const styles = stylex.create({
   app: {
     height: '100%',
     width: '100%',
@@ -20,18 +24,24 @@ export function App() {
   const [sizes, setSizes] = useState<ApplicationConfig['sizes']>(SIZE_RECORD[window.defaultSizes])
   const [foamModule] = useState<ApplicationConfig['foamModule']>(() => window.foamModule)
   const [scence, setScence] = useState<Set<string>>(new Set())
-  const [drawerVisible, setDrawerVisible] = useState<boolean>(false)
-
+  const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
+  const [tooltipContent, setTooltipContent] = useState<FoamDataObject | null>(null)
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const initialValue = {
     sizes,
     scence,
     foamModule,
-    drawerVisible,
-    updateSizes: setSizes,
     updateScence: setScence,
-    updateDrawerVisible: setDrawerVisible,
     treemap: treeMapRef as RefObject<TreeMapComponent>
+  }
+
+  const handleModeChange = (kind: ModeType) => {
+    setSizes(() => kind === 'Gzipped' ? 'gzipSize' : kind === 'Stat' ? 'statSize' : 'parsedSize')
+  }
+
+  const handleGroupHover = (group: FoamDataObject | null) => {
+    setTooltipVisible(!!group)
+    setTooltipContent(() => group ? group : null)
   }
 
   return (
@@ -39,9 +49,27 @@ export function App() {
       <ApplicationContext.Provider
         value={initialValue}
       >
-        <div className={styles('app')}>
-          <SideBar />
-          <TreeMap ref={(instance: any) => treeMapRef.current = instance} />
+        <div {...stylex.props(styles.app)}>
+          <SidebarProvider>
+            <Sidebar foamModule={foamModule} mode={sizes} onModeChange={handleModeChange} onVisibleChange={(s) => setTooltipVisible(!s)} />
+          </SidebarProvider>
+          <TreeMap ref={(instance: any) => treeMapRef.current = instance} onGroupHover={handleGroupHover} />
+          <Tooltip visible={tooltipVisible}>
+            {tooltipContent && (
+              <>
+                <Text p b font="14px">{tooltipContent.label}</Text>
+                <Spacer h={0.5} />
+                <ModuleSize module={tooltipContent} sizes="statSize" checkedSizes={sizes} />
+                <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} />
+                <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} />
+                <Text p font="12px">
+                  path:
+                  {' '}
+                  {tooltipContent.id}
+                </Text>
+              </>
+            )}
+          </Tooltip>
         </div>
       </ApplicationContext.Provider>
     </GeistProvider>

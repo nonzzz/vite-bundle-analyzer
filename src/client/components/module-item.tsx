@@ -1,7 +1,8 @@
 import { PropsWithChildren } from 'react'
-import style9 from 'style9'
+import stylex from '@stylexjs/stylex'
 import { Spacer, Text } from '@geist-ui/core'
-import { convertBytes, noop } from '../shared'
+import { noop } from 'foxact/noop'
+import { convertBytes } from '../shared'
 
 export interface ModuleItemProps {
   name: string,
@@ -12,7 +13,7 @@ export interface ModuleItemProps {
   onMouseEnter?: () => void,
 }
 
-const styles = style9.create({
+const styles = stylex.create({
   textContainer: {
     display: 'flex',
     alignItems: 'center'
@@ -35,20 +36,18 @@ export function ModuleItem(opts: PropsWithChildren<ModuleItemProps>) {
       className={className}
       style={{ cursor: pointer ? 'pointer' : 'inherit' }}
     >
-      <div className={styles('textContainer')}>
+      <div {...stylex.props(styles.textContainer)}>
         {children}
-        <div className={styles('text')}>
+        <div {...stylex.props(styles.text)}>
           {name}
         </div>
-        {
-                    size !== null && (
-                      <Text b>
-                        (
-                        {convertBytes(size)}
-                        )
-                      </Text>
-                    )
-                }
+        {size !== null && (
+          <Text b>
+            (
+            {convertBytes(size)}
+            )
+          </Text>
+        )}
       </div>
       <Spacer h={0.5} />
     </Text>

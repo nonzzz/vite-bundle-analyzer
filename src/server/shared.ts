@@ -13,8 +13,6 @@ export const clientPath = slash(path.join(__dirname, 'client'))
 
 export const clientAssetsPath = path.join(clientPath, 'assets')
 
-export function noop() { /** noop**/ }
-
 export function createGzip(options: ZlibOptions = {}) {
   options = Object.assign(defaultGzipOptions, options)
   return (buf: Buffer) => {

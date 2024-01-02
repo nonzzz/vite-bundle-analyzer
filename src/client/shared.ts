@@ -2,8 +2,6 @@ export function tuple<T extends string[]>(...elements: T) {
   return elements
 }
 
-export function noop() { /** noop**/ }
-
 export function convertBytes(bit: number) {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
   if (!bit) return 0 + ' ' + sizes[0]

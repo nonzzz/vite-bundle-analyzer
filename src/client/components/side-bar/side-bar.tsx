@@ -1,14 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
-import style9 from 'style9'
 import { Button, Drawer, Grid, Select, Text } from '@geist-ui/core'
+import { noop } from 'foxact/noop'
 import Menu from '@geist-ui/icons/menu'
-import { tuple } from '../shared'
-import { useApplicationContext } from '../context'
-import type { Sizes } from '../interface'
-import { FileList } from './file-list'
-import { SearchModules } from './search-modules'
+import { useEffect, useMemo, useState } from 'react'
+import stylex from '@stylexjs/stylex'
+import { useApplicationContext } from '../../context'
+import type { Sizes } from '../../interface'
+import { tuple } from '../../shared'
+import { FileList } from '../file-list'
+import { SearchModules } from '../search-modules'
+import { useSidebarState, useToggleDrawerVisible } from './provide'
 
-const styles = style9.create({
+const MODES = tuple('Stat', 'Parsed', 'Gzipped')
+
+export type ModeType = typeof MODES[number]
+
+const styles = stylex.create({
   visible: {
     visibility: 'hidden'
   },
@@ -17,72 +23,59 @@ const styles = style9.create({
     left: '10px',
     zIndex: 10
   },
-  sideBar: {
+  container: {
     minWidth: '450px'
   }
 })
 
-const MODES = tuple('Stat', 'Parsed', 'Gzipped')
-
-export type ModeType = typeof MODES[number]
-
-const MODE_RECORD: Record<Sizes, ModeType> = {
-  statSize: 'Stat',
-  parsedSize: 'Parsed',
-  gzipSize: 'Gzipped'
+export interface SidebarProps {
+  foamModule: typeof window.foamModule
+  mode: Sizes
+  onVisibleChange?: (state: boolean) => void
+  onModeChange?: (size: ModeType) => void
 }
 
-export function SideBar() {
-  const {
-    sizes,
-    scence,
-    drawerVisible,
-    foamModule,
-    updateScence,
-    updateSizes,
-    updateDrawerVisible
-  } = useApplicationContext()
-  const [mode, setMode] = useState<ModeType>(() => MODE_RECORD[sizes])
+export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange = noop, onVisibleChange = noop }: SidebarProps) {
+  const { drawerVisibile } = useSidebarState()
+  const toggleDrawerVisible = useToggleDrawerVisible()
+  const { scence, updateScence } = useApplicationContext()
+
   const [entrypoints, setEntrypoints] = useState<string[]>([])
 
   const allChunks = useMemo(() => foamModule
     .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.id === id || chunk.imports.includes(id)))
-    .sort((a, b) => b[sizes] - a[sizes]), [foamModule, sizes, entrypoints])
+    .sort((a, b) => b[userMode] - a[userMode]), [foamModule, userMode, entrypoints])
+
+  const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 
   const entrypointChunks = useMemo(() => foamModule.filter(chunk => chunk.isEntry), [foamModule])
-
-  useEffect(() => updateScence(() => new Set(allChunks.map(v => v.id))), [allChunks, updateScence])
-
-  const handleRadioChange = (type: ModeType) => {
-    setMode(type)
-    updateSizes(() => {
-      if (type === 'Gzipped') return 'gzipSize'
-      if (type === 'Stat') return 'statSize'
-      return 'parsedSize'
-    })
-  }
 
   const handleFilterByEntrypoints = (entrypoint: string | string[]) => {
     setEntrypoints(Array.isArray(entrypoint) ? entrypoint : [entrypoint])
   }
 
+  useEffect(() => updateScence(() => new Set(allChunks.map(v => v.id))), [allChunks, updateScence])
+
   return (
     <>
       <Button
-        className={styles(drawerVisible && 'visible', 'float')}
         style={{ position: 'absolute' }}
         auto
         scale={0.25}
         icon={<Menu />}
-        onClick={() => updateDrawerVisible((pre) => !pre)}
+        onClick={() => {
+          onVisibleChange(!drawerVisibile)
+          toggleDrawerVisible()
+        }}
+        {...stylex.props(drawerVisibile && styles.visible, styles.float)}
       />
       <Drawer
-        visible={drawerVisible}
+        visible={drawerVisibile}
         placement="left"
         padding={0}
-        onClose={() => updateDrawerVisible(false)}
-        className={styles('sideBar')}
+        onClose={toggleDrawerVisible}
         width="15vw"
+        {...stylex.props(styles.container)}
       >
         <Drawer.Content paddingTop={0.25}>
           <div>
@@ -91,7 +84,7 @@ export function SideBar() {
               {MODES.map(button => (
                 <Grid key={button}>
                   <Button
-                    onClick={() => handleRadioChange(button)}
+                    onClick={() => onModeChange(button)}
                     auto
                     type={mode === button ? 'secondary' : 'default'}
                     scale={0.7}
@@ -100,7 +93,7 @@ export function SideBar() {
                   </Button>
                 </Grid>
               )
-              ) }
+              )}
             </Grid.Container>
           </div>
           <div>
@@ -120,13 +113,13 @@ export function SideBar() {
           </div>
           <div>
             <Text p b h3>Search modules:</Text>
-            <SearchModules extra={sizes} files={allChunks} />
+            <SearchModules extra={userMode} files={allChunks} />
           </div>
           <div>
             <Text p b h3>Show Chunks:</Text>
             <FileList
               files={allChunks}
-              extra={sizes}
+              extra={userMode}
               scence={scence}
               onChange={(v) => updateScence(() => new Set(v))}
             />

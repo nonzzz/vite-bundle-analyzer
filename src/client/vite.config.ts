@@ -1,7 +1,7 @@
 import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import style9 from 'style9/vite'
+import { stylexPlugin } from 'vite-plugin-stylex-dev'
 import type { UserConfig } from 'vite'
 
 export default defineConfig(async ({ mode }) => {
@@ -14,7 +14,7 @@ export default defineConfig(async ({ mode }) => {
         { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
       ]
     },
-    plugins: [react(), style9({ fileName: 'style.css' })],
+    plugins: [react(), stylexPlugin()],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       minify: true,
