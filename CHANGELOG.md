@@ -1,3 +1,9 @@
+## 0.6.1
+
+# Patches
+
+- Fix tree-map error deps.
+
 ## 0.6.0
 
 # Improve & Features
