@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState } from 'react'
+import { RefObject, useCallback, useRef, useState } from 'react'
 import { Spacer, Text } from '@geist-ui/core'
 import stylex from '@stylexjs/stylex'
 import { GeistProvider } from '@geist-ui/core'
@@ -39,10 +39,10 @@ export function App() {
     setSizes(() => kind === 'Gzipped' ? 'gzipSize' : kind === 'Stat' ? 'statSize' : 'parsedSize')
   }
 
-  const handleGroupHover = (group: FoamDataObject | null) => {
+  const handleGroupHover = useCallback((group: FoamDataObject | null) => {
     setTooltipVisible(!!group)
     setTooltipContent(() => group ? group : null)
-  }
+  }, [])
 
   return (
     <GeistProvider>

@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import stylex from '@stylexjs/stylex'
 import { FoamTree } from '@carrotsearch/foamtree'
 import { Text } from '@geist-ui/core'
@@ -134,12 +134,12 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     if (!foamTreeInstance.current) return
     foamTreeInstance.current.resize()
   }
-
-  const handleGroupHover = useCallback((event: FoamEventObject) => {
-    const { group } = event
-    onGroupHover?.(group)
-  }, [onGroupHover])
+ 
   useEffect(() => {
+    const handleGroupHover = (event: FoamEventObject) => {
+      const { group } = event
+      onGroupHover?.(group)
+    }
     if (!foamTreeInstance.current && containerRef.current) {
       foamTreeInstance.current = new FoamTree({
         element: containerRef.current,
@@ -219,7 +219,7 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
       foamTreeInstance.current = null
       window.removeEventListener('resize', resize)
     }
-  }, [chunkNamePartIndex, visibleChunks, handleGroupHover])
+  }, [chunkNamePartIndex, visibleChunks, onGroupHover])
 
   return (
     <div ref={containerRef} {...stylex.props(styles.container)} />
