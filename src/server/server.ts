@@ -3,7 +3,7 @@ import fs from 'fs'
 import type { AddressInfo } from 'net'
 import path from 'path'
 import sirv from 'sirv'
-import { clientPath } from './shared'
+import { clientPath, injectHTMLTag } from './shared'
 import type { Foam } from './interface'
 import type { RenderOptions } from './render'
 
@@ -32,7 +32,13 @@ export function createServer(port = 0) {
           let html = fs.readFileSync(path.join(clientPath, 'index.html'), 'utf8')
           html = html
             .replace(/<title>(.*?)<\/title>/, `<title>${options.title}</title>`)
-            .replace(/<\/div>/, `</div>\r\n<script>window.defaultSizes = '${options.mode}';\r\nwindow.foamModule = ${JSON.stringify(foamModule)};</script>`)
+          html = injectHTMLTag({ 
+            html,
+            injectTo: 'body',
+            descriptors: [`<script>
+              window.defaultSizes = ${JSON.stringify(options.mode)};\n
+              window.foamModule = ${JSON.stringify(foamModule)};\n
+              </script>`] })
           res.end(html)
         } else {
           previousListerner.map(listen => listen.call(server, req, res))

@@ -1,7 +1,7 @@
 import fsp from 'fs/promises'
 import path from 'path'
 import fg from 'fast-glob'
-import { clientAssetsPath, slash } from './shared'
+import { clientAssetsPath, clientPath, injectHTMLTag, slash } from './shared'
 import type { DefaultSizes, Foam } from './interface'
 
 export interface RenderOptions {
@@ -17,25 +17,24 @@ export async function renderView(foamModule: Foam[], options: RenderOptions) {
     return { fileType, content }
   }))
 
-  const js = clientAssets.filter(v => v.fileType === 'js')
-  const css = clientAssets.filter(v => v.fileType === 'css')
-
-  return `<!DOCTYPE html>
-        <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>${options.title}</title>
-                ${css.map(({ content }) => `<style>${content}</style>`).join('')}
-                ${js.map(({ content }) => `<script>${content}</script>`).join('')}
-            </head>
-            <body>
-                <div id="app" />
-                <script>
-                    window.defaultSizes = '${options.mode}';
-                    window.foamModule = ${JSON.stringify(foamModule)};
-                </script>
-            </body>
-        </html>`
+  const assets = clientAssets.filter(a => ['js', 'css'].includes(a.fileType))
+  let html = await fsp.readFile(path.join(clientPath, 'index.html'), 'utf8')
+  html = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+  html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/gi, '')
+  html = html.replace(/<title>(.*?)<\/title>/, `<title>${options.title}</title>`)
+  html = injectHTMLTag({ 
+    html,
+    injectTo: 'head',
+    descriptors: assets.map(({ fileType, content }) => {
+      if (fileType === 'js') return `<script>${content}</script>`
+      return `<style>${content}</style>`
+    }) })
+  html = injectHTMLTag({ 
+    html,
+    injectTo: 'body',
+    descriptors: [`<script>
+    window.defaultSizes = ${JSON.stringify(options.mode)};\n
+    window.foamModule = ${JSON.stringify(foamModule)};\n
+    </script>`] })
+  return html
 }
