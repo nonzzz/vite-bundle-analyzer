@@ -48,7 +48,7 @@
     "tsx": "^3.13.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vite-plugin-stylex-dev": "^0.2.3"
+    "vite-plugin-stylex-dev": "^0.2.4"
   },
   "license": "MIT",
   "author": "kanno",

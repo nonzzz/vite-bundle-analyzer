@@ -5706,7 +5706,7 @@ __metadata:
     tsx: ^3.13.0
     typescript: ^5.2.2
     vite: ^4.4.9
-    vite-plugin-stylex-dev: ^0.2.3
+    vite-plugin-stylex-dev: ^0.2.4
   languageName: unknown
   linkType: soft
 
@@ -5724,9 +5724,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-stylex-dev@npm:^0.2.3":
-  version: 0.2.3
-  resolution: "vite-plugin-stylex-dev@npm:0.2.3"
+"vite-plugin-stylex-dev@npm:^0.2.4":
+  version: 0.2.4
+  resolution: "vite-plugin-stylex-dev@npm:0.2.4"
   dependencies:
     "@babel/core": ^7.23.6
     "@babel/plugin-syntax-flow": ^7.23.3
@@ -5735,7 +5735,7 @@ __metadata:
     "@stylexjs/babel-plugin": ^0.4.1
     es-module-lexer: ^1.4.1
     magic-string: ^0.30.5
-  checksum: ed9b92d371d7203562d7f95195d24b86429c9100f4994328b4e37027336dc0a22a95584a45c2d7e102f20461e8fb473346248963442387b2d05957f07d7c110c
+  checksum: 3d62b396e29776b4b62bd2e29170e496f58d337eedc1d755686cfd4377ca4300ab832cafebbf0e14e6b12f0806bebd3d344898ed7e3413d9d78f2ae00a94c9ca
   languageName: node
   linkType: hard
 

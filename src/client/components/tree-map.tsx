@@ -22,9 +22,13 @@ interface VisibleFoam extends Foam {
   weight: number
 }
 
-function travseVisibleModule(foamModule: Foam, sizes: Sizes): VisibleFoam {
-  if (sizes === 'statSize' && foamModule.stats) foamModule.groups = foamModule.stats.map((module) => travseVisibleModule(module, sizes))
-  if ((['parsedSize', 'gzipSize'].includes(sizes)) && foamModule.source) foamModule.groups = foamModule.source.map((module) => travseVisibleModule(module, sizes))
+function travseVisibleModule(foamModule: Foam, sizes: Sizes, topLayer: boolean): VisibleFoam {
+  if (topLayer) {
+    foamModule.groups = sizes === 'statSize' ? foamModule.stats : foamModule.source
+  }
+  if (Array.isArray(foamModule.groups)) {
+    foamModule.groups = foamModule.groups.map(module => travseVisibleModule(module, sizes, false))
+  }
   return { ...foamModule, weight: foamModule[sizes] }
 }
 
@@ -92,7 +96,7 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     check
   }))
 
-  const visibleChunks = useMemo(() => foamModule.filter((v) => scence.has(v.id)).map((module) => travseVisibleModule(module, sizes)), [foamModule, sizes, scence])
+  const visibleChunks = useMemo(() => foamModule.filter((v) => scence.has(v.id)).map((module) => travseVisibleModule(module, sizes, true)), [foamModule, sizes, scence])
 
   const chunkNamePartIndex = useMemo(() => {
     const splitChunkNames = visibleChunks.map((chunk) => chunk.label.split(/[^a-z0-9]/iu))
