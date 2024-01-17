@@ -1,3 +1,9 @@
+## 0.7.0
+
+# Improve
+
+- Sub module render by chunk size. #14
+
 ## 0.6.1
 
 # Patches
