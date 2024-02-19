@@ -1,3 +1,11 @@
+## 0.8.0
+
+# Improve & Features
+
+- Now file import with query suffix(Like worker and etc) can be collect.
+- Module size nearly the actullay size more.
+- Remove collect rest module size anymore.
+
 ## 0.7.0
 
 # Improve
