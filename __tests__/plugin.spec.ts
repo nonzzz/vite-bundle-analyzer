@@ -1,6 +1,6 @@
 import path from 'path'
-import fs from 'fs'
 import fsp from 'fs/promises'
+import fs from 'fs'
 import test from 'ava'
 import { type Logger, build } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -64,14 +64,14 @@ test.after(async () => {
   await fsp.rm(bundlePath, { recursive: true })
 })
 
-test('generator JSON', async (t) => {
+test.serial('generator JSON', async (t) => {
   const id = await createBuildServer('normal', { analyzerMode: 'json' })
   const statsPath = path.join(id, 'stats.json')
   await sleep(3000)
   t.is(fs.existsSync(statsPath), true)
 })
 
-test('generator Static Page', async (t) => {
+test.serial('generator Static Page', async (t) => {
   const id = await createBuildServer('normal', { analyzerMode: 'static' })
   const analyzerPath = path.join(id, 'stats.html')
   await sleep(3000)

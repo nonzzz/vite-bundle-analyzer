@@ -1,5 +1,5 @@
 import test from 'ava'
-import { convertBytes } from "../src/shared";
+import { convertBytes } from '../src/shared'
 
 test('convert bytes', async (t) => {
   t.is(convertBytes(0), '0 Bytes')
