@@ -8,5 +8,5 @@ export const tsup: Options = {
   shims: true,
   minify: true,
   esbuildPlugins: [minify.minifyTemplates(), minify.writeFiles()],
-  external: ['picocolors']
+  external: ['picocolors', 'vite']
 }

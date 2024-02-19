@@ -42,7 +42,8 @@ export default createMockStats('/assets/dynamic.js',
       }
     },
     map,
-    moduleIds: []
+    moduleIds: [],
+    type: 'chunk'
   },
   {
     id: 'assets/dynamic.js',

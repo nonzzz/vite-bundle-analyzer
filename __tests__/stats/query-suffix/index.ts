@@ -4,7 +4,7 @@ const code = 'const normal = \'vite-bundle-analyzer\''
 
 const map = {
   version: 3,
-  file: 'noraml.js',
+  file: 'query-suffix.js',
   sources: [],
   sourcesContent: [],
   names: [],
@@ -15,13 +15,11 @@ const map_size = getByteLen(map.toString())
 
 export default createMockStats('normal.js',
   {
-    code,
-    dynamicImports: [],
-    imports: [],
-    isEntry: true,
-    map,
-    moduleIds: [],
-    type: 'chunk'
+    type: 'asset',
+    source: code,
+    fileName: 'query-suffix.js',
+    __monkey__map__: JSON.stringify(map),
+    __monkey__map__id: map.file
   }, [
-    { id: 'normal.js', label: 'normal.js', path: 'normal.js', statSize: 0, parsedSize: getByteLen(code), mapSize: map_size }
+    { id: 'query-suffix.js', label: 'query-suffix.js', path: 'query-suffix.js', statSize: 0, parsedSize: getByteLen(code), mapSize: map_size }
   ])

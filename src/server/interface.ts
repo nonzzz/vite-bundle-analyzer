@@ -18,6 +18,8 @@ export type RenderedModule = RenderChunk['modules'][string]
 
 export type OutputBundle = Parameters<typeof generateBundle>[1]
 
+export type OutputAsset = Extract<OutputBundle[0], { type: 'asset' }>
+
 export type OutputChunk = Extract<OutputBundle[0], { type: 'chunk' }>
 
 export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>

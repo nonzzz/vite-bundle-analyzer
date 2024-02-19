@@ -30,11 +30,11 @@
     "@carrotsearch/foamtree": "^3.5.1",
     "@geist-ui/core": "^2.3.8",
     "@geist-ui/icons": "^1.0.2",
-    "@stylexjs/stylex": "^0.4.1",
+    "@stylexjs/stylex": "^0.5.1",
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
-    "@vitejs/plugin-react": "^4.0.4",
+    "@vitejs/plugin-react": "^4.2.1",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
     "esbuild-minify-templates": "^0.11.0",
@@ -48,7 +48,7 @@
     "tsx": "^3.13.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vite-plugin-stylex-dev": "^0.2.4"
+    "vite-plugin-stylex-dev": "^0.3.0"
   },
   "license": "MIT",
   "author": "kanno",

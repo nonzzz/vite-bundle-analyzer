@@ -1,12 +1,14 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
-import { SourceMapConsumer } from 'source-map'
-import { createGzip, pick, slash } from './shared'
-import type { Foam, OutputChunk, PluginContext } from './interface'
+import { createGzip, pick, slash, stringToByte } from './shared'
+import { convertSourcemapToObject, getSourceMappings } from './source-map'
+import type { Foam, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
-const defaultWd = slash(process.cwd())
+const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte']
 
 type NodeKind = 'stat' | 'source'
+
+const defaultWd = process.cwd()
 
 function getAbsPath(p: string) {
   p = slash(p)
@@ -28,34 +30,6 @@ function lexPaths(p: string) {
 function generateNodeId(id: string): string {
   const abs = getAbsPath(id)
   return path.isAbsolute(abs) ? abs.replace('/', '') : abs
-}
-
-async function getSourceMapContent(code: string, sourceMap: any) {
-  const modules: Record<string, string> = {}
-  if (!sourceMap) return {}
-  await SourceMapConsumer.with(sourceMap, null, consumer => {
-    let line = 1
-    let column = 0
-    for (let i = 0; i < code.length; i++, column++) {
-      const { source } = consumer.originalPositionFor({
-        line,
-        column
-      })
-      if (source) {
-        const id = source.replace(/\.\.\//g, '')
-        if (id in modules) {
-          modules[id] += code[i]
-        } else {
-          modules[id] = code[i]
-        }
-      }
-      if (code[i] === '\n') {
-        line += 1
-        column = -1
-      }
-    }
-  })
-  return modules
 }
 
 export class BaseNode {
@@ -122,7 +96,36 @@ function createStatNode(id: string, statSize: number) {
   return new StatNode(generateNodeId(id), statSize)
 }
 
+interface WrappedChunk {
+  code: Uint8Array
+  imports: string[],
+  dynamicImports: string[]
+  moduleIds: string[]
+  map: string
+  filename: string
+  isEntry: boolean
+}
+
+function findSourcemap(filename: string, sourcemapFileName: string, chunks: OutputBundle) {
+  if (sourcemapFileName in chunks) return ((chunks[sourcemapFileName] as OutputAsset).source) as string
+  throw new Error(`[analyzer error]: Missing sourcemap for ${filename}.`)
+}
+
+function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle, sourcemapFileName: string) {
+  const wrapped = <WrappedChunk>{}
+  const isChunk = bundle.type === 'chunk' 
+  wrapped.code = stringToByte(isChunk ? bundle.code : bundle.source)
+  wrapped.map = findSourcemap(bundle.fileName, sourcemapFileName, chunks)
+  wrapped.imports = isChunk ? bundle.imports : []
+  wrapped.dynamicImports = isChunk ? bundle.dynamicImports : []
+  wrapped.moduleIds = isChunk ? bundle.moduleIds : []
+  wrapped.filename = bundle.fileName
+  wrapped.isEntry = isChunk ? bundle.isEntry : false
+  return wrapped
+}
+
 export class AnalyzerNode extends BaseNode {
+  originalId: string
   parsedSize: number
   mapSize: number
   statSize: number
@@ -134,8 +137,9 @@ export class AnalyzerNode extends BaseNode {
   isAsset: boolean
   isEntry: boolean
   private currentNodeKind: NodeKind
-  constructor(id: string) {
+  constructor(id: string, originalId: string) {
     super(id)
+    this.originalId = originalId
     this.parsedSize = 0
     this.statSize = 0
     this.gzipSize = 0
@@ -173,66 +177,49 @@ export class AnalyzerNode extends BaseNode {
     imports.forEach((imp) => this.imports.add(imp))
   }
 
-  async setup(bundle: OutputChunk, pluginContext: PluginContext, compress: ReturnType<typeof createGzip>) {
-    const modules = bundle.modules
-    const code = Buffer.from(bundle.code, 'utf8')
-    const compressed = await compress(code)
-    this.gzipSize = compressed.byteLength
+  async setup(bundle: WrappedChunk, pluginContext: PluginContext, compress: ReturnType<typeof createGzip>, workspaceRoot: string) {
+    const { imports, dynamicImports, code, map, moduleIds } = bundle
+    this.addImports(...imports, ...dynamicImports)
+    this.gzipSize = (await compress(code)).byteLength
     this.parsedSize = code.byteLength
-    if (bundle.map) {
-      this.mapSize = Buffer.from(bundle.map.toString()).byteLength
-    }
-    const source = await getSourceMapContent(bundle.code, bundle.map)
-    for (const moduleId in modules) {
+    this.mapSize = map.length
+
+    // stats
+    for (const moduleId of moduleIds) {
       const info = pluginContext.getModuleInfo(moduleId)
-      if (!info) continue
-      const { id } = info
-      if (/\.(mjs|js|ts|vue|jsx|tsx|svelte)(\?.*|)$/.test(id) || id.startsWith('\0')) {
-        const node = createStatNode(id, modules[moduleId].renderedLength)
-        this.statSize += node.statSize
-        this.stats.push(node)
+      if (info) {
+        if (KNOWN_EXT_NAME.includes(path.extname(info.id)) || info.id.startsWith('\0')) {
+          const node = createStatNode(info.id, new TextEncoder().encode(info.code ?? '').byteLength)
+          this.statSize += node.statSize
+          this.stats.push(node)
+        }
       }
     }
-    // Handle the virtual moudle (For some reason we can only merge these chunks)
-    // Then handle the rest
-    const virtuals = bundle.moduleIds.filter(m => m.startsWith('\0'))
-    const fullModuleCalc = { parsedSize: 0 }
-    for (const sourceId in source) {
-      if (!bundle.moduleIds.length) continue
-      const matched = bundle.moduleIds.find(id => id.match(sourceId))
-      if (matched) {
-        const code = Buffer.from(source[sourceId], 'utf8')
-        const result = await compress(code)
-        fullModuleCalc.parsedSize += code.byteLength
-        this.source.push(createSourceNode(matched, code.byteLength, result.byteLength))
+    if (!this.statSize) {
+      const result = await convertSourcemapToObject(map)
+      for (const id in result) {
+        const resolved = await pluginContext.resolve(id, this.originalId)
+        if (resolved) {
+          const node = createStatNode(resolved.id, new TextEncoder().encode(result[id]).byteLength)
+          this.statSize += node.statSize
+          this.stats.push(node)
+        }
       }
     }
-    if (virtuals.length > 0) {
-      const { code, map } = bundle
-      const sourceId = map?.sources?.[0]
-      if (sourceId) {
-        let restCode: Buffer | null = null
-        await SourceMapConsumer.with(bundle.map! as any, null, consumer => {
-          let line = 1
-          let column = 0
-          for (let i = 0; i < code.length; i++, column++) {
-            const { source } = consumer.originalPositionFor({
-              line,
-              column
-            })
-            if (source === sourceId) {
-              restCode = Buffer.from(code.substring(0, column), 'utf8')
-              break
-            }
-            if (code[i] === '\n') {
-              line += 1
-              column = -1
-            }
-          }
-        })
-        const restCompressed = restCode ? (await compress(restCode)).byteLength : 0
-        this.source.push(createSourceNode('\0virtual-chunks', this.parsedSize - fullModuleCalc.parsedSize, restCompressed))
-      }
+
+    // We use sourcemap to restore the corresponding chunk block
+    const sources = await getSourceMappings(bundle.code, map, async (id: string) => {
+      const relatived = path.relative(workspaceRoot, id)
+      const resolved = await pluginContext.resolve(relatived)
+      if (resolved) return resolved.id
+      return path.join(workspaceRoot, relatived)
+    })
+    for (const id in sources) {
+      const code = sources[id]
+      const compressed = await compress(code)
+      const parsedSize = stringToByte(code).byteLength
+      const node = createSourceNode(id, parsedSize, compressed.byteLength)
+      this.source.push(node)
     }
     if (!this.source.length) {
       this.source.push(createSourceNode(this.id, this.parsedSize, this.gzipSize))
@@ -320,17 +307,21 @@ export class AnalyzerNode extends BaseNode {
 }
 
 function createAnalyzerNode(id: string) {
-  return new AnalyzerNode(generateNodeId(id))
+  return new AnalyzerNode(generateNodeId(id), id)
 }
 
 export class AnalyzerModule {
   compress: ReturnType<typeof createGzip>
   modules: AnalyzerNode[]
+  workspaceRoot: string
   pluginContext: PluginContext | null
+  private chunks: OutputBundle
   constructor(opt?: ZlibOptions) {
     this.compress = createGzip(opt)
     this.modules = []
     this.pluginContext = null
+    this.chunks = {}
+    this.workspaceRoot = process.cwd()
   }
 
   installPluginContext(context: PluginContext) {
@@ -338,10 +329,14 @@ export class AnalyzerModule {
     this.pluginContext = context
   }
 
-  async addModule(bundleName: string, bundle: OutputChunk) {
-    const node = createAnalyzerNode(bundleName)
-    node.addImports(...bundle.imports, ...bundle.dynamicImports)
-    await node.setup(bundle, this.pluginContext!, this.compress)
+  setupRollupChunks(chunks: OutputBundle) {
+    this.chunks = chunks
+  }
+
+  async addModule(bundle: OutputChunk | OutputAsset, sourcemapFileName: string) {
+    const wrapped = wrapBundleChunk(bundle, this.chunks, sourcemapFileName)
+    const node = createAnalyzerNode(wrapped.filename)
+    await node.setup(wrapped, this.pluginContext!, this.compress, this.workspaceRoot)
     this.modules.push(node)
   }
 

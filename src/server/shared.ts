@@ -1,7 +1,7 @@
 import zlib from 'zlib'
 import utils from 'util'
 import path from 'path'
-import type { ZlibOptions } from 'zlib'
+import type { InputType, ZlibOptions } from 'zlib'
 
 export * from '../shared'
 
@@ -17,7 +17,7 @@ export const clientAssetsPath = path.join(clientPath, 'assets')
 
 export function createGzip(options: ZlibOptions = {}) {
   options = Object.assign(defaultGzipOptions, options)
-  return (buf: Buffer) => {
+  return (buf: InputType) => {
     return gzip(buf, options)
   }
 }
@@ -39,4 +39,9 @@ interface InjectHTMLTagOptions {
 export function injectHTMLTag(options: InjectHTMLTagOptions) {
   const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
   return options.html.replace(regExp, (match) => `${options.descriptors.join('\n')}${match}`)
+}
+
+export function stringToByte(b: string | Uint8Array) {
+  if (typeof b === 'string') return new TextEncoder().encode(b)
+  return b
 }

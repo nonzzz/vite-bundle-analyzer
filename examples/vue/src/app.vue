@@ -11,6 +11,7 @@
 <script>
 import {defineComponent, ref, onMounted, defineAsyncComponent} from 'vue'
 import SyncComponent from "./sync-component.vue";
+import { send } from './worker'
 
 export default defineComponent({
   components: {
@@ -27,6 +28,7 @@ export default defineComponent({
     const clickHandler = () => {
       console.log('hello world')
       counter.value += 1
+      send()
     }
 
     return {

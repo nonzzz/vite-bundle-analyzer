@@ -1,10 +1,11 @@
 import path from 'path'
 import fsp from 'fs/promises'
+import { searchForWorkspaceRoot } from 'vite'
 import type { Logger, Plugin } from 'vite'
 import colors from 'picocolors'
 import { name } from '../../package.json'
 import { renderView } from './render'
-import type { AnalyzerPluginOptions } from './interface'
+import type { AnalyzerPluginOptions, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { type AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { createServer } from './server'
 import { convertBytes } from './shared'
@@ -38,6 +39,17 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
   return `${formatNumber(count)} chunks of ${formatSize(meta.parsed)} ${extra ? `(${extra})` : ''}`
 }
 
+function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle): [boolean, string | null] {
+  const { type } = chunk
+  if (type === 'asset' && path.extname(chunk.fileName) === '.js') {
+    const possiblePath = chunk.fileName + '.map'
+    if (possiblePath in allChunks) return [true, possiblePath]
+    return [true, null]
+  }
+  const isChunk = type === 'chunk'
+  return [isChunk, isChunk ? chunk.sourcemapFileName : null]
+}
+
 function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summary: true }): Plugin {
   const { reportTitle = name } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
@@ -45,6 +57,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
   let previousSourcemapOption: boolean = false
   let hasViteReporter = true
   let logger: Logger
+  let workspaceRoot = process.cwd()
   const plugin = <Plugin>{
     name,
     apply: 'build',
@@ -52,6 +65,8 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
     configResolved(config) {
       defaultWd = config.build.outDir ?? config.root
       logger = config.logger
+      workspaceRoot = searchForWorkspaceRoot(config.root)
+      analyzerModule.workspaceRoot = workspaceRoot
       if (opts.summary) {
         const reporter = config.plugins.find(plugin => plugin.name === 'vite:reporter')
         hasViteReporter = !!reporter?.writeBundle
@@ -81,18 +96,29 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       if (!config.build) {
         config.build = {}
       }
+      if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
+        config.build.sourcemap = true
+      } else {
       // force set sourcemap to ensure the result as accurate as possible.
-      config.build.sourcemap = 'hidden'
+        config.build.sourcemap = 'hidden'
+      }
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
+      analyzerModule.setupRollupChunks(outputBundle)
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)
+      // A funny thing is that 'Import with Query Suffixes' vite might think the worker is assets
+      // So we should wrapper them as a chunk node.
       for (const bundleName in outputBundle) {
         const bundle = outputBundle[bundleName]
-        if (bundle.type !== 'chunk') continue
-        await analyzerModule.addModule(bundleName, bundle)
-        if (!previousSourcemapOption && bundle.sourcemapFileName) {
-          Reflect.deleteProperty(outputBundle, bundle.sourcemapFileName)
+        const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
+        if (pass && sourcemapFileName) {
+          await analyzerModule.addModule(bundle, sourcemapFileName) 
+        }
+        if (!previousSourcemapOption) {
+          if (pass && sourcemapFileName) {
+            Reflect.deleteProperty(outputBundle, sourcemapFileName)
+          }
         }
       }
     },
