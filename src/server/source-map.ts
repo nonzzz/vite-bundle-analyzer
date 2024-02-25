@@ -1,7 +1,7 @@
 import { SourceMapConsumer } from 'source-map'
 import type { MappingItem } from 'source-map'
 
-export async function convertSourcemapToObject(rawSourceMap: string) {
+export async function convertSourcemapToContents(rawSourceMap: string) {
   const consumer = await new SourceMapConsumer(rawSourceMap)
   const sources = await consumer.sources
   const result = sources.reduce((sourceObj, source) => {
@@ -35,9 +35,10 @@ function splitBytesByNewLine(bytes: Uint8Array) {
 // serialize external mappings means 
 // split code by char '\n'
 // and then according generatedLine get the right code range
+// I think generated column means char in javascript string position not byte position.
 function getStringFromSerializeMappings(bytes: Uint8Array[], mappings: Array<Loc>, decoder: TextDecoder) {
   const mappingsWithLine: Record<number, Array<Loc>> = {}
-  const parsedBytes: Array<Uint8Array> = []
+  let parsedString = ''
   for (const mapping of mappings) {
     const { generatedLine } = mapping
     if (!(generatedLine in mappingsWithLine)) {
@@ -48,20 +49,20 @@ function getStringFromSerializeMappings(bytes: Uint8Array[], mappings: Array<Loc
   for (const line in mappingsWithLine) {
     const l = parseInt(line) - 1
     if (bytes[l]) {
-      const runes = bytes[l]
+      const runes = decoder.decode(bytes[l])
       const mappings = mappingsWithLine[line]
       const [first, ...rest] = mappings
       const end = rest[rest.length - 1]
       if (first && end) {
         if (typeof end.lastGeneratedColumn !== 'number') {
-          parsedBytes.push(new Uint8Array(runes.subarray(first.generatedColumn)))
+          parsedString += runes.substring(first.generatedColumn)
         } else {
-          parsedBytes.push(new Uint8Array(runes.subarray(first.generatedColumn, end.lastGeneratedColumn ?? end.generatedColumn)))
+          parsedString += runes.substring(first.generatedColumn, end.lastGeneratedColumn ?? end.generatedColumn)
         }
       }
     }
   }
-  return parsedBytes.map((u8) => decoder.decode(u8)).join('')
+  return parsedString
 }
 
 // an unstable mapping computed function

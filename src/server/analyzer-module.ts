@@ -1,7 +1,7 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
 import { createGzip, pick, slash, stringToByte } from './shared'
-import { convertSourcemapToObject, getSourceMappings } from './source-map'
+import { convertSourcemapToContents, getSourceMappings } from './source-map'
 import type { Foam, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte']
@@ -195,8 +195,11 @@ export class AnalyzerNode extends BaseNode {
         }
       }
     }
+    // If stat size is zero, possibly because import with suffix in vite.
+    // eg:
+    // import MyWorker from './worker?worker'
     if (!this.statSize) {
-      const result = await convertSourcemapToObject(map)
+      const result = await convertSourcemapToContents(map)
       for (const id in result) {
         const resolved = await pluginContext.resolve(id, this.originalId)
         if (resolved) {

@@ -1,10 +1,10 @@
 import path from 'path'
 import fsp from 'fs/promises'
-import { searchForWorkspaceRoot } from 'vite'
 import type { Logger, Plugin } from 'vite'
 import colors from 'picocolors'
 import { name } from '../../package.json'
 import { renderView } from './render'
+import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { type AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { createServer } from './server'
@@ -103,7 +103,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         config.build.sourcemap = 'hidden'
       }
     },
-    async generateBundle(_, outputBundle) {
+    async generateBundle(outputOptions, outputBundle) {
       analyzerModule.installPluginContext(this)
       analyzerModule.setupRollupChunks(outputBundle)
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)

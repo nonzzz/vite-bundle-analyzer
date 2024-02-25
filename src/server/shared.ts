@@ -1,5 +1,6 @@
 import zlib from 'zlib'
 import utils from 'util'
+import fs from 'fs'
 import path from 'path'
 import type { InputType, ZlibOptions } from 'zlib'
 
@@ -44,4 +45,31 @@ export function injectHTMLTag(options: InjectHTMLTagOptions) {
 export function stringToByte(b: string | Uint8Array) {
   if (typeof b === 'string') return new TextEncoder().encode(b)
   return b
+}
+
+// MIT License
+// Copyright (c) Vite
+
+export function tryStatSync(file: string): fs.Stats | undefined {
+  try {
+    // The "throwIfNoEntry" is a performance optimization for cases where the file does not exist
+    return fs.statSync(file, { throwIfNoEntry: false })
+  } catch {
+    // Ignore errors
+  }
+}
+
+export function isFileReadable(filename: string): boolean {
+  if (!tryStatSync(filename)) {
+    return false
+  }
+
+  try {
+    // Check if current process has read permission to the file
+    fs.accessSync(filename, fs.constants.R_OK)
+
+    return true
+  } catch {
+    return false
+  }
 }
