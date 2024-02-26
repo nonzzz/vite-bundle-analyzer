@@ -1,3 +1,9 @@
+## 0.8.1
+
+# Patches
+
+- Using javaScript String index to computing sourcemap.
+
 ## 0.8.0
 
 # Improve & Features
