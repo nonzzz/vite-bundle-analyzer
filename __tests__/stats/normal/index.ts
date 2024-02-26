@@ -1,17 +1,8 @@
-import { createMockStats, getByteLen } from '../helper'
+import { createMockStats, generateSourceMap, getByteLen } from '../helper'
 
 const code = 'const normal = \'vite-bundle-analyzer\''
 
-const map = {
-  version: 3,
-  file: 'noraml.js',
-  sources: [],
-  sourcesContent: [],
-  names: [],
-  mappings: ''
-}
-
-const map_size = getByteLen(map.toString())
+const map = generateSourceMap(code, code, 'normal.js')
 
 export default createMockStats('normal.js',
   {
@@ -23,5 +14,5 @@ export default createMockStats('normal.js',
     moduleIds: [],
     type: 'chunk'
   }, [
-    { id: 'normal.js', label: 'normal.js', path: 'normal.js', statSize: 0, parsedSize: getByteLen(code), mapSize: map_size }
+    { id: 'normal.js', label: 'normal.js', path: 'normal.js', statSize: getByteLen(code), parsedSize: getByteLen(code), mapSize: getByteLen(map) }
   ])

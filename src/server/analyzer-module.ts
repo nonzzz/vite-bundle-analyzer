@@ -183,7 +183,6 @@ export class AnalyzerNode extends BaseNode {
     this.gzipSize = (await compress(code)).byteLength
     this.parsedSize = code.byteLength
     this.mapSize = map.length
-
     // stats
     for (const moduleId of moduleIds) {
       const info = pluginContext.getModuleInfo(moduleId)

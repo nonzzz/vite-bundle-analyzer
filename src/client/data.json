@@ -13,14 +13,14 @@
         "path": "Users",
         "label": "Users",
         "parsedSize": 305942,
-        "gzipSize": 119054,
+        "gzipSize": 119058,
         "groups": [
           {
             "id": "node_modules",
             "label": "node_modules/.store",
             "path": "node_modules/.store",
-            "parsedSize": 295477,
-            "gzipSize": 113075,
+            "parsedSize": 295479,
+            "gzipSize": 113080,
             "groups": [
               {
                 "id": "preact-npm-10.19.2-3a1f1c5562",
@@ -89,14 +89,14 @@
                 "path": "@babel-runtime-npm-7.23.2-d013d6cf7e",
                 "label": "@babel-runtime-npm-7.23.2-d013d6cf7e",
                 "parsedSize": 3575,
-                "gzipSize": 2823,
+                "gzipSize": 2825,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules/@babel/runtime/helpers",
                     "path": "node_modules/@babel/runtime/helpers",
                     "parsedSize": 3575,
-                    "gzipSize": 2823,
+                    "gzipSize": 2825,
                     "groups": [
                       {
                         "id": "esm",
@@ -217,7 +217,7 @@
                         "path": "extends.js",
                         "label": "extends.js",
                         "parsedSize": 452,
-                        "gzipSize": 262
+                        "gzipSize": 263
                       },
                       {
                         "id": "Users/node_modules/.store/@babel-runtime-npm-7.23.2-d013d6cf7e/node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
@@ -231,7 +231,7 @@
                         "path": "objectWithoutProperties.js",
                         "label": "objectWithoutProperties.js",
                         "parsedSize": 364,
-                        "gzipSize": 261
+                        "gzipSize": 262
                       }
                     ]
                   }
@@ -1005,14 +1005,14 @@
                 "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
                 "path": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
                 "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde",
-                "parsedSize": 140915,
+                "parsedSize": 140917,
                 "gzipSize": 50203,
                 "groups": [
                   {
                     "id": "node_modules",
                     "label": "node_modules/@carrotsearch/foamtree/foamtree.js",
                     "path": "node_modules/@carrotsearch/foamtree/foamtree.js",
-                    "parsedSize": 140915,
+                    "parsedSize": 140917,
                     "gzipSize": 50203
                   }
                 ]
@@ -1045,21 +1045,21 @@
                 "label": "@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons",
                 "path": "@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons",
                 "parsedSize": 2100,
-                "gzipSize": 1369,
+                "gzipSize": 1372,
                 "groups": [
                   {
                     "id": "Users/node_modules/.store/@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons/menu.js",
                     "path": "menu.js",
                     "label": "menu.js",
                     "parsedSize": 573,
-                    "gzipSize": 388
+                    "gzipSize": 389
                   },
                   {
                     "id": "Users/node_modules/.store/@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons/folder.js",
                     "path": "folder.js",
                     "label": "folder.js",
                     "parsedSize": 876,
-                    "gzipSize": 569
+                    "gzipSize": 571
                   },
                   {
                     "id": "Users/node_modules/.store/@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons/file.js",
@@ -1076,15 +1076,15 @@
             "id": "src",
             "path": "src",
             "label": "src",
-            "parsedSize": 10465,
-            "gzipSize": 5979,
+            "parsedSize": 10463,
+            "gzipSize": 5978,
             "groups": [
               {
                 "id": "client",
                 "path": "client",
                 "label": "client",
-                "parsedSize": 10289,
-                "gzipSize": 5815,
+                "parsedSize": 10287,
+                "gzipSize": 5814,
                 "groups": [
                   {
                     "id": "Users/src/client/context.ts",
@@ -1098,7 +1098,7 @@
                     "path": "shared.ts",
                     "label": "shared.ts",
                     "parsedSize": 304,
-                    "gzipSize": 221
+                    "gzipSize": 222
                   },
                   {
                     "id": "components",
@@ -1112,14 +1112,14 @@
                         "path": "tree-map.tsx",
                         "label": "tree-map.tsx",
                         "parsedSize": 3488,
-                        "gzipSize": 1743
+                        "gzipSize": 1744
                       },
                       {
                         "id": "Users/src/client/components/module-item.tsx",
                         "path": "module-item.tsx",
                         "label": "module-item.tsx",
                         "parsedSize": 401,
-                        "gzipSize": 271
+                        "gzipSize": 269
                       },
                       {
                         "id": "Users/src/client/components/file-list.tsx",
@@ -1133,14 +1133,14 @@
                         "path": "search-modules.tsx",
                         "label": "search-modules.tsx",
                         "parsedSize": 1602,
-                        "gzipSize": 835
+                        "gzipSize": 834
                       },
                       {
                         "id": "side-bar",
                         "path": "side-bar",
                         "label": "side-bar",
                         "parsedSize": 1777,
-                        "gzipSize": 999,
+                        "gzipSize": 998,
                         "groups": [
                           {
                             "id": "Users/src/client/components/side-bar/provide.tsx",
@@ -1154,7 +1154,7 @@
                             "path": "side-bar.tsx",
                             "label": "side-bar.tsx",
                             "parsedSize": 1637,
-                            "gzipSize": 870
+                            "gzipSize": 869
                           }
                         ]
                       },
@@ -1163,7 +1163,7 @@
                         "path": "tooltip.tsx",
                         "label": "tooltip.tsx",
                         "parsedSize": 861,
-                        "gzipSize": 547
+                        "gzipSize": 550
                       }
                     ]
                   },
@@ -1178,8 +1178,8 @@
                     "id": "Users/src/client/main.tsx",
                     "path": "main.tsx",
                     "label": "main.tsx",
-                    "parsedSize": 142,
-                    "gzipSize": 144
+                    "parsedSize": 140,
+                    "gzipSize": 142
                   }
                 ]
               },
