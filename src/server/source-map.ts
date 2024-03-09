@@ -1,14 +1,15 @@
 import { SourceMapConsumer } from 'source-map'
 import type { MappingItem } from 'source-map'
+import type { ChunkMetadata } from './trie'
 
 export async function convertSourcemapToContents(rawSourceMap: string) {
   const consumer = await new SourceMapConsumer(rawSourceMap)
   const sources = await consumer.sources
-  const result = sources.reduce((sourceObj, source) => {
+  const result = sources.reduce((acc, source) => {
     const s = consumer.sourceContentFor(source, true)
-    if (s) sourceObj[source] = s
-    return sourceObj
-  }, {} as Record<string, string>)
+    if (s) acc.push({ id: source, code: s })
+    return acc
+  }, [] as Array<ChunkMetadata>)
   consumer.destroy()
   return result
 }
@@ -53,7 +54,9 @@ function getStringFromSerializeMappings(bytes: Uint8Array[], mappings: Array<Loc
       const mappings = mappingsWithLine[line]
       const [first, ...rest] = mappings
       const end = rest[rest.length - 1]
-      if (first && end) {
+      if (!end) {
+        parsedString += runes.substring(first.generatedColumn)
+      } else {
         if (typeof end.lastGeneratedColumn !== 'number') {
           parsedString += runes.substring(first.generatedColumn)
         } else {

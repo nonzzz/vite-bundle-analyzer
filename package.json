@@ -39,7 +39,7 @@
     "c8": "^8.0.1",
     "esbuild-minify-templates": "^0.11.0",
     "eslint": "^8.49.0",
-    "eslint-config-kagura": "^2.0.1",
+    "eslint-config-kagura": "^2.1.1",
     "foxact": "^0.2.29",
     "preact": "^10.19.2",
     "react": "^18.2.0",

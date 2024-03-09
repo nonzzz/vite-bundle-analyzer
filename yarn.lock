@@ -2721,9 +2721,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-kagura@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "eslint-config-kagura@npm:2.0.1"
+"eslint-config-kagura@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "eslint-config-kagura@npm:2.1.1"
   dependencies:
     "@stylistic/eslint-plugin": ^0.0.12
     "@typescript-eslint/eslint-plugin": ^6.8.0
@@ -2736,7 +2736,7 @@ __metadata:
     globals: ^13.23.0
   peerDependencies:
     eslint: ">= 8.0.0"
-  checksum: 7110cee319186d46ab94577e6f5b5d97a7145fbd6afd7965438575c10976563a62e393eff5bbbe0e49c03f4f6f47301b0e4ddba129da5e1a0765d0265c818c49
+  checksum: b33023e056173095ef7bbb925a6e706095471e79fe5a07646e19d86dcdc095209d2f0dc65eb88dddfd3bcd3bb5ad9c40596b7ca903bf23af1b1067d44aae0f25
   languageName: node
   linkType: hard
 
@@ -5795,7 +5795,7 @@ __metadata:
     c8: ^8.0.1
     esbuild-minify-templates: ^0.11.0
     eslint: ^8.49.0
-    eslint-config-kagura: ^2.0.1
+    eslint-config-kagura: ^2.1.1
     fast-glob: ^3.3.1
     foxact: ^0.2.29
     open: ^9.1.0

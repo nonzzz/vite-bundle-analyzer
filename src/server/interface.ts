@@ -57,7 +57,7 @@ export interface BasicAnalyzerPluginOptions {
 
 export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOptions {
   analyzerMode: 'server'
-  analyzerPort?: number | 'atuo'
+  analyzerPort?: number | 'auto'
   openAnalyzer?: boolean
 }
 

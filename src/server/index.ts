@@ -142,7 +142,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         }
         case 'server': {
           const foamModule = analyzerModule.processFoamModule()
-          const { setup, port } = createServer((opts.analyzerPort === 'atuo' ? 0 : opts.analyzerPort) ?? 8888)
+          const { setup, port } = createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
           setup(foamModule, { title: reportTitle, mode: 'stat' })
           if ((opts.openAnalyzer ?? true) && !isCI) {
             const address = `http://localhost:${port}`
