@@ -1,3 +1,9 @@
+## 0.8.2
+
+# Patches
+
+- Fix `analyzerPort` typo.
+
 ## 0.8.1
 
 # Patches
