@@ -128,10 +128,10 @@ export class AnalyzerNode {
     }
 
     // We use sourcemap to restore the corresponding chunk block
-    const chunks = await getSourceMappings(bundle.code, map, async (id: string) => {
+    // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
+    // It's will cause dead lock.(Altough this is a race case.)
+    const chunks = await getSourceMappings(bundle.code, map, (id: string) => {
       const relatived = path.relative(workspaceRoot, id)
-      const resolved = await pluginContext.resolve(relatived)
-      if (resolved) return resolved.id
       return path.join(workspaceRoot, relatived)
     })
 
