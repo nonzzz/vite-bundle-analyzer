@@ -1,3 +1,9 @@
+## 0.8.3
+
+# Patches
+
+- Fix the possible deadlock when generating stats.
+
 ## 0.8.2
 
 # Patches
