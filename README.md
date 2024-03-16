@@ -44,6 +44,9 @@ export default defineConfig({
     analyzer(),
   ],
 });
+
+// If you are using it in rollup you can import 'adapter' from package.
+// Then use it with adapter(analyzer())
 ```
 
 ## Options

@@ -1,3 +1,15 @@
+## 0.9.0
+
+# Features
+
+- Add rollup adapter.
+
+```js
+import { analyzer, adapter } from "vite-bundle-analyzer";
+
+plugins: [adapter(analyzer())];
+```
+
 ## 0.8.3
 
 # Patches
