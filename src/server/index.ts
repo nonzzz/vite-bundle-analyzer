@@ -5,7 +5,7 @@ import colors from 'picocolors'
 import { name } from '../../package.json'
 import { renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
-import type { AnalyzerPluginOptions, OutputAsset, OutputBundle, OutputChunk } from './interface'
+import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { type AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { createServer } from './server'
 import { convertBytes } from './shared'
@@ -53,8 +53,11 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
 function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summary: true }): Plugin {
   const { reportTitle = name } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
+  const store: AnalyzerStore = {
+    previousSourcemapOption: false,
+    analyzerModule
+  }
   let defaultWd = process.cwd()
-  let previousSourcemapOption: boolean = false
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
@@ -62,6 +65,9 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
     name,
     apply: 'build',
     enforce: 'post',
+    api: {
+      store
+    },
     configResolved(config) {
       defaultWd = config.build.outDir ?? config.root
       logger = config.logger
@@ -89,7 +95,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
     },
     config(config) {
       if (config.build?.sourcemap) {
-        previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
+        store.previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
           ? config.build.sourcemap
           : config.build.sourcemap === 'hidden'
       }
@@ -115,7 +121,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         if (pass && sourcemapFileName) {
           await analyzerModule.addModule(bundle, sourcemapFileName) 
         }
-        if (!previousSourcemapOption) {
+        if (!store.previousSourcemapOption) {
           if (pass && sourcemapFileName) {
             Reflect.deleteProperty(outputBundle, sourcemapFileName)
           }
@@ -160,6 +166,6 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
 }
 
 export { analyzer }
-
+export { adapter } from './adapter'
 export { analyzer as default }
 export { AnalyzerPluginOptions } from './interface'
