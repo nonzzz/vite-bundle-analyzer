@@ -52,15 +52,19 @@ function getStringFromSerializeMappings(bytes: Uint8Array[], mappings: Array<Loc
     if (bytes[l]) {
       const runes = decoder.decode(bytes[l])
       const mappings = mappingsWithLine[line]
-      const [first, ...rest] = mappings
-      const end = rest[rest.length - 1]
-      if (!end) {
-        parsedString += runes.substring(first.generatedColumn)
-      } else {
-        if (typeof end.lastGeneratedColumn !== 'number') {
-          parsedString += runes.substring(first.generatedColumn)
-        } else {
-          parsedString += runes.substring(first.generatedColumn, end.lastGeneratedColumn ?? end.generatedColumn)
+      const cap = mappings.length
+      for (let i = 0; i < cap; i++) {
+        const currentMaaping = mappings[i]
+        const nextMapping = i + 1 > cap ? null : mappings[i + 1]
+        if (cap === 1 || typeof currentMaaping.lastGeneratedColumn === 'object') {
+          parsedString += runes.substring(currentMaaping.generatedColumn)
+          continue
+        }
+        if (typeof currentMaaping.lastGeneratedColumn === 'number') {
+          const end = currentMaaping.lastGeneratedColumn + 1 === nextMapping?.generatedColumn
+            ? nextMapping.generatedColumn
+            : currentMaaping.lastGeneratedColumn
+          parsedString += runes.substring(currentMaaping.generatedColumn, end)
         }
       }
     }
