@@ -1,14 +1,15 @@
 import type { ZlibOptions } from 'zlib'
 import type { HookHandler, Plugin } from 'vite'
 import { noop } from 'foxact/noop'
+import { AnalyzerModule } from './analyzer-module'
 
 type RenderChunkFunction = HookHandler<Plugin['renderChunk']>
 
-type GenerateBundle = HookHandler<Plugin['generateBundle']>
+export type GenerateBundleFunction = HookHandler<Plugin['generateBundle']>
 
 const renderChunk: RenderChunkFunction = noop
 
-const generateBundle: GenerateBundle = noop
+const generateBundle: GenerateBundleFunction = noop
 
 export type RenderChunk = Parameters<typeof renderChunk>[1]
 
@@ -67,3 +68,8 @@ export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOpti
 }
 
 export type AnalyzerPluginOptions = AnalyzerPluginOptionsWithServer | AnalyzerPluginOptionsWithStatic
+
+export interface AnalyzerStore {
+  previousSourcemapOption: boolean
+  analyzerModule: AnalyzerModule
+}
