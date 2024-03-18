@@ -69,7 +69,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       store
     },
     configResolved(config) {
-      defaultWd = config.build.outDir ?? config.root
+      defaultWd = path.resolve(config.root, config.build.outDir ?? '')
       logger = config.logger
       workspaceRoot = searchForWorkspaceRoot(config.root)
       analyzerModule.workspaceRoot = workspaceRoot
