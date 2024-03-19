@@ -1,7 +1,7 @@
 {
   "name": "vite-bundle-analyzer",
   "packageManager": "yarn@3.6.3",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "a vite bundle analyzer",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -112,7 +112,6 @@
     "esbuild-minify-templates@^0.11.0": "patch:esbuild-minify-templates@npm%3A0.11.0#./.yarn/patches/esbuild-minify-templates-npm-0.11.0-458ab522a4.patch"
   },
   "dependencies": {
-    "fast-glob": "^3.3.1",
     "open": "^9.1.0",
     "picocolors": "^1.0.0",
     "sirv": "^2.0.3",

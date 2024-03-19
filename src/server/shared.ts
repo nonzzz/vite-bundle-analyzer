@@ -1,6 +1,7 @@
 import zlib from 'zlib'
 import utils from 'util'
 import fs from 'fs'
+import fsp from 'fs/promises'
 import path from 'path'
 import type { InputType, ZlibOptions } from 'zlib'
 
@@ -14,7 +15,7 @@ const defaultGzipOptions = <ZlibOptions>{
 
 export const clientPath = slash(path.join(__dirname, 'client'))
 
-export const clientAssetsPath = path.join(clientPath, 'assets')
+export const clientAssetsPath = slash(path.join(clientPath, 'assets'))
 
 export function createGzip(options: ZlibOptions = {}) {
   options = Object.assign(defaultGzipOptions, options)
@@ -47,6 +48,24 @@ export function stringToByte(b: string | Uint8Array) {
   return b
 }
 
+export async function readAll(entry: string) {
+  const paths = await Promise.all((await fsp.readdir(entry)).map((dir) => path.join(entry, dir)))
+  let pos = 0
+  const result: string[] = []
+  while (pos !== paths.length) {
+    const dir = paths[pos]
+    const stat = await fsp.stat(dir)
+    if (stat.isDirectory()) {
+      const dirs = await fsp.readdir(dir)
+      paths.push(...dirs.map((sub) => path.join(dir, sub)))
+    }
+    if (stat.isFile()) {
+      result.push(dir)
+    }
+    pos++
+  }
+  return result
+}
 // MIT License
 // Copyright (c) Vite
 

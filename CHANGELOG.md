@@ -1,3 +1,13 @@
+## 0.9.1
+
+# Patches
+
+- Fix use absolute path for working directory. #17
+
+### credits
+
+@TSmota
+
 ## 0.9.0
 
 # Features
