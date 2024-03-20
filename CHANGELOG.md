@@ -1,3 +1,7 @@
+## 0.9.2
+
+- Reduce package size.
+
 ## 0.9.1
 
 # Patches

@@ -1,7 +1,7 @@
 {
   "name": "vite-bundle-analyzer",
   "packageManager": "yarn@3.6.3",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "a vite bundle analyzer",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
