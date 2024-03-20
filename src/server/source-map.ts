@@ -57,7 +57,7 @@ function getStringFromSerializeMappings(bytes: Uint8Array[], mappings: Array<Loc
       const cap = mappings.length
       for (let i = 0; i < cap; i++) {
         const currentMaaping = mappings[i]
-        const nextMapping = i + 1 > cap ? null : mappings[i + 1]
+        const nextMapping = i + 1 >= cap ? null : mappings[i + 1]
         if (cap === 1 || currentMaaping.lastGeneratedColumn === null) {
           s += runes.substring(currentMaaping.generatedColumn)
           continue
