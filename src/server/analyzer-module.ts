@@ -82,18 +82,6 @@ export class AnalyzerNode {
     imports.forEach((imp) => this.imports.add(imp))
   }
 
-  private traverse(nodes: Array<GroupWithNode>, handler: (node: GroupWithNode) => void) {
-    for (const node of nodes) {
-      if (node.groups && node.groups.length) {
-        this.traverse(node.groups, handler)
-        handler(node)
-      } 
-      if (node.groups && node.groups.length === 0) {
-        delete (node as any).groups
-      }
-    }
-  }
-
   async setup(bundle: WrappedChunk, pluginContext: PluginContext, compress: ReturnType<typeof createGzip>, workspaceRoot: string) {
     const { imports, dynamicImports, map, moduleIds } = bundle
     this.addImports(...imports, ...dynamicImports)
@@ -144,27 +132,10 @@ export class AnalyzerNode {
     }
 
     stats.mergePrefixSingleDirectory()
-    stats.walk(stats.root, (id, n, p) => {
-      const { meta, groups } = pick(n, ['groups', 'meta'])
-      p.groups.push({ id, label: id, ...meta, groups })
-    })
-
+    stats.walk(stats.root, (c, p) => p.groups.push(c))
     sources.mergePrefixSingleDirectory()
-    sources.walk(sources.root, (id, n, p) => {
-      const { meta, groups } = pick(n, ['groups', 'meta'])
-      p.groups.push({ id, label: id, ...meta, groups })
-    })
-    this.traverse(stats.root.groups, (node) => {
-      node.statSize = node.groups.reduce((acc, cur) => acc + cur.statSize, 0)
-    })
-    this.traverse(sources.root.groups, (node) => {
-      const size = node.groups.reduce((acc, cur) => {
-        acc.parsedSize += cur.parsedSize
-        acc.gzipSize += cur.gzipSize
-        return acc
-      }, { parsedSize: 0, gzipSize: 0 })
-      Object.assign(node, size)
-    })
+    sources.walk(sources.root, (c, p) => p.groups.push(c))
+   
     this.stats = stats.root.groups
     this.source = sources.root.groups
     // Fix correect size
