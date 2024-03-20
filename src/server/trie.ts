@@ -86,11 +86,30 @@ export class FileSystemTrie<T> {
     }
   }
 
-  walk(node: Node<T>, handler: (id: string, node: Node<T>, parent: GroupWithNode) => void) {
+  walk(node: Node<T>, handler: (child: GroupWithNode, parent: GroupWithNode) => any) {
     if (!node.children.size) return
     for (const [id, childNode] of node.children.entries()) {
-      handler(id, childNode, node as unknown as GroupWithNode)
+      const child: GroupWithNode = { ...childNode.meta, id, label: id, groups: childNode.groups }
+      if (childNode.isEndOfPath) {
+        delete (child as any).groups
+      }
+      handler(child, node as unknown as GroupWithNode)
       this.walk(childNode, handler)
+      if (child.groups && child.groups.length) {
+        switch (node.kind) {
+          case 'stat':
+            child.statSize = child.groups.reduce((acc, cur) => acc + cur.statSize, 0)
+            break
+          case 'source':{
+            const size = child.groups.reduce((acc, cur) => {
+              acc.parsedSize += cur.parsedSize
+              acc.gzipSize += cur.gzipSize
+              return acc
+            }, { parsedSize: 0, gzipSize: 0 })
+            Object.assign(child, size)
+          }
+        }
+      }
     }
     // memory free
     node.children.clear()

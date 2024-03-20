@@ -32,6 +32,7 @@
     "@geist-ui/icons": "^1.0.2",
     "@stylexjs/stylex": "^0.5.1",
     "@types/node": "^20.7.0",
+    "@types/opener": "^1.4.3",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
@@ -112,9 +113,8 @@
     "esbuild-minify-templates@^0.11.0": "patch:esbuild-minify-templates@npm%3A0.11.0#./.yarn/patches/esbuild-minify-templates-npm-0.11.0-458ab522a4.patch"
   },
   "dependencies": {
-    "open": "^9.1.0",
+    "opener": "^1.5.2",
     "picocolors": "^1.0.0",
-    "sirv": "^2.0.3",
     "source-map": "^0.7.4"
   },
   "files": [

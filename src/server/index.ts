@@ -1,5 +1,6 @@
 import path from 'path'
 import fsp from 'fs/promises'
+import opener from 'opener'
 import type { Logger, Plugin } from 'vite'
 import colors from 'picocolors'
 import { name } from '../../package.json'
@@ -12,8 +13,8 @@ import { convertBytes } from './shared'
 
 const isCI = !!process.env.CI
 
-async function openBrowser(address: string) {
-  await import('open').then((module) => module.default(address, { newInstance: true })).catch(() => {})
+function openBrowser(address: string) {
+  opener(address)
 }
 
 const formatNumber = (number: number | string) => colors.dim(colors.bold(number))
@@ -152,7 +153,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
           setup(foamModule, { title: reportTitle, mode: 'stat' })
           if ((opts.openAnalyzer ?? true) && !isCI) {
             const address = `http://localhost:${port}`
-            await openBrowser(address)
+            openBrowser(address)
           }
           break
         }
