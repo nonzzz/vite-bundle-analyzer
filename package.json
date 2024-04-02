@@ -37,7 +37,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
-    "esbuild-minify-templates": "^0.11.0",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.1.1",
     "foxact": "^0.2.29",
@@ -108,8 +107,7 @@
     "unbox-primitive": "npm:@nolyfill/unbox-primitive@latest",
     "which-boxed-primitive": "npm:@nolyfill/which-boxed-primitive@latest",
     "which-typed-array": "npm:@nolyfill/which-typed-array@latest",
-    "@types/react": "^18.2.31",
-    "esbuild-minify-templates@^0.11.0": "patch:esbuild-minify-templates@npm%3A0.11.0#./.yarn/patches/esbuild-minify-templates-npm-0.11.0-458ab522a4.patch"
+    "@types/react": "^18.2.31"
   },
   "dependencies": {
     "picocolors": "^1.0.0",

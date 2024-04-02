@@ -12,7 +12,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ampproject/remapping@npm:^2.2.0, @ampproject/remapping@npm:^2.2.1":
+"@ampproject/remapping@npm:^2.2.0":
   version: 2.2.1
   resolution: "@ampproject/remapping@npm:2.2.1"
   dependencies:
@@ -1190,13 +1190,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:^0.0.45":
-  version: 0.0.45
-  resolution: "@types/estree@npm:0.0.45"
-  checksum: 82c3eed5ab5b20ecd58a6d19176b9be0523c00a794db11f8ed08faee851066f09a959b88a1983ad52313f750e1cfe6b9565904ad2f4f7cf5c1f96300cde04ca0
-  languageName: node
-  linkType: hard
-
 "@types/estree@npm:^1.0.0":
   version: 1.0.3
   resolution: "@types/estree@npm:1.0.3"
@@ -1903,18 +1896,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"astray@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "astray@npm:1.1.1"
-  dependencies:
-    "@types/estree": ^0.0.45
-  dependenciesMeta:
-    "@types/estree":
-      optional: true
-  checksum: 53ad4ac04d168f12a9274e057435bed9f02e6cfac2ef572b1966793a1b47625468726d625ef7e98d852da0e10a31ae71c8b59a39bd39a101487cf3d97d3cf527
-  languageName: node
-  linkType: hard
-
 "ava@npm:^5.3.1":
   version: 5.3.1
   resolution: "ava@npm:5.3.1"
@@ -2615,34 +2596,6 @@ __metadata:
   version: 1.4.1
   resolution: "es-module-lexer@npm:1.4.1"
   checksum: a11b5a256d4e8e9c7d94c2fd87415ccd1591617b6edd847e064503f8eaece2d25e2e9078a02c5ce3ed5e83bb748f5b4820efbe78072c8beb07ac619c2edec35d
-  languageName: node
-  linkType: hard
-
-"esbuild-minify-templates@npm:0.11.0":
-  version: 0.11.0
-  resolution: "esbuild-minify-templates@npm:0.11.0"
-  dependencies:
-    "@ampproject/remapping": ^2.2.1
-    astray: ^1.1.1
-    magic-string: ^0.30.0
-    meriyah: ^4.3.7
-  peerDependencies:
-    esbuild: ">=0.13.0 <1.0.0"
-  checksum: 22c653bb279ae190e5ff411b2c8fc1e38c65285426ac340d5b8f1c28ef57e9366040f7dd395dec0d8b499f704d1fd31c65e1c6cc6006b74203cf75ba8408def4
-  languageName: node
-  linkType: hard
-
-"esbuild-minify-templates@patch:esbuild-minify-templates@npm%3A0.11.0#./.yarn/patches/esbuild-minify-templates-npm-0.11.0-458ab522a4.patch::locator=vite-bundle-analyzer%40workspace%3A.":
-  version: 0.11.0
-  resolution: "esbuild-minify-templates@patch:esbuild-minify-templates@npm%3A0.11.0#./.yarn/patches/esbuild-minify-templates-npm-0.11.0-458ab522a4.patch::version=0.11.0&hash=9894e6&locator=vite-bundle-analyzer%40workspace%3A."
-  dependencies:
-    "@ampproject/remapping": ^2.2.1
-    astray: ^1.1.1
-    magic-string: ^0.30.0
-    meriyah: ^4.3.7
-  peerDependencies:
-    esbuild: ">=0.13.0 <1.0.0"
-  checksum: cb64aaae1e7e605b3971c79ff9a4195ac9714a9fa86a531cd0c04deae46254b55f88fbf44e2739e6ef2cf3fb019dd556563a5a20cea45f436b3fe01b13e8cc47
   languageName: node
   linkType: hard
 
@@ -4073,13 +4026,6 @@ __metadata:
   version: 1.4.1
   resolution: "merge2@npm:1.4.1"
   checksum: 7268db63ed5169466540b6fb947aec313200bcf6d40c5ab722c22e242f651994619bcd85601602972d3c85bd2cc45a358a4c61937e9f11a061919a1da569b0c2
-  languageName: node
-  linkType: hard
-
-"meriyah@npm:^4.3.7":
-  version: 4.3.9
-  resolution: "meriyah@npm:4.3.9"
-  checksum: eb43c4ca2295cbdaa6f4d13412f42fa97c968cbb3171899b1afcf5419715433b2906558aaabd08660592c5731d80341d81ce7bea7fd562942677c15a7bcbea4a
   languageName: node
   linkType: hard
 
@@ -5723,7 +5669,6 @@ __metadata:
     "@vitejs/plugin-react": ^4.2.1
     ava: ^5.3.1
     c8: ^8.0.1
-    esbuild-minify-templates: ^0.11.0
     eslint: ^8.49.0
     eslint-config-kagura: ^2.1.1
     foxact: ^0.2.29

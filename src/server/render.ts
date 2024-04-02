@@ -1,11 +1,35 @@
 import fsp from 'fs/promises'
 import path from 'path'
-import { clientAssetsPath, clientPath, injectHTMLTag, readAll } from './shared'
+import { clientAssetsPath, clientPath, readAll } from './shared'
 import type { DefaultSizes, Foam } from './interface'
 
 export interface RenderOptions {
   title: string
   mode: DefaultSizes
+}
+
+interface Descriptor {
+  kind: 'script' | 'style',
+  text: string
+}
+
+interface InjectHTMLTagOptions {
+  html: string
+  injectTo: 'body' | 'head',
+  descriptors: Descriptor | Descriptor[]
+}
+
+// Refactor this function
+export function injectHTMLTag(options: InjectHTMLTagOptions) {
+  const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
+  options.descriptors = Array.isArray(options.descriptors) ? options.descriptors : [options.descriptors]
+  const descriptors = options.descriptors.map(d => `<${d.kind}>${d.text}</${d.kind}>`)
+  return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
+}
+
+export function generateInjectCode(foamModule: Foam[], mode: string) {
+  const { stringify } = JSON
+  return `window.defaultSizes = ${stringify(mode)},window.foamModule = ${stringify(foamModule)};`
 }
 
 export async function renderView(foamModule: Foam[], options: RenderOptions) {
@@ -24,16 +48,16 @@ export async function renderView(foamModule: Foam[], options: RenderOptions) {
   html = injectHTMLTag({ 
     html,
     injectTo: 'head',
-    descriptors: assets.map(({ fileType, content }) => {
-      if (fileType === 'js') return `<script>${content}</script>`
-      return `<style>${content}</style>`
-    }) })
-  html = injectHTMLTag({ 
+    descriptors: assets.map(({ fileType, content }) => 
+      ({ kind: fileType === 'js' ? 'script' : 'style', text: content }))
+  })
+  html = injectHTMLTag({
     html,
     injectTo: 'body',
-    descriptors: [`<script>
-    window.defaultSizes = ${JSON.stringify(options.mode)};\n
-    window.foamModule = ${JSON.stringify(foamModule)};\n
-    </script>`] })
+    descriptors: {
+      kind: 'script',
+      text: generateInjectCode(foamModule, options.mode)
+    }
+  })
   return html
 }

@@ -2,7 +2,8 @@ import http from 'http'
 import fs from 'fs'
 import type { AddressInfo } from 'net'
 import path from 'path'
-import { clientPath, injectHTMLTag } from './shared'
+import { generateInjectCode, injectHTMLTag } from './render'
+import { clientPath } from './shared'
 import type { Foam } from './interface'
 import type { RenderOptions } from './render'
 
@@ -29,10 +30,10 @@ function createStaticMiddleware(options: RenderOptions, foamModule: Foam[]) {
       html = injectHTMLTag({
         html,
         injectTo: 'body',
-        descriptors: [`<script>
-          window.defaultSizes = ${JSON.stringify(options.mode)};\n
-          window.foamModule = ${JSON.stringify(foamModule)};\n
-          </script>`]
+        descriptors: {
+          kind: 'script',
+          text: generateInjectCode(foamModule, options.mode)
+        }
       })
       res.end(html)
       cache.set(filePath, { data: html, mimeType: 'text/html; charset=utf8;' })
