@@ -1218,30 +1218,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 20.11.30
-  resolution: "@types/node@npm:20.11.30"
-  dependencies:
-    undici-types: ~5.26.4
-  checksum: 7597767aa3e44b0f1bf62efa522dd17741135f283c11de6a20ead8bb7016fb4999cc30adcd8f2bb29ebb216906c92894346ccd187de170927dc1e212d2c07c81
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^20.7.0":
   version: 20.8.6
   resolution: "@types/node@npm:20.8.6"
   dependencies:
     undici-types: ~5.25.1
   checksum: ccfb7ac482c5a96edeb239893c5c099f5257fcc2ed9ae62fefdfbc782b79e16dbc2af9a85b379665237bf759904b44ca2be68e75d239e0297882aad42f61905c
-  languageName: node
-  linkType: hard
-
-"@types/opener@npm:^1.4.3":
-  version: 1.4.3
-  resolution: "@types/opener@npm:1.4.3"
-  dependencies:
-    "@types/node": "*"
-  checksum: 9a41f86b73f86b7f44d5bcbdd35330565c01df00183d00a45bbb509c3508d0f2cdcb4670f8620097b8b928912bc4fc5b58a46990fad915b91a4c680dc6c0efbd
   languageName: node
   linkType: hard
 
@@ -4453,15 +4435,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"opener@npm:^1.5.2":
-  version: 1.5.2
-  resolution: "opener@npm:1.5.2"
-  bin:
-    opener: bin/opener-bin.js
-  checksum: 33b620c0d53d5b883f2abc6687dd1c5fd394d270dbe33a6356f2d71e0a2ec85b100d5bac94694198ccf5c30d592da863b2292c5539009c715a9c80c697b4f6cc
-  languageName: node
-  linkType: hard
-
 "optionator@npm:^0.9.3":
   version: 0.9.3
   resolution: "optionator@npm:0.9.3"
@@ -5630,13 +5603,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
-  languageName: node
-  linkType: hard
-
 "unique-filename@npm:^3.0.0":
   version: 3.0.0
   resolution: "unique-filename@npm:3.0.0"
@@ -5752,7 +5718,6 @@ __metadata:
     "@geist-ui/icons": ^1.0.2
     "@stylexjs/stylex": ^0.5.1
     "@types/node": ^20.7.0
-    "@types/opener": ^1.4.3
     "@types/react": ^18.2.31
     "@types/react-dom": 18.2.7
     "@vitejs/plugin-react": ^4.2.1
@@ -5762,7 +5727,6 @@ __metadata:
     eslint: ^8.49.0
     eslint-config-kagura: ^2.1.1
     foxact: ^0.2.29
-    opener: ^1.5.2
     picocolors: ^1.0.0
     preact: ^10.19.2
     react: ^18.2.0
