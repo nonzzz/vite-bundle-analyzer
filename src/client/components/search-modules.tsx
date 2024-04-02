@@ -1,11 +1,12 @@
 import { ChangeEvent, useMemo, useState } from 'react'
 import stylex from '@stylexjs/stylex'
-import { Input, Spacer, Text } from '@geist-ui/core'
+import { Spacer, Text } from '@geist-ui/core'
 import Folder from '@geist-ui/icons/folder'
 import File from '@geist-ui/icons/file'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useApplicationContext } from '../context'
+import { Input } from './input'
 import { ModuleItem } from './module-item'
 
 export interface SearchModulesProps {
@@ -84,7 +85,6 @@ export function SearchModules(props: SearchModulesProps) {
   return (
     <>
       <Input
-        crossOrigin
         placeholder="Enter RegExp"
         clearable
         width="100%"

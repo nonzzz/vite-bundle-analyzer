@@ -1,7 +1,6 @@
 import { RefObject, useCallback, useRef, useState } from 'react'
 import { Spacer, Text } from '@geist-ui/core'
 import stylex from '@stylexjs/stylex'
-import { GeistProvider } from '@geist-ui/core'
 import { FoamDataObject } from '@carrotsearch/foamtree'
 import { ModuleSize, TreeMap, TreeMapComponent } from './components/tree-map'
 import { ApplicationContext, SIZE_RECORD } from './context'
@@ -45,33 +44,31 @@ export function App() {
   }, [])
 
   return (
-    <GeistProvider>
-      <ApplicationContext.Provider
-        value={initialValue}
-      >
-        <div {...stylex.props(styles.app)}>
-          <SidebarProvider>
-            <Sidebar foamModule={foamModule} mode={sizes} onModeChange={handleModeChange} onVisibleChange={(s) => setTooltipVisible(!s)} />
-          </SidebarProvider>
-          <TreeMap ref={(instance: any) => treeMapRef.current = instance} onGroupHover={handleGroupHover} />
-          <Tooltip visible={tooltipVisible}>
-            {tooltipContent && (
-              <>
-                <Text p b font="14px">{tooltipContent.label}</Text>
-                <Spacer h={0.5} />
-                <ModuleSize module={tooltipContent} sizes="statSize" checkedSizes={sizes} />
-                <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} />
-                <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} />
-                <Text p font="12px">
-                  path:
-                  {' '}
-                  {tooltipContent.id}
-                </Text>
-              </>
-            )}
-          </Tooltip>
-        </div>
-      </ApplicationContext.Provider>
-    </GeistProvider>
+    <ApplicationContext.Provider
+      value={initialValue}
+    >
+      <div {...stylex.props(styles.app)}>
+        <SidebarProvider>
+          <Sidebar foamModule={foamModule} mode={sizes} onModeChange={handleModeChange} onVisibleChange={(s) => setTooltipVisible(!s)} />
+        </SidebarProvider>
+        <TreeMap ref={(instance: any) => treeMapRef.current = instance} onGroupHover={handleGroupHover} />
+        <Tooltip visible={tooltipVisible}>
+          {tooltipContent && (
+            <>
+              <Text p b font="14px">{tooltipContent.label}</Text>
+              <Spacer h={0.5} />
+              <ModuleSize module={tooltipContent} sizes="statSize" checkedSizes={sizes} />
+              <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} />
+              <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} />
+              <Text p font="12px">
+                path:
+                {' '}
+                {tooltipContent.id}
+              </Text>
+            </>
+          )}
+        </Tooltip>
+      </div>
+    </ApplicationContext.Provider>
   )
 }

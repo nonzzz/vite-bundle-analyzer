@@ -30,6 +30,7 @@
     "@carrotsearch/foamtree": "^3.5.1",
     "@geist-ui/core": "^2.3.8",
     "@geist-ui/icons": "^1.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
     "@stylexjs/stylex": "^0.5.1",
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.31",
