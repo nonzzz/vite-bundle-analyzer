@@ -88,7 +88,6 @@ export function SearchModules(props: SearchModulesProps) {
         placeholder="Enter RegExp"
         clearable
         width="100%"
-        type="secondary"
         onChange={handleChangeRegExp}
       />
       <Spacer h={0.75} />
