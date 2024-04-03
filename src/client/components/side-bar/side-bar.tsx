@@ -1,4 +1,4 @@
-import { Drawer, Grid, Select, Text } from '@geist-ui/core'
+import { Drawer, Grid, Text } from '@geist-ui/core'
 import { noop } from 'foxact/noop'
 import Menu from '@geist-ui/icons/menu'
 import { useEffect, useMemo, useState } from 'react'
@@ -7,6 +7,7 @@ import { useApplicationContext } from '../../context'
 import type { Sizes } from '../../interface'
 import { tuple } from '../../shared'
 import { Button } from '../button'
+import { Select } from '../select'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
@@ -103,7 +104,6 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
               scale={0.75}
               placeholder="Select endpoints"
               multiple
-              type="secondary"
               width="95.5%"
               onChange={handleFilterByEntrypoints}
             >

@@ -1,11 +1,12 @@
 import { ChangeEvent, useMemo, useState } from 'react'
 import stylex from '@stylexjs/stylex'
-import { Spacer, Text } from '@geist-ui/core'
+import { Text } from '@geist-ui/core'
 import Folder from '@geist-ui/icons/folder'
 import File from '@geist-ui/icons/file'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useApplicationContext } from '../context'
+import { Spacer } from './spacer'
 import { Input } from './input'
 import { ModuleItem } from './module-item'
 

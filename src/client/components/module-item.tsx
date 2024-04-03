@@ -1,8 +1,9 @@
 import { PropsWithChildren } from 'react'
 import stylex from '@stylexjs/stylex'
-import { Spacer, Text } from '@geist-ui/core'
+import { Text } from '@geist-ui/core'
 import { noop } from 'foxact/noop'
 import { convertBytes } from '../shared'
+import { Spacer } from './spacer'
 
 export interface ModuleItemProps {
   name: string,
