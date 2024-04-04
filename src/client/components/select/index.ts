@@ -1,3 +1,10 @@
-import { Select } from './select'
+import { Select as _Select } from './select'
+import { SelectOption } from './select-option'
 
-export { Select }
+export type SelectComponentType = typeof _Select & {
+  Option: typeof SelectOption
+}
+
+(_Select as SelectComponentType).Option = SelectOption
+
+export const Select = _Select as SelectComponentType
