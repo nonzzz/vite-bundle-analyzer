@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { Grid, useScale, withScale } from '@geist-ui/core'
+import { useScale, withScale } from '@geist-ui/core'
 import { SCALES } from '../button'
 import { Provider } from './context'
 import { Ellipsis } from './ellipsis'
@@ -73,15 +73,16 @@ const styles = stylex.create({
       borderColor: '#eaeaea'
     }
   },
-  layout: (scale: SCALES, disabled: boolean) => ({
+  layout: (scale: SCALES, disabled: boolean, multiple: boolean) => ({
     '--select-font-size': scale.font(0.875),
-    '--scale-height': scale.height(2.25),
+    '--select-height': scale.height(2.25),
     '--disabled-color': disabled ? '#888' : '#000',
     width: scale.width(1, 'initial'),
-    height: 'var(--scale-height)',
+    height: multiple ? 'auto' : 'var(--select-height)',
     padding: `${scale.pt(0)} ${scale.pr(0.334)} ${scale.pb(0)} ${scale.pl(0.667)}`,
     margin: `${scale.mt(0)} ${scale.mr(0)} ${scale.mb(0)} ${scale.ml(0)}`,
-    cursor: disabled ? 'not-allowed' : 'pointer'
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    minHeight: multiple ? 'var(--select-height)' : null
   }),
   input: {
     position: 'fixed',
@@ -98,7 +99,7 @@ const styles = stylex.create({
   value: {
     display: 'inline-flex',
     flex: 1,
-    height: '100%',
+    height: 'var(--select-height)',
     alignItems: 'center',
     lineHeight: 1,
     padding: 0,
@@ -145,6 +146,10 @@ const styles = stylex.create({
   },
   reverse: {
     transform: 'translateY(-50%) rotate(180deg)'
+  },
+  flexable: {
+    display: 'flex',
+    flexWrap: 'wrap'
   }
 })
 
@@ -232,7 +237,7 @@ function SelectComponent(props: SelectProps) {
         role="presentation"
         onClick={handleClick}
         onMouseDown={handleMouseDown}
-        {...stylex.props(styles.select, styles.layout(SCALES, disabled), disabled && styles.disabledHoverColor)}
+        {...stylex.props(styles.select, styles.layout(SCALES, disabled, multiple), disabled && styles.disabledHoverColor)}
         {...rest}
       >
         <input
@@ -245,8 +250,7 @@ function SelectComponent(props: SelectProps) {
             <Ellipsis height="var(--scale-height)">{placeholder}</Ellipsis>
           </span>
         )}
-        {value && !multiple && <span>{selectChild}</span>}
-        {value && multiple && <Grid.Container gap={0.5}>{selectChild}</Grid.Container>}
+        {value && <div {...stylex.props(styles.flexable)}>{selectChild}</div>}
         <SelectDropdown visible={visible}>{children}</SelectDropdown>
         <div {...stylex.props(styles.icon, visible && styles.reverse)}>
           <svg

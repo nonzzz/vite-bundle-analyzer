@@ -1,6 +1,6 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { Grid, useClasses } from '@geist-ui/core'
+import { useClasses } from '@geist-ui/core'
 
 interface Props {
   disabled: boolean
@@ -19,6 +19,7 @@ const styles = stylex.create({
     borderRadius: '6px',
     backgroundColor: '#eaeaea',
     color: '#444',
+    margin: '3px',
     ':not(#__unused__) >div:not(.clear-icon)': {
       borderRadius: 0,
       backgroundColor: 'transparent',
@@ -69,32 +70,30 @@ function SelectMultipleValue({
   }
 
   return (
-    <Grid>
-      <div {...stylex.props(styles.item, disabled && styles.disabled)}>
-        {children}
-        {!!onClear && (
-          <div
-            role="presentation"
-            onClick={handleClick}
-            className={classes}
+    <div {...stylex.props(styles.item, disabled && styles.disabled)}>
+      {children}
+      {!!onClear && (
+        <div
+          role="presentation"
+          onClick={handleClick}
+          className={classes}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+            shapeRendering="geometricPrecision"
+            {...stylex.props(styles.svg)}
           >
-            <svg
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-              shapeRendering="geometricPrecision"
-              {...stylex.props(styles.svg)}
-            >
-              <path d="M18 6L6 18" />
-              <path d="M6 6l12 12" />
-            </svg>
-          </div>
-        )}
-      </div>
-    </Grid>
+            <path d="M18 6L6 18" />
+            <path d="M6 6l12 12" />
+          </svg>
+        </div>
+      )}
+    </div>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Drawer, Grid, Text } from '@geist-ui/core'
+import { Text } from '@geist-ui/core'
 import { noop } from 'foxact/noop'
 import Menu from '@geist-ui/icons/menu'
 import { useEffect, useMemo, useState } from 'react'
@@ -8,6 +8,7 @@ import type { Sizes } from '../../interface'
 import { tuple } from '../../shared'
 import { Button } from '../button'
 import { Select } from '../select'
+import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
@@ -25,8 +26,13 @@ const styles = stylex.create({
     left: '10px',
     zIndex: 10
   },
-  container: {
-    minWidth: '450px'
+  flexable: {
+    display: 'flex',
+    flexWrap: 'nowrap'
+  },
+  flexItem: {
+    padding: '5px',
+    boxSizing: 'border-box'
   }
 })
 
@@ -73,18 +79,16 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
       />
       <Drawer
         visible={drawerVisibile}
-        placement="left"
         padding={0}
         onClose={toggleDrawerVisible}
-        width="15vw"
-        {...stylex.props(styles.container)}
+        width="450px"
       >
         <Drawer.Content paddingTop={0.25}>
           <div>
             <Text p b h3>Treemap Sizes:</Text>
-            <Grid.Container gap={1} wrap="nowrap">
+            <div {...stylex.props(styles.flexable)}>
               {MODES.map(button => (
-                <Grid key={button}>
+                <div key={button} {...stylex.props(styles.flexItem)}>
                   <Button
                     onClick={() => onModeChange(button)}
                     auto
@@ -93,10 +97,10 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
                   >
                     {button}
                   </Button>
-                </Grid>
+                </div>
               )
               )}
-            </Grid.Container>
+            </div>
           </div>
           <div>
             <Text p b h3>Filter by entrypoints:</Text>
