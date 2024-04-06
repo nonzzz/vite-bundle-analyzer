@@ -1,7 +1,5 @@
 import { ChangeEvent, useMemo, useState } from 'react'
 import stylex from '@stylexjs/stylex'
-import Folder from '@geist-ui/icons/folder'
-import File from '@geist-ui/icons/file'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useApplicationContext } from '../context'
@@ -9,6 +7,8 @@ import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
 import { ModuleItem } from './module-item'
+import Folder from '~icons/ph/folder'
+import File from '~icons/ph/file-duotone'
 
 export interface SearchModulesProps {
   files: Foam[]
@@ -129,7 +129,7 @@ export function SearchModules(props: SearchModulesProps) {
                             onClick={() => treemap.current?.zoom(module)}
                             {...stylex.props(styles.moduleName)}
                           >
-                            {module.groups?.length ? <File size={14} /> : <Folder size={14} />}
+                            {module.groups?.length ? <File /> : <Folder />}
                             <Spacer inline />
                           </ModuleItem>
                         ))}

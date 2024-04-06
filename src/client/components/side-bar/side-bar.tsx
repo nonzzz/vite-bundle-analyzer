@@ -1,5 +1,4 @@
 import { noop } from 'foxact/noop'
-import Menu from '@geist-ui/icons/menu'
 import { useEffect, useMemo, useState } from 'react'
 import stylex from '@stylexjs/stylex'
 import { Text } from '../text'
@@ -12,6 +11,7 @@ import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
+import Menu from '~icons/ph/list'
 
 const MODES = tuple('Stat', 'Parsed', 'Gzipped')
 
