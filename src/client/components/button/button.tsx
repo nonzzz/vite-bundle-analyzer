@@ -1,9 +1,7 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { useClasses, useScale, withScale } from '@geist-ui/core'
-import type { ScaleConfig } from '@geist-ui/core'
-
-export type SCALES = ScaleConfig['SCALES']
+import { useClasses, useScale, withScale } from '../../composables'
+import type { SCALES } from '../../composables'
 
 interface Props {
   icon?: React.ReactNode

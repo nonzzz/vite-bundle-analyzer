@@ -6,15 +6,15 @@ export interface SelectContext {
   visible?: boolean
   updateVisible?: (next: boolean) => unknown
   disableAll: boolean,
-  ref?: React.RefObject<HTMLDivElement>
+  ref: React.RefObject<HTMLDivElement>
 }
   
-const defaultContext: SelectContext = {
+const defaultContext = {
   visible: false,
   disableAll: false
 }
 
-const selectContext = React.createContext<SelectContext>(defaultContext)
+const selectContext = React.createContext<SelectContext>(defaultContext as any)
 
 export function useSelect() {
   return React.useContext(selectContext)

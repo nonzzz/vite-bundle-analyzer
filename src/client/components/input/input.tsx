@@ -1,7 +1,7 @@
 import React, { useImperativeHandle, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { useClasses, useScale, withScale } from '@geist-ui/core'
-import type { SCALES } from '../button'
+import { useClasses, useScale, withScale } from '../../composables'
+import type { SCALES } from '../../composables'
 
 interface Props {
   clearable?: boolean

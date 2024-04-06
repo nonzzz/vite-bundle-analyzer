@@ -1,7 +1,7 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { useScale, withScale } from '@geist-ui/core'
-import { SCALES } from '../button'
+import { useScale, withScale } from '../../composables'
+import { SCALES } from '../../composables'
  
 interface Props {
   inline?: boolean

@@ -1,6 +1,6 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { useClasses } from '@geist-ui/core'
+import { useClasses } from '../../composables'
 
 interface Props {
   disabled: boolean

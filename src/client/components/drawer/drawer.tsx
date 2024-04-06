@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useBodyScroll, withScale } from '@geist-ui/core'
-import usePortal from '@geist-ui/core/esm/utils/use-portal'
-import Backdrop from '@geist-ui/core/esm/shared/backdrop'
+import { useBodyScroll, usePortal, withScale } from '../../composables'
+import { Backdrop } from './backdrop'
 import { DrawerWrapper } from './wrapper'
 
 interface Props {
   visible?: boolean
-  disableBackdropClick?: boolean
   onClose?: () => void
   onContentClick?: (event: React. MouseEvent<HTMLElement>) => void
 }
@@ -15,7 +13,7 @@ interface Props {
 export type DrawerProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
 
 function DrawerComponent(props: DrawerProps) {
-  const { visible: userVisible, disableBackdropClick = false, children, onClose, ...rest } = props
+  const { visible: userVisible, children, onClose, ...rest } = props
   const portal = usePortal('drawer')
   const [visible, setVisible] = useState<boolean>(false)
   const [, setBodyHidden] = useBodyScroll(null, { delayReset: 300 })
@@ -33,7 +31,6 @@ function DrawerComponent(props: DrawerProps) {
   }, [setBodyHidden, userVisible])
   
   const closeFromBackdrop = () => {
-    if (disableBackdropClick) return
     closeDrawer()
   }
   if (!portal) return null

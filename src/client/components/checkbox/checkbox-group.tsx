@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useScale, withScale } from '@geist-ui/core'
 import * as stylex from '@stylexjs/stylex'
-import { SCALES } from '../button'
+import { useScale, withScale } from '../../composables'
+import { SCALES } from '../../composables'
 import { CheckboxProvider } from './context'
 
 interface Props {

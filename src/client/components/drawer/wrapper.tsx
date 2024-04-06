@@ -1,8 +1,8 @@
 import React from 'react'
-import { useClasses, useScale } from '@geist-ui/core'
-import CSSTransition from '@geist-ui/core/esm/shared/css-transition'
 import * as stylex from '@stylexjs/stylex'
-import type { SCALES } from '../button'
+import { CSSTransition } from '../css-transition'
+import { useClasses, useScale } from '../../composables'
+import type { SCALES } from '../../composables'
 
 interface Props {
   visible?: boolean

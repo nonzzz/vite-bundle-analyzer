@@ -1,5 +1,4 @@
 import { RefObject, useCallback, useRef, useState } from 'react'
-import { Text } from '@geist-ui/core'
 import stylex from '@stylexjs/stylex'
 import { FoamDataObject } from '@carrotsearch/foamtree'
 import { ModuleSize, TreeMap, TreeMapComponent } from './components/tree-map'
@@ -10,6 +9,7 @@ import './init.css'
 import { Sidebar, SidebarProvider } from './components/side-bar'
 import type { ModeType } from './components/side-bar/side-bar'
 import { Tooltip } from './components/tooltip'
+import { Text } from './components/text'
 
 const styles = stylex.create({
   app: {

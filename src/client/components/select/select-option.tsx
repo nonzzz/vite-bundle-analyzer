@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import * as stylex from '@stylexjs/stylex'
-import { useScale, withScale } from '@geist-ui/core'
-import { SCALES } from '../button'
+import { useScale, withScale } from '../../composables'
+import { SCALES } from '../../composables'
 import { Ellipsis } from './ellipsis'
 import { useSelect } from './context'
 
