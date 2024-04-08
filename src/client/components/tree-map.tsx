@@ -1,12 +1,12 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import stylex from '@stylexjs/stylex'
 import { FoamTree } from '@carrotsearch/foamtree'
-import { Text } from '@geist-ui/core'
 import type { FoamContext, FoamDataObject, FoamEventObject } from '@carrotsearch/foamtree'
 import { noop } from 'foxact/noop'
 import { useApplicationContext } from '../context'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, hashCode } from '../shared'
+import { Text } from './text'
 
 type FoamGroup = Omit<Foam, 'groups'> & { isAsset?: boolean }
 

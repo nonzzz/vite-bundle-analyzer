@@ -1,1087 +1,539 @@
 [
   {
-    "id": "assets/index-5a98af6a.js",
-    "label": "assets/index-5a98af6a.js",
-    "statSize": 458303,
-    "parsedSize": 305942,
-    "mapSize": 896037,
-    "gzipSize": 119058,
+    "id": "assets/index-e335f571.js",
+    "label": "assets/index-e335f571.js",
+    "statSize": 273734,
+    "parsedSize": 213759,
+    "mapSize": 586366,
+    "gzipSize": 84977,
     "source": [
       {
+        "gzipSize": 84977,
+        "parsedSize": 213759,
         "id": "Users",
         "label": "Users",
-        "gzipSize": 119058,
-        "parsedSize": 305942,
         "groups": [
           {
+            "gzipSize": 23424,
+            "parsedSize": 46566,
             "id": "src",
             "label": "src",
-            "gzipSize": 5978,
-            "parsedSize": 10463,
             "groups": [
               {
+                "gzipSize": 23260,
+                "parsedSize": 46390,
                 "id": "client",
                 "label": "client",
-                "gzipSize": 5814,
-                "parsedSize": 10287,
                 "groups": [
                   {
-                    "id": "context.ts",
-                    "label": "context.ts",
                     "gzipSize": 159,
-                    "parsedSize": 181
+                    "parsedSize": 181,
+                    "id": "context.ts",
+                    "label": "context.ts"
                   },
                   {
+                    "gzipSize": 226,
+                    "parsedSize": 304,
                     "id": "shared.ts",
-                    "label": "shared.ts",
-                    "gzipSize": 222,
-                    "parsedSize": 304
+                    "label": "shared.ts"
                   },
                   {
-                    "id": "components",
-                    "label": "components",
-                    "gzipSize": 4793,
-                    "parsedSize": 8788,
+                    "gzipSize": 2504,
+                    "parsedSize": 3967,
+                    "id": "composables",
+                    "label": "composables",
                     "groups": [
                       {
-                        "id": "tree-map.tsx",
-                        "label": "tree-map.tsx",
-                        "gzipSize": 1744,
-                        "parsedSize": 3488
-                      },
-                      {
-                        "id": "module-item.tsx",
-                        "label": "module-item.tsx",
-                        "gzipSize": 269,
-                        "parsedSize": 401
-                      },
-                      {
-                        "id": "file-list.tsx",
-                        "label": "file-list.tsx",
-                        "gzipSize": 398,
-                        "parsedSize": 659
-                      },
-                      {
-                        "id": "search-modules.tsx",
-                        "label": "search-modules.tsx",
-                        "gzipSize": 834,
-                        "parsedSize": 1602
-                      },
-                      {
-                        "id": "side-bar",
-                        "label": "side-bar",
-                        "gzipSize": 998,
-                        "parsedSize": 1777,
+                        "gzipSize": 242,
+                        "parsedSize": 369,
+                        "id": "use-classes",
+                        "label": "use-classes",
                         "groups": [
                           {
-                            "id": "provide.tsx",
-                            "label": "provide.tsx",
-                            "gzipSize": 129,
-                            "parsedSize": 140
-                          },
-                          {
-                            "id": "side-bar.tsx",
-                            "label": "side-bar.tsx",
-                            "gzipSize": 869,
-                            "parsedSize": 1637
+                            "gzipSize": 242,
+                            "parsedSize": 369,
+                            "id": "use-classes.ts",
+                            "label": "use-classes.ts"
                           }
                         ]
                       },
                       {
-                        "id": "tooltip.tsx",
-                        "label": "tooltip.tsx",
-                        "gzipSize": 550,
-                        "parsedSize": 861
+                        "gzipSize": 1096,
+                        "parsedSize": 1831,
+                        "id": "use-scale",
+                        "label": "use-scale",
+                        "groups": [
+                          {
+                            "gzipSize": 278,
+                            "parsedSize": 482,
+                            "id": "scale-context.ts",
+                            "label": "scale-context.ts"
+                          },
+                          {
+                            "gzipSize": 153,
+                            "parsedSize": 196,
+                            "id": "utils.ts",
+                            "label": "utils.ts"
+                          },
+                          {
+                            "gzipSize": 665,
+                            "parsedSize": 1153,
+                            "id": "with-scale.tsx",
+                            "label": "with-scale.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 496,
+                        "parsedSize": 961,
+                        "id": "use-body-scroll",
+                        "label": "use-body-scroll",
+                        "groups": [
+                          {
+                            "gzipSize": 496,
+                            "parsedSize": 961,
+                            "id": "use-body-scroll.ts",
+                            "label": "use-body-scroll.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 263,
+                        "parsedSize": 338,
+                        "id": "use-portal",
+                        "label": "use-portal",
+                        "groups": [
+                          {
+                            "gzipSize": 263,
+                            "parsedSize": 338,
+                            "id": "use-portal.ts",
+                            "label": "use-portal.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 120,
+                        "parsedSize": 132,
+                        "id": "use-click-anywhere",
+                        "label": "use-click-anywhere",
+                        "groups": [
+                          {
+                            "gzipSize": 120,
+                            "parsedSize": 132,
+                            "id": "use-click-anywhere.ts",
+                            "label": "use-click-anywhere.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 96,
+                        "parsedSize": 106,
+                        "id": "use-resize",
+                        "label": "use-resize",
+                        "groups": [
+                          {
+                            "gzipSize": 96,
+                            "parsedSize": 106,
+                            "id": "use-resize.ts",
+                            "label": "use-resize.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 191,
+                        "parsedSize": 230,
+                        "id": "use-dom-observer",
+                        "label": "use-dom-observer",
+                        "groups": [
+                          {
+                            "gzipSize": 191,
+                            "parsedSize": 230,
+                            "id": "use-dom-observer.ts",
+                            "label": "use-dom-observer.ts"
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    "id": "application.tsx",
-                    "label": "application.tsx",
-                    "gzipSize": 498,
-                    "parsedSize": 874
+                    "gzipSize": 19731,
+                    "parsedSize": 40954,
+                    "id": "components",
+                    "label": "components",
+                    "groups": [
+                      {
+                        "gzipSize": 1213,
+                        "parsedSize": 2953,
+                        "id": "text",
+                        "label": "text",
+                        "groups": [
+                          {
+                            "gzipSize": 794,
+                            "parsedSize": 2212,
+                            "id": "child.tsx",
+                            "label": "child.tsx"
+                          },
+                          {
+                            "gzipSize": 419,
+                            "parsedSize": 741,
+                            "id": "text.tsx",
+                            "label": "text.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 1488,
+                        "parsedSize": 2921,
+                        "id": "tree-map.tsx",
+                        "label": "tree-map.tsx"
+                      },
+                      {
+                        "gzipSize": 444,
+                        "parsedSize": 987,
+                        "id": "spacer",
+                        "label": "spacer",
+                        "groups": [
+                          {
+                            "gzipSize": 444,
+                            "parsedSize": 987,
+                            "id": "spacer.tsx",
+                            "label": "spacer.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 1210,
+                        "parsedSize": 2824,
+                        "id": "button",
+                        "label": "button",
+                        "groups": [
+                          {
+                            "gzipSize": 1210,
+                            "parsedSize": 2824,
+                            "id": "button.tsx",
+                            "label": "button.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 5137,
+                        "parsedSize": 9891,
+                        "id": "select",
+                        "label": "select",
+                        "groups": [
+                          {
+                            "gzipSize": 123,
+                            "parsedSize": 114,
+                            "id": "context.ts",
+                            "label": "context.ts"
+                          },
+                          {
+                            "gzipSize": 218,
+                            "parsedSize": 277,
+                            "id": "ellipsis.tsx",
+                            "label": "ellipsis.tsx"
+                          },
+                          {
+                            "gzipSize": 737,
+                            "parsedSize": 1332,
+                            "id": "select-multiple.tsx",
+                            "label": "select-multiple.tsx"
+                          },
+                          {
+                            "gzipSize": 287,
+                            "parsedSize": 547,
+                            "id": "layouts.ts",
+                            "label": "layouts.ts"
+                          },
+                          {
+                            "gzipSize": 699,
+                            "parsedSize": 1279,
+                            "id": "dropdown.tsx",
+                            "label": "dropdown.tsx"
+                          },
+                          {
+                            "gzipSize": 2012,
+                            "parsedSize": 4336,
+                            "id": "select.tsx",
+                            "label": "select.tsx"
+                          },
+                          {
+                            "gzipSize": 1014,
+                            "parsedSize": 1979,
+                            "id": "select-option.tsx",
+                            "label": "select-option.tsx"
+                          },
+                          {
+                            "gzipSize": 47,
+                            "parsedSize": 27,
+                            "id": "index.ts",
+                            "label": "index.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 378,
+                        "parsedSize": 644,
+                        "id": "css-transition",
+                        "label": "css-transition",
+                        "groups": [
+                          {
+                            "gzipSize": 378,
+                            "parsedSize": 644,
+                            "id": "css-transition.tsx",
+                            "label": "css-transition.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 2463,
+                        "parsedSize": 4930,
+                        "id": "drawer",
+                        "label": "drawer",
+                        "groups": [
+                          {
+                            "gzipSize": 777,
+                            "parsedSize": 1448,
+                            "id": "backdrop.tsx",
+                            "label": "backdrop.tsx"
+                          },
+                          {
+                            "gzipSize": 950,
+                            "parsedSize": 2292,
+                            "id": "wrapper.tsx",
+                            "label": "wrapper.tsx"
+                          },
+                          {
+                            "gzipSize": 276,
+                            "parsedSize": 355,
+                            "id": "drawer.tsx",
+                            "label": "drawer.tsx"
+                          },
+                          {
+                            "gzipSize": 415,
+                            "parsedSize": 810,
+                            "id": "content.tsx",
+                            "label": "content.tsx"
+                          },
+                          {
+                            "gzipSize": 45,
+                            "parsedSize": 25,
+                            "id": "index.ts",
+                            "label": "index.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 2318,
+                        "parsedSize": 4934,
+                        "id": "checkbox",
+                        "label": "checkbox",
+                        "groups": [
+                          {
+                            "gzipSize": 126,
+                            "parsedSize": 114,
+                            "id": "context.ts",
+                            "label": "context.ts"
+                          },
+                          {
+                            "gzipSize": 1417,
+                            "parsedSize": 3091,
+                            "id": "checkbox.tsx",
+                            "label": "checkbox.tsx"
+                          },
+                          {
+                            "gzipSize": 732,
+                            "parsedSize": 1706,
+                            "id": "checkbox-group.tsx",
+                            "label": "checkbox-group.tsx"
+                          },
+                          {
+                            "gzipSize": 43,
+                            "parsedSize": 23,
+                            "id": "index.ts",
+                            "label": "index.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 269,
+                        "parsedSize": 396,
+                        "id": "module-item.tsx",
+                        "label": "module-item.tsx"
+                      },
+                      {
+                        "gzipSize": 415,
+                        "parsedSize": 705,
+                        "id": "file-list.tsx",
+                        "label": "file-list.tsx"
+                      },
+                      {
+                        "gzipSize": 1893,
+                        "parsedSize": 5346,
+                        "id": "input",
+                        "label": "input",
+                        "groups": [
+                          {
+                            "gzipSize": 1893,
+                            "parsedSize": 5346,
+                            "id": "input.tsx",
+                            "label": "input.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 817,
+                        "parsedSize": 1560,
+                        "id": "search-modules.tsx",
+                        "label": "search-modules.tsx"
+                      },
+                      {
+                        "gzipSize": 1134,
+                        "parsedSize": 2003,
+                        "id": "side-bar",
+                        "label": "side-bar",
+                        "groups": [
+                          {
+                            "gzipSize": 275,
+                            "parsedSize": 411,
+                            "id": "provide.tsx",
+                            "label": "provide.tsx"
+                          },
+                          {
+                            "gzipSize": 859,
+                            "parsedSize": 1592,
+                            "id": "side-bar.tsx",
+                            "label": "side-bar.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "gzipSize": 552,
+                        "parsedSize": 860,
+                        "id": "tooltip.tsx",
+                        "label": "tooltip.tsx"
+                      }
+                    ]
                   },
                   {
-                    "id": "main.tsx",
-                    "label": "main.tsx",
+                    "gzipSize": 498,
+                    "parsedSize": 845,
+                    "id": "application.tsx",
+                    "label": "application.tsx"
+                  },
+                  {
                     "gzipSize": 142,
-                    "parsedSize": 140
+                    "parsedSize": 139,
+                    "id": "main.tsx",
+                    "label": "main.tsx"
                   }
                 ]
               },
               {
-                "id": "shared/index.ts",
-                "label": "shared/index.ts",
                 "gzipSize": 164,
-                "parsedSize": 176
+                "parsedSize": 176,
+                "id": "shared/index.ts",
+                "label": "shared/index.ts"
               }
             ]
           },
           {
+            "gzipSize": 61553,
+            "parsedSize": 167193,
             "id": "node_modules/.store",
             "label": "node_modules/.store",
-            "gzipSize": 113080,
-            "parsedSize": 295479,
             "groups": [
               {
+                "gzipSize": 9954,
+                "parsedSize": 23562,
                 "id": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
                 "label": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
-                "gzipSize": 10112,
-                "parsedSize": 24499,
                 "groups": [
                   {
+                    "gzipSize": 3784,
+                    "parsedSize": 8829,
                     "id": "compat",
                     "label": "compat",
-                    "gzipSize": 3913,
-                    "parsedSize": 9663,
                     "groups": [
                       {
+                        "gzipSize": 121,
+                        "parsedSize": 136,
                         "id": "client.mjs",
-                        "label": "client.mjs",
-                        "gzipSize": 118,
-                        "parsedSize": 136
+                        "label": "client.mjs"
                       },
                       {
+                        "gzipSize": 3663,
+                        "parsedSize": 8693,
                         "id": "dist/compat.module.js",
-                        "label": "dist/compat.module.js",
-                        "gzipSize": 3795,
-                        "parsedSize": 9527
+                        "label": "dist/compat.module.js"
                       }
                     ]
                   },
                   {
+                    "gzipSize": 4504,
+                    "parsedSize": 10990,
                     "id": "dist/preact.module.js",
-                    "label": "dist/preact.module.js",
-                    "gzipSize": 4478,
-                    "parsedSize": 10929
+                    "label": "dist/preact.module.js"
                   },
                   {
+                    "gzipSize": 1418,
+                    "parsedSize": 3404,
                     "id": "hooks/dist",
                     "label": "hooks/dist",
-                    "gzipSize": 1476,
-                    "parsedSize": 3563,
                     "groups": [
                       {
+                        "gzipSize": 1418,
+                        "parsedSize": 3404,
                         "id": "hooks.module.js",
-                        "label": "hooks.module.js",
-                        "gzipSize": 1476,
-                        "parsedSize": 3563
+                        "label": "hooks.module.js"
                       }
                     ]
                   },
                   {
+                    "gzipSize": 248,
+                    "parsedSize": 339,
                     "id": "jsx-runtime/dist",
                     "label": "jsx-runtime/dist",
-                    "gzipSize": 245,
-                    "parsedSize": 344,
                     "groups": [
                       {
+                        "gzipSize": 248,
+                        "parsedSize": 339,
                         "id": "jsxRuntime.module.js",
-                        "label": "jsxRuntime.module.js",
-                        "gzipSize": 245,
-                        "parsedSize": 344
+                        "label": "jsxRuntime.module.js"
                       }
                     ]
                   }
                 ]
               },
               {
-                "id": "@babel-runtime-npm-7.23.2-d013d6cf7e/node_modules/@babel/runtime/helpers",
-                "label": "@babel-runtime-npm-7.23.2-d013d6cf7e/node_modules/@babel/runtime/helpers",
-                "gzipSize": 2825,
-                "parsedSize": 3575,
-                "groups": [
-                  {
-                    "id": "esm",
-                    "label": "esm",
-                    "gzipSize": 1942,
-                    "parsedSize": 2292,
-                    "groups": [
-                      {
-                        "id": "extends.js",
-                        "label": "extends.js",
-                        "gzipSize": 180,
-                        "parsedSize": 230
-                      },
-                      {
-                        "id": "arrayWithHoles.js",
-                        "label": "arrayWithHoles.js",
-                        "gzipSize": 58,
-                        "parsedSize": 43
-                      },
-                      {
-                        "id": "iterableToArrayLimit.js",
-                        "label": "iterableToArrayLimit.js",
-                        "gzipSize": 281,
-                        "parsedSize": 387
-                      },
-                      {
-                        "id": "arrayLikeToArray.js",
-                        "label": "arrayLikeToArray.js",
-                        "gzipSize": 113,
-                        "parsedSize": 106
-                      },
-                      {
-                        "id": "unsupportedIterableToArray.js",
-                        "label": "unsupportedIterableToArray.js",
-                        "gzipSize": 225,
-                        "parsedSize": 295
-                      },
-                      {
-                        "id": "nonIterableRest.js",
-                        "label": "nonIterableRest.js",
-                        "gzipSize": 150,
-                        "parsedSize": 172
-                      },
-                      {
-                        "id": "slicedToArray.js",
-                        "label": "slicedToArray.js",
-                        "gzipSize": 64,
-                        "parsedSize": 53
-                      },
-                      {
-                        "id": "objectWithoutPropertiesLoose.js",
-                        "label": "objectWithoutPropertiesLoose.js",
-                        "gzipSize": 141,
-                        "parsedSize": 137
-                      },
-                      {
-                        "id": "objectWithoutProperties.js",
-                        "label": "objectWithoutProperties.js",
-                        "gzipSize": 196,
-                        "parsedSize": 245
-                      },
-                      {
-                        "id": "typeof.js",
-                        "label": "typeof.js",
-                        "gzipSize": 159,
-                        "parsedSize": 258
-                      },
-                      {
-                        "id": "arrayWithoutHoles.js",
-                        "label": "arrayWithoutHoles.js",
-                        "gzipSize": 61,
-                        "parsedSize": 47
-                      },
-                      {
-                        "id": "iterableToArray.js",
-                        "label": "iterableToArray.js",
-                        "gzipSize": 108,
-                        "parsedSize": 105
-                      },
-                      {
-                        "id": "nonIterableSpread.js",
-                        "label": "nonIterableSpread.js",
-                        "gzipSize": 148,
-                        "parsedSize": 167
-                      },
-                      {
-                        "id": "toConsumableArray.js",
-                        "label": "toConsumableArray.js",
-                        "gzipSize": 58,
-                        "parsedSize": 47
-                      }
-                    ]
-                  },
-                  {
-                    "id": "interopRequireDefault.js",
-                    "label": "interopRequireDefault.js",
-                    "gzipSize": 149,
-                    "parsedSize": 200
-                  },
-                  {
-                    "id": "extends.js",
-                    "label": "extends.js",
-                    "gzipSize": 263,
-                    "parsedSize": 452
-                  },
-                  {
-                    "id": "objectWithoutPropertiesLoose.js",
-                    "label": "objectWithoutPropertiesLoose.js",
-                    "gzipSize": 209,
-                    "parsedSize": 267
-                  },
-                  {
-                    "id": "objectWithoutProperties.js",
-                    "label": "objectWithoutProperties.js",
-                    "gzipSize": 262,
-                    "parsedSize": 364
-                  }
-                ]
-              },
-              {
-                "id": "@geist-ui-core-virtual-8fac665204/node_modules/@geist-ui/core/esm",
-                "label": "@geist-ui-core-virtual-8fac665204/node_modules/@geist-ui/core/esm",
-                "gzipSize": 47014,
-                "parsedSize": 121153,
-                "groups": [
-                  {
-                    "id": "styled-jsx.es.js",
-                    "label": "styled-jsx.es.js",
-                    "gzipSize": 3016,
-                    "parsedSize": 9060
-                  },
-                  {
-                    "id": "themes",
-                    "label": "themes",
-                    "gzipSize": 2104,
-                    "parsedSize": 4044,
-                    "groups": [
-                      {
-                        "id": "presets",
-                        "label": "presets",
-                        "gzipSize": 1579,
-                        "parsedSize": 3077,
-                        "groups": [
-                          {
-                            "id": "shared.js",
-                            "label": "shared.js",
-                            "gzipSize": 451,
-                            "parsedSize": 809
-                          },
-                          {
-                            "id": "default.js",
-                            "label": "default.js",
-                            "gzipSize": 576,
-                            "parsedSize": 1167
-                          },
-                          {
-                            "id": "dark.js",
-                            "label": "dark.js",
-                            "gzipSize": 552,
-                            "parsedSize": 1101
-                          }
-                        ]
-                      },
-                      {
-                        "id": "themes.js",
-                        "label": "themes.js",
-                        "gzipSize": 525,
-                        "parsedSize": 967
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-theme",
-                    "label": "use-theme",
-                    "gzipSize": 104,
-                    "parsedSize": 94,
-                    "groups": [
-                      {
-                        "id": "theme-context.js",
-                        "label": "theme-context.js",
-                        "gzipSize": 104,
-                        "parsedSize": 94
-                      }
-                    ]
-                  },
-                  {
-                    "id": "input",
-                    "label": "input",
-                    "gzipSize": 5238,
-                    "parsedSize": 15030,
-                    "groups": [
-                      {
-                        "id": "input-label.js",
-                        "label": "input-label.js",
-                        "gzipSize": 520,
-                        "parsedSize": 1576
-                      },
-                      {
-                        "id": "input-block-label.js",
-                        "label": "input-block-label.js",
-                        "gzipSize": 348,
-                        "parsedSize": 582
-                      },
-                      {
-                        "id": "input-icon.js",
-                        "label": "input-icon.js",
-                        "gzipSize": 512,
-                        "parsedSize": 1147
-                      },
-                      {
-                        "id": "input-icon-clear.js",
-                        "label": "input-icon-clear.js",
-                        "gzipSize": 780,
-                        "parsedSize": 2250
-                      },
-                      {
-                        "id": "styles.js",
-                        "label": "styles.js",
-                        "gzipSize": 192,
-                        "parsedSize": 428
-                      },
-                      {
-                        "id": "input-props.js",
-                        "label": "input-props.js",
-                        "gzipSize": 135,
-                        "parsedSize": 152
-                      },
-                      {
-                        "id": "input.js",
-                        "label": "input.js",
-                        "gzipSize": 1885,
-                        "parsedSize": 7520
-                      },
-                      {
-                        "id": "password-icon.js",
-                        "label": "password-icon.js",
-                        "gzipSize": 404,
-                        "parsedSize": 712
-                      },
-                      {
-                        "id": "password.js",
-                        "label": "password.js",
-                        "gzipSize": 413,
-                        "parsedSize": 634
-                      },
-                      {
-                        "id": "index.js",
-                        "label": "index.js",
-                        "gzipSize": 49,
-                        "parsedSize": 29
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-classes",
-                    "label": "use-classes",
-                    "gzipSize": 275,
-                    "parsedSize": 441,
-                    "groups": [
-                      {
-                        "id": "use-classes.js",
-                        "label": "use-classes.js",
-                        "gzipSize": 275,
-                        "parsedSize": 441
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-scale",
-                    "label": "use-scale",
-                    "gzipSize": 2158,
-                    "parsedSize": 4467,
-                    "groups": [
-                      {
-                        "id": "scale-context.js",
-                        "label": "scale-context.js",
-                        "gzipSize": 289,
-                        "parsedSize": 529
-                      },
-                      {
-                        "id": "utils.js",
-                        "label": "utils.js",
-                        "gzipSize": 753,
-                        "parsedSize": 1432
-                      },
-                      {
-                        "id": "with-scale.js",
-                        "label": "with-scale.js",
-                        "gzipSize": 1116,
-                        "parsedSize": 2506
-                      }
-                    ]
-                  },
-                  {
-                    "id": "utils",
-                    "label": "utils",
-                    "gzipSize": 2787,
-                    "parsedSize": 4535,
-                    "groups": [
-                      {
-                        "id": "collections.js",
-                        "label": "collections.js",
-                        "gzipSize": 384,
-                        "parsedSize": 616
-                      },
-                      {
-                        "id": "prop-types.js",
-                        "label": "prop-types.js",
-                        "gzipSize": 282,
-                        "parsedSize": 669
-                      },
-                      {
-                        "id": "use-ssr.js",
-                        "label": "use-ssr.js",
-                        "gzipSize": 132,
-                        "parsedSize": 127
-                      },
-                      {
-                        "id": "use-portal.js",
-                        "label": "use-portal.js",
-                        "gzipSize": 304,
-                        "parsedSize": 442
-                      },
-                      {
-                        "id": "use-resize.js",
-                        "label": "use-resize.js",
-                        "gzipSize": 175,
-                        "parsedSize": 251
-                      },
-                      {
-                        "id": "use-click-anywhere.js",
-                        "label": "use-click-anywhere.js",
-                        "gzipSize": 135,
-                        "parsedSize": 185
-                      },
-                      {
-                        "id": "use-dom-observer.js",
-                        "label": "use-dom-observer.js",
-                        "gzipSize": 232,
-                        "parsedSize": 330
-                      },
-                      {
-                        "id": "use-warning.js",
-                        "label": "use-warning.js",
-                        "gzipSize": 150,
-                        "parsedSize": 164
-                      },
-                      {
-                        "id": "layouts.js",
-                        "label": "layouts.js",
-                        "gzipSize": 300,
-                        "parsedSize": 556
-                      },
-                      {
-                        "id": "color.js",
-                        "label": "color.js",
-                        "gzipSize": 464,
-                        "parsedSize": 849
-                      },
-                      {
-                        "id": "use-geist-ui-context.js",
-                        "label": "use-geist-ui-context.js",
-                        "gzipSize": 229,
-                        "parsedSize": 346
-                      }
-                    ]
-                  },
-                  {
-                    "id": "textarea",
-                    "label": "textarea",
-                    "gzipSize": 1339,
-                    "parsedSize": 3893,
-                    "groups": [
-                      {
-                        "id": "textarea.js",
-                        "label": "textarea.js",
-                        "gzipSize": 1339,
-                        "parsedSize": 3893
-                      }
-                    ]
-                  },
-                  {
-                    "id": "shared",
-                    "label": "shared",
-                    "gzipSize": 2327,
-                    "parsedSize": 5390,
-                    "groups": [
-                      {
-                        "id": "ellipsis.js",
-                        "label": "ellipsis.js",
-                        "gzipSize": 251,
-                        "parsedSize": 327
-                      },
-                      {
-                        "id": "css-transition.js",
-                        "label": "css-transition.js",
-                        "gzipSize": 465,
-                        "parsedSize": 895
-                      },
-                      {
-                        "id": "dropdown.js",
-                        "label": "dropdown.js",
-                        "gzipSize": 682,
-                        "parsedSize": 1335
-                      },
-                      {
-                        "id": "backdrop.js",
-                        "label": "backdrop.js",
-                        "gzipSize": 929,
-                        "parsedSize": 2833
-                      }
-                    ]
-                  },
-                  {
-                    "id": "loading",
-                    "label": "loading",
-                    "gzipSize": 1068,
-                    "parsedSize": 4010,
-                    "groups": [
-                      {
-                        "id": "loading.js",
-                        "label": "loading.js",
-                        "gzipSize": 1068,
-                        "parsedSize": 4010
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-current-state",
-                    "label": "use-current-state",
-                    "gzipSize": 174,
-                    "parsedSize": 243,
-                    "groups": [
-                      {
-                        "id": "use-current-state.js",
-                        "label": "use-current-state.js",
-                        "gzipSize": 174,
-                        "parsedSize": 243
-                      }
-                    ]
-                  },
-                  {
-                    "id": "button",
-                    "label": "button",
-                    "gzipSize": 4114,
-                    "parsedSize": 10888,
-                    "groups": [
-                      {
-                        "id": "button.drip.js",
-                        "label": "button.drip.js",
-                        "gzipSize": 600,
-                        "parsedSize": 1611
-                      },
-                      {
-                        "id": "button-loading.js",
-                        "label": "button-loading.js",
-                        "gzipSize": 253,
-                        "parsedSize": 353
-                      },
-                      {
-                        "id": "button-icon.js",
-                        "label": "button-icon.js",
-                        "gzipSize": 556,
-                        "parsedSize": 1236
-                      },
-                      {
-                        "id": "utils.js",
-                        "label": "utils.js",
-                        "gzipSize": 448,
-                        "parsedSize": 788
-                      },
-                      {
-                        "id": "styles.js",
-                        "label": "styles.js",
-                        "gzipSize": 616,
-                        "parsedSize": 2069
-                      },
-                      {
-                        "id": "button.js",
-                        "label": "button.js",
-                        "gzipSize": 1641,
-                        "parsedSize": 4831
-                      }
-                    ]
-                  },
-                  {
-                    "id": "button-group",
-                    "label": "button-group",
-                    "gzipSize": 106,
-                    "parsedSize": 95,
-                    "groups": [
-                      {
-                        "id": "button-group-context.js",
-                        "label": "button-group-context.js",
-                        "gzipSize": 106,
-                        "parsedSize": 95
-                      }
-                    ]
-                  },
-                  {
-                    "id": "checkbox",
-                    "label": "checkbox",
-                    "gzipSize": 2920,
-                    "parsedSize": 7023,
-                    "groups": [
-                      {
-                        "id": "checkbox-context.js",
-                        "label": "checkbox-context.js",
-                        "gzipSize": 116,
-                        "parsedSize": 106
-                      },
-                      {
-                        "id": "checkbox.icon.js",
-                        "label": "checkbox.icon.js",
-                        "gzipSize": 681,
-                        "parsedSize": 1674
-                      },
-                      {
-                        "id": "styles.js",
-                        "label": "styles.js",
-                        "gzipSize": 146,
-                        "parsedSize": 262
-                      },
-                      {
-                        "id": "checkbox.js",
-                        "label": "checkbox.js",
-                        "gzipSize": 1210,
-                        "parsedSize": 3403
-                      },
-                      {
-                        "id": "checkbox-group.js",
-                        "label": "checkbox-group.js",
-                        "gzipSize": 736,
-                        "parsedSize": 1567
-                      },
-                      {
-                        "id": "index.js",
-                        "label": "index.js",
-                        "gzipSize": 31,
-                        "parsedSize": 11
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-body-scroll",
-                    "label": "use-body-scroll",
-                    "gzipSize": 534,
-                    "parsedSize": 1042,
-                    "groups": [
-                      {
-                        "id": "use-body-scroll.js",
-                        "label": "use-body-scroll.js",
-                        "gzipSize": 534,
-                        "parsedSize": 1042
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-keyboard",
-                    "label": "use-keyboard",
-                    "gzipSize": 1459,
-                    "parsedSize": 3191,
-                    "groups": [
-                      {
-                        "id": "codes.js",
-                        "label": "codes.js",
-                        "gzipSize": 744,
-                        "parsedSize": 1872
-                      },
-                      {
-                        "id": "helper.js",
-                        "label": "helper.js",
-                        "gzipSize": 177,
-                        "parsedSize": 246
-                      },
-                      {
-                        "id": "use-keyboard.js",
-                        "label": "use-keyboard.js",
-                        "gzipSize": 538,
-                        "parsedSize": 1073
-                      }
-                    ]
-                  },
-                  {
-                    "id": "drawer",
-                    "label": "drawer",
-                    "gzipSize": 2036,
-                    "parsedSize": 6608,
-                    "groups": [
-                      {
-                        "id": "helper.js",
-                        "label": "helper.js",
-                        "gzipSize": 180,
-                        "parsedSize": 499
-                      },
-                      {
-                        "id": "drawer-wrapper.js",
-                        "label": "drawer-wrapper.js",
-                        "gzipSize": 1303,
-                        "parsedSize": 5243
-                      },
-                      {
-                        "id": "drawer.js",
-                        "label": "drawer.js",
-                        "gzipSize": 500,
-                        "parsedSize": 826
-                      },
-                      {
-                        "id": "index.js",
-                        "label": "index.js",
-                        "gzipSize": 53,
-                        "parsedSize": 40
-                      }
-                    ]
-                  },
-                  {
-                    "id": "modal",
-                    "label": "modal",
-                    "gzipSize": 1751,
-                    "parsedSize": 4156,
-                    "groups": [
-                      {
-                        "id": "modal-title.js",
-                        "label": "modal-title.js",
-                        "gzipSize": 634,
-                        "parsedSize": 1498
-                      },
-                      {
-                        "id": "modal-subtitle.js",
-                        "label": "modal-subtitle.js",
-                        "gzipSize": 550,
-                        "parsedSize": 1174
-                      },
-                      {
-                        "id": "modal-content.js",
-                        "label": "modal-content.js",
-                        "gzipSize": 567,
-                        "parsedSize": 1484
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-all-themes",
-                    "label": "use-all-themes",
-                    "gzipSize": 70,
-                    "parsedSize": 50,
-                    "groups": [
-                      {
-                        "id": "all-themes-context.js",
-                        "label": "all-themes-context.js",
-                        "gzipSize": 70,
-                        "parsedSize": 50
-                      }
-                    ]
-                  },
-                  {
-                    "id": "geist-provider",
-                    "label": "geist-provider",
-                    "gzipSize": 654,
-                    "parsedSize": 1075,
-                    "groups": [
-                      {
-                        "id": "theme-provider.js",
-                        "label": "theme-provider.js",
-                        "gzipSize": 322,
-                        "parsedSize": 519
-                      },
-                      {
-                        "id": "geist-provider.js",
-                        "label": "geist-provider.js",
-                        "gzipSize": 332,
-                        "parsedSize": 556
-                      }
-                    ]
-                  },
-                  {
-                    "id": "use-toasts",
-                    "label": "use-toasts",
-                    "gzipSize": 2332,
-                    "parsedSize": 6307,
-                    "groups": [
-                      {
-                        "id": "helpers.js",
-                        "label": "helpers.js",
-                        "gzipSize": 491,
-                        "parsedSize": 1060
-                      },
-                      {
-                        "id": "toast-item.js",
-                        "label": "toast-item.js",
-                        "gzipSize": 932,
-                        "parsedSize": 2959
-                      },
-                      {
-                        "id": "toast-container.js",
-                        "label": "toast-container.js",
-                        "gzipSize": 909,
-                        "parsedSize": 2288
-                      }
-                    ]
-                  },
-                  {
-                    "id": "grid",
-                    "label": "grid",
-                    "gzipSize": 2278,
-                    "parsedSize": 7307,
-                    "groups": [
-                      {
-                        "id": "basic-item.js",
-                        "label": "basic-item.js",
-                        "gzipSize": 1241,
-                        "parsedSize": 4712
-                      },
-                      {
-                        "id": "grid.js",
-                        "label": "grid.js",
-                        "gzipSize": 425,
-                        "parsedSize": 1021
-                      },
-                      {
-                        "id": "grid-container.js",
-                        "label": "grid-container.js",
-                        "gzipSize": 577,
-                        "parsedSize": 1559
-                      },
-                      {
-                        "id": "index.js",
-                        "label": "index.js",
-                        "gzipSize": 35,
-                        "parsedSize": 15
-                      }
-                    ]
-                  },
-                  {
-                    "id": "select",
-                    "label": "select",
-                    "gzipSize": 6359,
-                    "parsedSize": 17995,
-                    "groups": [
-                      {
-                        "id": "select-icon.js",
-                        "label": "select-icon.js",
-                        "gzipSize": 334,
-                        "parsedSize": 523
-                      },
-                      {
-                        "id": "select-context.js",
-                        "label": "select-context.js",
-                        "gzipSize": 105,
-                        "parsedSize": 95
-                      },
-                      {
-                        "id": "select-dropdown.js",
-                        "label": "select-dropdown.js",
-                        "gzipSize": 561,
-                        "parsedSize": 1068
-                      },
-                      {
-                        "id": "select-icon-clear.js",
-                        "label": "select-icon-clear.js",
-                        "gzipSize": 633,
-                        "parsedSize": 1520
-                      },
-                      {
-                        "id": "select-multiple-value.js",
-                        "label": "select-multiple-value.js",
-                        "gzipSize": 521,
-                        "parsedSize": 1179
-                      },
-                      {
-                        "id": "styles.js",
-                        "label": "styles.js",
-                        "gzipSize": 212,
-                        "parsedSize": 578
-                      },
-                      {
-                        "id": "select-input.js",
-                        "label": "select-input.js",
-                        "gzipSize": 420,
-                        "parsedSize": 639
-                      },
-                      {
-                        "id": "select.js",
-                        "label": "select.js",
-                        "gzipSize": 2261,
-                        "parsedSize": 8563
-                      },
-                      {
-                        "id": "select-option.js",
-                        "label": "select-option.js",
-                        "gzipSize": 1280,
-                        "parsedSize": 3818
-                      },
-                      {
-                        "id": "index.js",
-                        "label": "index.js",
-                        "gzipSize": 32,
-                        "parsedSize": 12
-                      }
-                    ]
-                  },
-                  {
-                    "id": "spacer",
-                    "label": "spacer",
-                    "gzipSize": 431,
-                    "parsedSize": 925,
-                    "groups": [
-                      {
-                        "id": "spacer.js",
-                        "label": "spacer.js",
-                        "gzipSize": 431,
-                        "parsedSize": 925
-                      }
-                    ]
-                  },
-                  {
-                    "id": "text",
-                    "label": "text",
-                    "gzipSize": 1380,
-                    "parsedSize": 3284,
-                    "groups": [
-                      {
-                        "id": "child.js",
-                        "label": "child.js",
-                        "gzipSize": 836,
-                        "parsedSize": 2278
-                      },
-                      {
-                        "id": "text.js",
-                        "label": "text.js",
-                        "gzipSize": 544,
-                        "parsedSize": 1006
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
+                "gzipSize": 1384,
+                "parsedSize": 3060,
                 "id": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-                "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-                "gzipSize": 1377,
-                "parsedSize": 3042
+                "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
               },
               {
+                "gzipSize": 50035,
+                "parsedSize": 140380,
                 "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
-                "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
-                "gzipSize": 50203,
-                "parsedSize": 140917
+                "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js"
               },
               {
+                "gzipSize": 180,
+                "parsedSize": 191,
                 "id": "foxact-virtual-99ab390723/node_modules/foxact",
                 "label": "foxact-virtual-99ab390723/node_modules/foxact",
-                "gzipSize": 177,
-                "parsedSize": 193,
                 "groups": [
                   {
-                    "id": "noop/index.mjs",
-                    "label": "noop/index.mjs",
                     "gzipSize": 29,
-                    "parsedSize": 9
+                    "parsedSize": 9,
+                    "id": "noop/index.mjs",
+                    "label": "noop/index.mjs"
                   },
                   {
+                    "gzipSize": 151,
+                    "parsedSize": 182,
                     "id": "context-state/index.mjs",
-                    "label": "context-state/index.mjs",
-                    "gzipSize": 148,
-                    "parsedSize": 184
-                  }
-                ]
-              },
-              {
-                "id": "@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons",
-                "label": "@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons",
-                "gzipSize": 1372,
-                "parsedSize": 2100,
-                "groups": [
-                  {
-                    "id": "menu.js",
-                    "label": "menu.js",
-                    "gzipSize": 389,
-                    "parsedSize": 573
-                  },
-                  {
-                    "id": "folder.js",
-                    "label": "folder.js",
-                    "gzipSize": 571,
-                    "parsedSize": 876
-                  },
-                  {
-                    "id": "file.js",
-                    "label": "file.js",
-                    "gzipSize": 412,
-                    "parsedSize": 651
+                    "label": "context-state/index.mjs"
                   }
                 ]
               }
@@ -1092,977 +544,464 @@
     ],
     "stats": [
       {
+        "statSize": 17,
         "id": "vite-plugin:stylex.css",
-        "label": "vite-plugin:stylex.css",
-        "statSize": 17
+        "label": "vite-plugin:stylex.css"
       },
       {
+        "statSize": 95464,
         "id": "src",
         "label": "src",
-        "statSize": 25903,
         "groups": [
           {
+            "statSize": 95067,
             "id": "client",
             "label": "client",
-            "statSize": 25506,
             "groups": [
               {
+                "statSize": 515,
                 "id": "context.ts",
-                "label": "context.ts",
-                "statSize": 515
+                "label": "context.ts"
               },
               {
+                "statSize": 884,
                 "id": "shared.ts",
-                "label": "shared.ts",
-                "statSize": 884
+                "label": "shared.ts"
               },
               {
-                "id": "components",
-                "label": "components",
-                "statSize": 20698,
+                "statSize": 9642,
+                "id": "composables",
+                "label": "composables",
                 "groups": [
                   {
-                    "id": "tree-map.tsx",
-                    "label": "tree-map.tsx",
-                    "statSize": 7021
-                  },
-                  {
-                    "id": "module-item.tsx",
-                    "label": "module-item.tsx",
-                    "statSize": 1043
-                  },
-                  {
-                    "id": "file-list.tsx",
-                    "label": "file-list.tsx",
-                    "statSize": 1764
-                  },
-                  {
-                    "id": "search-modules.tsx",
-                    "label": "search-modules.tsx",
-                    "statSize": 3930
-                  },
-                  {
-                    "id": "side-bar",
-                    "label": "side-bar",
-                    "statSize": 5132,
+                    "statSize": 864,
+                    "id": "use-classes",
+                    "label": "use-classes",
                     "groups": [
                       {
-                        "id": "provide.tsx",
-                        "label": "provide.tsx",
-                        "statSize": 518
-                      },
-                      {
-                        "id": "side-bar.tsx",
-                        "label": "side-bar.tsx",
-                        "statSize": 4614
+                        "statSize": 864,
+                        "id": "use-classes.ts",
+                        "label": "use-classes.ts"
                       }
                     ]
                   },
                   {
-                    "id": "tooltip.tsx",
-                    "label": "tooltip.tsx",
-                    "statSize": 1808
+                    "statSize": 5008,
+                    "id": "use-scale",
+                    "label": "use-scale",
+                    "groups": [
+                      {
+                        "statSize": 1227,
+                        "id": "scale-context.ts",
+                        "label": "scale-context.ts"
+                      },
+                      {
+                        "statSize": 782,
+                        "id": "utils.ts",
+                        "label": "utils.ts"
+                      },
+                      {
+                        "statSize": 2999,
+                        "id": "with-scale.tsx",
+                        "label": "with-scale.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 1954,
+                    "id": "use-body-scroll",
+                    "label": "use-body-scroll",
+                    "groups": [
+                      {
+                        "statSize": 1954,
+                        "id": "use-body-scroll.ts",
+                        "label": "use-body-scroll.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 790,
+                    "id": "use-portal",
+                    "label": "use-portal",
+                    "groups": [
+                      {
+                        "statSize": 790,
+                        "id": "use-portal.ts",
+                        "label": "use-portal.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 282,
+                    "id": "use-click-anywhere",
+                    "label": "use-click-anywhere",
+                    "groups": [
+                      {
+                        "statSize": 282,
+                        "id": "use-click-anywhere.ts",
+                        "label": "use-click-anywhere.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 201,
+                    "id": "use-resize",
+                    "label": "use-resize",
+                    "groups": [
+                      {
+                        "statSize": 201,
+                        "id": "use-resize.ts",
+                        "label": "use-resize.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 543,
+                    "id": "use-dom-observer",
+                    "label": "use-dom-observer",
+                    "groups": [
+                      {
+                        "statSize": 543,
+                        "id": "use-dom-observer.ts",
+                        "label": "use-dom-observer.ts"
+                      }
+                    ]
                   }
                 ]
               },
               {
-                "id": "application.tsx",
-                "label": "application.tsx",
-                "statSize": 3047
+                "statSize": 80771,
+                "id": "components",
+                "label": "components",
+                "groups": [
+                  {
+                    "statSize": 5630,
+                    "id": "text",
+                    "label": "text",
+                    "groups": [
+                      {
+                        "statSize": 3858,
+                        "id": "child.tsx",
+                        "label": "child.tsx"
+                      },
+                      {
+                        "statSize": 1772,
+                        "id": "text.tsx",
+                        "label": "text.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 7013,
+                    "id": "tree-map.tsx",
+                    "label": "tree-map.tsx"
+                  },
+                  {
+                    "statSize": 1797,
+                    "id": "spacer",
+                    "label": "spacer",
+                    "groups": [
+                      {
+                        "statSize": 1797,
+                        "id": "spacer.tsx",
+                        "label": "spacer.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 4631,
+                    "id": "button",
+                    "label": "button",
+                    "groups": [
+                      {
+                        "statSize": 4631,
+                        "id": "button.tsx",
+                        "label": "button.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 19857,
+                    "id": "select",
+                    "label": "select",
+                    "groups": [
+                      {
+                        "statSize": 269,
+                        "id": "context.ts",
+                        "label": "context.ts"
+                      },
+                      {
+                        "statSize": 599,
+                        "id": "ellipsis.tsx",
+                        "label": "ellipsis.tsx"
+                      },
+                      {
+                        "statSize": 2211,
+                        "id": "select-multiple.tsx",
+                        "label": "select-multiple.tsx"
+                      },
+                      {
+                        "statSize": 1149,
+                        "id": "layouts.ts",
+                        "label": "layouts.ts"
+                      },
+                      {
+                        "statSize": 3081,
+                        "id": "dropdown.tsx",
+                        "label": "dropdown.tsx"
+                      },
+                      {
+                        "statSize": 8320,
+                        "id": "select.tsx",
+                        "label": "select.tsx"
+                      },
+                      {
+                        "statSize": 4072,
+                        "id": "select-option.tsx",
+                        "label": "select-option.tsx"
+                      },
+                      {
+                        "statSize": 156,
+                        "id": "index.ts",
+                        "label": "index.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 1510,
+                    "id": "css-transition",
+                    "label": "css-transition",
+                    "groups": [
+                      {
+                        "statSize": 1510,
+                        "id": "css-transition.tsx",
+                        "label": "css-transition.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 9107,
+                    "id": "drawer",
+                    "label": "drawer",
+                    "groups": [
+                      {
+                        "statSize": 2760,
+                        "id": "backdrop.tsx",
+                        "label": "backdrop.tsx"
+                      },
+                      {
+                        "statSize": 3457,
+                        "id": "wrapper.tsx",
+                        "label": "wrapper.tsx"
+                      },
+                      {
+                        "statSize": 1212,
+                        "id": "drawer.tsx",
+                        "label": "drawer.tsx"
+                      },
+                      {
+                        "statSize": 1525,
+                        "id": "content.tsx",
+                        "label": "content.tsx"
+                      },
+                      {
+                        "statSize": 153,
+                        "id": "index.ts",
+                        "label": "index.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 9557,
+                    "id": "checkbox",
+                    "label": "checkbox",
+                    "groups": [
+                      {
+                        "statSize": 377,
+                        "id": "context.ts",
+                        "label": "context.ts"
+                      },
+                      {
+                        "statSize": 5839,
+                        "id": "checkbox.tsx",
+                        "label": "checkbox.tsx"
+                      },
+                      {
+                        "statSize": 3171,
+                        "id": "checkbox-group.tsx",
+                        "label": "checkbox-group.tsx"
+                      },
+                      {
+                        "statSize": 170,
+                        "id": "index.ts",
+                        "label": "index.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 1062,
+                    "id": "module-item.tsx",
+                    "label": "module-item.tsx"
+                  },
+                  {
+                    "statSize": 1981,
+                    "id": "file-list.tsx",
+                    "label": "file-list.tsx"
+                  },
+                  {
+                    "statSize": 7768,
+                    "id": "input",
+                    "label": "input",
+                    "groups": [
+                      {
+                        "statSize": 7768,
+                        "id": "input.tsx",
+                        "label": "input.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 3857,
+                    "id": "search-modules.tsx",
+                    "label": "search-modules.tsx"
+                  },
+                  {
+                    "statSize": 5193,
+                    "id": "side-bar",
+                    "label": "side-bar",
+                    "groups": [
+                      {
+                        "statSize": 518,
+                        "id": "provide.tsx",
+                        "label": "provide.tsx"
+                      },
+                      {
+                        "statSize": 4675,
+                        "id": "side-bar.tsx",
+                        "label": "side-bar.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "statSize": 1808,
+                    "id": "tooltip.tsx",
+                    "label": "tooltip.tsx"
+                  }
+                ]
               },
               {
+                "statSize": 2893,
+                "id": "application.tsx",
+                "label": "application.tsx"
+              },
+              {
+                "statSize": 362,
                 "id": "main.tsx",
-                "label": "main.tsx",
-                "statSize": 362
+                "label": "main.tsx"
               }
             ]
           },
           {
+            "statSize": 397,
             "id": "shared",
             "label": "shared",
-            "statSize": 397,
             "groups": [
               {
+                "statSize": 397,
                 "id": "index.ts",
-                "label": "index.ts",
-                "statSize": 397
+                "label": "index.ts"
               }
             ]
           }
         ]
       },
       {
-        "id": "commonjsHelpers.js",
-        "label": "commonjsHelpers.js",
-        "statSize": 1294
-      },
-      {
+        "statSize": 1548,
         "id": "vite/modulepreload-polyfill",
-        "label": "vite/modulepreload-polyfill",
-        "statSize": 1548
+        "label": "vite/modulepreload-polyfill"
       },
       {
+        "statSize": 176705,
         "id": "node_modules/.store",
         "label": "node_modules/.store",
-        "statSize": 429541,
         "groups": [
           {
+            "statSize": 26513,
             "id": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
             "label": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
-            "statSize": 26818,
             "groups": [
               {
+                "statSize": 10084,
                 "id": "compat",
                 "label": "compat",
-                "statSize": 10389,
                 "groups": [
                   {
-                    "id": "dist",
-                    "label": "dist",
-                    "statSize": 9982,
-                    "groups": [
-                      {
-                        "id": "compat.module.js",
-                        "label": "compat.module.js",
-                        "statSize": 9677
-                      },
-                      {
-                        "id": "compat.module.js?commonjs-proxy",
-                        "label": "compat.module.js?commonjs-proxy",
-                        "statSize": 305
-                      }
-                    ]
+                    "statSize": 407,
+                    "id": "client.mjs",
+                    "label": "client.mjs"
                   },
                   {
-                    "id": "client.mjs",
-                    "label": "client.mjs",
-                    "statSize": 407
+                    "statSize": 9677,
+                    "id": "dist/compat.module.js",
+                    "label": "dist/compat.module.js"
                   }
                 ]
               },
               {
+                "statSize": 11021,
                 "id": "dist/preact.module.js",
-                "label": "dist/preact.module.js",
-                "statSize": 11021
+                "label": "dist/preact.module.js"
               },
               {
+                "statSize": 3702,
                 "id": "hooks/dist",
                 "label": "hooks/dist",
-                "statSize": 3702,
                 "groups": [
                   {
+                    "statSize": 3702,
                     "id": "hooks.module.js",
-                    "label": "hooks.module.js",
-                    "statSize": 3702
+                    "label": "hooks.module.js"
                   }
                 ]
               },
               {
+                "statSize": 1706,
                 "id": "jsx-runtime/dist",
                 "label": "jsx-runtime/dist",
-                "statSize": 1706,
                 "groups": [
                   {
+                    "statSize": 1706,
                     "id": "jsxRuntime.module.js",
-                    "label": "jsxRuntime.module.js",
-                    "statSize": 1706
+                    "label": "jsxRuntime.module.js"
                   }
                 ]
               }
             ]
           },
           {
-            "id": "@babel-runtime-npm-7.23.2-d013d6cf7e/node_modules/@babel/runtime/helpers",
-            "label": "@babel-runtime-npm-7.23.2-d013d6cf7e/node_modules/@babel/runtime/helpers",
-            "statSize": 10239,
-            "groups": [
-              {
-                "id": "esm",
-                "label": "esm",
-                "statSize": 4780,
-                "groups": [
-                  {
-                    "id": "extends.js",
-                    "label": "extends.js",
-                    "statSize": 416
-                  },
-                  {
-                    "id": "arrayWithHoles.js",
-                    "label": "arrayWithHoles.js",
-                    "statSize": 86
-                  },
-                  {
-                    "id": "iterableToArrayLimit.js",
-                    "label": "iterableToArrayLimit.js",
-                    "statSize": 687
-                  },
-                  {
-                    "id": "arrayLikeToArray.js",
-                    "label": "arrayLikeToArray.js",
-                    "statSize": 200
-                  },
-                  {
-                    "id": "unsupportedIterableToArray.js",
-                    "label": "unsupportedIterableToArray.js",
-                    "statSize": 495
-                  },
-                  {
-                    "id": "nonIterableRest.js",
-                    "label": "nonIterableRest.js",
-                    "statSize": 210
-                  },
-                  {
-                    "id": "slicedToArray.js",
-                    "label": "slicedToArray.js",
-                    "statSize": 409
-                  },
-                  {
-                    "id": "objectWithoutPropertiesLoose.js",
-                    "label": "objectWithoutPropertiesLoose.js",
-                    "statSize": 348
-                  },
-                  {
-                    "id": "objectWithoutProperties.js",
-                    "label": "objectWithoutProperties.js",
-                    "statSize": 632
-                  },
-                  {
-                    "id": "typeof.js",
-                    "label": "typeof.js",
-                    "statSize": 350
-                  },
-                  {
-                    "id": "arrayWithoutHoles.js",
-                    "label": "arrayWithoutHoles.js",
-                    "statSize": 161
-                  },
-                  {
-                    "id": "iterableToArray.js",
-                    "label": "iterableToArray.js",
-                    "statSize": 175
-                  },
-                  {
-                    "id": "nonIterableSpread.js",
-                    "label": "nonIterableSpread.js",
-                    "statSize": 207
-                  },
-                  {
-                    "id": "toConsumableArray.js",
-                    "label": "toConsumableArray.js",
-                    "statSize": 404
-                  }
-                ]
-              },
-              {
-                "id": "interopRequireDefault.js?commonjs-module",
-                "label": "interopRequireDefault.js?commonjs-module",
-                "statSize": 85
-              },
-              {
-                "id": "interopRequireDefault.js",
-                "label": "interopRequireDefault.js",
-                "statSize": 885
-              },
-              {
-                "id": "extends.js?commonjs-module",
-                "label": "extends.js?commonjs-module",
-                "statSize": 59
-              },
-              {
-                "id": "extends.js",
-                "label": "extends.js",
-                "statSize": 1207
-              },
-              {
-                "id": "objectWithoutProperties.js?commonjs-module",
-                "label": "objectWithoutProperties.js?commonjs-module",
-                "statSize": 89
-              },
-              {
-                "id": "objectWithoutPropertiesLoose.js?commonjs-module",
-                "label": "objectWithoutPropertiesLoose.js?commonjs-module",
-                "statSize": 99
-              },
-              {
-                "id": "objectWithoutPropertiesLoose.js",
-                "label": "objectWithoutPropertiesLoose.js",
-                "statSize": 1300
-              },
-              {
-                "id": "objectWithoutProperties.js",
-                "label": "objectWithoutProperties.js",
-                "statSize": 1735
-              }
-            ]
-          },
-          {
-            "id": "@geist-ui-core-virtual-8fac665204/node_modules/@geist-ui/core/esm",
-            "label": "@geist-ui-core-virtual-8fac665204/node_modules/@geist-ui/core/esm",
-            "statSize": 235155,
-            "groups": [
-              {
-                "id": "styled-jsx.es.js",
-                "label": "styled-jsx.es.js",
-                "statSize": 19962
-              },
-              {
-                "id": "themes",
-                "label": "themes",
-                "statSize": 6987,
-                "groups": [
-                  {
-                    "id": "presets",
-                    "label": "presets",
-                    "statSize": 4321,
-                    "groups": [
-                      {
-                        "id": "shared.js",
-                        "label": "shared.js",
-                        "statSize": 1077
-                      },
-                      {
-                        "id": "default.js",
-                        "label": "default.js",
-                        "statSize": 1657
-                      },
-                      {
-                        "id": "dark.js",
-                        "label": "dark.js",
-                        "statSize": 1587
-                      }
-                    ]
-                  },
-                  {
-                    "id": "themes.js",
-                    "label": "themes.js",
-                    "statSize": 2666
-                  }
-                ]
-              },
-              {
-                "id": "use-theme",
-                "label": "use-theme",
-                "statSize": 270,
-                "groups": [
-                  {
-                    "id": "theme-context.js",
-                    "label": "theme-context.js",
-                    "statSize": 270
-                  }
-                ]
-              },
-              {
-                "id": "input",
-                "label": "input",
-                "statSize": 24430,
-                "groups": [
-                  {
-                    "id": "input-label.js",
-                    "label": "input-label.js",
-                    "statSize": 2101
-                  },
-                  {
-                    "id": "input-block-label.js",
-                    "label": "input-block-label.js",
-                    "statSize": 984
-                  },
-                  {
-                    "id": "input-icon.js",
-                    "label": "input-icon.js",
-                    "statSize": 1569
-                  },
-                  {
-                    "id": "input-icon-clear.js",
-                    "label": "input-icon-clear.js",
-                    "statSize": 3204
-                  },
-                  {
-                    "id": "styles.js",
-                    "label": "styles.js",
-                    "statSize": 792
-                  },
-                  {
-                    "id": "input-props.js",
-                    "label": "input-props.js",
-                    "statSize": 229
-                  },
-                  {
-                    "id": "input.js",
-                    "label": "input.js",
-                    "statSize": 12082
-                  },
-                  {
-                    "id": "password-icon.js",
-                    "label": "password-icon.js",
-                    "statSize": 1121
-                  },
-                  {
-                    "id": "password.js",
-                    "label": "password.js",
-                    "statSize": 2163
-                  },
-                  {
-                    "id": "index.js",
-                    "label": "index.js",
-                    "statSize": 185
-                  }
-                ]
-              },
-              {
-                "id": "use-classes",
-                "label": "use-classes",
-                "statSize": 1059,
-                "groups": [
-                  {
-                    "id": "use-classes.js",
-                    "label": "use-classes.js",
-                    "statSize": 1059
-                  }
-                ]
-              },
-              {
-                "id": "use-scale",
-                "label": "use-scale",
-                "statSize": 11163,
-                "groups": [
-                  {
-                    "id": "scale-context.js",
-                    "label": "scale-context.js",
-                    "statSize": 1313
-                  },
-                  {
-                    "id": "utils.js",
-                    "label": "utils.js",
-                    "statSize": 2961
-                  },
-                  {
-                    "id": "with-scale.js",
-                    "label": "with-scale.js",
-                    "statSize": 6889
-                  }
-                ]
-              },
-              {
-                "id": "utils",
-                "label": "utils",
-                "statSize": 14512,
-                "groups": [
-                  {
-                    "id": "collections.js",
-                    "label": "collections.js",
-                    "statSize": 4589
-                  },
-                  {
-                    "id": "prop-types.js",
-                    "label": "prop-types.js",
-                    "statSize": 1185
-                  },
-                  {
-                    "id": "use-ssr.js",
-                    "label": "use-ssr.js",
-                    "statSize": 497
-                  },
-                  {
-                    "id": "use-portal.js",
-                    "label": "use-portal.js",
-                    "statSize": 1239
-                  },
-                  {
-                    "id": "use-resize.js",
-                    "label": "use-resize.js",
-                    "statSize": 488
-                  },
-                  {
-                    "id": "use-click-anywhere.js",
-                    "label": "use-click-anywhere.js",
-                    "statSize": 402
-                  },
-                  {
-                    "id": "use-dom-observer.js",
-                    "label": "use-dom-observer.js",
-                    "statSize": 692
-                  },
-                  {
-                    "id": "use-warning.js",
-                    "label": "use-warning.js",
-                    "statSize": 436
-                  },
-                  {
-                    "id": "layouts.js",
-                    "label": "layouts.js",
-                    "statSize": 2729
-                  },
-                  {
-                    "id": "color.js",
-                    "label": "color.js",
-                    "statSize": 1570
-                  },
-                  {
-                    "id": "use-geist-ui-context.js",
-                    "label": "use-geist-ui-context.js",
-                    "statSize": 685
-                  }
-                ]
-              },
-              {
-                "id": "textarea",
-                "label": "textarea",
-                "statSize": 6802,
-                "groups": [
-                  {
-                    "id": "textarea.js",
-                    "label": "textarea.js",
-                    "statSize": 6802
-                  }
-                ]
-              },
-              {
-                "id": "shared",
-                "label": "shared",
-                "statSize": 11437,
-                "groups": [
-                  {
-                    "id": "ellipsis.js",
-                    "label": "ellipsis.js",
-                    "statSize": 591
-                  },
-                  {
-                    "id": "css-transition.js",
-                    "label": "css-transition.js",
-                    "statSize": 2384
-                  },
-                  {
-                    "id": "dropdown.js",
-                    "label": "dropdown.js",
-                    "statSize": 3779
-                  },
-                  {
-                    "id": "backdrop.js",
-                    "label": "backdrop.js",
-                    "statSize": 4683
-                  }
-                ]
-              },
-              {
-                "id": "loading",
-                "label": "loading",
-                "statSize": 6045,
-                "groups": [
-                  {
-                    "id": "loading.js",
-                    "label": "loading.js",
-                    "statSize": 6045
-                  }
-                ]
-              },
-              {
-                "id": "use-current-state",
-                "label": "use-current-state",
-                "statSize": 759,
-                "groups": [
-                  {
-                    "id": "use-current-state.js",
-                    "label": "use-current-state.js",
-                    "statSize": 759
-                  }
-                ]
-              },
-              {
-                "id": "button",
-                "label": "button",
-                "statSize": 20739,
-                "groups": [
-                  {
-                    "id": "button.drip.js",
-                    "label": "button.drip.js",
-                    "statSize": 2472
-                  },
-                  {
-                    "id": "button-loading.js",
-                    "label": "button-loading.js",
-                    "statSize": 652
-                  },
-                  {
-                    "id": "button-icon.js",
-                    "label": "button-icon.js",
-                    "statSize": 1923
-                  },
-                  {
-                    "id": "utils.js",
-                    "label": "utils.js",
-                    "statSize": 1850
-                  },
-                  {
-                    "id": "styles.js",
-                    "label": "styles.js",
-                    "statSize": 4988
-                  },
-                  {
-                    "id": "button.js",
-                    "label": "button.js",
-                    "statSize": 8854
-                  }
-                ]
-              },
-              {
-                "id": "button-group",
-                "label": "button-group",
-                "statSize": 296,
-                "groups": [
-                  {
-                    "id": "button-group-context.js",
-                    "label": "button-group-context.js",
-                    "statSize": 296
-                  }
-                ]
-              },
-              {
-                "id": "checkbox",
-                "label": "checkbox",
-                "statSize": 13479,
-                "groups": [
-                  {
-                    "id": "checkbox-context.js",
-                    "label": "checkbox-context.js",
-                    "statSize": 281
-                  },
-                  {
-                    "id": "checkbox.icon.js",
-                    "label": "checkbox.icon.js",
-                    "statSize": 2640
-                  },
-                  {
-                    "id": "styles.js",
-                    "label": "styles.js",
-                    "statSize": 571
-                  },
-                  {
-                    "id": "checkbox.js",
-                    "label": "checkbox.js",
-                    "statSize": 6372
-                  },
-                  {
-                    "id": "checkbox-group.js",
-                    "label": "checkbox-group.js",
-                    "statSize": 3478
-                  },
-                  {
-                    "id": "index.js",
-                    "label": "index.js",
-                    "statSize": 137
-                  }
-                ]
-              },
-              {
-                "id": "use-body-scroll",
-                "label": "use-body-scroll",
-                "statSize": 2426,
-                "groups": [
-                  {
-                    "id": "use-body-scroll.js",
-                    "label": "use-body-scroll.js",
-                    "statSize": 2426
-                  }
-                ]
-              },
-              {
-                "id": "use-keyboard",
-                "label": "use-keyboard",
-                "statSize": 7602,
-                "groups": [
-                  {
-                    "id": "codes.js",
-                    "label": "codes.js",
-                    "statSize": 4057
-                  },
-                  {
-                    "id": "helper.js",
-                    "label": "helper.js",
-                    "statSize": 677
-                  },
-                  {
-                    "id": "use-keyboard.js",
-                    "label": "use-keyboard.js",
-                    "statSize": 2868
-                  }
-                ]
-              },
-              {
-                "id": "drawer",
-                "label": "drawer",
-                "statSize": 11688,
-                "groups": [
-                  {
-                    "id": "helper.js",
-                    "label": "helper.js",
-                    "statSize": 806
-                  },
-                  {
-                    "id": "drawer-wrapper.js",
-                    "label": "drawer-wrapper.js",
-                    "statSize": 7867
-                  },
-                  {
-                    "id": "drawer.js",
-                    "label": "drawer.js",
-                    "statSize": 2720
-                  },
-                  {
-                    "id": "index.js",
-                    "label": "index.js",
-                    "statSize": 295
-                  }
-                ]
-              },
-              {
-                "id": "modal",
-                "label": "modal",
-                "statSize": 7235,
-                "groups": [
-                  {
-                    "id": "modal-title.js",
-                    "label": "modal-title.js",
-                    "statSize": 2516
-                  },
-                  {
-                    "id": "modal-subtitle.js",
-                    "label": "modal-subtitle.js",
-                    "statSize": 2216
-                  },
-                  {
-                    "id": "modal-content.js",
-                    "label": "modal-content.js",
-                    "statSize": 2503
-                  }
-                ]
-              },
-              {
-                "id": "use-all-themes",
-                "label": "use-all-themes",
-                "statSize": 317,
-                "groups": [
-                  {
-                    "id": "all-themes-context.js",
-                    "label": "all-themes-context.js",
-                    "statSize": 317
-                  }
-                ]
-              },
-              {
-                "id": "geist-provider",
-                "label": "geist-provider",
-                "statSize": 3809,
-                "groups": [
-                  {
-                    "id": "theme-provider.js",
-                    "label": "theme-provider.js",
-                    "statSize": 1639
-                  },
-                  {
-                    "id": "geist-provider.js",
-                    "label": "geist-provider.js",
-                    "statSize": 2170
-                  }
-                ]
-              },
-              {
-                "id": "use-toasts",
-                "label": "use-toasts",
-                "statSize": 11789,
-                "groups": [
-                  {
-                    "id": "helpers.js",
-                    "label": "helpers.js",
-                    "statSize": 2286
-                  },
-                  {
-                    "id": "toast-item.js",
-                    "label": "toast-item.js",
-                    "statSize": 4448
-                  },
-                  {
-                    "id": "toast-container.js",
-                    "label": "toast-container.js",
-                    "statSize": 5055
-                  }
-                ]
-              },
-              {
-                "id": "grid",
-                "label": "grid",
-                "statSize": 12173,
-                "groups": [
-                  {
-                    "id": "basic-item.js",
-                    "label": "basic-item.js",
-                    "statSize": 7165
-                  },
-                  {
-                    "id": "grid.js",
-                    "label": "grid.js",
-                    "statSize": 2087
-                  },
-                  {
-                    "id": "grid-container.js",
-                    "label": "grid-container.js",
-                    "statSize": 2796
-                  },
-                  {
-                    "id": "index.js",
-                    "label": "index.js",
-                    "statSize": 125
-                  }
-                ]
-              },
-              {
-                "id": "select",
-                "label": "select",
-                "statSize": 31576,
-                "groups": [
-                  {
-                    "id": "select-icon.js",
-                    "label": "select-icon.js",
-                    "statSize": 856
-                  },
-                  {
-                    "id": "select-context.js",
-                    "label": "select-context.js",
-                    "statSize": 272
-                  },
-                  {
-                    "id": "select-dropdown.js",
-                    "label": "select-dropdown.js",
-                    "statSize": 2106
-                  },
-                  {
-                    "id": "select-icon-clear.js",
-                    "label": "select-icon-clear.js",
-                    "statSize": 2195
-                  },
-                  {
-                    "id": "select-multiple-value.js",
-                    "label": "select-multiple-value.js",
-                    "statSize": 1789
-                  },
-                  {
-                    "id": "styles.js",
-                    "label": "styles.js",
-                    "statSize": 1012
-                  },
-                  {
-                    "id": "select-input.js",
-                    "label": "select-input.js",
-                    "statSize": 1220
-                  },
-                  {
-                    "id": "select.js",
-                    "label": "select.js",
-                    "statSize": 15413
-                  },
-                  {
-                    "id": "select-option.js",
-                    "label": "select-option.js",
-                    "statSize": 6586
-                  },
-                  {
-                    "id": "index.js",
-                    "label": "index.js",
-                    "statSize": 127
-                  }
-                ]
-              },
-              {
-                "id": "spacer",
-                "label": "spacer",
-                "statSize": 1823,
-                "groups": [
-                  {
-                    "id": "spacer.js",
-                    "label": "spacer.js",
-                    "statSize": 1823
-                  }
-                ]
-              },
-              {
-                "id": "text",
-                "label": "text",
-                "statSize": 6777,
-                "groups": [
-                  {
-                    "id": "child.js",
-                    "label": "child.js",
-                    "statSize": 3932
-                  },
-                  {
-                    "id": "text.js",
-                    "label": "text.js",
-                    "statSize": 2845
-                  }
-                ]
-              }
-            ]
-          },
-          {
+            "statSize": 9250,
             "id": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-            "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-            "statSize": 9250
+            "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
           },
           {
+            "statSize": 140532,
             "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
-            "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
-            "statSize": 140532
+            "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js"
           },
           {
+            "statSize": 410,
             "id": "foxact-virtual-99ab390723/node_modules/foxact",
             "label": "foxact-virtual-99ab390723/node_modules/foxact",
-            "statSize": 410,
             "groups": [
               {
+                "statSize": 33,
                 "id": "noop/index.mjs",
-                "label": "noop/index.mjs",
-                "statSize": 33
+                "label": "noop/index.mjs"
               },
               {
+                "statSize": 377,
                 "id": "context-state/index.mjs",
-                "label": "context-state/index.mjs",
-                "statSize": 377
-              }
-            ]
-          },
-          {
-            "id": "@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons",
-            "label": "@geist-ui-icons-virtual-3ea94b30ea/node_modules/@geist-ui/icons",
-            "statSize": 7137,
-            "groups": [
-              {
-                "id": "menu.js?commonjs-exports",
-                "label": "menu.js?commonjs-exports",
-                "statSize": 41
-              },
-              {
-                "id": "menu.js",
-                "label": "menu.js",
-                "statSize": 2205
-              },
-              {
-                "id": "folder.js?commonjs-exports",
-                "label": "folder.js?commonjs-exports",
-                "statSize": 45
-              },
-              {
-                "id": "folder.js",
-                "label": "folder.js",
-                "statSize": 2501
-              },
-              {
-                "id": "file.js?commonjs-exports",
-                "label": "file.js?commonjs-exports",
-                "statSize": 41
-              },
-              {
-                "id": "file.js",
-                "label": "file.js",
-                "statSize": 2304
+                "label": "context-state/index.mjs"
               }
             ]
           }

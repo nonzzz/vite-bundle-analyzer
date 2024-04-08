@@ -124,6 +124,7 @@ export class AnalyzerNode {
     })
 
     for (const id in chunks) {
+      if (!KNOWN_EXT_NAME.includes(path.extname(id))) continue
       const code = chunks[id]
       const b = stringToByte(code)
       const { byteLength: gzipSize } = await compress(b)

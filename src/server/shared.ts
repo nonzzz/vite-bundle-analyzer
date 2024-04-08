@@ -32,17 +32,6 @@ export function slash(path: string) {
   return path.replace(/\\/g, '/')
 }
 
-interface InjectHTMLTagOptions {
-  html: string
-  injectTo: 'body' | 'head',
-  descriptors: string[]
-}
-
-export function injectHTMLTag(options: InjectHTMLTagOptions) {
-  const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
-  return options.html.replace(regExp, (match) => `${options.descriptors.join('\n')}${match}`)
-}
-
 export function stringToByte(b: string | Uint8Array) {
   if (typeof b === 'string') return new TextEncoder().encode(b)
   return b

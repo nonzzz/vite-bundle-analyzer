@@ -28,17 +28,16 @@
   "devDependencies": {
     "@babel/runtime": "^7.23.1",
     "@carrotsearch/foamtree": "^3.5.1",
-    "@geist-ui/core": "^2.3.8",
-    "@geist-ui/icons": "^1.0.2",
+    "@iconify-json/ph": "^1.1.12",
     "@stylexjs/stylex": "^0.5.1",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
     "@types/node": "^20.7.0",
-    "@types/opener": "^1.4.3",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
-    "esbuild-minify-templates": "^0.11.0",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.1.1",
     "foxact": "^0.2.29",
@@ -49,6 +48,7 @@
     "tsup": "^7.2.0",
     "tsx": "^3.13.0",
     "typescript": "^5.2.2",
+    "unplugin-icons": "^0.18.5",
     "vite": "^4.4.9",
     "vite-plugin-stylex-dev": "^0.3.0"
   },
@@ -109,11 +109,9 @@
     "unbox-primitive": "npm:@nolyfill/unbox-primitive@latest",
     "which-boxed-primitive": "npm:@nolyfill/which-boxed-primitive@latest",
     "which-typed-array": "npm:@nolyfill/which-typed-array@latest",
-    "@types/react": "^18.2.31",
-    "esbuild-minify-templates@^0.11.0": "patch:esbuild-minify-templates@npm%3A0.11.0#./.yarn/patches/esbuild-minify-templates-npm-0.11.0-458ab522a4.patch"
+    "@types/react": "^18.2.31"
   },
   "dependencies": {
-    "opener": "^1.5.2",
     "picocolors": "^1.0.0",
     "source-map": "^0.7.4"
   },

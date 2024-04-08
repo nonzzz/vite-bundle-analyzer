@@ -1,9 +1,9 @@
 import path from 'path'
 import fsp from 'fs/promises'
-import opener from 'opener'
 import type { Logger, Plugin } from 'vite'
 import colors from 'picocolors'
 import { name } from '../../package.json'
+import { opener } from './opener'
 import { renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
@@ -14,7 +14,7 @@ import { convertBytes } from './shared'
 const isCI = !!process.env.CI
 
 function openBrowser(address: string) {
-  opener(address)
+  opener([address])
 }
 
 const formatNumber = (number: number | string) => colors.dim(colors.bold(number))

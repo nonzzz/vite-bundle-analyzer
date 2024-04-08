@@ -8,6 +8,7 @@
       "skipLibCheck": true,
       "target": "ESNext",
       "lib": ["esnext","DOM","DOM.Iterable"],
+      "types": ["unplugin-icons/types/react"],
       "resolveJsonModule": true,
       "module": "ESNext",
       "moduleResolution": "node",

@@ -1,8 +1,10 @@
 import { useMemo } from 'react'
-import { Checkbox, Spacer } from '@geist-ui/core'
 import stylex from '@stylexjs/stylex'
 import { noop } from 'foxact/noop'
 import type { Foam, Sizes } from '../interface'
+import { Spacer } from './spacer'
+import { Checkbox } from './checkbox'
+import type { CheckboxEvent } from './checkbox'
 import { ModuleItem } from './module-item'
 
 export interface FileListProps<F> {
@@ -16,6 +18,11 @@ export interface FileListProps<F> {
 const styles = stylex.create({
   container: {
     overflow: 'hidden'
+  },
+  baseline: {
+    ':not(#__unused__) > div': {
+      alignItems: 'baseline'
+    }
   }
 })
 
@@ -43,21 +50,25 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
     return Array.from(scence)
   }, [checkAll, scence, userFiles])
 
+  const handleChange = (e: CheckboxEvent) => {
+    const { checked } = e.target
+    onChange(checked ? userFiles.map(v => v.id) : [])
+  }
   return (
     <div {...stylex.props(styles.container)}>
-      <ModuleItem name={all.name} size={all.extra}>
+      <ModuleItem name={all.name} size={all.extra} {...stylex.props(styles.baseline)}>
         <Checkbox
           value={all.name}
           font="14px"
           scale={0.85}
           checked={checkAll}
-          onChange={() => onChange(checkAll ? [] : userFiles.map(v => v.id))}
+          onChange={handleChange}
         />
       </ModuleItem>
       <Spacer h={0.75} />
       <Checkbox.Group font="14px" scale={0.85} value={groupValues} onChange={onChange}>
         {files.map(file => (
-          <ModuleItem name={file.name} size={file.extra} key={file.name}>
+          <ModuleItem name={file.name} size={file.extra} key={file.name} {...stylex.props(styles.baseline)}>
             <Checkbox value={file.name} />
           </ModuleItem>
         ))}
