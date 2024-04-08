@@ -1,3 +1,14 @@
+## 0.9.3
+
+# Improve
+
+- Reduce package size.
+
+# Patches
+
+- Fix counting size should skip unknown assets.
+- Fix `openAnalyzer` can't work on WSL/WSL2.
+
 ## 0.9.2
 
 - Reduce package size.
