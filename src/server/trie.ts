@@ -100,7 +100,7 @@ export class FileSystemTrie<T> {
           case 'stat':
             child.statSize = child.groups.reduce((acc, cur) => acc + cur.statSize, 0)
             break
-          case 'source':{
+          case 'source': {
             const size = child.groups.reduce((acc, cur) => {
               acc.parsedSize += cur.parsedSize
               acc.gzipSize += cur.gzipSize
