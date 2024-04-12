@@ -1,3 +1,13 @@
+## 0.9.4
+
+# Patches
+
+- Fix the problem of exit of generate task.
+
+### credits
+
+@paulcarroll
+
 ## 0.9.3
 
 # Improve

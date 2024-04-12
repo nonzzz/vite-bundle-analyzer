@@ -1,7 +1,7 @@
 {
   "name": "vite-bundle-analyzer",
-  "packageManager": "yarn@3.6.3",
-  "version": "0.9.3",
+  "packageManager": "yarn@4.1.1",
+  "version": "0.9.4",
   "description": "a vite bundle analyzer",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -26,7 +26,6 @@
     "lint": "eslint . --fix"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.23.1",
     "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
     "@stylexjs/stylex": "^0.5.1",
@@ -49,13 +48,13 @@
     "tsx": "^3.13.0",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
-    "vite": "^4.4.9",
-    "vite-plugin-stylex-dev": "^0.3.0"
+    "vite": "^5.2.8",
+    "vite-plugin-stylex-dev": "^0.5.1"
   },
   "license": "MIT",
   "author": "kanno",
   "resolutions": {
-    "vite": "^4.4.9",
+    "vite": "^5.2.8",
     "array-buffer-byte-length": "npm:@nolyfill/array-buffer-byte-length@latest",
     "array-includes": "npm:@nolyfill/array-includes@latest",
     "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@latest",
