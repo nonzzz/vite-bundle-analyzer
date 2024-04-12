@@ -137,15 +137,13 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         case 'json': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')
           const foamModule = analyzerModule.processFoamModule()
-          fsp.writeFile(p, JSON.stringify(foamModule, null, 2), 'utf8')
-          break
+          return fsp.writeFile(p, JSON.stringify(foamModule, null, 2), 'utf8')
         }
         case 'static': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
           const foamModule = analyzerModule.processFoamModule()
           const html = await renderView(foamModule, { title: reportTitle, mode: 'stat' })
-          fsp.writeFile(p, html, 'utf8')
-          break
+          return fsp.writeFile(p, html, 'utf8')
         }
         case 'server': {
           const foamModule = analyzerModule.processFoamModule()
