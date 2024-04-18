@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { useClasses, useScale, withScale } from '../../composables'
-import { SCALES } from '../../composables'
 import { useCheckbox } from './context'
 
 export interface CheckboxEventTarget {
@@ -35,26 +34,6 @@ const defaultProps: Props = {
 }
 
 const styles = stylex.create({
-  checkbox: (scale: SCALES, disabled) => ({
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '--checkbox-size': scale.font(0.875),
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    opacity: disabled ? 0.75 : 1,
-    lineHeight: 'var(--checkbox-size)',
-    width: scale.width(1, 'auto'),
-    height: scale.height(1, 'var(--checkbox-size)'),
-    padding: `${scale.pt(0)} ${scale.pr(0)} ${scale.pb(0)} ${scale.pl(0)}`,
-    margin: `${scale.mt(0)} ${scale.mr(0)} ${scale.mb(0)} ${scale.ml(0)}`
-  }),
-  text: (disabled) => ({
-    fontSize: 'var(--checkbox-size)',
-    lineHeight: 'var(--checkbox-size)',
-    paddingLeft: 'calc(var(--checkbox-size) * 0.5)',
-    userSelect: 'none',
-    cursor: disabled ? 'not-allowed' : 'pointer'
-  }),
   input: {
     opacity: 0,
     outline: 'none',
@@ -147,7 +126,22 @@ function CheckboxComponent(props: CheckboxProps) {
   }, [value, values, selfChecked, inGroup])
 
   return (
-    <label {...stylex.props(styles.checkbox(SCALES, isDisabled))}>
+    <label 
+      stylex={{
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '--checkbox-size': SCALES.font(0.875),
+        cursor: 'pointer',
+        opacity: 1,
+        ...(isDisabled && { cursor: 'not-allowed', opacity: 0.75 }),
+        lineHeight: 'var(--checkbox-size)',
+        width: SCALES.width(1, 'auto'),
+        height: SCALES.height(1, 'var(--checkbox-size)'),
+        padding: `${SCALES.pt(0)} ${SCALES.pr(0)} ${SCALES.pb(0)} ${SCALES.pl(0)}`,
+        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`
+      }}
+    >
       <CheckboxIcon checked={selfChecked} disabled={disabled} />
       <input
         disabled={isDisabled}
@@ -158,7 +152,17 @@ function CheckboxComponent(props: CheckboxProps) {
         type="checkbox"
         {...rest}
       />
-      <span {...stylex.props(styles.text(isDisabled))}>{children}</span>
+      <span stylex={{
+        fontSize: 'var(--checkbox-size)',
+        lineHeight: 'var(--checkbox-size)',
+        paddingLeft: 'calc(var(--checkbox-size) * 0.5)',
+        userSelect: 'none',
+        cursor: 'pointer',
+        ...(isDisabled && { cursor: 'not-allowed' })
+      }}
+      >
+        {children}
+      </span>
     </label>
   )
 }

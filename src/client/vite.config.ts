@@ -2,6 +2,7 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { stylexPlugin } from 'vite-plugin-stylex-dev'
+import stylexExtendBabelPlugin from '@stylex-extend/babel-plugin'
 import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
 
@@ -15,7 +16,7 @@ export default defineConfig(async ({ mode }) => {
         { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
       ]
     },
-    plugins: [react(), stylexPlugin(), Icons({ compiler: 'jsx', jsx: 'react' })],
+    plugins: [react({ babel: { plugins: [stylexExtendBabelPlugin] } }), stylexPlugin(), Icons({ compiler: 'jsx', jsx: 'react' })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       minify: true,

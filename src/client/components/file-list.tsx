@@ -16,9 +16,6 @@ export interface FileListProps<F> {
 }
 
 const styles = stylex.create({
-  container: {
-    overflow: 'hidden'
-  },
   baseline: {
     ':not(#__unused__) > div': {
       alignItems: 'baseline'
@@ -55,7 +52,10 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
     onChange(checked ? userFiles.map(v => v.id) : [])
   }
   return (
-    <div {...stylex.props(styles.container)}>
+    <div stylex={{
+      overflow: 'hidden'
+    }}
+    >
       <ModuleItem name={all.name} size={all.extra} {...stylex.props(styles.baseline)}>
         <Checkbox
           value={all.name}

@@ -92,7 +92,6 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
     width,
     onContentClick,
     backdropClassName,
-    positionClassName,
     layerClassName,
     ...props
   }) => {

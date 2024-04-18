@@ -8,29 +8,6 @@ interface Props {
 }
 
 const styles = stylex.create({
-  item: {
-    display: 'inline-flex',
-    justifyItems: 'center',
-    alignItems: 'center',
-    lineHeight: 1,
-    padding: '0 0.5em',
-    fontSize: 'var(--select-font-size)',
-    height: 'calc(var(--select-font-size) * 2)',
-    borderRadius: '6px',
-    backgroundColor: '#eaeaea',
-    color: '#444',
-    margin: '3px',
-    ':not(#__unused__) >div:not(.clear-icon)': {
-      borderRadius: 0,
-      backgroundColor: 'transparent',
-      padding: 0,
-      margin: 0,
-      color: 'inherit'
-    }
-  },
-  disabled: {
-    color: '#888'
-  },
   icon: {
     padding: '0 0 0 0.5em',
     margin: 0,
@@ -46,12 +23,8 @@ const styles = stylex.create({
     },
     visibility: 'visible',
     opacity: 1
-  },
-  svg: {
-    color: 'currentColor',
-    width: '1em',
-    height: '1em'
   }
+
 })
 
 function SelectMultipleValue({
@@ -70,7 +43,28 @@ function SelectMultipleValue({
   }
 
   return (
-    <div {...stylex.props(styles.item, disabled && styles.disabled)}>
+    <div stylex={{
+      display: 'inline-flex',
+      justifyItems: 'center',
+      alignItems: 'center',
+      lineHeight: 1,
+      padding: '0 0.5em',
+      fontSize: 'var(--select-font-size)',
+      height: 'calc(var(--select-font-size) * 2)',
+      borderRadius: '6px',
+      backgroundColor: '#eaeaea',
+      color: '#444',
+      margin: '3px',
+      ':not(#__unused__) >div:not(.clear-icon)': {
+        borderRadius: 0,
+        backgroundColor: 'transparent',
+        padding: 0,
+        margin: 0,
+        color: 'inherit'
+      },
+      ...(disabled && { color: '#888' })
+    }}
+    >
       {children}
       {!!onClear && (
         <div
@@ -86,7 +80,11 @@ function SelectMultipleValue({
             strokeLinejoin="round"
             fill="none"
             shapeRendering="geometricPrecision"
-            {...stylex.props(styles.svg)}
+            stylex={{
+              color: 'currentColor',
+              width: '1em',
+              height: '1em'
+            }}
           >
             <path d="M18 6L6 18" />
             <path d="M6 6l12 12" />

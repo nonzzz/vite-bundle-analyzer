@@ -1,7 +1,6 @@
 import React, { ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { useScale, withScale } from '../../composables'
-import { SCALES } from '../../composables'
 import { Provider } from './context'
 import { Ellipsis } from './ellipsis'
 import { SelectMultipleValue } from './select-multiple'
@@ -52,38 +51,6 @@ function pickChildByProps(children: ReactNode | undefined, key: string, value: a
 }
 
 const styles = stylex.create({
-  select: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    userSelect: 'none',
-    whiteSpace: 'nowrap',
-    position: 'relative',
-    maxWidth: '90vw',
-    overflow: 'hidden',
-    transition: ' border 150ms ease-in 0s, color 200ms ease-out 0s, box-shadow 200ms ease 0s',
-    border: '1px solid #eaeaea',
-    borderRadius: '6px',
-    minWidth: '11.5em',
-    ':hover': {
-      borderColor: '#000'
-    }
-  },
-  disabledHoverColor: {
-    ':hover': {
-      borderColor: '#eaeaea'
-    }
-  },
-  layout: (scale: SCALES, disabled: boolean, multiple: boolean) => ({
-    '--select-font-size': scale.font(0.875),
-    '--select-height': scale.height(2.25),
-    '--disabled-color': disabled ? '#888' : '#000',
-    width: scale.width(1, 'initial'),
-    height: multiple ? 'auto' : 'var(--select-height)',
-    padding: `${scale.pt(0)} ${scale.pr(0.334)} ${scale.pb(0)} ${scale.pl(0.667)}`,
-    margin: `${scale.mt(0)} ${scale.mr(0)} ${scale.mb(0)} ${scale.ml(0)}`,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    minHeight: multiple ? 'var(--select-height)' : null
-  }),
   input: {
     position: 'fixed',
     top: '-10000px',
@@ -123,33 +90,6 @@ const styles = stylex.create({
   },
   placeholder: {
     color: '#999'
-  },
-  icon: {
-    position: 'absolute',
-    right: '4pt',
-    fontSize: 'var(--select-font-size)',
-    top: '50%',
-    bottom: 0,
-    transform: 'translateY(-50%)',
-    pointerEvents: 'none',
-    transition: 'transform 200ms ease',
-    display: 'flex',
-    alignItems: 'center',
-    color: '#666',
-    ':not(#__unused__) svg': {
-      color: 'inherit',
-      stroke: 'currentColor',
-      transition: 'all 200ms ease',
-      width: '1.214em',
-      height: '1.214em'
-    }
-  },
-  reverse: {
-    transform: 'translateY(-50%) rotate(180deg)'
-  },
-  flexable: {
-    display: 'flex',
-    flexWrap: 'wrap'
   }
 })
 
@@ -237,7 +177,33 @@ function SelectComponent(props: SelectProps) {
         role="presentation"
         onClick={handleClick}
         onMouseDown={handleMouseDown}
-        {...stylex.props(styles.select, styles.layout(SCALES, disabled, multiple), disabled && styles.disabledHoverColor)}
+        stylex={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          userSelect: 'none',
+          whiteSpace: 'nowrap',
+          position: 'relative',
+          maxWidth: '90vw',
+          overflow: 'hidden',
+          transition: ' border 150ms ease-in 0s, color 200ms ease-out 0s, box-shadow 200ms ease 0s',
+          border: '1px solid #eaeaea',
+          borderRadius: '6px',
+          ':hover': {
+            borderColor: '#000'
+          },
+          ...(disabled && { ':hover': { borderColor: '#eaeaea' } }),
+          '--select-font-size': SCALES.font(0.875),
+          '--select-height': SCALES.height(2.25),
+          '--disabled-color': disabled ? '#888' : '#000',
+          width: SCALES.width(1, 'initial'),
+          height: multiple ? 'auto' : 'var(--select-height)',
+          padding: `${SCALES.pt(0)} ${SCALES.pr(0.334)} ${SCALES.pb(0)} ${SCALES.pl(0.667)}`,
+          margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
+          cursor: 'pointer',
+          ...(disabled && { cursor: 'not-allowed' }),
+          minHeight: multiple ? 'var(--select-height)' : '11.5em'
+
+        }}
         {...rest}
       >
         <input
@@ -250,9 +216,30 @@ function SelectComponent(props: SelectProps) {
             <Ellipsis height="var(--scale-height)">{placeholder}</Ellipsis>
           </span>
         )}
-        {value && <div {...stylex.props(styles.flexable)}>{selectChild}</div>}
+        {value && <div stylex={{ display: 'flex', flexWrap: 'wrap' }}>{selectChild}</div>}
         <SelectDropdown visible={visible}>{children}</SelectDropdown>
-        <div {...stylex.props(styles.icon, visible && styles.reverse)}>
+        <div stylex={{
+          position: 'absolute',
+          right: '4pt',
+          fontSize: 'var(--select-font-size)',
+          top: '50%',
+          bottom: 0,
+          transform: 'translateY(-50%)',
+          pointerEvents: 'none',
+          transition: 'transform 200ms ease',
+          display: 'flex',
+          alignItems: 'center',
+          color: '#666',
+          ':not(#__unused__) svg': {
+            color: 'inherit',
+            stroke: 'currentColor',
+            transition: 'all 200ms ease',
+            width: '1.214em',
+            height: '1.214em'
+          },
+          ...(visible && { transform: 'translateY(-50%) rotate(180deg)' })
+        }}
+        >
           <svg
             viewBox="0 0 24 24"
             strokeWidth="1"

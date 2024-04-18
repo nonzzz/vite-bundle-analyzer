@@ -188,11 +188,9 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
         onGroupClick(event) {
           event.preventDefault()
           zoomOutDisabled.current = false
-          // eslint-disable-next-line react/no-this-in-sfc
           this.zoom(event.group)
         },
         onGroupHover(event) {
-          // eslint-disable-next-line react/no-this-in-sfc
           if (event.group && (event.group.attribution || event.group === this.get<FoamDataObject>('dataObject'))) {
             event.preventDefault()
             handleGroupHover(Object.create(null))
@@ -201,7 +199,6 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
           handleGroupHover(event)
         },
         onGroupMouseWheel(event) {
-          // eslint-disable-next-line react/no-this-in-sfc
           const { scale } = this.get<{ scale: number }>('viewport')!
           const isZoomOut = event.delta < 0
           if (isZoomOut) {

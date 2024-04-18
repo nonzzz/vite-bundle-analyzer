@@ -1,6 +1,5 @@
 import { noop } from 'foxact/noop'
 import { useEffect, useMemo, useState } from 'react'
-import stylex from '@stylexjs/stylex'
 import { Text } from '../text'
 import { useApplicationContext } from '../../context'
 import type { Sizes } from '../../interface'
@@ -16,25 +15,6 @@ import Menu from '~icons/ph/list'
 const MODES = tuple('Stat', 'Parsed', 'Gzipped')
 
 export type ModeType = typeof MODES[number]
-
-const styles = stylex.create({
-  visible: {
-    visibility: 'hidden'
-  },
-  float: {
-    top: '10px',
-    left: '10px',
-    zIndex: 10
-  },
-  flexable: {
-    display: 'flex',
-    flexWrap: 'nowrap'
-  },
-  flexItem: {
-    padding: '5px',
-    boxSizing: 'border-box'
-  }
-})
 
 export interface SidebarProps {
   foamModule: typeof window.foamModule
@@ -75,7 +55,12 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
           onVisibleChange(!drawerVisibile)
           toggleDrawerVisible()
         }}
-        {...stylex.props(drawerVisibile && styles.visible, styles.float)}
+        stylex={{
+          top: '10px',
+          left: '10px',
+          zIndex: 10,
+          ...(drawerVisibile && { visibility: 'hidden' })
+        }}
       />
       <Drawer
         visible={drawerVisibile}
@@ -86,9 +71,13 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
         <Drawer.Content paddingTop={0.25}>
           <div>
             <Text p b h3>Treemap Sizes:</Text>
-            <div {...stylex.props(styles.flexable)}>
+            <div stylex={{
+              display: 'flex',
+              flexWrap: 'nowrap'
+            }}
+            >
               {MODES.map(button => (
-                <div key={button} {...stylex.props(styles.flexItem)}>
+                <div key={button} stylex={{ padding: '5px', boxSizing: 'border-box' }}>
                   <Button
                     onClick={() => onModeChange(button)}
                     auto

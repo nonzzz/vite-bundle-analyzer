@@ -28,6 +28,8 @@
   "devDependencies": {
     "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
+    "@stylex-extend/babel-plugin": "^0.2.1",
+    "@stylex-extend/react": "^0.2.1",
     "@stylexjs/stylex": "^0.5.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
@@ -38,7 +40,7 @@
     "ava": "^5.3.1",
     "c8": "^8.0.1",
     "eslint": "^8.49.0",
-    "eslint-config-kagura": "^2.1.1",
+    "eslint-config-kagura": "^2.2.1",
     "foxact": "^0.2.29",
     "preact": "^10.19.2",
     "react": "^18.2.0",
@@ -49,7 +51,7 @@
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8",
-    "vite-plugin-stylex-dev": "^0.5.1"
+    "vite-plugin-stylex-dev": "^0.5.2"
   },
   "license": "MIT",
   "author": "kanno",

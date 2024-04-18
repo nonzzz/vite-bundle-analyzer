@@ -1,5 +1,4 @@
 import { RefObject, useCallback, useRef, useState } from 'react'
-import stylex from '@stylexjs/stylex'
 import { FoamDataObject } from '@carrotsearch/foamtree'
 import { ModuleSize, TreeMap, TreeMapComponent } from './components/tree-map'
 import { ApplicationContext, SIZE_RECORD } from './context'
@@ -11,14 +10,6 @@ import type { ModeType } from './components/side-bar/side-bar'
 import { Tooltip } from './components/tooltip'
 import { Text } from './components/text'
 
-const styles = stylex.create({
-  app: {
-    height: '100%',
-    width: '100%',
-    position: 'relative'
-  }
-})
-
 export function App() {
   const treeMapRef = useRef<TreeMapComponent>()
   const [sizes, setSizes] = useState<ApplicationConfig['sizes']>(SIZE_RECORD[window.defaultSizes])
@@ -26,7 +17,7 @@ export function App() {
   const [scence, setScence] = useState<Set<string>>(new Set())
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
   const [tooltipContent, setTooltipContent] = useState<FoamDataObject | null>(null)
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  // eslint-disable-next-line @eslint-react/no-unstable-context-value
   const initialValue = {
     sizes,
     scence,
@@ -48,7 +39,12 @@ export function App() {
     <ApplicationContext.Provider
       value={initialValue}
     >
-      <div {...stylex.props(styles.app)}>
+      <div stylex={{
+        height: '100%',
+        width: '100%',
+        position: 'relative'
+      }}
+      >
         <SidebarProvider>
           <Sidebar foamModule={foamModule} mode={sizes} onModeChange={handleModeChange} onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>

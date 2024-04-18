@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { useScale, withScale } from '../../composables'
-import { SCALES } from '../../composables'
 import { CheckboxProvider } from './context'
 
 interface Props {
@@ -16,22 +14,6 @@ const defaultProps: Props = {
   disabled: false,
   value: []
 }
-
-const styles = stylex.create({
-  group: (scale: SCALES) => ({
-    width: scale.width(1, 'auto'),
-    height: scale.height(1, 'auto'),
-    padding: `${scale.pt(0)} ${scale.pr(0)} ${scale.pb(0)} ${scale.pl(0)}`,
-    margin: `${scale.mt(0)} ${scale.mr(0)} ${scale.mb(0)} ${scale.ml(0)}`,
-    ':not(#__unused__) label': {
-      marginRight: `calc(${scale.font(1)} * 2)`,
-      '--checkbox-size': scale.font(1)
-    },
-    ':not(#__unused__) label:last-of-type': {
-      marginRight: 0
-    }
-  })
-})
 
 function CheckboxGroupComponent(props: React.PropsWithChildren< CheckboxGroupProps>) {
   const { children, value, disabled = false, onChange, ...rest } = props
@@ -60,7 +42,22 @@ function CheckboxGroupComponent(props: React.PropsWithChildren< CheckboxGroupPro
 
   return (
     <CheckboxProvider value={contextValue}>
-      <div {...stylex.props(styles.group(SCALES))} {...rest}>
+      <div
+        stylex={{
+          width: SCALES.width(1, 'auto'),
+          height: SCALES.height(1, 'auto'),
+          padding: `${SCALES.pt(0)} ${SCALES.pr(0)} ${SCALES.pb(0)} ${SCALES.pl(0)}`,
+          margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
+          ':not(#__unused__) label': {
+            marginRight: `calc(${SCALES.font(1)} * 2)`,
+            '--checkbox-size': SCALES.font(1)
+          },
+          ':not(#__unused__) label:last-of-type': {
+            marginRight: 0
+          }
+        }}
+        {...rest}
+      >
         {children}
       </div>
     </CheckboxProvider>

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from '../css-transition'
 import { useClickAnyWhere, useDOMObserver, usePortal, useResize } from '../../composables'
@@ -25,26 +24,6 @@ const defaultRect: ReactiveDomReact = {
   right: -1000,
   width: 0
 }
-
-const styles = stylex.create({
-  dropdown: (rect: ReactiveDomReact) => ({
-    position: 'absolute',
-    zIndex: 1100,
-    top: `${rect.top + 2}px`,
-    left: `${rect.left}px`,
-    width: `${rect.width}px`
-  }),
-  inner: {
-    borderRadius: '6px',
-    boxShadow: '0 30px 60px rgba(0, 0, 0, 0.12)',
-    backgroundColor: '#fff',
-    maxHeight: '17em',
-    overflowY: 'auto',
-    overflowAnchor: 'none',
-    padding: '0.38em 0',
-    scrollBehavior: 'smooth'
-  }
-})
 
 const SelectDropdown = React.forwardRef<
     HTMLDivElement,
@@ -109,9 +88,28 @@ const SelectDropdown = React.forwardRef<
           role="presentation" 
           onClick={clickHandler}
           onMouseDown={mouseDownHandler}
-          {...stylex.props(styles.dropdown(rect))}
+          stylex={{
+            position: 'absolute',
+            zIndex: 1100,
+            top: `${rect.top + 2}px`,
+            left: `${rect.left}px`,
+            width: `${rect.width}px`
+          }}
         >
-          <div ref={internalDropdownRef} {...stylex.props(styles.inner)}>
+          <div
+            ref={internalDropdownRef}
+            stylex={{
+              borderRadius: '6px',
+              boxShadow: '0 30px 60px rgba(0, 0, 0, 0.12)',
+              backgroundColor: '#fff',
+              maxHeight: '17em',
+              overflowY: 'auto',
+              overflowAnchor: 'none',
+              padding: '0.38em 0',
+              scrollBehavior: 'smooth'
+          
+            }}
+          >
             {children}
           </div>
         </div>

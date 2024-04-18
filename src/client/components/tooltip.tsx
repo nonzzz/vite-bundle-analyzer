@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import stylex from '@stylexjs/stylex'
 
 export type TooltipProps = React.PropsWithChildren<{
   visible: boolean
@@ -9,25 +8,6 @@ const offset = {
   x: 10,
   y: 30
 }
-
-const styles = stylex.create({
-  container: {
-    position: 'absolute',
-    fontSize: '11px',
-    padding: '5px 10px',
-    borderRadius: '4px',
-    backgroundColor: '#fff',
-    border: '1px solid #aaa',
-    opacity: '0.9',
-    whiteSpace: 'nowrap',
-    visibility: 'visible',
-    transition: 'opacity .2s ease, visibility .2s ease'
-  },
-  hidden: {
-    opacity: '0',
-    visibility: 'hidden'
-  }
-})
 
 export function Tooltip(props: TooltipProps) {
   const { children, visible } = props
@@ -58,7 +38,23 @@ export function Tooltip(props: TooltipProps) {
   }, [handleMouseEvent])
 
   return (
-    <div ref={containerRef} style={position} {...stylex.props(styles.container, !visible && styles.hidden)}>
+    <div
+      ref={containerRef}
+      style={position}
+      stylex={{
+        position: 'absolute',
+        fontSize: '11px',
+        padding: '5px 10px',
+        borderRadius: '4px',
+        backgroundColor: '#fff',
+        border: '1px solid #aaa',
+        opacity: 0.9,
+        whiteSpace: 'nowrap',
+        visibility: 'visible',
+        transition: 'opacity .2s ease, visibility .2s ease',
+        ...(!visible && { opacity: 0, visibility: 'hidden' })
+      }}
+    >
       {children}
     </div>
   )

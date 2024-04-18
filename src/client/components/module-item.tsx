@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react'
-import stylex from '@stylexjs/stylex'
 import { noop } from 'foxact/noop'
 import { convertBytes } from '../shared'
 import { Text } from './text'
@@ -14,19 +13,6 @@ export interface ModuleItemProps {
   onMouseEnter?: () => void,
 }
 
-const styles = stylex.create({
-  textContainer: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  text: {
-    flex: '1',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  }
-})
-
 export function ModuleItem(opts: PropsWithChildren<ModuleItemProps>) {
   const { name, size = null, pointer = false, children, className, onClick = noop, onMouseEnter = noop } = opts
   return (
@@ -37,9 +23,19 @@ export function ModuleItem(opts: PropsWithChildren<ModuleItemProps>) {
       className={className}
       style={{ cursor: pointer ? 'pointer' : 'inherit' }}
     >
-      <div {...stylex.props(styles.textContainer)}>
+      <div stylex={{
+        display: 'flex',
+        alignItems: 'center'
+      }}
+      >
         {children}
-        <div {...stylex.props(styles.text)}>
+        <div stylex={{
+          flex: '1',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }}
+        >
           {name}
         </div>
         {size !== null && (
