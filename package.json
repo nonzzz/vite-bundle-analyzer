@@ -18,21 +18,25 @@
   },
   "scripts": {
     "dev": "vite src/client",
-    "dev:plugin": "tsup --watch src/server",
+    "dev:plugin": "rollup --config rollup.config.ts --configPlugin swc3 --watch",
     "build": "yarn build:client & yarn build:plugin",
     "build:client": "vite build src/client",
-    "build:plugin": "tsup",
+    "build:plugin": "rollup --config rollup.config.ts --configPlugin swc3",
     "test": "c8 -r=lcov ava __tests__/*.spec.ts",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
     "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
+    "@rollup/plugin-esm-shim": "^0.1.6",
+    "@rollup/plugin-json": "^6.1.0",
     "@stylex-extend/babel-plugin": "^0.2.1",
     "@stylex-extend/react": "^0.2.1",
     "@stylexjs/stylex": "^0.5.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
+    "@swc-node/register": "^1.9.0",
+    "@swc/core": "^1.4.16",
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
@@ -46,8 +50,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^4.13.0",
-    "tsup": "^7.2.0",
-    "tsx": "^3.13.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-swc3": "^0.11.1",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8",
@@ -141,7 +145,7 @@
       "ts"
     ],
     "require": [
-      "tsx/cjs"
+      "@swc-node/register"
     ],
     "timeout": "30s"
   }

@@ -167,4 +167,4 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
 export { analyzer }
 export { adapter } from './adapter'
 export { analyzer as default }
-export { AnalyzerPluginOptions } from './interface'
+export type { AnalyzerPluginOptions } from './interface'
