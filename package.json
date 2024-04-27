@@ -30,7 +30,7 @@
     "@iconify-json/ph": "^1.1.12",
     "@rollup/plugin-esm-shim": "^0.1.6",
     "@rollup/plugin-json": "^6.1.0",
-    "@stylex-extend/babel-plugin": "^0.2.1",
+    "@stylex-extend/core": "^0.2.2",
     "@stylex-extend/react": "^0.2.1",
     "@stylexjs/stylex": "^0.5.1",
     "@svgr/core": "^8.1.0",
@@ -55,7 +55,7 @@
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8",
-    "vite-plugin-stylex-dev": "^0.5.2"
+    "vite-plugin-stylex-dev": "^0.6.0"
   },
   "license": "MIT",
   "author": "kanno",

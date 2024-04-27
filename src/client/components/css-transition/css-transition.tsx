@@ -1,3 +1,5 @@
+/* eslint-disable @eslint-react/no-clone-element */
+/* eslint-disable @eslint-react/naming-convention/filename-extension */
 import React, { useEffect, useState } from 'react'
 
 interface Props {
