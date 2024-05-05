@@ -6439,20 +6439,19 @@ __metadata:
     typescript: "npm:^5.2.2"
     unplugin-icons: "npm:^0.18.5"
     vite: "npm:^5.2.8"
-    vite-plugin-stylex-dev: "npm:^0.6.0"
+    vite-plugin-stylex-dev: "npm:^0.7.0"
   languageName: unknown
   linkType: soft
 
-"vite-plugin-stylex-dev@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "vite-plugin-stylex-dev@npm:0.6.0"
+"vite-plugin-stylex-dev@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "vite-plugin-stylex-dev@npm:0.7.0"
   dependencies:
     "@babel/core": "npm:^7.23.9"
     "@rollup/pluginutils": "npm:^5.1.0"
     "@stylex-extend/babel-plugin": "npm:^0.2.2"
     "@stylexjs/babel-plugin": "npm:^0.6.1"
-    magic-string: "npm:^0.30.5"
-  checksum: 10/02728ef7283deea88c07cf123494ad701b18bea606175fa9b7a4105dc6a67a169234b000888400f71170e9e14a951fd31af43caa477bb6993463588d9634f942
+  checksum: 10/46d1fc563d2b1b55cd5e2855a405f273ed347c55c0bc6882d41f30f39c11778cbf3fd136a3f9eab0c6ce78e054d574f06a127ed8898fb871dbc33e2d28ba35f9
   languageName: node
   linkType: hard
 

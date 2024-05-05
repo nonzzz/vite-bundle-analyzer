@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import type { MouseEvent } from 'react'
 import * as stylex from '@stylexjs/stylex'
+import { injectGlobalStyle } from '@stylex-extend/core'
 import { CSSTransition } from '../css-transition'
 import { useClasses } from '../../composables'
 
@@ -44,19 +45,7 @@ const styles = stylex.create({
       height: '100%',
       verticalAlign: 'middle',
       content: ''
-    },
-    ':not(#__unused__).backdrop-enter .layer': {
-      opacity: 0
-    },
-    ':not(#__unused__).backdrop-enter-active .layer': {
-      opacity: 0.25
-    },
-    ':not(#__unused__).backdrop-leave .layer': {
-      opacity: 0.25
-    },
-    ':not(#__unused__).backdrop-leave-active .layer': {
-      opacity: 0
-    } 
+    }
   },
   position: (width: string) => ({
     position: 'relative',
@@ -81,6 +70,23 @@ const styles = stylex.create({
     transition: 'opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
     pointerEvents: 'none',
     zIndex: 1000
+  }
+})
+
+injectGlobalStyle({
+  '.backdrop': {
+    '&.backdrop-wrapper-enter .layer': {
+      opacity: 0
+    },
+    '&.backdrop-wrapper-enter-active .layer': {
+      opacity: 0.25
+    },
+    '&.backdrop-wrapper-leave .layer': {
+      opacity: 0.25
+    },
+    '&.backdrop-wrapper-leave-active .layer': {
+      opacity: 0
+    }
   }
 })
 
@@ -116,7 +122,7 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
       <CSSTransition name="backdrop-wrapper" visible={visible} clearTime={300}>
         <div
           role="presentation"
-          className={useClasses(stylex.props(styles.backdrop).className, backdropClassName)}
+          className={useClasses(stylex.props(styles.backdrop).className, backdropClassName, 'backdrop')}
           onClick={handleClick}
           onMouseUp={handleMouseUp}
           {...props}
