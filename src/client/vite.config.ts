@@ -5,7 +5,10 @@ import { stylex } from 'vite-plugin-stylex-dev'
 import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
 
-export default defineConfig(async ({ mode }) => {
+// Because esbuild can handle esm and cjs syntax
+// so we using cjs require to import data.json
+
+export default defineConfig(({ mode }) => {
   const base = <UserConfig>{
     resolve: {
       alias: [
@@ -24,10 +27,10 @@ export default defineConfig(async ({ mode }) => {
     base: './'
   }
   if (mode === 'development') {
-    const mock = await import('./data.json')
+    const mock = require('./data.json')
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
-      'window.foamModule': JSON.stringify(mock.default)
+      'window.foamModule': JSON.stringify(mock)
     }
   }
   return base

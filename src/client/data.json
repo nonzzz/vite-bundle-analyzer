@@ -1,56 +1,56 @@
 [
   {
-    "id": "assets/index-e335f571.js",
-    "label": "assets/index-e335f571.js",
-    "statSize": 273734,
-    "parsedSize": 213759,
-    "mapSize": 586366,
-    "gzipSize": 84977,
+    "id": "assets/index-C2B-iZ9m.js",
+    "label": "assets/index-C2B-iZ9m.js",
+    "statSize": 279459,
+    "parsedSize": 214391,
+    "mapSize": 580158,
+    "gzipSize": 84917,
     "source": [
       {
-        "gzipSize": 84977,
-        "parsedSize": 213759,
+        "gzipSize": 84917,
+        "parsedSize": 214391,
         "id": "Users",
         "label": "Users",
         "groups": [
           {
-            "gzipSize": 23424,
-            "parsedSize": 46566,
+            "gzipSize": 23942,
+            "parsedSize": 48763,
             "id": "src",
             "label": "src",
             "groups": [
               {
-                "gzipSize": 23260,
-                "parsedSize": 46390,
+                "gzipSize": 23778,
+                "parsedSize": 48587,
                 "id": "client",
                 "label": "client",
                 "groups": [
                   {
-                    "gzipSize": 159,
+                    "gzipSize": 157,
                     "parsedSize": 181,
                     "id": "context.ts",
                     "label": "context.ts"
                   },
                   {
-                    "gzipSize": 226,
+                    "gzipSize": 224,
                     "parsedSize": 304,
                     "id": "shared.ts",
                     "label": "shared.ts"
                   },
                   {
-                    "gzipSize": 2504,
+                    "gzipSize": 2503,
                     "parsedSize": 3967,
                     "id": "composables",
                     "label": "composables",
                     "groups": [
                       {
-                        "gzipSize": 242,
+                        "gzipSize": 241,
                         "parsedSize": 369,
                         "id": "use-classes",
                         "label": "use-classes",
                         "groups": [
                           {
-                            "gzipSize": 242,
+                            "gzipSize": 241,
                             "parsedSize": 369,
                             "id": "use-classes.ts",
                             "label": "use-classes.ts"
@@ -64,19 +64,19 @@
                         "label": "use-scale",
                         "groups": [
                           {
-                            "gzipSize": 278,
+                            "gzipSize": 280,
                             "parsedSize": 482,
                             "id": "scale-context.ts",
                             "label": "scale-context.ts"
                           },
                           {
-                            "gzipSize": 153,
+                            "gzipSize": 150,
                             "parsedSize": 196,
                             "id": "utils.ts",
                             "label": "utils.ts"
                           },
                           {
-                            "gzipSize": 665,
+                            "gzipSize": 666,
                             "parsedSize": 1153,
                             "id": "with-scale.tsx",
                             "label": "with-scale.tsx"
@@ -84,13 +84,13 @@
                         ]
                       },
                       {
-                        "gzipSize": 496,
+                        "gzipSize": 495,
                         "parsedSize": 961,
                         "id": "use-body-scroll",
                         "label": "use-body-scroll",
                         "groups": [
                           {
-                            "gzipSize": 496,
+                            "gzipSize": 495,
                             "parsedSize": 961,
                             "id": "use-body-scroll.ts",
                             "label": "use-body-scroll.ts"
@@ -98,13 +98,13 @@
                         ]
                       },
                       {
-                        "gzipSize": 263,
+                        "gzipSize": 264,
                         "parsedSize": 338,
                         "id": "use-portal",
                         "label": "use-portal",
                         "groups": [
                           {
-                            "gzipSize": 263,
+                            "gzipSize": 264,
                             "parsedSize": 338,
                             "id": "use-portal.ts",
                             "label": "use-portal.ts"
@@ -156,25 +156,25 @@
                     ]
                   },
                   {
-                    "gzipSize": 19731,
-                    "parsedSize": 40954,
+                    "gzipSize": 20258,
+                    "parsedSize": 43151,
                     "id": "components",
                     "label": "components",
                     "groups": [
                       {
-                        "gzipSize": 1213,
-                        "parsedSize": 2953,
+                        "gzipSize": 1248,
+                        "parsedSize": 2998,
                         "id": "text",
                         "label": "text",
                         "groups": [
                           {
-                            "gzipSize": 794,
-                            "parsedSize": 2212,
+                            "gzipSize": 831,
+                            "parsedSize": 2257,
                             "id": "child.tsx",
                             "label": "child.tsx"
                           },
                           {
-                            "gzipSize": 419,
+                            "gzipSize": 417,
                             "parsedSize": 741,
                             "id": "text.tsx",
                             "label": "text.tsx"
@@ -182,42 +182,42 @@
                         ]
                       },
                       {
-                        "gzipSize": 1488,
+                        "gzipSize": 1485,
                         "parsedSize": 2921,
                         "id": "tree-map.tsx",
                         "label": "tree-map.tsx"
                       },
                       {
-                        "gzipSize": 444,
-                        "parsedSize": 987,
+                        "gzipSize": 460,
+                        "parsedSize": 988,
                         "id": "spacer",
                         "label": "spacer",
                         "groups": [
                           {
-                            "gzipSize": 444,
-                            "parsedSize": 987,
+                            "gzipSize": 460,
+                            "parsedSize": 988,
                             "id": "spacer.tsx",
                             "label": "spacer.tsx"
                           }
                         ]
                       },
                       {
-                        "gzipSize": 1210,
-                        "parsedSize": 2824,
+                        "gzipSize": 1419,
+                        "parsedSize": 4020,
                         "id": "button",
                         "label": "button",
                         "groups": [
                           {
-                            "gzipSize": 1210,
-                            "parsedSize": 2824,
+                            "gzipSize": 1419,
+                            "parsedSize": 4020,
                             "id": "button.tsx",
                             "label": "button.tsx"
                           }
                         ]
                       },
                       {
-                        "gzipSize": 5137,
-                        "parsedSize": 9891,
+                        "gzipSize": 5258,
+                        "parsedSize": 10338,
                         "id": "select",
                         "label": "select",
                         "groups": [
@@ -228,38 +228,38 @@
                             "label": "context.ts"
                           },
                           {
-                            "gzipSize": 218,
-                            "parsedSize": 277,
+                            "gzipSize": 224,
+                            "parsedSize": 273,
                             "id": "ellipsis.tsx",
                             "label": "ellipsis.tsx"
                           },
                           {
-                            "gzipSize": 737,
-                            "parsedSize": 1332,
+                            "gzipSize": 740,
+                            "parsedSize": 1326,
                             "id": "select-multiple.tsx",
                             "label": "select-multiple.tsx"
                           },
                           {
-                            "gzipSize": 287,
+                            "gzipSize": 286,
                             "parsedSize": 547,
                             "id": "layouts.ts",
                             "label": "layouts.ts"
                           },
                           {
-                            "gzipSize": 699,
-                            "parsedSize": 1279,
+                            "gzipSize": 708,
+                            "parsedSize": 1282,
                             "id": "dropdown.tsx",
                             "label": "dropdown.tsx"
                           },
                           {
-                            "gzipSize": 2012,
-                            "parsedSize": 4336,
+                            "gzipSize": 1971,
+                            "parsedSize": 4052,
                             "id": "select.tsx",
                             "label": "select.tsx"
                           },
                           {
-                            "gzipSize": 1014,
-                            "parsedSize": 1979,
+                            "gzipSize": 1159,
+                            "parsedSize": 2717,
                             "id": "select-option.tsx",
                             "label": "select-option.tsx"
                           },
@@ -286,32 +286,32 @@
                         ]
                       },
                       {
-                        "gzipSize": 2463,
-                        "parsedSize": 4930,
+                        "gzipSize": 2598,
+                        "parsedSize": 5551,
                         "id": "drawer",
                         "label": "drawer",
                         "groups": [
                           {
-                            "gzipSize": 777,
-                            "parsedSize": 1448,
+                            "gzipSize": 751,
+                            "parsedSize": 1410,
                             "id": "backdrop.tsx",
                             "label": "backdrop.tsx"
                           },
                           {
-                            "gzipSize": 950,
-                            "parsedSize": 2292,
+                            "gzipSize": 1103,
+                            "parsedSize": 2970,
                             "id": "wrapper.tsx",
                             "label": "wrapper.tsx"
                           },
                           {
-                            "gzipSize": 276,
+                            "gzipSize": 277,
                             "parsedSize": 355,
                             "id": "drawer.tsx",
                             "label": "drawer.tsx"
                           },
                           {
-                            "gzipSize": 415,
-                            "parsedSize": 810,
+                            "gzipSize": 422,
+                            "parsedSize": 791,
                             "id": "content.tsx",
                             "label": "content.tsx"
                           },
@@ -324,26 +324,26 @@
                         ]
                       },
                       {
-                        "gzipSize": 2318,
-                        "parsedSize": 4934,
+                        "gzipSize": 2327,
+                        "parsedSize": 4871,
                         "id": "checkbox",
                         "label": "checkbox",
                         "groups": [
                           {
-                            "gzipSize": 126,
+                            "gzipSize": 127,
                             "parsedSize": 114,
                             "id": "context.ts",
                             "label": "context.ts"
                           },
                           {
-                            "gzipSize": 1417,
-                            "parsedSize": 3091,
+                            "gzipSize": 1415,
+                            "parsedSize": 3022,
                             "id": "checkbox.tsx",
                             "label": "checkbox.tsx"
                           },
                           {
-                            "gzipSize": 732,
-                            "parsedSize": 1706,
+                            "gzipSize": 742,
+                            "parsedSize": 1712,
                             "id": "checkbox-group.tsx",
                             "label": "checkbox-group.tsx"
                           },
@@ -362,67 +362,67 @@
                         "label": "module-item.tsx"
                       },
                       {
-                        "gzipSize": 415,
+                        "gzipSize": 414,
                         "parsedSize": 705,
                         "id": "file-list.tsx",
                         "label": "file-list.tsx"
                       },
                       {
-                        "gzipSize": 1893,
-                        "parsedSize": 5346,
+                        "gzipSize": 1916,
+                        "parsedSize": 5327,
                         "id": "input",
                         "label": "input",
                         "groups": [
                           {
-                            "gzipSize": 1893,
-                            "parsedSize": 5346,
+                            "gzipSize": 1916,
+                            "parsedSize": 5327,
                             "id": "input.tsx",
                             "label": "input.tsx"
                           }
                         ]
                       },
                       {
-                        "gzipSize": 817,
-                        "parsedSize": 1560,
+                        "gzipSize": 814,
+                        "parsedSize": 1559,
                         "id": "search-modules.tsx",
                         "label": "search-modules.tsx"
                       },
                       {
-                        "gzipSize": 1134,
-                        "parsedSize": 2003,
+                        "gzipSize": 1128,
+                        "parsedSize": 1991,
                         "id": "side-bar",
                         "label": "side-bar",
                         "groups": [
                           {
-                            "gzipSize": 275,
+                            "gzipSize": 272,
                             "parsedSize": 411,
-                            "id": "provide.tsx",
-                            "label": "provide.tsx"
+                            "id": "provide.ts",
+                            "label": "provide.ts"
                           },
                           {
-                            "gzipSize": 859,
-                            "parsedSize": 1592,
+                            "gzipSize": 856,
+                            "parsedSize": 1580,
                             "id": "side-bar.tsx",
                             "label": "side-bar.tsx"
                           }
                         ]
                       },
                       {
-                        "gzipSize": 552,
-                        "parsedSize": 860,
+                        "gzipSize": 544,
+                        "parsedSize": 842,
                         "id": "tooltip.tsx",
                         "label": "tooltip.tsx"
                       }
                     ]
                   },
                   {
-                    "gzipSize": 498,
+                    "gzipSize": 495,
                     "parsedSize": 845,
                     "id": "application.tsx",
                     "label": "application.tsx"
                   },
                   {
-                    "gzipSize": 142,
+                    "gzipSize": 141,
                     "parsedSize": 139,
                     "id": "main.tsx",
                     "label": "main.tsx"
@@ -438,51 +438,51 @@
             ]
           },
           {
-            "gzipSize": 61553,
-            "parsedSize": 167193,
+            "gzipSize": 60975,
+            "parsedSize": 165628,
             "id": "node_modules/.store",
             "label": "node_modules/.store",
             "groups": [
               {
-                "gzipSize": 9954,
-                "parsedSize": 23562,
-                "id": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
-                "label": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
+                "gzipSize": 9946,
+                "parsedSize": 23560,
+                "id": "preact-npm-10.19.2-3a1f1c5562/package",
+                "label": "preact-npm-10.19.2-3a1f1c5562/package",
                 "groups": [
                   {
-                    "gzipSize": 3784,
-                    "parsedSize": 8829,
+                    "gzipSize": 3777,
+                    "parsedSize": 8827,
                     "id": "compat",
                     "label": "compat",
                     "groups": [
                       {
-                        "gzipSize": 121,
+                        "gzipSize": 123,
                         "parsedSize": 136,
                         "id": "client.mjs",
                         "label": "client.mjs"
                       },
                       {
-                        "gzipSize": 3663,
-                        "parsedSize": 8693,
+                        "gzipSize": 3654,
+                        "parsedSize": 8691,
                         "id": "dist/compat.module.js",
                         "label": "dist/compat.module.js"
                       }
                     ]
                   },
                   {
-                    "gzipSize": 4504,
+                    "gzipSize": 4500,
                     "parsedSize": 10990,
                     "id": "dist/preact.module.js",
                     "label": "dist/preact.module.js"
                   },
                   {
-                    "gzipSize": 1418,
+                    "gzipSize": 1421,
                     "parsedSize": 3404,
                     "id": "hooks/dist",
                     "label": "hooks/dist",
                     "groups": [
                       {
-                        "gzipSize": 1418,
+                        "gzipSize": 1421,
                         "parsedSize": 3404,
                         "id": "hooks.module.js",
                         "label": "hooks.module.js"
@@ -506,22 +506,10 @@
                 ]
               },
               {
-                "gzipSize": 1384,
-                "parsedSize": 3060,
-                "id": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-                "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
-              },
-              {
-                "gzipSize": 50035,
-                "parsedSize": 140380,
-                "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
-                "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js"
-              },
-              {
-                "gzipSize": 180,
+                "gzipSize": 178,
                 "parsedSize": 191,
-                "id": "foxact-virtual-99ab390723/node_modules/foxact",
-                "label": "foxact-virtual-99ab390723/node_modules/foxact",
+                "id": "foxact-virtual-99ab390723/package",
+                "label": "foxact-virtual-99ab390723/package",
                 "groups": [
                   {
                     "gzipSize": 29,
@@ -530,12 +518,24 @@
                     "label": "noop/index.mjs"
                   },
                   {
-                    "gzipSize": 151,
+                    "gzipSize": 149,
                     "parsedSize": 182,
                     "id": "context-state/index.mjs",
                     "label": "context-state/index.mjs"
                   }
                 ]
+              },
+              {
+                "gzipSize": 832,
+                "parsedSize": 1496,
+                "id": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/package/lib/es/stylex.mjs",
+                "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/package/lib/es/stylex.mjs"
+              },
+              {
+                "gzipSize": 50019,
+                "parsedSize": 140381,
+                "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/package/foamtree.js",
+                "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/package/foamtree.js"
               }
             ]
           }
@@ -544,32 +544,27 @@
     ],
     "stats": [
       {
-        "statSize": 17,
-        "id": "vite-plugin:stylex.css",
-        "label": "vite-plugin:stylex.css"
-      },
-      {
-        "statSize": 95464,
+        "statSize": 101206,
         "id": "src",
         "label": "src",
         "groups": [
           {
-            "statSize": 95067,
+            "statSize": 100809,
             "id": "client",
             "label": "client",
             "groups": [
               {
-                "statSize": 515,
+                "statSize": 521,
                 "id": "context.ts",
                 "label": "context.ts"
               },
               {
-                "statSize": 884,
+                "statSize": 878,
                 "id": "shared.ts",
                 "label": "shared.ts"
               },
               {
-                "statSize": 9642,
+                "statSize": 9604,
                 "id": "composables",
                 "label": "composables",
                 "groups": [
@@ -586,22 +581,22 @@
                     ]
                   },
                   {
-                    "statSize": 5008,
+                    "statSize": 4956,
                     "id": "use-scale",
                     "label": "use-scale",
                     "groups": [
                       {
-                        "statSize": 1227,
+                        "statSize": 1167,
                         "id": "scale-context.ts",
                         "label": "scale-context.ts"
                       },
                       {
-                        "statSize": 782,
+                        "statSize": 780,
                         "id": "utils.ts",
                         "label": "utils.ts"
                       },
                       {
-                        "statSize": 2999,
+                        "statSize": 3009,
                         "id": "with-scale.tsx",
                         "label": "with-scale.tsx"
                       }
@@ -656,12 +651,12 @@
                     ]
                   },
                   {
-                    "statSize": 543,
+                    "statSize": 557,
                     "id": "use-dom-observer",
                     "label": "use-dom-observer",
                     "groups": [
                       {
-                        "statSize": 543,
+                        "statSize": 557,
                         "id": "use-dom-observer.ts",
                         "label": "use-dom-observer.ts"
                       }
@@ -670,93 +665,93 @@
                 ]
               },
               {
-                "statSize": 80771,
+                "statSize": 86483,
                 "id": "components",
                 "label": "components",
                 "groups": [
                   {
-                    "statSize": 5630,
+                    "statSize": 6014,
                     "id": "text",
                     "label": "text",
                     "groups": [
                       {
-                        "statSize": 3858,
+                        "statSize": 4206,
                         "id": "child.tsx",
                         "label": "child.tsx"
                       },
                       {
-                        "statSize": 1772,
+                        "statSize": 1808,
                         "id": "text.tsx",
                         "label": "text.tsx"
                       }
                     ]
                   },
                   {
-                    "statSize": 7013,
+                    "statSize": 7066,
                     "id": "tree-map.tsx",
                     "label": "tree-map.tsx"
                   },
                   {
-                    "statSize": 1797,
+                    "statSize": 1959,
                     "id": "spacer",
                     "label": "spacer",
                     "groups": [
                       {
-                        "statSize": 1797,
+                        "statSize": 1959,
                         "id": "spacer.tsx",
                         "label": "spacer.tsx"
                       }
                     ]
                   },
                   {
-                    "statSize": 4631,
+                    "statSize": 6470,
                     "id": "button",
                     "label": "button",
                     "groups": [
                       {
-                        "statSize": 4631,
+                        "statSize": 6470,
                         "id": "button.tsx",
                         "label": "button.tsx"
                       }
                     ]
                   },
                   {
-                    "statSize": 19857,
+                    "statSize": 21132,
                     "id": "select",
                     "label": "select",
                     "groups": [
                       {
-                        "statSize": 269,
+                        "statSize": 271,
                         "id": "context.ts",
                         "label": "context.ts"
                       },
                       {
-                        "statSize": 599,
+                        "statSize": 651,
                         "id": "ellipsis.tsx",
                         "label": "ellipsis.tsx"
                       },
                       {
-                        "statSize": 2211,
+                        "statSize": 2329,
                         "id": "select-multiple.tsx",
                         "label": "select-multiple.tsx"
                       },
                       {
-                        "statSize": 1149,
+                        "statSize": 1179,
                         "id": "layouts.ts",
                         "label": "layouts.ts"
                       },
                       {
-                        "statSize": 3081,
+                        "statSize": 3198,
                         "id": "dropdown.tsx",
                         "label": "dropdown.tsx"
                       },
                       {
-                        "statSize": 8320,
+                        "statSize": 8236,
                         "id": "select.tsx",
                         "label": "select.tsx"
                       },
                       {
-                        "statSize": 4072,
+                        "statSize": 5112,
                         "id": "select-option.tsx",
                         "label": "select-option.tsx"
                       },
@@ -780,27 +775,27 @@
                     ]
                   },
                   {
-                    "statSize": 9107,
+                    "statSize": 10308,
                     "id": "drawer",
                     "label": "drawer",
                     "groups": [
                       {
-                        "statSize": 2760,
+                        "statSize": 2777,
                         "id": "backdrop.tsx",
                         "label": "backdrop.tsx"
                       },
                       {
-                        "statSize": 3457,
+                        "statSize": 4516,
                         "id": "wrapper.tsx",
                         "label": "wrapper.tsx"
                       },
                       {
-                        "statSize": 1212,
+                        "statSize": 1224,
                         "id": "drawer.tsx",
                         "label": "drawer.tsx"
                       },
                       {
-                        "statSize": 1525,
+                        "statSize": 1638,
                         "id": "content.tsx",
                         "label": "content.tsx"
                       },
@@ -812,7 +807,7 @@
                     ]
                   },
                   {
-                    "statSize": 9557,
+                    "statSize": 9732,
                     "id": "checkbox",
                     "label": "checkbox",
                     "groups": [
@@ -822,12 +817,12 @@
                         "label": "context.ts"
                       },
                       {
-                        "statSize": 5839,
+                        "statSize": 5817,
                         "id": "checkbox.tsx",
                         "label": "checkbox.tsx"
                       },
                       {
-                        "statSize": 3171,
+                        "statSize": 3368,
                         "id": "checkbox-group.tsx",
                         "label": "checkbox-group.tsx"
                       },
@@ -839,63 +834,63 @@
                     ]
                   },
                   {
-                    "statSize": 1062,
+                    "statSize": 1147,
                     "id": "module-item.tsx",
                     "label": "module-item.tsx"
                   },
                   {
-                    "statSize": 1981,
+                    "statSize": 2105,
                     "id": "file-list.tsx",
                     "label": "file-list.tsx"
                   },
                   {
-                    "statSize": 7768,
+                    "statSize": 7942,
                     "id": "input",
                     "label": "input",
                     "groups": [
                       {
-                        "statSize": 7768,
+                        "statSize": 7942,
                         "id": "input.tsx",
                         "label": "input.tsx"
                       }
                     ]
                   },
                   {
-                    "statSize": 3857,
+                    "statSize": 3941,
                     "id": "search-modules.tsx",
                     "label": "search-modules.tsx"
                   },
                   {
-                    "statSize": 5193,
+                    "statSize": 5279,
                     "id": "side-bar",
                     "label": "side-bar",
                     "groups": [
                       {
-                        "statSize": 518,
-                        "id": "provide.tsx",
-                        "label": "provide.tsx"
+                        "statSize": 528,
+                        "id": "provide.ts",
+                        "label": "provide.ts"
                       },
                       {
-                        "statSize": 4675,
+                        "statSize": 4751,
                         "id": "side-bar.tsx",
                         "label": "side-bar.tsx"
                       }
                     ]
                   },
                   {
-                    "statSize": 1808,
+                    "statSize": 1878,
                     "id": "tooltip.tsx",
                     "label": "tooltip.tsx"
                   }
                 ]
               },
               {
-                "statSize": 2893,
+                "statSize": 2957,
                 "id": "application.tsx",
                 "label": "application.tsx"
               },
               {
-                "statSize": 362,
+                "statSize": 366,
                 "id": "main.tsx",
                 "label": "main.tsx"
               }
@@ -903,22 +898,15 @@
           },
           {
             "statSize": 397,
-            "id": "shared",
-            "label": "shared",
-            "groups": [
-              {
-                "statSize": 397,
-                "id": "index.ts",
-                "label": "index.ts"
-              }
-            ]
+            "id": "shared/index.ts",
+            "label": "shared/index.ts"
           }
         ]
       },
       {
         "statSize": 1548,
-        "id": "vite/modulepreload-polyfill",
-        "label": "vite/modulepreload-polyfill"
+        "id": "vite/modulepreload-polyfill.js",
+        "label": "vite/modulepreload-polyfill.js"
       },
       {
         "statSize": 176705,
@@ -927,8 +915,8 @@
         "groups": [
           {
             "statSize": 26513,
-            "id": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
-            "label": "preact-npm-10.19.2-3a1f1c5562/node_modules/preact",
+            "id": "preact-npm-10.19.2-3a1f1c5562/package",
+            "label": "preact-npm-10.19.2-3a1f1c5562/package",
             "groups": [
               {
                 "statSize": 10084,
@@ -979,19 +967,9 @@
             ]
           },
           {
-            "statSize": 9250,
-            "id": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-            "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
-          },
-          {
-            "statSize": 140532,
-            "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js",
-            "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/node_modules/@carrotsearch/foamtree/foamtree.js"
-          },
-          {
             "statSize": 410,
-            "id": "foxact-virtual-99ab390723/node_modules/foxact",
-            "label": "foxact-virtual-99ab390723/node_modules/foxact",
+            "id": "foxact-virtual-99ab390723/package",
+            "label": "foxact-virtual-99ab390723/package",
             "groups": [
               {
                 "statSize": 33,
@@ -1004,6 +982,16 @@
                 "label": "context-state/index.mjs"
               }
             ]
+          },
+          {
+            "statSize": 9250,
+            "id": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/package/lib/es/stylex.mjs",
+            "label": "@stylexjs-stylex-npm-0.5.1-98e1a1d341/package/lib/es/stylex.mjs"
+          },
+          {
+            "statSize": 140532,
+            "id": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/package/foamtree.js",
+            "label": "@carrotsearch-foamtree-npm-3.5.1-5905162fde/package/foamtree.js"
           }
         ]
       }
