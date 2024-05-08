@@ -1262,50 +1262,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylex-extend/babel-plugin@npm:^0.2.2":
-  version: 0.2.2
-  resolution: "@stylex-extend/babel-plugin@npm:0.2.2"
+"@stylex-extend/babel-plugin@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@stylex-extend/babel-plugin@npm:0.3.1"
   dependencies:
     "@babel/core": "npm:^7.23.9"
     "@stylexjs/shared": "npm:^0.5.1"
     stylis: "npm:^4.3.1"
-  checksum: 10/cc53cbdfd4b86a481455b48831d13108f1b7654fb020dda31cbbdfb848ba1f8aa3fdbbc374727799bbbdb5f4540dfd9f1bd1ae29f0d30c00eba93288b967079d
+  checksum: 10/e2eee4ec675cd74d31bb3948dc74396eef138395dfb773dc2169f173926cbd56c4d63b5f4cd161c2511e41d64632e7dc806f47077138983df447a25d338492f1
   languageName: node
   linkType: hard
 
-"@stylex-extend/core@npm:^0.2.2":
-  version: 0.2.2
-  resolution: "@stylex-extend/core@npm:0.2.2"
+"@stylex-extend/core@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@stylex-extend/core@npm:0.3.1"
   dependencies:
-    "@stylex-extend/shared": "npm:0.2.2"
-  checksum: 10/e864dcce13de343ca9cf4ce67a2ee5f1b631dedef2cf3cdcf0d27fdd6b4b785ed0e329e26a1126298753a7027c663e92ef1ecce9d92f8732ef4da900962539df
+    "@stylex-extend/shared": "npm:0.3.1"
+  checksum: 10/6a75098f6b3783c57e2c27d85f79f4e315d53fac6b113951276c09fc647269d1cbc6a361aa2763413053442b7fb80890971417e8a0f13c2a5946659cf09d65b1
   languageName: node
   linkType: hard
 
-"@stylex-extend/react@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@stylex-extend/react@npm:0.2.1"
+"@stylex-extend/react@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@stylex-extend/react@npm:0.3.1"
   dependencies:
-    "@stylex-extend/shared": "npm:0.2.1"
-  checksum: 10/aa2e358c9a631fbef2dd65b9d708dac3f43b87cc1c2763eee05a55e652daed9321440c84578bf90fb5a94fd3e18933bd0efbe97cf6f412b5e074dfb0c4ce39d6
+    "@stylex-extend/shared": "npm:0.3.1"
+  checksum: 10/8e1c8c074b8ff1873c5c89629973642e0154b9b50847de6a8db5f59570b9539009c4064fd51056ba1ca146fd74e8193404bb32987d49ecd136fe5bc38dd361c2
   languageName: node
   linkType: hard
 
-"@stylex-extend/shared@npm:0.2.1":
-  version: 0.2.1
-  resolution: "@stylex-extend/shared@npm:0.2.1"
-  dependencies:
-    csstype: "npm:^3.1.3"
-  checksum: 10/ef1d63bd9dd3acbbe756dcd31777639c471c541c61a3dd5a14ce7f46047e499e734be8c64ee602b9da245d52fbc61b048b2c06994cd799cfa350e79c1f4b48fe
-  languageName: node
-  linkType: hard
-
-"@stylex-extend/shared@npm:0.2.2":
-  version: 0.2.2
-  resolution: "@stylex-extend/shared@npm:0.2.2"
+"@stylex-extend/shared@npm:0.3.1":
+  version: 0.3.1
+  resolution: "@stylex-extend/shared@npm:0.3.1"
   dependencies:
     csstype: "npm:^3.1.3"
-  checksum: 10/cad4349081b06416ccfec01db4e8d63c5dcb26e967b1837645278d951b15b7991eec22e06618d480a7893e28dde7e606ec628b35e4769e5523ea9965b0c1191d
+  checksum: 10/1882ccc2db9484cd465109ba1712b444ba2bcf164bebaa2f639c00fab1d3dbefdb05161f18bb9d4ce30c0b045ccca5e1c4a4044a6b932bbed1d1ad03673ae5c9
   languageName: node
   linkType: hard
 
@@ -6412,8 +6403,8 @@ __metadata:
     "@iconify-json/ph": "npm:^1.1.12"
     "@rollup/plugin-esm-shim": "npm:^0.1.6"
     "@rollup/plugin-json": "npm:^6.1.0"
-    "@stylex-extend/core": "npm:^0.2.2"
-    "@stylex-extend/react": "npm:^0.2.1"
+    "@stylex-extend/core": "npm:^0.3.1"
+    "@stylex-extend/react": "npm:^0.3.1"
     "@stylexjs/stylex": "npm:^0.5.1"
     "@svgr/core": "npm:^8.1.0"
     "@svgr/plugin-jsx": "npm:^8.1.0"
@@ -6439,11 +6430,11 @@ __metadata:
     typescript: "npm:^5.2.2"
     unplugin-icons: "npm:^0.18.5"
     vite: "npm:^5.2.8"
-    vite-plugin-stylex-dev: "npm:^0.7.0"
+    vite-plugin-stylex-dev: "npm:0.7.0"
   languageName: unknown
   linkType: soft
 
-"vite-plugin-stylex-dev@npm:^0.7.0":
+"vite-plugin-stylex-dev@npm:0.7.0":
   version: 0.7.0
   resolution: "vite-plugin-stylex-dev@npm:0.7.0"
   dependencies:

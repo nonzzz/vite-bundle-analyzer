@@ -32,25 +32,6 @@ const expand = stylex.keyframes({
   }
 })
 
-const styles = stylex.create({
-  drip: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0
-  },
-  svg: {
-    position: 'absolute',
-    animationName: expand,
-    animationDuration: '350ms',
-    animationTimingFunction: 'ease-in',
-    animationFillMode: 'forwards',
-    width: '1rem',
-    height: '1rem'
-  }
-})
-
 const ButtonDrip: React.FC<ButtonDrip> = ({
   x,
   y,
@@ -71,8 +52,32 @@ const ButtonDrip: React.FC<ButtonDrip> = ({
   })
 
   return (
-    <div ref={dripRef} {...stylex.props(styles.drip)}>
-      <svg width="20" height="20" viewBox="0 0 20 20" {...stylex.props(styles.svg)} style={{ top, left }}>
+    <div
+      ref={dripRef}
+      stylex={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      }}
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        stylex={{
+          position: 'absolute',
+          top,
+          left,
+          animationName: expand,
+          animationDuration: '350ms',
+          animationTimingFunction: 'ease-in',
+          animationFillMode: 'forwards',
+          width: '1rem',
+          height: '1rem'
+        }}
+      >
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g fill={color}>
             <rect width="100%" height="100%" rx="10" />

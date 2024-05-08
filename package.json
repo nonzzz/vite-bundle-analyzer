@@ -30,8 +30,8 @@
     "@iconify-json/ph": "^1.1.12",
     "@rollup/plugin-esm-shim": "^0.1.6",
     "@rollup/plugin-json": "^6.1.0",
-    "@stylex-extend/core": "^0.2.2",
-    "@stylex-extend/react": "^0.2.1",
+    "@stylex-extend/core": "^0.3.1",
+    "@stylex-extend/react": "^0.3.1",
     "@stylexjs/stylex": "^0.5.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
@@ -55,7 +55,7 @@
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8",
-    "vite-plugin-stylex-dev": "^0.7.0"
+    "vite-plugin-stylex-dev": "0.7.0"
   },
   "license": "MIT",
   "author": "kanno",
@@ -114,7 +114,8 @@
     "unbox-primitive": "npm:@nolyfill/unbox-primitive@latest",
     "which-boxed-primitive": "npm:@nolyfill/which-boxed-primitive@latest",
     "which-typed-array": "npm:@nolyfill/which-typed-array@latest",
-    "@types/react": "^18.2.31"
+    "@types/react": "^18.2.31",
+    "@stylex-extend/babel-plugin": "^0.3.1"
   },
   "dependencies": {
     "picocolors": "^1.0.0",
