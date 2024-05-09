@@ -1,6 +1,5 @@
-import fsp from 'fs/promises'
 import path from 'path'
-import { clientAssetsPath, clientPath, readAll } from './shared'
+import { clientAssetsPath, clientPath, fsp, readAll } from './shared'
 import type { DefaultSizes, Foam } from './interface'
 
 export interface RenderOptions {

@@ -1,12 +1,12 @@
 import zlib from 'zlib'
 import utils from 'util'
 import fs from 'fs'
-import fsp from 'fs/promises'
 import path from 'path'
 import type { InputType, ZlibOptions } from 'zlib'
 
 export * from '../shared'
 
+export const fsp = fs.promises
 const gzip = utils.promisify(zlib.gzip)
 
 const defaultGzipOptions = <ZlibOptions>{

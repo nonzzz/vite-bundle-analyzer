@@ -3,7 +3,10 @@ client-analyze:
 	@yarn run vite build src/client --config analyze.config.ts
 	awk '{ print }' dist/client/stats.json > src/client/data.json
 
-build-all: build-server build-client
+build-all:cleanup  build-server build-client
+
+cleanup:
+	-rm -rf dist
 
 build-client:
 	@echo "Building client code..."
