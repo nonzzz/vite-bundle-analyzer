@@ -46,6 +46,7 @@
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.2.1",
     "foxact": "^0.2.29",
+    "lightningcss": "^1.24.1",
     "preact": "^10.19.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
