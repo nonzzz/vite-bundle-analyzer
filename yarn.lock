@@ -857,7 +857,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-esm-shim@npm:^0.1.6":
+"@rollup/plugin-esm-shim@npm:0.1.6":
   version: 0.1.6
   resolution: "@rollup/plugin-esm-shim@npm:0.1.6"
   dependencies:
@@ -868,6 +868,20 @@ __metadata:
     rollup:
       optional: true
   checksum: 10/06c59ac0977d5bc50f21fb8a241900aef55d3ad919216d729261ac0a4d5d48f907608926e3b39ab986a7a61bab619715b1d6ad81285cf93587babaad28d735a7
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-esm-shim@patch:@rollup/plugin-esm-shim@npm%3A0.1.6#~/.yarn/patches/@rollup-plugin-esm-shim-npm-0.1.6-d8e3018c76.patch":
+  version: 0.1.6
+  resolution: "@rollup/plugin-esm-shim@patch:@rollup/plugin-esm-shim@npm%3A0.1.6#~/.yarn/patches/@rollup-plugin-esm-shim-npm-0.1.6-d8e3018c76.patch::version=0.1.6&hash=d4bc92"
+  dependencies:
+    magic-string: "npm:^0.30.3"
+  peerDependencies:
+    rollup: ^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 10/d2e159300642818566eca5b45fca1fefd7de09f5d0738807947bee7b0b9bfb12895dc4da2d47b700045e7fe1b71d1b7e300e7074708ca2c3d03f307c4b9eb5e8
   languageName: node
   linkType: hard
 
@@ -5966,7 +5980,7 @@ __metadata:
   dependencies:
     "@carrotsearch/foamtree": "npm:^3.5.1"
     "@iconify-json/ph": "npm:^1.1.12"
-    "@rollup/plugin-esm-shim": "npm:^0.1.6"
+    "@rollup/plugin-esm-shim": "patch:@rollup/plugin-esm-shim@npm%3A0.1.6#~/.yarn/patches/@rollup-plugin-esm-shim-npm-0.1.6-d8e3018c76.patch"
     "@rollup/plugin-json": "npm:^6.1.0"
     "@stylex-extend/core": "npm:^0.3.1"
     "@stylex-extend/react": "npm:^0.3.1"
