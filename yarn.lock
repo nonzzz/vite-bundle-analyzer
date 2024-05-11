@@ -5256,9 +5256,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-swc3@npm:^0.11.1":
-  version: 0.11.1
-  resolution: "rollup-plugin-swc3@npm:0.11.1"
+"rollup-plugin-swc3@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "rollup-plugin-swc3@npm:0.11.2"
   dependencies:
     "@fastify/deepmerge": "npm:^1.3.0"
     "@rollup/pluginutils": "npm:^5.1.0"
@@ -5267,7 +5267,7 @@ __metadata:
   peerDependencies:
     "@swc/core": ">=1.2.165"
     rollup: ^2.0.0 || ^3.0.0 || ^4.0.0
-  checksum: 10/914621c71d5fcacec6541abb9b7215c00fd950a67ae0f726ec3b04b69f0ce91ee84b62d690607cac9e9543a42fee25bc4dab68e64a217ba7fc52fe7daab87fa1
+  checksum: 10/4f5e3a4fe09e489681becd817e072a3faea83bb72b83fed674660a0d6f33315b382ccc5e0824b43b11c455ec6f08c47ed22b5b84531ad0a3b537fdc99a65de9a
   languageName: node
   linkType: hard
 
@@ -6005,7 +6005,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     rollup: "npm:^4.13.0"
     rollup-plugin-dts: "npm:^6.1.0"
-    rollup-plugin-swc3: "npm:^0.11.1"
+    rollup-plugin-swc3: "npm:^0.11.2"
     source-map: "npm:^0.7.4"
     typescript: "npm:^5.2.2"
     unplugin-icons: "npm:^0.18.5"
