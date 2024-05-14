@@ -1,5 +1,6 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
+import { inline } from '@stylex-extend/core'
 import { useClasses } from '../../composables'
 
 interface Props {
@@ -7,8 +8,12 @@ interface Props {
   onClear: (() => void) | null
 }
 
-const styles = stylex.create({
-  icon: {
+function SelectMultipleValue({
+  disabled,
+  onClear,
+  children
+}: React.PropsWithChildren<Props>) {
+  const { className } = stylex.props(inline({
     padding: '0 0 0 0.5em',
     margin: 0,
     display: 'inline-flex',
@@ -23,16 +28,7 @@ const styles = stylex.create({
     },
     visibility: 'visible',
     opacity: 1
-  }
-
-})
-
-function SelectMultipleValue({
-  disabled,
-  onClear,
-  children
-}: React.PropsWithChildren<Props>) {
-  const { className } = stylex.props(styles.icon)
+  }))
   const classes = useClasses('clear-icon', className)
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {

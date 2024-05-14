@@ -34,10 +34,9 @@ export type AnalyzerMode = 'static' | 'json' | 'server'
 export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
 export interface Foam {
-  id: string
   label: string
+  filename: string
   isEntry: boolean
-  path: string
   statSize: number
   parsedSize: number
   mapSize: number

@@ -1,5 +1,4 @@
 import React, { ReactNode, useCallback, useMemo, useRef, useState } from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { useScale, withScale } from '../../composables'
 import { Provider } from './context'
 import { Ellipsis } from './ellipsis'
@@ -49,49 +48,6 @@ function pickChildByProps(children: ReactNode | undefined, key: string, value: a
 
   return [withoutPropChildren, targetChildren]
 }
-
-const styles = stylex.create({
-  input: {
-    position: 'fixed',
-    top: '-10000px',
-    left: '-10000px',
-    opacity: 0,
-    zIndex: -1,
-    width: 0,
-    height: 0,
-    padding: 0,
-    fontSize: 0,
-    border: 'none'
-  },
-  value: {
-    display: 'inline-flex',
-    flex: 1,
-    height: 'var(--select-height)',
-    alignItems: 'center',
-    lineHeight: 1,
-    padding: 0,
-    marginRight: '1.25em',
-    fontSize: 'var(--select-font-size)',
-    color: 'var(--disabled-color)',
-    ':not(#__unused__) div': {
-      borderRadius: 0,
-      backgroundColor: 'transparent',
-      padding: 0,
-      margin: 0,
-      color: 'inherit'
-    },
-    ':not(#__unused__) div:hover': {
-      borderRadius: 0,
-      backgroundColor: 'transparent',
-      padding: 0,
-      margin: 0,
-      color: 'inherit'
-    }
-  },
-  placeholder: {
-    color: '#999'
-  }
-})
 
 function SelectComponent(props: SelectProps) {
   const { disabled = false, value: userValue, 
@@ -209,10 +165,46 @@ function SelectComponent(props: SelectProps) {
         <input
           aria-haspopup="listbox"
           readOnly
-          {...stylex.props(styles.input)}
+          stylex={{
+            position: 'fixed',
+            top: '-10000px',
+            left: '-10000px',
+            opacity: 0,
+            zIndex: -1,
+            width: 0,
+            height: 0,
+            padding: 0,
+            fontSize: 0,
+            border: 'none'
+          }}
         />
         {isEmpty && (
-          <span {...stylex.props(styles.value, styles.placeholder)}>
+          <span stylex={{
+            display: 'inline-flex',
+            flex: 1,
+            height: 'var(--select-height)',
+            alignItems: 'center',
+            lineHeight: 1,
+            padding: 0,
+            marginRight: '1.25em',
+            fontSize: 'var(--select-font-size)',
+            color: '#999',
+            ':not(#__unused__) div': {
+              borderRadius: 0,
+              backgroundColor: 'transparent',
+              padding: 0,
+              margin: 0,
+              color: 'inherit'
+            },
+            ':not(#__unused__) div:hover': {
+              borderRadius: 0,
+              backgroundColor: 'transparent',
+              padding: 0,
+              margin: 0,
+              color: 'inherit'
+            }
+          }}
+          >
             <Ellipsis height="var(--scale-height)">{placeholder}</Ellipsis>
           </span>
         )}

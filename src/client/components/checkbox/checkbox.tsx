@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
+import { inline } from '@stylex-extend/core'
 import { useClasses, useScale, withScale } from '../../composables'
 import { useCheckbox } from './context'
 
@@ -33,32 +34,17 @@ const defaultProps: Props = {
   value: ''
 }
 
-const styles = stylex.create({
-  input: {
-    opacity: 0,
-    outline: 'none',
-    position: 'absolute',
-    width: 0,
-    height: 0,
-    margin: 0,
-    padding: 0,
-    zIndex: -1,
-    fontSize: 0,
-    backgroundColor: 'transparent'
-  },
-  svg: (disabled) => ({
+function CheckboxIcon(props: CheckboxIconProps) {
+  const { checked, disabled } = props
+  const c = stylex.props(inline({
     display: 'inline-flex',
     width: 'calc(var(--checkbox-size) * 0.86)',
     height: 'calc(var(--checkbox-size) * 0.86)',
     userSelect: 'none',
-    opacity: disabled ? 0.4 : 1,
-    cursor: disabled ? 'not-allowed' : 'pointer'
-  })
-})
-
-function CheckboxIcon(props: CheckboxIconProps) {
-  const { checked, disabled } = props
-  const c = stylex.props(styles.svg(disabled))
+    opacity: 1,
+    cursor: 'pointer',
+    ...(disabled && { opacity: 0.4, cursor: 'not-allowed' })
+  }))
   
   if (checked) {
     return (
@@ -89,7 +75,18 @@ function CheckboxComponent(props: CheckboxProps) {
      props
   const { disabledAll, inGroup, values, updateState } = useCheckbox()
   const { SCALES } = useScale()
-  const { className, style } = stylex.props(styles.input)
+  const { className, style } = stylex.props(inline({
+    opacity: 0,
+    outline: 'none',
+    position: 'absolute',
+    width: 0,
+    height: 0,
+    margin: 0,
+    padding: 0,
+    zIndex: -1,
+    fontSize: 0,
+    backgroundColor: 'transparent'
+  }))
   const classes = useClasses(className, userClassName)
   const [selfChecked, setSelfChecked] = useState<boolean>(false)
   const isDisabled = inGroup ? disabledAll || disabled : disabled

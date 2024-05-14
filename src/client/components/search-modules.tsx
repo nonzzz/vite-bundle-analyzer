@@ -32,7 +32,7 @@ export function SearchModules(props: SearchModulesProps) {
           (module.groups?.flatMap(flatModules) || []).concat(module)
 
         const modules = flatModules(foam)
-          .filter((module) => regExp.test(module.id))
+          .filter((module) => regExp.test(module.label))
           .sort((a, b) => b[extra] - a[extra])
           .reduce(
             (acc, module) => {
@@ -46,7 +46,7 @@ export function SearchModules(props: SearchModulesProps) {
 
         return {
           foam,
-          modules: uniqBy(modules, 'id')
+          modules: uniqBy(modules, 'label')
         }
       })
       .filter((find) => find.modules.length)
@@ -76,7 +76,7 @@ export function SearchModules(props: SearchModulesProps) {
     const check = treemap.current?.check(module)
     setAvailableMap({
       ...availableMap,
-      [module.id]: !!check
+      [module.label]: !!check
     })
   }
 
@@ -108,7 +108,7 @@ export function SearchModules(props: SearchModulesProps) {
       {filtered.length
         ? (
             filtered.map((find) => (
-              <div key={find.foam.id}>
+              <div key={find.foam.label}>
                 <ModuleItem
                   name={find.foam.label}
                   stylex={{ fontStyle: 'bold' }}
@@ -116,10 +116,10 @@ export function SearchModules(props: SearchModulesProps) {
                 <div>
                   {find.modules.map((module) => (
                     <ModuleItem
-                      key={module.id}
-                      name={module.id}
+                      key={module.label}
+                      name={module.label}
                       size={module[extra]}
-                      pointer={availableMap[module.id]}
+                      pointer={availableMap[module.label]}
                       onMouseEnter={() => handleMouseEnter(module)}
                       onClick={() => treemap.current?.zoom(module)}
                       stylex={{ fontStyle: 'italic' }}

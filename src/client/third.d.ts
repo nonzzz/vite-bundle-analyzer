@@ -1,9 +1,8 @@
 declare module '@carrotsearch/foamtree' {
 
   export interface FoamDataObject extends NonNullable<unknown> {
-    id?: string
     label: string
-    path?: string
+    filename?: string
     weight?: number
     open?: boolean
     attribution?: unknown

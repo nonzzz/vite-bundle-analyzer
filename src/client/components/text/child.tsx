@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import * as stylex from '@stylexjs/stylex'
+import { inline } from '@stylex-extend/core'
 import { useClasses, useScale } from '../../composables'
-import type { SCALES } from '../../composables'
 
 export interface Props {
   tag: keyof JSX.IntrinsicElements
@@ -14,32 +14,6 @@ const defaultProps = {
 
 type NativeAttrs = Omit<React.DetailsHTMLAttributes<any>, keyof Props>
 export type TextChildProps = Props & NativeAttrs
-
-const styles = stylex.create({
-  tag: (scale: SCALES) => ({
-    width: scale.width(1, 'auto'),
-    height: scale.height(1, 'auto'),
-    ':not(#__unused__).font': {
-      fontSize: scale.font(1, 'inherit')
-    },
-    ':not(#__unused__).mx': {
-      marginLeft: scale.ml(0, 'revert'),
-      marginRight: scale.mr(0, 'revert')
-    },
-    ':not(#__unused__).my': {
-      marginTop: scale.mt(0, 'revert'),
-      marginBottom: scale.mb(0, 'revert')
-    },
-    ':not(#__unused__).px': {
-      paddingLeft: scale.pl(0, 'revert'),
-      paddingRight: scale.pr(0, 'revert')
-    },
-    ':not(#__unused__).py': {
-      paddingTop: scale.pt(0, 'revert'),
-      paddingBottom: scale.pb(0, 'revert')
-    }
-  })
-})
 
 function TextChild({
   children,
@@ -69,7 +43,29 @@ function TextChild({
     return `${scaleClassNames} ${userClassName}`.trim()
   }, [mx, my, px, py, font, userClassName])
 
-  const { className, style } = stylex.props(styles.tag(SCALES))
+  const { className, style } = stylex.props(inline({
+    width: SCALES.width(1, 'auto'),
+    height: SCALES.height(1, 'auto'),
+    ':not(#__unused__).font': {
+      fontSize: SCALES.font(1, 'inherit')
+    },
+    ':not(#__unused__).mx': {
+      marginLeft: SCALES.ml(0, 'revert'),
+      marginRight: SCALES.mr(0, 'revert')
+    },
+    ':not(#__unused__).my': {
+      marginTop: SCALES.mt(0, 'revert'),
+      marginBottom: SCALES.mb(0, 'revert')
+    },
+    ':not(#__unused__).px': {
+      paddingLeft: SCALES.pl(0, 'revert'),
+      paddingRight: SCALES.pr(0, 'revert')
+    },
+    ':not(#__unused__).py': {
+      paddingTop: SCALES.pt(0, 'revert'),
+      paddingBottom: SCALES.pb(0, 'revert')
+    }
+  }))
 
   const classes = useClasses(className, classNames)
 

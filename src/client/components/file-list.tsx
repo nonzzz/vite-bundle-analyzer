@@ -29,7 +29,7 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
   const [all, ...files] = useMemo(
     () => userFiles
       .reduce((acc, file) => {
-        const meta = { name: file.id, extra: file[extra] }
+        const meta = { name: file.label, extra: file[extra] }
         acc[0].extra += meta.extra
         acc.push(meta)
         return acc
@@ -43,13 +43,13 @@ export function FileList<F extends Foam>(props: FileListProps<F>) {
   )
 
   const groupValues = useMemo(() => {
-    if (checkAll) return userFiles.map(v => v.id)
+    if (checkAll) return userFiles.map(v => v.label)
     return Array.from(scence)
   }, [checkAll, scence, userFiles])
 
   const handleChange = (e: CheckboxEvent) => {
     const { checked } = e.target
-    onChange(checked ? userFiles.map(v => v.id) : [])
+    onChange(checked ? userFiles.map(v => v.label) : [])
   }
   return (
     <div stylex={{

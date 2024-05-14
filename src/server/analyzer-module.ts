@@ -206,9 +206,10 @@ export class AnalyzerModule {
     return this.modules.map((module) => ({
       ...pick(
         module,
-        ['id', 'label', 'statSize', 'parsedSize', 'mapSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']
+        ['label', 'statSize', 'parsedSize', 'mapSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']
       ),
-      imports: Array.from(entrypointsMap[module.id] ?? [])
+      imports: Array.from(entrypointsMap[module.id] ?? []),
+      filename: module.label
     })) as unknown as Foam[]
   }
 }

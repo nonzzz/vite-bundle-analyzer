@@ -1,8 +1,8 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
+import { inline } from '@stylex-extend/core'
 import { CSSTransition } from '../css-transition'
 import { useClasses, useScale } from '../../composables'
-import type { SCALES } from '../../composables'
 
 interface Props {
   visible?: boolean
@@ -10,8 +10,10 @@ interface Props {
 
 export type DrawerWrapperProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
 
-const styles = stylex.create({
-  wrapper: {
+function DrawerWrapper(props: React.PropsWithChildren<DrawerWrapperProps>) {
+  const { visible, children } = props
+  const { SCALES } = useScale()
+  const { className, style } = stylex.props(inline({
     position: 'fixed',
     top: 0,
     left: 0,
@@ -48,23 +50,15 @@ const styles = stylex.create({
     ':not(#__unused__).wrapper-leave-active': {
       opacity: 0.4,
       transform: 'translate3d(-100%, 0, 0)'
-    } 
-  },
-  layout: (scale: SCALES) => ({
-    fontSize: scale.font(1),
-    '--wrapper-padding-left': scale.pl(1.3125),
-    '--wrapper-padding-right': scale.pr(1.3125),
-    padding: `${scale.pt(1.3125)} var(--wrapper-padding-right) ${scale.pb(1.3125)} var(--wrapper-padding-left)`,
-    margin: `${scale.mt(0)} ${scale.mr(0)} ${scale.mb(0)} ${scale.ml(0)}`,
-    width: scale.width(1, 'auto'),
-    height: scale.height(1, '100%')
-  })
-})
-
-function DrawerWrapper(props: React.PropsWithChildren<DrawerWrapperProps>) {
-  const { visible, children } = props
-  const { SCALES } = useScale()
-  const { className, style } = stylex.props(styles.wrapper, styles.layout(SCALES))
+    },
+    fontSize: SCALES.font(1),
+    '--wrapper-padding-left': SCALES.pl(1.3125),
+    '--wrapper-padding-right': SCALES.pr(1.3125),
+    padding: `${SCALES.pt(1.3125)} var(--wrapper-padding-right) ${SCALES.pb(1.3125)} var(--wrapper-padding-left)`,
+    margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
+    width: SCALES.width(1, 'auto'),
+    height: SCALES.height(1, '100%')
+  }))
   const classes = useClasses(className, 'wrapper')
 
   return (

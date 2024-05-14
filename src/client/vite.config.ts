@@ -2,10 +2,13 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { stylex } from 'vite-plugin-stylex-dev'
+import { viteMinify } from 'rollup-plugin-swc3'
 import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
 
-export default defineConfig(async ({ mode }) => {
+// Because esbuild can handle esm and cjs syntax
+// so we using cjs require to import data.json
+export default defineConfig(({ mode }) => {
   const base = <UserConfig>{
     resolve: {
       alias: [
@@ -15,19 +18,19 @@ export default defineConfig(async ({ mode }) => {
         { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
       ]
     },
-    plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' })],
+    plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' }), viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
-      minify: true,
+      cssMinify: 'lightningcss',
       emptyOutDir: true
     },
     base: './'
   }
   if (mode === 'development') {
-    const mock = await import('./data.json')
+    const mock = require('./data.json')
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
-      'window.foamModule': JSON.stringify(mock.default)
+      'window.foamModule': JSON.stringify(mock)
     }
   }
   return base

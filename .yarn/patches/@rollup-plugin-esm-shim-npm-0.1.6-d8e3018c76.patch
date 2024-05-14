@@ -1,0 +1,34 @@
+diff --git a/dist/cjs/index.js b/dist/cjs/index.js
+index abf5597a5fa4f0c0fab637b5259f1474715bbb18..84f0b11ae8c2a45caac5e113230d68385f37835a 100644
+--- a/dist/cjs/index.js
++++ b/dist/cjs/index.js
+@@ -7,9 +7,9 @@ var MagicString = require('magic-string');
+ const CJSyntaxRegex = /__filename|__dirname|require\(|require\.resolve\(/;
+ const ESMShim = `
+ // -- Shims --
+-import cjsUrl from 'node:url';
+-import cjsPath from 'node:path';
+-import cjsModule from 'node:module';
++import cjsUrl from 'url';
++import cjsPath from 'path';
++import cjsModule from 'module';
+ const __filename = cjsUrl.fileURLToPath(import.meta.url);
+ const __dirname = cjsPath.dirname(__filename);
+ const require = cjsModule.createRequire(import.meta.url);
+diff --git a/dist/es/index.js b/dist/es/index.js
+index 05fa7900c116d3ca3c4fe341bb4c2d95a6075ed2..6baeb2d3766d565aee7caea7a97024737f8c97bc 100644
+--- a/dist/es/index.js
++++ b/dist/es/index.js
+@@ -3,9 +3,9 @@ import MagicString from 'magic-string';
+ const CJSyntaxRegex = /__filename|__dirname|require\(|require\.resolve\(/;
+ const ESMShim = `
+ // -- Shims --
+-import cjsUrl from 'node:url';
+-import cjsPath from 'node:path';
+-import cjsModule from 'node:module';
++import cjsUrl from 'url';
++import cjsPath from 'path';
++import cjsModule from 'module';
+ const __filename = cjsUrl.fileURLToPath(import.meta.url);
+ const __dirname = cjsPath.dirname(__filename);
+ const require = cjsModule.createRequire(import.meta.url);

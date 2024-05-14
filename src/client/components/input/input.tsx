@@ -1,33 +1,13 @@
 import React, { useImperativeHandle, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
+import { inline } from '@stylex-extend/core'
 import { useClasses, useScale, withScale } from '../../composables'
-import type { SCALES } from '../../composables'
 
 interface Props {
   clearable?: boolean
 }
 
 type InputProps = Props & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof Props>
-
-const styles = stylex.create({
-  input: (scale: SCALES) => ({
-    padding: 0,
-    boxShadow: 'none',
-    margin: '0.25em 0.625em',
-    fontSize: scale.font(0.875),
-    backgroundColor: 'transparent',
-    border: 'none',
-    color: '#000',
-    outline: 'none',
-    borderRadius: 0,
-    width: '100%',
-    minWidth: 0,
-    WebkitAppearance: 'none',
-    '::placeholder': {
-      color: '#999'
-    }
-  })
-})
 
 function simulateChangeEvent(el: HTMLInputElement,
   event: React.MouseEvent<HTMLDivElement>) {
@@ -50,7 +30,23 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
   const inputRef = useRef<HTMLInputElement>(null)
   const [selfValue, setSelfValue] = useState<string>()
   const { SCALES } = useScale()
-  const { className, style } = stylex.props(styles.input(SCALES))
+  const { className, style } = stylex.props(inline({
+    padding: 0,
+    boxShadow: 'none',
+    margin: '0.25em 0.625em',
+    fontSize: SCALES.font(0.875),
+    backgroundColor: 'transparent',
+    border: 'none',
+    color: '#000',
+    outline: 'none',
+    borderRadius: 0,
+    width: '100%',
+    minWidth: 0,
+    WebkitAppearance: 'none',
+    '::placeholder': {
+      color: '#999'
+    }
+  }))
 
   useImperativeHandle(ref, () => inputRef.current!)
 
