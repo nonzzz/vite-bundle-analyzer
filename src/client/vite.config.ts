@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
         { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
       ]
     },
-    plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' }), viteMinify({ mangle: true, module: true, compress: true })],
+    plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' }), viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       cssMinify: 'lightningcss',

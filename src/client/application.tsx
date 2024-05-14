@@ -59,7 +59,7 @@ export function App() {
               <Text p font="12px">
                 path:
                 {' '}
-                {tooltipContent.id}
+                {tooltipContent.filename}
               </Text>
             </>
           )}

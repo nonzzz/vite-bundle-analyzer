@@ -21,10 +21,11 @@ export interface ChunkMetadata {
 }
 
 export interface GroupWithNode {
-  id: string
   groups: Array<GroupWithNode>
   // eslint-disable-next-line no-use-before-define
   children?: Map<string, Node<any>>
+  filename: string
+  label: string
   [prop: string]: any
 }
 
@@ -56,12 +57,16 @@ export class FileSystemTrie<T> {
   insert(filePath: string, desc: Partial<NodeDescriptor<T>>) {
     let current = this.root
     const dirs = filePath.split('/').filter(Boolean)
+    let path = ''
     for (const dir of dirs) {
+      path = path ? `${path}/${dir}` : dir
       if (!current.children.has(dir)) {
-        current.children.set(dir, createNode({ ...desc, filename: dir }))
+        current.children.set(dir, createNode({ ...desc }))
       }
       current = current.children.get(dir)!
+      current.filename = path
     }
+
     current.isEndOfPath = true
   }
 
@@ -89,7 +94,7 @@ export class FileSystemTrie<T> {
   walk(node: Node<T>, handler: (child: GroupWithNode, parent: GroupWithNode) => any) {
     if (!node.children.size) return
     for (const [id, childNode] of node.children.entries()) {
-      const child: GroupWithNode = { ...childNode.meta, id, label: id, groups: childNode.groups }
+      const child: GroupWithNode = { ...childNode.meta, label: id, groups: childNode.groups, filename: childNode.filename }
       if (childNode.isEndOfPath) {
         delete (child as any).groups
       }

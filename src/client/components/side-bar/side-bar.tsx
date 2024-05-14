@@ -31,7 +31,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
   const [entrypoints, setEntrypoints] = useState<string[]>([])
 
   const allChunks = useMemo(() => foamModule
-    .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.id === id || chunk.imports.includes(id)))
+    .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
     .sort((a, b) => b[userMode] - a[userMode]), [foamModule, userMode, entrypoints])
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
@@ -42,7 +42,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
     setEntrypoints(Array.isArray(entrypoint) ? entrypoint : [entrypoint])
   }
 
-  useEffect(() => updateScence(() => new Set(allChunks.map(v => v.id))), [allChunks, updateScence])
+  useEffect(() => updateScence(() => new Set(allChunks.map(v => v.label))), [allChunks, updateScence])
 
   return (
     <>
@@ -101,7 +101,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
               onChange={handleFilterByEntrypoints}
             >
               {entrypointChunks.map(chunk => (
-                <Select.Option key={chunk.id} value={chunk.id}>{chunk.id}</Select.Option>
+                <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>
               ))}
             </Select>
           </div>

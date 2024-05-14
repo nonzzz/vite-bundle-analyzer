@@ -96,7 +96,7 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     check
   }))
 
-  const visibleChunks = useMemo(() => foamModule.filter((v) => scence.has(v.id)).map((module) => travseVisibleModule(module, sizes, true)), [foamModule, sizes, scence])
+  const visibleChunks = useMemo(() => foamModule.filter((v) => scence.has(v.label)).map((module) => travseVisibleModule(module, sizes, true)), [foamModule, sizes, scence])
 
   const chunkNamePartIndex = useMemo(() => {
     const splitChunkNames = visibleChunks.map((chunk) => chunk.label.split(/[^a-z0-9]/iu))
