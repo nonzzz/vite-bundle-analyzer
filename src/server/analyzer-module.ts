@@ -1,6 +1,6 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
-import { createGzip, pick, slash, stringToByte } from './shared'
+import { createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
 import { convertSourcemapToContents, getSourceMappings } from './source-map'
@@ -52,7 +52,7 @@ function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle
 
 export class AnalyzerNode {
   originalId: string
-  id: string
+  filename: string
   label: string
   parsedSize: number
   mapSize: number
@@ -63,9 +63,9 @@ export class AnalyzerNode {
   imports: Set<string>
   isAsset: boolean
   isEntry: boolean
-  constructor(id: string, originalId: string) {
+  constructor(originalId: string) {
     this.originalId = originalId
-    this.id = originalId
+    this.filename = originalId
     this.label = originalId
     this.parsedSize = 0
     this.statSize = 0
@@ -148,7 +148,7 @@ export class AnalyzerNode {
 }
 
 function createAnalyzerNode(id: string) {
-  return new AnalyzerNode(generateNodeId(id), id)
+  return new AnalyzerNode(id)
 }
 
 export class AnalyzerModule {
@@ -182,35 +182,10 @@ export class AnalyzerModule {
   }
 
   processFoamModule() {
-    // We only consider top layer entryPointer
-    const findEntrypointsRelatedNodes = (nodes: AnalyzerNode[]): Record<string, Set<string>> => {
-      const mapImports = (entry: AnalyzerNode, exclude: string[] = []): AnalyzerNode[] => {
-        const processed = [...entry.imports].flatMap(id => this.modules
-          .filter(foam => !exclude.includes(foam.id) && foam.id === generateNodeId(id)))
-        const newExclude = processed.map(foam => foam.id).concat(exclude)
-        return processed.flatMap(foam => mapImports(foam, newExclude)).concat(processed)
-      }
-
-      return nodes.filter(node => node.isEntry)
-        .reduce((acc, entry) => {
-          mapImports(entry).forEach(relative => {
-            if (!acc[relative.id]) {
-              acc[relative.id] = new Set()
-            }
-            acc[relative.id].add(entry.id)
-          })
-          return acc
-        }, {} as Record<string, Set<string>>)
-    }
-    const entrypointsMap = findEntrypointsRelatedNodes(this.modules)
-    return this.modules.map((module) => ({
-      ...pick(
-        module,
-        ['label', 'statSize', 'parsedSize', 'mapSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']
-      ),
-      imports: Array.from(entrypointsMap[module.id] ?? []),
-      filename: module.label
-    })) as unknown as Foam[]
+    return this.modules.map((m) => {
+      const { originalId: _, imports, ...rest } = m
+      return { ...rest, imports: [...imports] }
+    }) as unknown as Foam[]
   }
 }
 

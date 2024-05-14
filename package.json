@@ -28,6 +28,7 @@
   "devDependencies": {
     "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
+    "@jridgewell/source-map": "^0.3.6",
     "@rollup/plugin-esm-shim": "patch:@rollup/plugin-esm-shim@npm%3A0.1.6#~/.yarn/patches/@rollup-plugin-esm-shim-npm-0.1.6-d8e3018c76.patch",
     "@rollup/plugin-json": "^6.1.0",
     "@stylex-extend/core": "^0.3.1",

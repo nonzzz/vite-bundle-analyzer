@@ -7,6 +7,7 @@ import type { InputType, ZlibOptions } from 'zlib'
 export * from '../shared'
 
 export const fsp = fs.promises
+const encoder = new TextEncoder()
 const gzip = utils.promisify(zlib.gzip)
 
 const defaultGzipOptions = <ZlibOptions>{
@@ -33,7 +34,7 @@ export function slash(path: string) {
 }
 
 export function stringToByte(b: string | Uint8Array) {
-  if (typeof b === 'string') return new TextEncoder().encode(b)
+  if (typeof b === 'string') return encoder.encode(b)
   return b
 }
 

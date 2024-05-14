@@ -751,6 +751,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jridgewell/source-map@npm:^0.3.6":
+  version: 0.3.6
+  resolution: "@jridgewell/source-map@npm:0.3.6"
+  dependencies:
+    "@jridgewell/gen-mapping": "npm:^0.3.5"
+    "@jridgewell/trace-mapping": "npm:^0.3.25"
+  checksum: 10/0a9aca9320dc9044014ba0ef989b3a8411b0d778895553e3b7ca2ac0a75a20af4a5ad3f202acfb1879fa40466036a4417e1d5b38305baed8b9c1ebe6e4b3e7f5
+  languageName: node
+  linkType: hard
+
 "@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
   version: 1.4.15
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.15"
@@ -5980,6 +5990,7 @@ __metadata:
   dependencies:
     "@carrotsearch/foamtree": "npm:^3.5.1"
     "@iconify-json/ph": "npm:^1.1.12"
+    "@jridgewell/source-map": "npm:^0.3.6"
     "@rollup/plugin-esm-shim": "patch:@rollup/plugin-esm-shim@npm%3A0.1.6#~/.yarn/patches/@rollup-plugin-esm-shim-npm-0.1.6-d8e3018c76.patch"
     "@rollup/plugin-json": "npm:^6.1.0"
     "@stylex-extend/core": "npm:^0.3.1"
