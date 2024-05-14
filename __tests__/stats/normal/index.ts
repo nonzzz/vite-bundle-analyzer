@@ -14,5 +14,5 @@ export default createMockStats('normal.js',
     moduleIds: [],
     type: 'chunk'
   }, [
-    { id: 'normal.js', label: 'normal.js', statSize: getByteLen(code), parsedSize: getByteLen(code), mapSize: getByteLen(map) }
+    { filename: 'normal.js', label: 'normal.js', statSize: getByteLen(code), parsedSize: getByteLen(code), mapSize: getByteLen(map) }
   ])
