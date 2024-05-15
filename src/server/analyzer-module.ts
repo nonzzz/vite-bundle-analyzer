@@ -3,14 +3,12 @@ import type { ZlibOptions } from 'zlib'
 import { createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
-import { convertSourcemapToContents, getSourceMappings } from './source-map'
+import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import type { Foam, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
 const defaultWd = process.cwd()
-
-const encoder = new TextEncoder()
 
 function getAbsPath(p: string, cwd = defaultWd) {
   p = slash(p)
@@ -99,7 +97,7 @@ export class AnalyzerNode {
         }
         return acc
       }, [] as Array<ChunkMetadata>)
-      : await convertSourcemapToContents(map)
+      : pickupContentFromSourcemap(map)
 
     const stats = createFileSystemTrie<KindStat>({ meta: { statSize: 0 } })
     const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, parsedSize: 0 } })
@@ -110,7 +108,7 @@ export class AnalyzerNode {
         if (!resolved) continue
         info.id = resolved.id
       }
-      const statSize = encoder.encode(info.code).byteLength
+      const statSize = stringToByte(info.code).byteLength
       this.statSize += statSize
       stats.insert(generateNodeId(info.id, workspaceRoot), { kind: 'stat', meta: { statSize } })
     }
@@ -118,7 +116,7 @@ export class AnalyzerNode {
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
     // It's will cause dead lock.(Altough this is a race case.)
-    const chunks = await getSourceMappings(bundle.code, map, (id: string) => {
+    const chunks = pickupMappingsFromCodeBinary(bundle.code, map, (id: string) => {
       const relatived = path.relative(workspaceRoot, id)
       return path.join(workspaceRoot, relatived)
     })

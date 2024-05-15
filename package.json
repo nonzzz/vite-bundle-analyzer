@@ -29,11 +29,13 @@
     "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
+    "@jridgewell/trace-mapping": "^0.3.25",
     "@rollup/plugin-esm-shim": "patch:@rollup/plugin-esm-shim@npm%3A0.1.6#~/.yarn/patches/@rollup-plugin-esm-shim-npm-0.1.6-d8e3018c76.patch",
     "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@stylex-extend/core": "^0.3.1",
     "@stylex-extend/react": "^0.3.1",
-    "@stylexjs/stylex": "^0.5.1",
+    "@stylexjs/stylex": "^0.6.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@swc-node/register": "^1.9.0",
@@ -57,7 +59,7 @@
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8",
-    "vite-plugin-stylex-dev": "^0.7.3"
+    "vite-plugin-stylex-dev": "^0.7.4"
   },
   "license": "MIT",
   "author": "kanno",
@@ -120,8 +122,7 @@
     "@stylex-extend/babel-plugin": "^0.3.1"
   },
   "dependencies": {
-    "picocolors": "^1.0.0",
-    "source-map": "^0.7.4"
+    "picocolors": "^1.0.0"
   },
   "files": [
     "dist",
