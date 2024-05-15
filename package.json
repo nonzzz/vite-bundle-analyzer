@@ -118,8 +118,7 @@
     "unbox-primitive": "npm:@nolyfill/unbox-primitive@latest",
     "which-boxed-primitive": "npm:@nolyfill/which-boxed-primitive@latest",
     "which-typed-array": "npm:@nolyfill/which-typed-array@latest",
-    "@types/react": "^18.2.31",
-    "@stylex-extend/babel-plugin": "^0.3.1"
+    "@types/react": "^18.2.31"
   },
   "dependencies": {
     "picocolors": "^1.0.0"
