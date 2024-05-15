@@ -1,4 +1,4 @@
-import { SourceMapGenerator } from 'source-map'
+import { SourceMapGenerator } from '@jridgewell/source-map'
 import { stringToByte } from '../../src/server/shared'
 import type { Foam, OutputAsset, OutputChunk } from '../../src/server/interface'
 
@@ -26,7 +26,8 @@ export function generateSourceMap(originalCode: string, transformedCode: string,
     generator.addMapping({
       generated: { line: i + 1, column: 0 }, 
       original: { line: originalLine, column: originalColumn },
-      source: fileName
+      source: fileName,
+      name: ''
     })
     originalLine++
     if (originalLines[i]) {

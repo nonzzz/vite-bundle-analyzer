@@ -3,6 +3,8 @@ import { defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import { minify, swc } from 'rollup-plugin-swc3'
 import json from '@rollup/plugin-json'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+
 import shim from '@rollup/plugin-esm-shim'
 
 const _require = createRequire(import.meta.url)
@@ -20,6 +22,7 @@ export default defineConfig([
     ],
     plugins: [
       json(),
+      nodeResolve(),
       shim(),
       swc(),
       minify({ mangle: true, module: true, compress: true, sourceMap: true })

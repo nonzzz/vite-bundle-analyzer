@@ -1,16 +1,14 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
-import { createGzip, pick, slash, stringToByte } from './shared'
+import { createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
-import { convertSourcemapToContents, getSourceMappings } from './source-map'
+import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import type { Foam, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
 const defaultWd = process.cwd()
-
-const encoder = new TextEncoder()
 
 function getAbsPath(p: string, cwd = defaultWd) {
   p = slash(p)
@@ -52,7 +50,7 @@ function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle
 
 export class AnalyzerNode {
   originalId: string
-  id: string
+  filename: string
   label: string
   parsedSize: number
   mapSize: number
@@ -63,9 +61,9 @@ export class AnalyzerNode {
   imports: Set<string>
   isAsset: boolean
   isEntry: boolean
-  constructor(id: string, originalId: string) {
+  constructor(originalId: string) {
     this.originalId = originalId
-    this.id = originalId
+    this.filename = originalId
     this.label = originalId
     this.parsedSize = 0
     this.statSize = 0
@@ -99,7 +97,7 @@ export class AnalyzerNode {
         }
         return acc
       }, [] as Array<ChunkMetadata>)
-      : await convertSourcemapToContents(map)
+      : pickupContentFromSourcemap(map)
 
     const stats = createFileSystemTrie<KindStat>({ meta: { statSize: 0 } })
     const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, parsedSize: 0 } })
@@ -110,7 +108,7 @@ export class AnalyzerNode {
         if (!resolved) continue
         info.id = resolved.id
       }
-      const statSize = encoder.encode(info.code).byteLength
+      const statSize = stringToByte(info.code).byteLength
       this.statSize += statSize
       stats.insert(generateNodeId(info.id, workspaceRoot), { kind: 'stat', meta: { statSize } })
     }
@@ -118,7 +116,7 @@ export class AnalyzerNode {
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
     // It's will cause dead lock.(Altough this is a race case.)
-    const chunks = await getSourceMappings(bundle.code, map, (id: string) => {
+    const chunks = pickupMappingsFromCodeBinary(bundle.code, map, (id: string) => {
       const relatived = path.relative(workspaceRoot, id)
       return path.join(workspaceRoot, relatived)
     })
@@ -148,7 +146,7 @@ export class AnalyzerNode {
 }
 
 function createAnalyzerNode(id: string) {
-  return new AnalyzerNode(generateNodeId(id), id)
+  return new AnalyzerNode(id)
 }
 
 export class AnalyzerModule {
@@ -182,35 +180,10 @@ export class AnalyzerModule {
   }
 
   processFoamModule() {
-    // We only consider top layer entryPointer
-    const findEntrypointsRelatedNodes = (nodes: AnalyzerNode[]): Record<string, Set<string>> => {
-      const mapImports = (entry: AnalyzerNode, exclude: string[] = []): AnalyzerNode[] => {
-        const processed = [...entry.imports].flatMap(id => this.modules
-          .filter(foam => !exclude.includes(foam.id) && foam.id === generateNodeId(id)))
-        const newExclude = processed.map(foam => foam.id).concat(exclude)
-        return processed.flatMap(foam => mapImports(foam, newExclude)).concat(processed)
-      }
-
-      return nodes.filter(node => node.isEntry)
-        .reduce((acc, entry) => {
-          mapImports(entry).forEach(relative => {
-            if (!acc[relative.id]) {
-              acc[relative.id] = new Set()
-            }
-            acc[relative.id].add(entry.id)
-          })
-          return acc
-        }, {} as Record<string, Set<string>>)
-    }
-    const entrypointsMap = findEntrypointsRelatedNodes(this.modules)
-    return this.modules.map((module) => ({
-      ...pick(
-        module,
-        ['label', 'statSize', 'parsedSize', 'mapSize', 'gzipSize', 'source', 'stats', 'isAsset', 'isEntry']
-      ),
-      imports: Array.from(entrypointsMap[module.id] ?? []),
-      filename: module.label
-    })) as unknown as Foam[]
+    return this.modules.map((m) => {
+      const { originalId: _, imports, ...rest } = m
+      return { ...rest, imports: [...imports] }
+    }) as unknown as Foam[]
   }
 }
 
