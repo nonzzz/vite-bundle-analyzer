@@ -8,11 +8,6 @@ interface Props {
   color: string
 }
 
-const defaultProps = {
-  x: 0,
-  y: 0
-}
-
 export type ButtonDrip = Props
 
 const expand = stylex.keyframes({
@@ -33,11 +28,11 @@ const expand = stylex.keyframes({
 })
 
 const ButtonDrip: React.FC<ButtonDrip> = ({
-  x,
-  y,
+  x = 0,
+  y = 0,
   color,
   onCompleted
-}: ButtonDrip & typeof defaultProps) => {
+}) => {
   const dripRef = useRef<HTMLDivElement>(null)
   const top = Number.isNaN(+y) ? 0 : y - 10
   const left = Number.isNaN(+x) ? 0 : x - 10
@@ -88,6 +83,5 @@ const ButtonDrip: React.FC<ButtonDrip> = ({
   )
 }
 
-ButtonDrip.defaultProps = defaultProps
 ButtonDrip.displayName = 'GeistButtonDrip'
 export default ButtonDrip

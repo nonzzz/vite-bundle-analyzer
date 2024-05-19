@@ -8,10 +8,6 @@ export interface Props {
   className?: string
 }
 
-const defaultProps = {
-  className: ''
-}
-
 type NativeAttrs = Omit<React.DetailsHTMLAttributes<any>, keyof Props>
 export type TextChildProps = Props & NativeAttrs
 
@@ -70,14 +66,12 @@ function TextChild({
   const classes = useClasses(className, classNames)
 
   return (
-    // @ts-expect-error
     <Component className={classes} style={style} {...props}>
       {children}
     </Component>
   )
 }
 
-TextChild.defaultProps = defaultProps
 TextChild.displayName = 'TextChild'
 
 export { TextChild }

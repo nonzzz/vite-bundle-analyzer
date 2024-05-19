@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 
 export const ScalePropKeys = [
@@ -88,6 +87,7 @@ export type ScaleInputKeys =
   | 'font'
 
 export type DynamicScales = {
+  // eslint-disable-next-line no-unused-vars
   [key in ScaleInputKeys]: DynamicLayoutPipe
 }
 
@@ -133,6 +133,6 @@ const defaultContext: ScaleConfig = {
   unit: '16px'
 }
 
-export const ScaleContext = React.createContext<ScaleConfig>(defaultContext)
-
-export const useScale = (): ScaleConfig => React.useContext<ScaleConfig>(ScaleContext)
+const ScaleContext = React.createContext(defaultContext)
+export const useScale = () => React.useContext(ScaleContext)
+export const ScaleProvider = ScaleContext.Provider

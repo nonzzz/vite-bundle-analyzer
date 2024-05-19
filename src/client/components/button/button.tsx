@@ -12,11 +12,6 @@ interface Props {
 type ButtonProps = Props &
 Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof Props>
 
-const defaultProps: Props = {
-  auto: false,
-  type: 'default'
-}
-
 const styles = stylex.create({
   text: {
     position: 'relative',
@@ -82,8 +77,8 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       ...rest
     } = props
-    const { SCALES } = useScale()
 
+    const { SCALES } = useScale()
     const { className, style } = stylex.props(
       inline({
         boxSizing: 'border-box',
@@ -148,6 +143,5 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 
 ButtonComponent.displayName = 'Button'
-ButtonComponent.defaultProps = defaultProps
 
 export const Button = withScale(ButtonComponent)

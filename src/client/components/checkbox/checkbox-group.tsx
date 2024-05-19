@@ -10,13 +10,10 @@ interface Props {
 
 export type CheckboxGroupProps = Props & Omit<React.HTMLAttributes<any>, keyof Props>
 
-const defaultProps: Props = {
-  disabled: false,
-  value: []
-}
+const defaultValue: string[] = []
 
 function CheckboxGroupComponent(props: React.PropsWithChildren< CheckboxGroupProps>) {
-  const { children, value, disabled = false, onChange, ...rest } = props
+  const { children, value = defaultValue, disabled = false, onChange, ...rest } = props
   const { SCALES } = useScale()
   const [selfValue, setSelfValue] = useState<string[]>([])
 
@@ -64,7 +61,6 @@ function CheckboxGroupComponent(props: React.PropsWithChildren< CheckboxGroupPro
   )
 }
 
-CheckboxGroupComponent.defaultProps = defaultProps
 CheckboxGroupComponent.displayName = 'CheckboxGroup'
 
 export const CheckboxGroup = withScale(CheckboxGroupComponent)
