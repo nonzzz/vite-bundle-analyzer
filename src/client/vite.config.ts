@@ -8,16 +8,9 @@ import type { UserConfig } from 'vite'
 
 // Because esbuild can handle esm and cjs syntax
 // so we using cjs require to import data.json
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const base = <UserConfig>{
-    resolve: {
-      alias: [
-        { find: 'react', replacement: 'preact/compat' },
-        { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
-        { find: 'react-dom', replacement: 'preact/compat' },
-        { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
-      ]
-    },
+  
     plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' }), viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
@@ -31,6 +24,16 @@ export default defineConfig(({ mode }) => {
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
       'window.foamModule': JSON.stringify(mock)
+    }
+  }
+  if (command === 'build') {
+    base.resolve = {
+      alias: [
+        { find: 'react', replacement: 'preact/compat' },
+        { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
+        { find: 'react-dom', replacement: 'preact/compat' },
+        { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
+      ]
     }
   }
   return base

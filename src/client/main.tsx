@@ -26,7 +26,10 @@ injectGlobalStyle({
   }
 })
 
-window.addEventListener('load', () => {
-  const element = document.querySelector('#app')!
-  ReactDOM.createRoot(element).render(<React.StrictMode><App /></React.StrictMode>)
-})
+// window.addEventListener('load', () => {
+//   const element = document.querySelector('#app')!
+//   ReactDOM.createRoot(element).render(<React.StrictMode><App /></React.StrictMode>)
+// })
+
+const element = document.querySelector('#app')!
+ReactDOM.createRoot(element).render(<React.StrictMode><App /></React.StrictMode>)
