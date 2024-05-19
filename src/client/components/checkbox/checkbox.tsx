@@ -29,11 +29,6 @@ interface Props {
 
 export type CheckboxProps = Props & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof Props>
 
-const defaultProps: Props = {
-  disabled: false,
-  value: ''
-}
-
 function CheckboxIcon(props: CheckboxIconProps) {
   const { checked, disabled } = props
   const c = stylex.props(inline({
@@ -71,7 +66,7 @@ function CheckboxIcon(props: CheckboxIconProps) {
 function CheckboxComponent(props: CheckboxProps) {
   const { 
     checked, className: userClassName, style: userStyle, 
-    value, disabled = false, onChange, children, ...rest } =
+    value = '', disabled = false, onChange, children, ...rest } =
      props
   const { disabledAll, inGroup, values, updateState } = useCheckbox()
   const { SCALES } = useScale()
@@ -164,7 +159,6 @@ function CheckboxComponent(props: CheckboxProps) {
   )
 }
 
-CheckboxComponent.defaultProps = defaultProps
 CheckboxComponent.displayName = 'Checkbox'
 
 export const Checkbox = withScale(CheckboxComponent)

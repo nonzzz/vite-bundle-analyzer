@@ -1,3 +1,8 @@
+install:
+	@echo "Using berry to install dependencies..."
+	corepack enable
+	yarn install
+
 client-analyze:
 	@echo "Analyzing client code..."
 	@yarn run vite build src/client --config analyze.config.ts

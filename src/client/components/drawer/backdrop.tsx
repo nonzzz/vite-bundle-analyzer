@@ -15,15 +15,6 @@ interface Props {
   layerClassName?: string
 }
 
-const defaultProps = {
-  onClick: () => {},
-  visible: false,
-  onContentClick: () => {},
-  backdropClassName: '',
-  positionClassName: '',
-  layerClassName: ''
-}
-
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>
 export type BackdropProps = Props & NativeAttrs
 
@@ -94,7 +85,7 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
   ({
     children,
     onClick,
-    visible,
+    visible = false,
     width,
     onContentClick,
     backdropClassName,
@@ -142,6 +133,5 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
   }
 )
 
-Backdrop.defaultProps = defaultProps
 Backdrop.displayName = 'Backdrop'
 export { Backdrop }

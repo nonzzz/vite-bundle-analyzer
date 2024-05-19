@@ -5,13 +5,9 @@ interface Props {
   inline?: boolean
 }
 
-const defaultProps: Props = {
-  inline: false
-}
-
 export type SpacerProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
 
-function SpacerComponent({ inline, ...props }: SpacerProps) {
+function SpacerComponent({ inline = false, ...props }: SpacerProps) {
   const { SCALES } = useScale()
   return (
     <div
@@ -29,7 +25,6 @@ function SpacerComponent({ inline, ...props }: SpacerProps) {
   )
 }
 
-SpacerComponent.defaultProps = defaultProps
 SpacerComponent.displayName = 'Spacer'
 
 export const Spacer = withScale(SpacerComponent)

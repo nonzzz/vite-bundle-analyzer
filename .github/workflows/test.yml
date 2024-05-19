@@ -7,18 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install berry
-        run: corepack enable
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: Install Dependices
-        run: yarn install
-      
+        run: make
+
       - name: Build Library
-        run:  yarn build
+        run: make build-all
       - name: Run Test
-        run: yarn test
+        run: make test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3

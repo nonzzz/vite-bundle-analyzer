@@ -11,27 +11,18 @@ interface Props {
   name?: string
 }
 
-const defaultProps = {
-  visible: false,
-  enterTime: 60,
-  leaveTime: 60,
-  clearTime: 60,
-  className: '',
-  name: 'transition'
-}
-
 export type CssTransitionProps = Props
 
 function CSSTransition({
   children,
   className,
-  visible,
-  enterTime,
-  leaveTime,
-  clearTime,
-  name,
+  visible = false,
+  enterTime = 60,
+  leaveTime = 60,
+  clearTime = 60,
+  name = 'transition',
   ...props
-}: React.PropsWithChildren<CssTransitionProps> & typeof defaultProps) {
+}: React.PropsWithChildren<CssTransitionProps>) {
   const [classes, setClasses] = useState<string>('')
   const [renderable, setRenderable] = useState<boolean>(visible)
 
@@ -73,7 +64,6 @@ function CSSTransition({
   })
 }
 
-CSSTransition.defaultProps = defaultProps
 CSSTransition.displayName = 'CSSTransition'
 
 export { CSSTransition }

@@ -20,24 +20,6 @@ interface Props {
   className?: string
 }
 
-const defaultProps = {
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  h5: false,
-  h6: false,
-  p: false,
-  b: false,
-  small: false,
-  i: false,
-  span: false,
-  del: false,
-  em: false,
-  blockquote: false,
-  className: ''
-}
-
 // eslint-disable-next-line no-unused-vars
 type ElementMap = { [k in keyof JSX.IntrinsicElements]?: boolean }
 
@@ -74,10 +56,10 @@ function TextComponent({
   const elements: ElementMap = { h1, h2, h3, h4, h5, h6, p, blockquote }
   const inlineElements: ElementMap = { span, small, b, em, i, del }
   const names = Object.keys(elements).filter(
-    (name: keyof JSX.IntrinsicElements) => elements[name]
+    (name: string) => elements[name as keyof JSX.IntrinsicElements]
   ) as TextRenderableElements
   const inlineNames = Object.keys(inlineElements).filter(
-    (name: keyof JSX.IntrinsicElements) => inlineElements[name]
+    (name: string) => inlineElements[name as keyof JSX.IntrinsicElements]
   ) as TextRenderableElements
 
   /**
@@ -112,6 +94,5 @@ function TextComponent({
   )
 }
 
-TextComponent.defaultProps = defaultProps
 TextComponent.displayName = 'Text'
 export const Text = withScale(TextComponent)

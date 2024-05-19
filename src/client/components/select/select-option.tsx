@@ -11,13 +11,8 @@ interface Props {
 
 export type SelectOptionProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
 
-const defaultProps: Props = {
-  disabled: false,
-  preventAllEvents: false
-}
-
 function SelectOptionComponent(props: React.PropsWithChildren<SelectOptionProps>) {
-  const { children, value: initialValue, preventAllEvents, disabled = false, ...rest } = props
+  const { children, value: initialValue, preventAllEvents = false, disabled = false, ...rest } = props
   const { SCALES } = useScale()
   const { disableAll, value, updateValue } = useSelect()
   const isDisabled = useMemo(() => disabled || disableAll, [disabled, disableAll])
@@ -91,6 +86,5 @@ function SelectOptionComponent(props: React.PropsWithChildren<SelectOptionProps>
 }
 
 SelectOptionComponent.displayName = 'SelectOption'
-SelectOptionComponent.defaultProps = defaultProps
 
 export const SelectOption = withScale(SelectOptionComponent)

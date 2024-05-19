@@ -14,7 +14,7 @@ function reduceScaleCoefficient(scale: number) {
 }
 
 export const withScale = <T, P = {}>(
-  Render: React.ComponentType<P & { ref?: React.Ref<T> }>
+  Render: React.ComponentType<P & { ref?: React.Ref<T> }> | React.ForwardRefExoticComponent<P>
 ) => {
   const ScaleFC = forwardRef<T, P & React.PropsWithChildren<ScaleProps>>(({ children, ...props }, ref) => {
     const {

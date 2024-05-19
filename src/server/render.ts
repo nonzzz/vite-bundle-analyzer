@@ -26,9 +26,11 @@ export function injectHTMLTag(options: InjectHTMLTagOptions) {
   return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
 }
 
+// https://tc39.es/ecma262/#sec-putvalue
+// Using var instead of set attr to window we can reduce 9 bytes
 export function generateInjectCode(foamModule: Foam[], mode: string) {
   const { stringify } = JSON
-  return `window.defaultSizes = ${stringify(mode)},window.foamModule = ${stringify(foamModule)};`
+  return `var defaultSizes=${stringify(mode)},foamModule=${stringify(foamModule)};`
 }
 
 export async function renderView(foamModule: Foam[], options: RenderOptions) {
