@@ -5,7 +5,7 @@
 // Thanks Squarified Treemap by Mark Bruls, Kees Huizing, and Jarke J. van Wijk
 // https://www.win.tue.nl/~vanwijk/stm.pdf
 
-import { Arcana, ArcanaWithNode } from './interface'
+import type { Module } from './interface'
 
 interface Shape {
   width: number
@@ -21,10 +21,10 @@ export class Paint {
   private context: CanvasRenderingContext2D
   private shape: Shape
   private mainEl: HTMLElement | null
-  private data: Arcana[]
-  private layoutNodes: ArcanaWithNode[]
+  private data: Module[]
+  private layoutNodes: Module[]
   private colorMapping: Record<string, string>
-  constructor(data: Arcana[]) {
+  constructor(data: Module[]) {
     this.mainEl = null
     this.data = data
     this.layoutNodes = []
@@ -42,7 +42,7 @@ export class Paint {
     const root: Record<string, string> = {
     }
     const colorMapping: Record<string, string> = {}
-    const accumulatePath = (node: Arcana, path: string = '') => {
+    const accumulatePath = (node: Module, path: string = '') => {
       path += node.id + '/'
       root[path.substring(0, path.length - 1)] = ''
       if (!node.groups) return
@@ -102,7 +102,7 @@ export class Paint {
 // It will be re desgined after squarify algorithm is implemented.
 // In past we used @carrotsearch/Moduletree it neeed Module struct. But now we won't use it anymore.
 
-export function createTreemap(manifest: Arcana[]) {
+export function createTreemap(manifest: Module[]) {
   const panit = new Paint(manifest)
   return panit
 }

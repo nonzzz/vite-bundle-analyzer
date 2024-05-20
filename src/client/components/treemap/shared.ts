@@ -1,6 +1,6 @@
-// import type { Arcana } from './interface'
+import type { Module } from './interface'
 
-export function sortChildrenBySize(a: Arcana, b: Arcana) {
+export function sortChildrenBySize(a: Module, b: Module) {
   return b.size - a.size || +(a.id > b.id) - +(a.id < b.id)
 }
 
