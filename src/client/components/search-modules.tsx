@@ -1,7 +1,7 @@
 import { ChangeEvent, useMemo, useState } from 'react'
 import type { Foam, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
-import { useApplicationContext } from '../context'
+import { useTreemapContext } from '../context'
 import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
@@ -15,7 +15,7 @@ export interface SearchModulesProps {
 }
 
 export function SearchModules(props: SearchModulesProps) {
-  const { treemap } = useApplicationContext()
+  const { treemap } = useTreemapContext()
 
   const { extra, files } = props
 

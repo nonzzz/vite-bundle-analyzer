@@ -8,3 +8,5 @@ export type SelectComponentType = typeof _Select & {
 (_Select as SelectComponentType).Option = SelectOption
 
 export const Select = _Select as SelectComponentType
+
+export type { SelectInstance } from './select'

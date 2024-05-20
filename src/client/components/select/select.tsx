@@ -1,4 +1,5 @@
-import React, { ReactNode, useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { useScale, withScale } from '../../composables'
 import { Provider } from './context'
 import { Ellipsis } from './ellipsis'
@@ -15,6 +16,10 @@ interface Props {
 }
 
 export type SelectProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+
+export type SelectInstance = {
+  destory: () => void
+}
 
 function getSelectValue(value: string | string[] | undefined, next: string, multiple: boolean) {
   if (multiple) {
@@ -49,12 +54,13 @@ function pickChildByProps(children: ReactNode | undefined, key: string, value: a
   return [withoutPropChildren, targetChildren]
 }
 
-function SelectComponent(props: SelectProps) {
+const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<SelectInstance>) => {
   const { disabled = false, value: userValue, 
     placeholder, clearable = true, multiple = false, children,
     onChange, ...rest } = props
   
-  const ref = useRef<HTMLDivElement>(null)
+  const elementRef = useRef<HTMLDivElement>(null)
+
   const { SCALES } = useScale()
   const [visible, setVisible] = useState<boolean>(false)
 
@@ -105,7 +111,7 @@ function SelectComponent(props: SelectProps) {
       value,
       visible,
       disableAll: disabled,
-      ref,
+      ref: elementRef,
       updateValue,
       updateVisible
     }
@@ -126,10 +132,16 @@ function SelectComponent(props: SelectProps) {
     }
   }
 
+  useImperativeHandle(ref, () => {
+    return {
+      destory: () => updateVisible(false)
+    }
+  })
+
   return (
     <Provider value={initialValue}>
       <div
-        ref={ref}
+        ref={elementRef}
         role="presentation"
         onClick={handleClick}
         onMouseDown={handleMouseDown}
@@ -246,6 +258,6 @@ function SelectComponent(props: SelectProps) {
       </div>
     </Provider>
   )
-}
+})
 
 export const Select = withScale(SelectComponent)

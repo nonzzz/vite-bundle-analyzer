@@ -1,11 +1,11 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { noop } from 'foxact/noop'
-import { useEffect, useMemo, useState } from 'react'
 import { Text } from '../text'
-import { useApplicationContext } from '../../context'
-import type { Sizes } from '../../interface'
+import { useApplicationContext, useToggleSize, useUpdateScence } from '../../context'
 import { tuple } from '../../shared'
 import { Button } from '../button'
 import { Select } from '../select'
+import type { SelectInstance } from '../select'
 import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
@@ -17,18 +17,17 @@ const MODES = tuple('Stat', 'Parsed', 'Gzipped')
 export type ModeType = typeof MODES[number]
 
 export interface SidebarProps {
-  foamModule: typeof window.foamModule
-  mode: Sizes
   onVisibleChange?: (state: boolean) => void
-  onModeChange?: (size: ModeType) => void
 }
 
-export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange = noop, onVisibleChange = noop }: SidebarProps) {
+export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const { drawerVisibile } = useSidebarState()
   const toggleDrawerVisible = useToggleDrawerVisible()
-  const { scence, updateScence } = useApplicationContext()
-
+  const { scence, foamModule, sizes: userMode } = useApplicationContext()
+  const updateScence = useUpdateScence()
+  const toggleSize = useToggleSize()
   const [entrypoints, setEntrypoints] = useState<string[]>([])
+  const selectRef = useRef<SelectInstance>(null)
 
   const allChunks = useMemo(() => foamModule
     .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
@@ -42,7 +41,12 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
     setEntrypoints(Array.isArray(entrypoint) ? entrypoint : [entrypoint])
   }
 
-  useEffect(() => updateScence(() => new Set(allChunks.map(v => v.label))), [allChunks, updateScence])
+  useEffect(() => updateScence(new Set(allChunks.map(c => c.label))), [allChunks, updateScence])
+
+  const handleDrawerClose = () => {
+    selectRef.current?.destory()
+    toggleDrawerVisible()
+  }
 
   return (
     <>
@@ -65,7 +69,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
       <Drawer
         visible={drawerVisibile}
         padding={0}
-        onClose={toggleDrawerVisible}
+        onClose={handleDrawerClose}
         width="450px"
       >
         <Drawer.Content paddingTop={0.25}>
@@ -79,7 +83,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
               {MODES.map(button => (
                 <div key={button} stylex={{ padding: '5px', boxSizing: 'border-box' }}>
                   <Button
-                    onClick={() => onModeChange(button)}
+                    onClick={() => toggleSize(button === 'Gzipped' ? 'gzipSize' : button === 'Stat' ? 'statSize' : 'parsedSize')}
                     auto
                     type={mode === button ? 'secondary' : 'default'}
                     scale={0.7}
@@ -94,6 +98,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
           <div>
             <Text p b h3>Filter by entrypoints:</Text>
             <Select
+              ref={selectRef}
               scale={0.75}
               placeholder="Select endpoints"
               multiple
@@ -115,7 +120,7 @@ export function Sidebar({ foamModule, mode: userMode = 'statSize', onModeChange 
               files={allChunks}
               extra={userMode}
               scence={scence}
-              onChange={(v) => updateScence(() => new Set(v))}
+              onChange={(v) => updateScence(new Set(v))}
             />
           </div>
         </Drawer.Content>
