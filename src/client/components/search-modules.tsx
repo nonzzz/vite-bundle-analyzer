@@ -1,5 +1,5 @@
 import { ChangeEvent, useMemo, useState } from 'react'
-import type { Foam, Sizes } from '../interface'
+import type { Module, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
 import { Text } from './text'
@@ -10,7 +10,7 @@ import Folder from '~icons/ph/folder'
 import File from '~icons/ph/file-duotone'
 
 export interface SearchModulesProps {
-  files: Foam[];
+  files: Module[];
   extra: Sizes;
 }
 
@@ -22,13 +22,13 @@ export function SearchModules(props: SearchModulesProps) {
   const [regExp, setRegExp] = useState<RegExp | null>()
   const [availableMap, setAvailableMap] = useState<Record<string, boolean>>({})
 
-  const filtered = useMemo<{ foam: Foam; modules: Foam[] }[]>(() => {
+  const filtered = useMemo<{ foam: Module; modules: Module[] }[]>(() => {
     if (!regExp) {
       return []
     }
     return files
       .map((foam) => {
-        const flatModules = (module: Foam): Foam[] =>
+        const flatModules = (module: Module): Module[] =>
           (module.groups?.flatMap(flatModules) || []).concat(module)
 
         const modules = flatModules(foam)
@@ -40,7 +40,7 @@ export function SearchModules(props: SearchModulesProps) {
               acc[group].push(module)
               return acc
             },
-            [[], []] as [Foam[], Foam[]]
+            [[], []] as [Module[], Module[]]
           )
           .flat()
 
@@ -54,7 +54,7 @@ export function SearchModules(props: SearchModulesProps) {
   }, [regExp, files, extra])
 
   const findModules = useMemo(
-    () => filtered.reduce<Foam[]>((acc, find) => acc.concat(find.modules), []),
+    () => filtered.reduce<Module[]>((acc, find) => acc.concat(find.modules), []),
     [filtered]
   )
 
@@ -72,7 +72,7 @@ export function SearchModules(props: SearchModulesProps) {
     }
   }
 
-  const handleMouseEnter = (module: Foam) => {
+  const handleMouseEnter = (module: Module) => {
     const check = treemap.current?.check(module)
     setAvailableMap({
       ...availableMap,

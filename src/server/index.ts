@@ -135,19 +135,19 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       switch (opts.analyzerMode) {
         case 'json': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')
-          const foamModule = analyzerModule.processFoamModule()
-          return fsp.writeFile(p, JSON.stringify(foamModule, null, 2), 'utf8')
+          const analyzeModule = analyzerModule.processModule()
+          return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
         case 'static': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
-          const foamModule = analyzerModule.processFoamModule()
-          const html = await renderView(foamModule, { title: reportTitle, mode: 'stat' })
+          const analyzeModule = analyzerModule.processModule()
+          const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
           return fsp.writeFile(p, html, 'utf8')
         }
         case 'server': {
-          const foamModule = analyzerModule.processFoamModule()
+          const analyzeModule = analyzerModule.processModule()
           const { setup, port } = createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
-          setup(foamModule, { title: reportTitle, mode: 'stat' })
+          setup(analyzeModule, { title: reportTitle, mode: 'stat' })
           if ((opts.openAnalyzer ?? true) && !isCI) {
             const address = `http://localhost:${port}`
             openBrowser(address)

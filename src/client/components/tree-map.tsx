@@ -4,11 +4,11 @@ import { FoamTree } from '@carrotsearch/foamtree'
 import type { FoamContext, FoamDataObject, FoamEventObject } from '@carrotsearch/foamtree'
 import { noop } from 'foxact/noop'
 import { useApplicationContext } from '../context'
-import type { Foam, Sizes } from '../interface'
+import type { Module, Sizes } from '../interface'
 import { convertBytes, hashCode } from '../shared'
 import { Text } from './text'
 
-type FoamGroup = Omit<Foam, 'groups'> & { isAsset?: boolean }
+type FoamGroup = Omit<Module, 'groups'> & { isAsset?: boolean }
 
 const styles = stylex.create({
   container: {
@@ -18,25 +18,25 @@ const styles = stylex.create({
   }
 })
 
-interface VisibleFoam extends Foam {
+interface VisibleFoam extends Module {
   weight: number
 }
 
-function travseVisibleModule(foamModule: Foam, sizes: Sizes, topLayer: boolean): VisibleFoam {
+function travseVisibleModule(analyzeModule: Module, sizes: Sizes, topLayer: boolean): VisibleFoam {
   if (topLayer) {
-    foamModule.groups = sizes === 'statSize' ? foamModule.stats : foamModule.source
+    analyzeModule.groups = sizes === 'statSize' ? analyzeModule.stats : analyzeModule.source
   }
-  if (Array.isArray(foamModule.groups)) {
-    foamModule.groups = foamModule.groups.map(module => travseVisibleModule(module, sizes, false))
+  if (Array.isArray(analyzeModule.groups)) {
+    analyzeModule.groups = analyzeModule.groups.map(module => travseVisibleModule(module, sizes, false))
   }
-  return { ...foamModule, weight: foamModule[sizes] }
+  return { ...analyzeModule, weight: analyzeModule[sizes] }
 }
 
 // We using keyword `isAsset` to judge the group root
 function findGroupRoot(group: FoamGroup, foamContext: FoamContext): FoamGroup {
   if (group.isAsset) return group
   while (!group.isAsset) {
-    const prop = foamContext.get<{ parent: Foam }>('hierarchy', group)!
+    const prop = foamContext.get<{ parent: Module }>('hierarchy', group)!
     return findGroupRoot(prop.parent, foamContext)
   }
   return group
@@ -69,7 +69,7 @@ export interface TreeMapProps {
 }
 
 export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeMap({ onGroupHover = noop }, ref) {
-  const { foamModule, sizes, scence } = useApplicationContext()
+  const { analyzeModule, sizes, scence } = useApplicationContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const foamTreeInstance = useRef<FoamTree | null>(null)
   const zoomOutDisabled = useRef<boolean>(false)
@@ -96,7 +96,7 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     check
   }))
 
-  const visibleChunks = useMemo(() => foamModule.filter((v) => scence.has(v.label)).map((module) => travseVisibleModule(module, sizes, true)), [foamModule, sizes, scence])
+  const visibleChunks = useMemo(() => analyzeModule.filter((v) => scence.has(v.label)).map((module) => travseVisibleModule(module, sizes, true)), [analyzeModule, sizes, scence])
 
   const chunkNamePartIndex = useMemo(() => {
     const splitChunkNames = visibleChunks.map((chunk) => chunk.label.split(/[^a-z0-9]/iu))

@@ -1,6 +1,6 @@
 import path from 'path'
 import { clientAssetsPath, clientPath, fsp, readAll } from './shared'
-import type { DefaultSizes, Foam } from './interface'
+import type { DefaultSizes, Module } from './interface'
 
 export interface RenderOptions {
   title: string
@@ -28,12 +28,12 @@ export function injectHTMLTag(options: InjectHTMLTagOptions) {
 
 // https://tc39.es/ecma262/#sec-putvalue
 // Using var instead of set attr to window we can reduce 9 bytes
-export function generateInjectCode(foamModule: Foam[], mode: string) {
+export function generateInjectCode(analyzeModule: Module[], mode: string) {
   const { stringify } = JSON
-  return `var defaultSizes=${stringify(mode)},foamModule=${stringify(foamModule)};`
+  return `var defaultSizes=${stringify(mode)},analyzeModule=${stringify(analyzeModule)};`
 }
 
-export async function renderView(foamModule: Foam[], options: RenderOptions) {
+export async function renderView(analyzeModule: Module[], options: RenderOptions) {
   const clientAssetsPaths = await readAll(clientAssetsPath)
   const clientAssets = await Promise.all(clientAssetsPaths.map(async (p) => {
     const fileType = path.extname(p).replace('.', '')
@@ -57,7 +57,7 @@ export async function renderView(foamModule: Foam[], options: RenderOptions) {
     injectTo: 'body',
     descriptors: {
       kind: 'script',
-      text: generateInjectCode(foamModule, options.mode)
+      text: generateInjectCode(analyzeModule, options.mode)
     }
   })
   return html

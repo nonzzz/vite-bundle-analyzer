@@ -23,19 +23,19 @@ export interface SidebarProps {
 export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const { drawerVisibile } = useSidebarState()
   const toggleDrawerVisible = useToggleDrawerVisible()
-  const { scence, foamModule, sizes: userMode } = useApplicationContext()
+  const { scence, analyzeModule, sizes: userMode } = useApplicationContext()
   const updateScence = useUpdateScence()
   const toggleSize = useToggleSize()
   const [entrypoints, setEntrypoints] = useState<string[]>([])
   const selectRef = useRef<SelectInstance>(null)
 
-  const allChunks = useMemo(() => foamModule
+  const allChunks = useMemo(() => analyzeModule
     .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
-    .sort((a, b) => b[userMode] - a[userMode]), [foamModule, userMode, entrypoints])
+    .sort((a, b) => b[userMode] - a[userMode]), [analyzeModule, userMode, entrypoints])
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 
-  const entrypointChunks = useMemo(() => foamModule.filter(chunk => chunk.isEntry), [foamModule])
+  const entrypointChunks = useMemo(() => analyzeModule.filter(chunk => chunk.isEntry), [analyzeModule])
 
   const handleFilterByEntrypoints = (entrypoint: string | string[]) => {
     setEntrypoints(Array.isArray(entrypoint) ? entrypoint : [entrypoint])

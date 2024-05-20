@@ -1,12 +1,12 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { ForwardedRef } from 'react'
 import { useApplicationContext } from '../../context'
-import type { Foam, Sizes } from '../../interface'
+import type { Module, Sizes } from '../../interface'
 import { createTreemap } from './treemap'
 import { Arcana } from './interface'
 import { sortChildrenBySize } from './shared'
 
-function handleModule(data: Foam, size: Sizes): Arcana {
+function handleModule(data: Module, size: Sizes): Arcana {
   if (Array.isArray(data.groups)) {
     data.groups = data.groups.map((m) => handleModule(m, size)).sort(sortChildrenBySize)
   }
@@ -18,20 +18,22 @@ interface TreemapProps {
 
 export type TreemapInstance = ReturnType<typeof createTreemap>
 
+// We need sort the chunks by byte. We can't sort the chunks at backend side, because we can't determine the order.
+
 export const Treemap = forwardRef((props: TreemapProps, ref: ForwardedRef<TreemapInstance>) => {
   const treemapInstance = useRef<TreemapInstance | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { foamModule, sizes, scence } = useApplicationContext()
+  const { analyzeModule, sizes, scence } = useApplicationContext()
 
   useImperativeHandle(ref, () => treemapInstance.current!)
 
   const visibleChunks = useMemo(() => {
-    return foamModule.filter(m => scence.has(m.id))
+    return analyzeModule.filter(m => scence.has(m.id))
       .map(m => {
         m.groups = sizes === 'statSize' ? m.stats : m.source
         return handleModule(m, sizes)
       })
-  }, [foamModule, sizes, scence])
+  }, [analyzeModule, sizes, scence])
 
   const resize = () => {
     if (!treemapInstance.current) return

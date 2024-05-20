@@ -1,10 +1,10 @@
 import { SourceMapGenerator } from '@jridgewell/source-map'
 import { stringToByte } from '../../src/server/shared'
-import type { Foam, OutputAsset, OutputChunk } from '../../src/server/interface'
+import type { Module, OutputAsset, OutputChunk } from '../../src/server/interface'
 
-export function createMockStats(chunkName: string, chunk: DeepPartial<OutputChunk | OutputAsset>, expect: Array<DeepPartial<Foam>> | DeepPartial<Foam>) {
+export function createMockStats(chunkName: string, chunk: DeepPartial<OutputChunk | OutputAsset>, expect: Array<DeepPartial<Module>> | DeepPartial<Module>) {
   return { chunk, expect, chunkName, sourceMapFileName: chunkName + '.map', map: (chunk as OutputChunk).map } as unknown as
-   { chunkName: string, chunk: OutputChunk | OutputAsset, expect: Foam | Foam[], sourceMapFileName: string, map: any }
+   { chunkName: string, chunk: OutputChunk | OutputAsset, expect: Module | Module[], sourceMapFileName: string, map: any }
 }
 
 export function getByteLen(code: string) {

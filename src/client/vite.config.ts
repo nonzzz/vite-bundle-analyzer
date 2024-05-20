@@ -23,7 +23,7 @@ export default defineConfig(({ mode, command }) => {
     const mock = require('./data.json')
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
-      'window.foamModule': JSON.stringify(mock)
+      'window.analyzeModule': JSON.stringify(mock)
     }
   }
   if (command === 'build') {

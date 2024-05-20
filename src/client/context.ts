@@ -7,7 +7,7 @@ import { TreemapInstance } from './components/treemap'
 
 export interface ApplicationConfig {
   sizes: Sizes
-  foamModule: typeof window.foamModule
+  analyzeModule: typeof window.analyzeModule
   scence: Set<string>
 }
 
@@ -23,7 +23,7 @@ export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
 
 const defaultApplicationContext = <ApplicationConfig>{
   sizes: SIZE_RECORD[window.defaultSizes],
-  foamModule: window.foamModule,
+  analyzeModule: window.analyzeModule,
   scence: new Set(),
   updateScence: noop
 }

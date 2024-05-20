@@ -1,3 +1,3 @@
-export type Foam = typeof window['foamModule'][number]
+export type Module = typeof window['analyzeModule'][number]
 
-export type Sizes = keyof Pick<Foam, 'gzipSize' | 'statSize' | 'parsedSize'>
+export type Sizes = keyof Pick<Module, 'gzipSize' | 'statSize' | 'parsedSize'>

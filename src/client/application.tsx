@@ -7,8 +7,10 @@ import { Text } from './components/text'
 import { Spacer } from './components/spacer'
 import { ApplicationProvider, TreemapProvider, useApplicationContext } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
-import { type TreemapInstance } from './components/treemap'
-import { ModuleSize, TreeMap } from './components/tree-map'
+import { Treemap } from './components/treemap'
+import type { TreemapInstance } from './components/treemap'
+
+// import { ModuleSize, TreeMap } from './components/tree-map'
 
 export function App() {
   const treeMapRef = useRef<TreemapInstance>()
@@ -39,15 +41,16 @@ export function App() {
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
-        <TreeMap ref={(instance: any) => treeMapRef.current = instance} onGroupHover={handleGroupHover} />
+        <Treemap ref={(instance: any) => treeMapRef.current = instance} />
+        {/* <TreeMap ref={(instance: any) => treeMapRef.current = instance} onGroupHover={handleGroupHover} /> */}
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
             <>
               <Text p b font="14px">{tooltipContent.label}</Text>
               <Spacer h={0.5} />
-              <ModuleSize module={tooltipContent} sizes="statSize" checkedSizes={sizes} />
-              <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} />
-              <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} />
+              {/* <ModuleSize module={tooltipContent} sizes="statSize" checkedSizes={sizes} /> */}
+              {/* <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} /> */}
+              {/* <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} /> */}
               <Text p font="12px">
                 path:
                 {' '}

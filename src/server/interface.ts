@@ -33,7 +33,7 @@ export type AnalyzerMode = 'static' | 'json' | 'server'
 // `gzip` This is the size of running the parsed bundles/modules through gzip compression.
 export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
-export interface Foam {
+export interface Module {
   label: string
   filename: string
   isEntry: boolean
@@ -41,10 +41,10 @@ export interface Foam {
   parsedSize: number
   mapSize: number
   gzipSize: number
-  source: Array<Foam>
-  stats: Array<Foam>
+  source: Array<Module>
+  stats: Array<Module>
   imports: Array<string>
-  groups: Array<Foam>
+  groups: Array<Module>
   isAsset?: boolean
 }
 

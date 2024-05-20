@@ -4,7 +4,7 @@ import { createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
-import type { Foam, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
+import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
@@ -179,11 +179,11 @@ export class AnalyzerModule {
     this.modules.push(node)
   }
 
-  processFoamModule() {
+  processModule() {
     return this.modules.map((m) => {
       const { originalId: _, imports, ...rest } = m
       return { ...rest, imports: [...imports] }
-    }) as unknown as Foam[]
+    }) as Module[]
   }
 }
 

@@ -1,5 +1,5 @@
-// According the bundle analyzed size. I deiced to implement the treemap component to replace foamtree component.
-// Alough the foamtree component is more powerful and has more features, but it's too large to be used in the project.
+// According the bundle analyzed size. I deiced to implement the treemap component to replace Moduletree component.
+// Alough the Moduletree component is more powerful and has more features, but it's too large to be used in the project.
 // The treemap component is a simple component that can be used to display the data in a treemap format.
 
 // Thanks Squarified Treemap by Mark Bruls, Kees Huizing, and Jarke J. van Wijk
@@ -98,9 +98,9 @@ export class Paint {
   }
 }
 
-// manifest is the processed foam module but it's only a temporary data struct.
+// manifest is the processed Module module but it's only a temporary data struct.
 // It will be re desgined after squarify algorithm is implemented.
-// In past we used @carrotsearch/foamtree it neeed foam struct. But now we won't use it anymore.
+// In past we used @carrotsearch/Moduletree it neeed Module struct. But now we won't use it anymore.
 
 export function createTreemap(manifest: Arcana[]) {
   const panit = new Paint(manifest)
