@@ -7,8 +7,8 @@ import react from '@vitejs/plugin-react'
 import { analyzer } from '../dist'
 import type { AnalyzerPluginOptions } from '../src/server'
 
-type LoggerMessage = { type: string, message: string }
-type FakeLogger = Logger & { messages: LoggerMessage[], clear: () => void }
+type LoggerMessage = { type: string; message: string }
+type FakeLogger = Logger & { messages: LoggerMessage[]; clear: () => void }
 
 const defaultWd = __dirname
 

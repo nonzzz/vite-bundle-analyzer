@@ -49,7 +49,7 @@ export interface Module {
 }
 
 export interface BasicAnalyzerPluginOptions {
-  summary?: boolean,
+  summary?: boolean
   analyzerMode?: AnalyzerMode
   reportTitle?: string
   gzipOptions?: ZlibOptions

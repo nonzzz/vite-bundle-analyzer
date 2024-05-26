@@ -319,6 +319,55 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dprint/darwin-arm64@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/darwin-arm64@npm:0.46.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@dprint/darwin-x64@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/darwin-x64@npm:0.46.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@dprint/linux-arm64-glibc@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/linux-arm64-glibc@npm:0.46.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@dprint/linux-arm64-musl@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/linux-arm64-musl@npm:0.46.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@dprint/linux-x64-glibc@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/linux-x64-glibc@npm:0.46.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@dprint/linux-x64-musl@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/linux-x64-musl@npm:0.46.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@dprint/win32-x64@npm:0.46.0":
+  version: 0.46.0
+  resolution: "@dprint/win32-x64@npm:0.46.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.20.2":
   version: 0.20.2
   resolution: "@esbuild/aix-ppc64@npm:0.20.2"
@@ -2839,6 +2888,38 @@ __metadata:
     no-case: "npm:^3.0.4"
     tslib: "npm:^2.0.3"
   checksum: 10/a65e3519414856df0228b9f645332f974f2bf5433370f544a681122eab59e66038fc3349b4be1cdc47152779dac71a5864f1ccda2f745e767c46e9c6543b1169
+  languageName: node
+  linkType: hard
+
+"dprint@npm:^0.46.0":
+  version: 0.46.0
+  resolution: "dprint@npm:0.46.0"
+  dependencies:
+    "@dprint/darwin-arm64": "npm:0.46.0"
+    "@dprint/darwin-x64": "npm:0.46.0"
+    "@dprint/linux-arm64-glibc": "npm:0.46.0"
+    "@dprint/linux-arm64-musl": "npm:0.46.0"
+    "@dprint/linux-x64-glibc": "npm:0.46.0"
+    "@dprint/linux-x64-musl": "npm:0.46.0"
+    "@dprint/win32-x64": "npm:0.46.0"
+  dependenciesMeta:
+    "@dprint/darwin-arm64":
+      optional: true
+    "@dprint/darwin-x64":
+      optional: true
+    "@dprint/linux-arm64-glibc":
+      optional: true
+    "@dprint/linux-arm64-musl":
+      optional: true
+    "@dprint/linux-x64-glibc":
+      optional: true
+    "@dprint/linux-x64-musl":
+      optional: true
+    "@dprint/win32-x64":
+      optional: true
+  bin:
+    dprint: bin.js
+  checksum: 10/d6681f98ee949e53ad2bf08262e8e4e1b9a7818bbbc466d878db95f6bc0c603aeda182fdb4fd5787cca971728aedaaa4355464f984ed67810e761a18225df656
   languageName: node
   linkType: hard
 
@@ -6038,6 +6119,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.2.1"
     ava: "npm:^5.3.1"
     c8: "npm:^8.0.1"
+    dprint: "npm:^0.46.0"
     eslint: "npm:^8.49.0"
     eslint-config-kagura: "npm:^2.2.1"
     foxact: "npm:^0.2.29"

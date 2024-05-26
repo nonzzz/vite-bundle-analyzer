@@ -8,13 +8,13 @@ export interface RenderOptions {
 }
 
 interface Descriptor {
-  kind: 'script' | 'style',
+  kind: 'script' | 'style'
   text: string
 }
 
 interface InjectHTMLTagOptions {
   html: string
-  injectTo: 'body' | 'head',
+  injectTo: 'body' | 'head'
   descriptors: Descriptor | Descriptor[]
 }
 
@@ -46,11 +46,10 @@ export async function renderView(analyzeModule: Module[], options: RenderOptions
   html = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
   html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/gi, '')
   html = html.replace(/<title>(.*?)<\/title>/, `<title>${options.title}</title>`)
-  html = injectHTMLTag({ 
+  html = injectHTMLTag({
     html,
     injectTo: 'head',
-    descriptors: assets.map(({ fileType, content }) => 
-      ({ kind: fileType === 'js' ? 'script' : 'style', text: content }))
+    descriptors: assets.map(({ fileType, content }) => ({ kind: fileType === 'js' ? 'script' : 'style', text: content }))
   })
   html = injectHTMLTag({
     html,

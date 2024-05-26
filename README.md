@@ -22,28 +22,26 @@
 ## Install
 
 ```bash
-
 $ yarn add vite-bundle-analyzer -D
 
 # or
 
 $ npm install vite-bundle-analyzer -D
-
 ```
 
 ## Usage
 
 ```js
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
 
-import { analyzer } from "vite-bundle-analyzer";
+import { analyzer } from 'vite-bundle-analyzer'
 
 export default defineConfig({
   plugins: [
     // ...your plugin
-    analyzer(),
-  ],
-});
+    analyzer()
+  ]
+})
 
 // If you are using it in rollup you can import 'adapter' from package.
 // Then use it with adapter(analyzer())

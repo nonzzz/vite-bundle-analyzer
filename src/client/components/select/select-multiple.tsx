@@ -39,27 +39,28 @@ function SelectMultipleValue({
   }
 
   return (
-    <div stylex={{
-      display: 'inline-flex',
-      justifyItems: 'center',
-      alignItems: 'center',
-      lineHeight: 1,
-      padding: '0 0.5em',
-      fontSize: 'var(--select-font-size)',
-      height: 'calc(var(--select-font-size) * 2)',
-      borderRadius: '6px',
-      backgroundColor: '#eaeaea',
-      color: '#444',
-      margin: '3px',
-      ':not(#__unused__) >div:not(.clear-icon)': {
-        borderRadius: 0,
-        backgroundColor: 'transparent',
-        padding: 0,
-        margin: 0,
-        color: 'inherit'
-      },
-      ...(disabled && { color: '#888' })
-    }}
+    <div
+      stylex={{
+        display: 'inline-flex',
+        justifyItems: 'center',
+        alignItems: 'center',
+        lineHeight: 1,
+        padding: '0 0.5em',
+        fontSize: 'var(--select-font-size)',
+        height: 'calc(var(--select-font-size) * 2)',
+        borderRadius: '6px',
+        backgroundColor: '#eaeaea',
+        color: '#444',
+        margin: '3px',
+        ':not(#__unused__) >div:not(.clear-icon)': {
+          borderRadius: 0,
+          backgroundColor: 'transparent',
+          padding: 0,
+          margin: 0,
+          color: 'inherit'
+        },
+        ...(disabled && { color: '#888' })
+      }}
     >
       {children}
       {!!onClear && (

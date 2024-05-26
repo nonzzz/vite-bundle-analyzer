@@ -27,4 +27,8 @@ injectGlobalStyle({
 })
 
 const element = document.querySelector('#app')!
-ReactDOM.createRoot(element).render(<React.StrictMode><App /></React.StrictMode>)
+ReactDOM.createRoot(element).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)

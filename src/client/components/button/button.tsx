@@ -4,13 +4,14 @@ import { inline } from '@stylex-extend/core'
 import { useClasses, useScale, withScale } from '../../composables'
 
 interface Props {
-  icon?: React.ReactNode;
-  auto?: boolean;
-  type?: 'default' | 'secondary';
+  icon?: React.ReactNode
+  auto?: boolean
+  type?: 'default' | 'secondary'
 }
 
-type ButtonProps = Props &
-Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof Props>
+type ButtonProps =
+  & Props
+  & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof Props>
 
 const styles = stylex.create({
   text: {
@@ -56,7 +57,7 @@ function getButtonChildrenWithIcon(
       >
         {icon}
       </span>
-    ) 
+    )
   }
   return (
     <>
@@ -90,8 +91,7 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
         justifyContent: 'center',
         textAlign: 'center',
         whiteSpace: 'nowrap',
-        transition:
-          'background-color 200ms ease 0s, box-shadow 200ms ease 0ms, border 200ms ease 0ms, color 200ms ease 0ms',
+        transition: 'background-color 200ms ease 0s, box-shadow 200ms ease 0ms, border 200ms ease 0ms, color 200ms ease 0ms',
         position: 'relative',
         overflow: 'hidden',
         color: {
@@ -109,12 +109,14 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
         lineHeight: SCALES.height(2.5),
         fontSize: SCALES.font(0.875),
         height: SCALES.height(2.5),
-        padding: `${SCALES.pt(0)} ${
-          auto ? SCALES.pr(1.15) : SCALES.pr(1.375)
-        } ${SCALES.pt(0)} ${auto ? SCALES.pl(1.15) : SCALES.pl(1.375)}`,
-        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(
-          0
-        )}`,
+        padding: `${SCALES.pt(0)} ${auto ? SCALES.pr(1.15) : SCALES.pr(1.375)} ${SCALES.pt(0)} ${
+          auto ? SCALES.pl(1.15) : SCALES.pl(1.375)
+        }`,
+        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${
+          SCALES.ml(
+            0
+          )
+        }`,
         '--button-height': SCALES.height(2.5),
         '--button-icon-padding': SCALES.pl(0.727),
         ...(auto && { width: 'auto' }),

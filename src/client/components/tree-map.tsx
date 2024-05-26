@@ -46,7 +46,7 @@ function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
   return chunkLabel.split(/[^a-z0-9]/iu)[chunkNamePartIndex] || chunkLabel
 }
 
-export function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checkedSizes: Sizes }) {
+export function ModuleSize(props: { module: FoamDataObject; sizes: Sizes; checkedSizes: Sizes }) {
   const { module, sizes, checkedSizes } = props
   if (!module[sizes]) return null
   return (
@@ -60,8 +60,8 @@ export function ModuleSize(props: { module: FoamDataObject, sizes: Sizes, checke
 }
 
 export type TreeMapComponent = {
-  zoom: (to: FoamDataObject) => void,
-  check: (to: FoamDataObject) => FoamDataObject | void,
+  zoom: (to: FoamDataObject) => void
+  check: (to: FoamDataObject) => FoamDataObject | void
 }
 
 export interface TreeMapProps {
@@ -96,7 +96,10 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     check
   }))
 
-  const visibleChunks = useMemo(() => analyzeModule.filter((v) => scence.has(v.label)).map((module) => travseVisibleModule(module, sizes, true)), [analyzeModule, sizes, scence])
+  const visibleChunks = useMemo(
+    () => analyzeModule.filter((v) => scence.has(v.label)).map((module) => travseVisibleModule(module, sizes, true)),
+    [analyzeModule, sizes, scence]
+  )
 
   const chunkNamePartIndex = useMemo(() => {
     const splitChunkNames = visibleChunks.map((chunk) => chunk.label.split(/[^a-z0-9]/iu))
@@ -138,7 +141,7 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     if (!foamTreeInstance.current) return
     foamTreeInstance.current.resize()
   }
- 
+
   useEffect(() => {
     const handleGroupHover = (event: FoamEventObject) => {
       const { group } = event
@@ -222,7 +225,5 @@ export const TreeMap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
     }
   }, [chunkNamePartIndex, visibleChunks, onGroupHover])
 
-  return (
-    <div ref={containerRef} {...stylex.props(styles.container)} />
-  )
+  return <div ref={containerRef} {...stylex.props(styles.container)} />
 })

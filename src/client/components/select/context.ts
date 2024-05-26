@@ -5,10 +5,10 @@ export interface SelectContext {
   updateValue?: (next: string) => unknown
   visible?: boolean
   updateVisible?: (next: boolean) => unknown
-  disableAll: boolean,
+  disableAll: boolean
   ref: React.RefObject<HTMLDivElement>
 }
-  
+
 const defaultContext = {
   visible: false,
   disableAll: false

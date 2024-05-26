@@ -12,7 +12,7 @@ const offset = {
 export function Tooltip(props: TooltipProps) {
   const { children, visible } = props
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const [position, setPosition] = useState<{ top: number, left: number }>({ top: 0, left: 0 })
+  const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 })
 
   const handleMouseEvent = useCallback((event: MouseEvent) => {
     if (!visible) return

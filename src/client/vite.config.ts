@@ -9,9 +9,13 @@ import type { UserConfig } from 'vite'
 // Because esbuild can handle esm and cjs syntax
 // so we using cjs require to import data.json
 export default defineConfig(({ mode, command }) => {
-  const base = <UserConfig>{
-  
-    plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' }), viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })],
+  const base = <UserConfig> {
+    plugins: [
+      react(),
+      stylex({ enableStylexExtend: true }),
+      Icons({ compiler: 'jsx', jsx: 'react' }),
+      viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })
+    ],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       cssMinify: 'lightningcss',

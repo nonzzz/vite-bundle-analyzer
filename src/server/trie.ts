@@ -1,7 +1,7 @@
 export type Kind = 'stat' | 'source'
 
 interface NodeDescriptor<T = Record<string, any>> {
-  kind: Kind,
+  kind: Kind
   meta: T
   filename: string
 }

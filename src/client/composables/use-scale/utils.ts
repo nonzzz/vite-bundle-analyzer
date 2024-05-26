@@ -1,10 +1,5 @@
-import {
-  GetAllScalePropsFunction,
-  GetScalePropsFunction,
-  ScalePropKeys,
-  ScaleProps
-} from './scale-context'
-  
+import { GetAllScalePropsFunction, GetScalePropsFunction, ScalePropKeys, ScaleProps } from './scale-context'
+
 export const generateGetScaleProps = <P>(
   props: P & ScaleProps
 ): GetScalePropsFunction => {
@@ -21,7 +16,7 @@ export const generateGetScaleProps = <P>(
   }
   return getScaleProps
 }
-  
+
 export const generateGetAllScaleProps = <P>(
   props: P & ScaleProps
 ): GetAllScalePropsFunction => {

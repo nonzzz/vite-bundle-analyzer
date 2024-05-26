@@ -22,7 +22,7 @@ function generateNodeId(id: string, cwd: string = defaultWd): string {
 
 interface WrappedChunk {
   code: Uint8Array
-  imports: string[],
+  imports: string[]
   dynamicImports: string[]
   moduleIds: string[]
   map: string
@@ -36,8 +36,8 @@ function findSourcemap(filename: string, sourcemapFileName: string, chunks: Outp
 }
 
 function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle, sourcemapFileName: string) {
-  const wrapped = <WrappedChunk>{}
-  const isChunk = bundle.type === 'chunk' 
+  const wrapped = <WrappedChunk> {}
+  const isChunk = bundle.type === 'chunk'
   wrapped.code = stringToByte(isChunk ? bundle.code : bundle.source)
   wrapped.map = findSourcemap(bundle.fileName, sourcemapFileName, chunks)
   wrapped.imports = isChunk ? bundle.imports : []
@@ -101,7 +101,7 @@ export class AnalyzerNode {
 
     const stats = createFileSystemTrie<KindStat>({ meta: { statSize: 0 } })
     const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, parsedSize: 0 } })
-    
+
     for (const info of infomations) {
       if (info.id[0] === '.') {
         const resolved = await pluginContext.resolve(info.id, this.originalId)
@@ -134,7 +134,7 @@ export class AnalyzerNode {
     stats.walk(stats.root, (c, p) => p.groups.push(c))
     sources.mergePrefixSingleDirectory()
     sources.walk(sources.root, (c, p) => p.groups.push(c))
-   
+
     this.stats = stats.root.groups
     this.source = sources.root.groups
     // Fix correect size

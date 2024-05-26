@@ -32,15 +32,14 @@ export class Paint {
     this.context = this.canvas.getContext('2d')!
     this.shape = { ...defaultShape }
   }
- 
+
   private draw() {
     // cleanup layout
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   private updateColorMapping() {
-    const root: Record<string, string> = {
-    }
+    const root: Record<string, string> = {}
     const colorMapping: Record<string, string> = {}
     const accumulatePath = (node: Module, path: string = '') => {
       path += node.id + '/'

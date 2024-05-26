@@ -16,7 +16,6 @@ function DrawerContentComponent(props: React.PropsWithChildren<Props>) {
         width: SCALES.width(1, 'auto'),
         height: SCALES.height(1, 'auto'),
         padding: `${SCALES.pt(1.3125)} ${SCALES.pr(1.3125)} ${SCALES.pb(1.3125)} ${SCALES.pl(1.3125)}`
-    
       }}
       {...rest}
     >

@@ -30,13 +30,13 @@ export function App() {
   const { sizes } = useApplicationContext()
 
   return (
-    
     <ComposeContextProvider contexts={contexts}>
-      <div stylex={{
-        height: '100%',
-        width: '100%',
-        position: 'relative'
-      }}
+      <div
+        stylex={{
+          height: '100%',
+          width: '100%',
+          position: 'relative'
+        }}
       >
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
@@ -52,7 +52,7 @@ export function App() {
               {/* <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} /> */}
               {/* <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} /> */}
               <Text p font="12px">
-                path:
+                path: 
                 {' '}
                 {tooltipContent.filename}
               </Text>

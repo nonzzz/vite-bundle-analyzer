@@ -10,8 +10,8 @@ import Folder from '~icons/ph/folder'
 import File from '~icons/ph/file-duotone'
 
 export interface SearchModulesProps {
-  files: Module[];
-  extra: Sizes;
+  files: Module[]
+  extra: Sizes
 }
 
 export function SearchModules(props: SearchModulesProps) {
@@ -28,8 +28,7 @@ export function SearchModules(props: SearchModulesProps) {
     }
     return files
       .map((foam) => {
-        const flatModules = (module: Module): Module[] =>
-          (module.groups?.flatMap(flatModules) || []).concat(module)
+        const flatModules = (module: Module): Module[] => (module.groups?.flatMap(flatModules) || []).concat(module)
 
         const modules = flatModules(foam)
           .filter((module) => regExp.test(module.label))

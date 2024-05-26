@@ -36,3 +36,7 @@ test:
 lint:
 	@echo "Linting code..."
 	@yarn run lint
+
+format:
+	@echo "Formatting code..."
+	yarn exec dprint fmt

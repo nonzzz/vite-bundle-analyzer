@@ -7,7 +7,7 @@ import type { Module, PluginContext } from '../src/server/interface'
 import { createMockStats } from './stats/helper'
 import normal from './stats/normal'
 
-const mockRollupContext = <PluginContext>{
+const mockRollupContext = <PluginContext> {
   resolve(...args: any) {
     return { id: args[0] } as any
   }

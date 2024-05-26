@@ -55,10 +55,8 @@ function pickChildByProps(children: ReactNode | undefined, key: string, value: a
 }
 
 const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<SelectInstance>) => {
-  const { disabled = false, value: userValue, 
-    placeholder, clearable = true, multiple = false, children,
-    onChange, ...rest } = props
-  
+  const { disabled = false, value: userValue, placeholder, clearable = true, multiple = false, children, onChange, ...rest } = props
+
   const elementRef = useRef<HTMLDivElement>(null)
 
   const { SCALES } = useScale()
@@ -89,7 +87,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
   }, [multiple, onChange, value])
 
   const selectChild = useMemo(() => {
-    const [,optionChildren] = pickChildByProps(children, 'value', value)
+    const [, optionChildren] = pickChildByProps(children, 'value', value)
     return React.Children.map(optionChildren, child => {
       if (!React.isValidElement(child)) return null
       // @ts-expect-error
@@ -170,7 +168,6 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
           cursor: 'pointer',
           ...(disabled && { cursor: 'not-allowed' }),
           minHeight: multiple ? 'var(--select-height)' : '11.5em'
-
         }}
         {...rest}
       >
@@ -191,58 +188,60 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
           }}
         />
         {isEmpty && (
-          <span stylex={{
-            display: 'inline-flex',
-            flex: 1,
-            height: 'var(--select-height)',
-            alignItems: 'center',
-            lineHeight: 1,
-            padding: 0,
-            marginRight: '1.25em',
-            fontSize: 'var(--select-font-size)',
-            color: '#999',
-            ':not(#__unused__) div': {
-              borderRadius: 0,
-              backgroundColor: 'transparent',
+          <span
+            stylex={{
+              display: 'inline-flex',
+              flex: 1,
+              height: 'var(--select-height)',
+              alignItems: 'center',
+              lineHeight: 1,
               padding: 0,
-              margin: 0,
-              color: 'inherit'
-            },
-            ':not(#__unused__) div:hover': {
-              borderRadius: 0,
-              backgroundColor: 'transparent',
-              padding: 0,
-              margin: 0,
-              color: 'inherit'
-            }
-          }}
+              marginRight: '1.25em',
+              fontSize: 'var(--select-font-size)',
+              color: '#999',
+              ':not(#__unused__) div': {
+                borderRadius: 0,
+                backgroundColor: 'transparent',
+                padding: 0,
+                margin: 0,
+                color: 'inherit'
+              },
+              ':not(#__unused__) div:hover': {
+                borderRadius: 0,
+                backgroundColor: 'transparent',
+                padding: 0,
+                margin: 0,
+                color: 'inherit'
+              }
+            }}
           >
             <Ellipsis height="var(--scale-height)">{placeholder}</Ellipsis>
           </span>
         )}
         {value && <div stylex={{ display: 'flex', flexWrap: 'wrap' }}>{selectChild}</div>}
         <SelectDropdown visible={visible}>{children}</SelectDropdown>
-        <div stylex={{
-          position: 'absolute',
-          right: '4pt',
-          fontSize: 'var(--select-font-size)',
-          top: '50%',
-          bottom: 0,
-          transform: 'translateY(-50%)',
-          pointerEvents: 'none',
-          transition: 'transform 200ms ease',
-          display: 'flex',
-          alignItems: 'center',
-          color: '#666',
-          ':not(#__unused__) svg': {
-            color: 'inherit',
-            stroke: 'currentColor',
-            transition: 'all 200ms ease',
-            width: '1.214em',
-            height: '1.214em'
-          },
-          ...(visible && { transform: 'translateY(-50%) rotate(180deg)' })
-        }}
+        <div
+          stylex={{
+            position: 'absolute',
+            right: '4pt',
+            fontSize: 'var(--select-font-size)',
+            top: '50%',
+            bottom: 0,
+            transform: 'translateY(-50%)',
+            pointerEvents: 'none',
+            transition: 'transform 200ms ease',
+            display: 'flex',
+            alignItems: 'center',
+            color: '#666',
+            ':not(#__unused__) svg': {
+              color: 'inherit',
+              stroke: 'currentColor',
+              transition: 'all 200ms ease',
+              width: '1.214em',
+              height: '1.214em'
+            },
+            ...(visible && { transform: 'translateY(-50%) rotate(180deg)' })
+          }}
         >
           <svg
             viewBox="0 0 24 24"

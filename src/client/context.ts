@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react'
-import { type RefObject, useCallback } from 'react'
+import { createContext, useCallback, useContext } from 'react'
+import type { RefObject } from 'react'
 import { noop } from 'foxact/noop'
 import { createContextState } from 'foxact/context-state'
 import type { Sizes } from './interface'
@@ -21,18 +21,20 @@ export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
   parsed: 'parsedSize'
 }
 
-const defaultApplicationContext = <ApplicationConfig>{
+const defaultApplicationContext = <ApplicationConfig> {
   sizes: SIZE_RECORD[window.defaultSizes],
   analyzeModule: window.analyzeModule,
   scence: new Set(),
   updateScence: noop
 }
 
-const defaultTreemapContext = <TreemapConfig>{
+const defaultTreemapContext = <TreemapConfig> {
   treemap: { current: null }
 }
 
-const [ApplicationProvider, useApplicationContext, useSetApplicationContext] = createContextState<ApplicationConfig>(defaultApplicationContext)
+const [ApplicationProvider, useApplicationContext, useSetApplicationContext] = createContextState<ApplicationConfig>(
+  defaultApplicationContext
+)
 
 export function useUpdateScence() {
   const dispatch = useSetApplicationContext()

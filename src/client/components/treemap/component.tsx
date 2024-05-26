@@ -10,7 +10,7 @@ function handleModule(data: Module, size: Sizes) {
   if (Array.isArray(data.groups)) {
     data.groups = data.groups.map((m) => handleModule(m, size)).sort(sortChildrenBySize)
   }
-  return { ...data, size: data[size] } 
+  return { ...data, size: data[size] }
 }
 
 interface TreemapProps {

@@ -10,7 +10,7 @@ export const fsp = fs.promises
 const encoder = new TextEncoder()
 const gzip = utils.promisify(zlib.gzip)
 
-const defaultGzipOptions = <ZlibOptions>{
+const defaultGzipOptions = <ZlibOptions> {
   level: zlib.constants.Z_DEFAULT_LEVEL
 }
 

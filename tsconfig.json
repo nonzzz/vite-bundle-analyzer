@@ -1,19 +1,18 @@
 {
-    "compilerOptions": {
-      "allowJs": true,
-      "baseUrl": ".",
-      "outDir": "dist",
-      "noImplicitThis": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "target": "ESNext",
-      "lib": ["esnext","DOM","DOM.Iterable"],
-      "types": ["unplugin-icons/types/react","react","@stylex-extend/react"],
-      "resolveJsonModule": true,
-      "module": "ESNext",
-      "moduleResolution": "node",
-      "jsx": "react-jsx",
-      "strict": true,
-    }
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "types": ["unplugin-icons/types/react", "react", "@stylex-extend/react"],
+    "resolveJsonModule": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "strict": true
   }
-  
+}

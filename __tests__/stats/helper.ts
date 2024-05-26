@@ -2,9 +2,18 @@ import { SourceMapGenerator } from '@jridgewell/source-map'
 import { stringToByte } from '../../src/server/shared'
 import type { Module, OutputAsset, OutputChunk } from '../../src/server/interface'
 
-export function createMockStats(chunkName: string, chunk: DeepPartial<OutputChunk | OutputAsset>, expect: Array<DeepPartial<Module>> | DeepPartial<Module>) {
-  return { chunk, expect, chunkName, sourceMapFileName: chunkName + '.map', map: (chunk as OutputChunk).map } as unknown as
-   { chunkName: string, chunk: OutputChunk | OutputAsset, expect: Module | Module[], sourceMapFileName: string, map: any }
+export function createMockStats(
+  chunkName: string,
+  chunk: DeepPartial<OutputChunk | OutputAsset>,
+  expect: Array<DeepPartial<Module>> | DeepPartial<Module>
+) {
+  return { chunk, expect, chunkName, sourceMapFileName: chunkName + '.map', map: (chunk as OutputChunk).map } as unknown as {
+    chunkName: string
+    chunk: OutputChunk | OutputAsset
+    expect: Module | Module[]
+    sourceMapFileName: string
+    map: any
+  }
 }
 
 export function getByteLen(code: string) {
@@ -24,7 +33,7 @@ export function generateSourceMap(originalCode: string, transformedCode: string,
 
   for (let i = 0; i < transformedLines.length; i++) {
     generator.addMapping({
-      generated: { line: i + 1, column: 0 }, 
+      generated: { line: i + 1, column: 0 },
       original: { line: originalLine, column: originalColumn },
       source: fileName,
       name: ''

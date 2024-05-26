@@ -8,7 +8,8 @@ module.exports = nonzzz(
       'node_modules',
       'examples/vue/dist',
       'examples/vue/node_modules',
-      '__tests__/dist'
+      '__tests__/dist',
+      '**/*.d.ts'
     ]
   }
 )

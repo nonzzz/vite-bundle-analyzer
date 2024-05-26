@@ -61,7 +61,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
-  const plugin = <Plugin>{
+  const plugin = <Plugin> {
     name,
     apply: 'build',
     enforce: 'post',
@@ -105,7 +105,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
         config.build.sourcemap = true
       } else {
-      // force set sourcemap to ensure the result as accurate as possible.
+        // force set sourcemap to ensure the result as accurate as possible.
         config.build.sourcemap = 'hidden'
       }
     },
@@ -119,7 +119,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         const bundle = outputBundle[bundleName]
         const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
         if (pass && sourcemapFileName) {
-          await analyzerModule.addModule(bundle, sourcemapFileName) 
+          await analyzerModule.addModule(bundle, sourcemapFileName)
         }
         if (!store.previousSourcemapOption) {
           if (pass && sourcemapFileName) {

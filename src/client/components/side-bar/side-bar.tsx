@@ -29,9 +29,10 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const [entrypoints, setEntrypoints] = useState<string[]>([])
   const selectRef = useRef<SelectInstance>(null)
 
-  const allChunks = useMemo(() => analyzeModule
-    .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
-    .sort((a, b) => b[userMode] - a[userMode]), [analyzeModule, userMode, entrypoints])
+  const allChunks = useMemo(() =>
+    analyzeModule
+      .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
+      .sort((a, b) => b[userMode] - a[userMode]), [analyzeModule, userMode, entrypoints])
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 
@@ -75,10 +76,11 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
         <Drawer.Content paddingTop={0.25}>
           <div>
             <Text p b h3>Treemap Sizes:</Text>
-            <div stylex={{
-              display: 'flex',
-              flexWrap: 'nowrap'
-            }}
+            <div
+              stylex={{
+                display: 'flex',
+                flexWrap: 'nowrap'
+              }}
             >
               {MODES.map(button => (
                 <div key={button} stylex={{ padding: '5px', boxSizing: 'border-box' }}>
@@ -91,8 +93,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
                     {button}
                   </Button>
                 </div>
-              )
-              )}
+              ))}
             </div>
           </div>
           <div>
@@ -105,9 +106,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
               width="95.5%"
               onChange={handleFilterByEntrypoints}
             >
-              {entrypointChunks.map(chunk => (
-                <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>
-              ))}
+              {entrypointChunks.map(chunk => <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>)}
             </Select>
           </div>
           <div>

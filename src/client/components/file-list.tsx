@@ -27,13 +27,14 @@ export function FileList<F extends Module>(props: FileListProps<F>) {
   const { scence, files: userFiles, extra = 'statSize', onChange = noop } = props
 
   const [all, ...files] = useMemo(
-    () => userFiles
-      .reduce((acc, file) => {
-        const meta = { name: file.label, extra: file[extra] }
-        acc[0].extra += meta.extra
-        acc.push(meta)
-        return acc
-      }, [{ name: 'All', extra: 0 }] as { name: string, extra: number }[]),
+    () =>
+      userFiles
+        .reduce((acc, file) => {
+          const meta = { name: file.label, extra: file[extra] }
+          acc[0].extra += meta.extra
+          acc.push(meta)
+          return acc
+        }, [{ name: 'All', extra: 0 }] as { name: string; extra: number }[]),
     [userFiles, extra]
   )
 
@@ -52,9 +53,10 @@ export function FileList<F extends Module>(props: FileListProps<F>) {
     onChange(checked ? userFiles.map(v => v.label) : [])
   }
   return (
-    <div stylex={{
-      overflow: 'hidden'
-    }}
+    <div
+      stylex={{
+        overflow: 'hidden'
+      }}
     >
       <ModuleItem name={all.name} size={all.extra} {...stylex.props(styles.baseline)}>
         <Checkbox

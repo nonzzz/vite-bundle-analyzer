@@ -66,7 +66,7 @@ export type ScaleProps = {
 
 export type DynamicLayoutPipe = (
   scale1x: number,
-  defaultValue?: string | number,
+  defaultValue?: string | number
 ) => string
 
 export type ScaleInputKeys =
@@ -92,7 +92,7 @@ export type DynamicScales = {
 }
 
 export type GetScalePropsFunction = (
-  key: keyof ScaleProps | Array<keyof ScaleProps>,
+  key: keyof ScaleProps | Array<keyof ScaleProps>
 ) => ScaleProps[keyof ScaleProps]
 
 export type GetAllScalePropsFunction = () => ScaleProps

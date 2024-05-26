@@ -13,8 +13,8 @@ const mimeTypes: Record<string, string> = {
 }
 
 function createStaticMiddleware(options: RenderOptions, analyzeModule: Module[]) {
-  const cache: Map<string, { data: Buffer | string, mimeType: string }> = new Map()
-  
+  const cache: Map<string, { data: Buffer | string; mimeType: string }> = new Map()
+
   return function staticMiddleware(req: http.IncomingMessage, res: http.ServerResponse) {
     const filePath = path.join(clientPath, req.url!)
     if (cache.has(filePath)) {
@@ -57,7 +57,7 @@ function createStaticMiddleware(options: RenderOptions, analyzeModule: Module[])
 
 export function createServer(port = 0) {
   const server = http.createServer()
- 
+
   server.listen(port, () => {
     console.log(`server run on http://localhost:${(server.address() as AddressInfo).port}`)
   })
