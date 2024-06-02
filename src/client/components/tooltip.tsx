@@ -51,7 +51,7 @@ export function Tooltip(props: TooltipProps) {
         opacity: 0.9,
         whiteSpace: 'nowrap',
         visibility: 'visible',
-        transition: 'opacity .2s ease, visibility .2s ease',
+        ...(visible && { transition: 'opacity .2s ease, visibility .2s ease' }),
         ...(!visible && { opacity: 0, visibility: 'hidden' })
       }}
     >

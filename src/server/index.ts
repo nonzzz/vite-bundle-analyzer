@@ -80,7 +80,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
           const originalFunction = typeof reporter.writeBundle === 'function'
             ? reporter.writeBundle
             : reporter.writeBundle?.handler
-          const fn: Plugin['writeBundle'] = async function (...args) {
+          const fn: Plugin['writeBundle'] = async function writeBundle(...args) {
             await originalFunction?.apply(this, args)
             logger.info(generateSummaryMessage(analyzerModule.modules))
           }

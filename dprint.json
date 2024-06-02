@@ -6,7 +6,10 @@
     "useTabs": false,
     "trailingCommas": "never",
     "module.sortImportDeclarations": "maintain",
-    "operatorPosition": "maintain"
+    "importDeclaration.sortNamedImports": "maintain",
+    "operatorPosition": "maintain",
+    "jsx.quoteStyle": "preferDouble",
+    "functionDeclaration.spaceBeforeParentheses": false
   },
   "json": {},
   "markdown": {},

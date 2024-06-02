@@ -31,7 +31,7 @@ const SelectDropdown = React.forwardRef<
 >(({ visible, children }, dropdownRef) => {
   const [rect, setRect] = useState<ReactiveDomReact>(defaultRect)
   const internalDropdownRef = useRef<HTMLDivElement | null>(null)
-  const { ref } = useSelect()
+  const { ref, updateVisible } = useSelect()
 
   const el = usePortal('dropdown')
 
@@ -53,10 +53,8 @@ const SelectDropdown = React.forwardRef<
   useResize(updateRect)
 
   useClickAnyWhere(() => {
-    const { top, left } = getRefRect(ref)
-    const shouldUpdatePosition = top !== rect.top || left !== rect.left
-    if (!shouldUpdatePosition) return
-    updateRect()
+    setRect(defaultRect)
+    updateVisible?.(false)
   })
   useDOMObserver(ref, () => {
     updateRect()
