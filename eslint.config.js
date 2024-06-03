@@ -10,6 +10,9 @@ module.exports = nonzzz(
       'examples/vue/node_modules',
       '__tests__/dist',
       '**/*.d.ts'
-    ]
+    ],
+    rules: {
+      'stylistic/indent': 'off'
+    }
   }
 )

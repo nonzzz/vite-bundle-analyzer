@@ -154,6 +154,9 @@ export class Paint {
   zoom(node: PaintEvent<MouseEvent | WheelEvent>) {
   }
 
+  check(node: SquarifiedModule) {
+  }
+
   dispose() {
     if (!this.mainEl) return
     this.mainEl.removeChild(this.canvas)

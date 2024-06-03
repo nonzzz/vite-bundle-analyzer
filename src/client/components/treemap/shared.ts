@@ -5,6 +5,26 @@ export function sortChildrenBySize(a: Module, b: Module) {
   return b.size - a.size || +(a.id > b.id) - +(a.id < b.id)
 }
 
+export function flattenModules<T extends Record<string, any> & { groups: T[] }>(modules: T[]): Omit<T, 'groups'>[] {
+  const flattend: Omit<T, 'groups'>[] = []
+  for (const module of modules) {
+    const { groups, ...rest } = module
+    flattend.push(rest)
+    if (groups) {
+      flattend.push(...flattenModules(groups))
+    }
+  }
+  return flattend
+}
+
+export function wrapperModuleAsSquarifiedModule<T extends Record<string, any>>(module: T): SquarifiedModule {
+  return {
+    node: module,
+    layout: [0, 0, 0, 0],
+    children: []
+  }
+}
+
 export function hueAngleToColor(hue: number, depth: number) {
   const saturation = 60 - depth * 5
   const lightness = 50 + depth * 5

@@ -5,7 +5,7 @@ import { useApplicationContext } from '../../context'
 import type { Sizes } from '../../interface'
 import { PaintEvent, createTreemap } from './treemap'
 import type { Module } from './interface'
-import { sortChildrenBySize } from './shared'
+import { flattenModules, sortChildrenBySize } from './shared'
 
 function handleModule(data: Module, size: Sizes) {
   if (Array.isArray(data.groups)) {
@@ -47,7 +47,6 @@ export const Treemap = forwardRef((props: TreemapProps, ref: ForwardedRef<Treema
 
   useEffect(() => {
     if (!visibleChunks.length) return
-
     if (!treemapInstance.current && containerRef.current) {
       const treemap = createTreemap(visibleChunks)
       treemapInstance.current = treemap

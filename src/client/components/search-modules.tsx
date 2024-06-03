@@ -2,6 +2,7 @@ import { ChangeEvent, useMemo, useState } from 'react'
 import type { Module, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
+import { flattenModules, wrapperModuleAsSquarifiedModule } from '../components/treemap/shared'
 import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
@@ -14,6 +15,17 @@ export interface SearchModulesProps {
   extra: Sizes
 }
 
+function extension(filename: string) {
+  const match = filename.match(/\.([^.]+)$/)
+  return match ? `${match[1]}` : ''
+}
+
+type ExcludeGroupsModule = Omit<Module, 'groups'>
+
+type FilterModule = ExcludeGroupsModule & {
+  isDirectory: boolean
+}
+
 export function SearchModules(props: SearchModulesProps) {
   const { treemap } = useTreemapContext()
 
@@ -22,44 +34,34 @@ export function SearchModules(props: SearchModulesProps) {
   const [regExp, setRegExp] = useState<RegExp | null>()
   const [availableMap, setAvailableMap] = useState<Record<string, boolean>>({})
 
-  const filtered = useMemo<{ foam: Module; modules: Module[] }[]>(() => {
+  const filtered = useMemo(() => {
     if (!regExp) {
       return []
     }
-    return files
-      .map((foam) => {
-        const flatModules = (module: Module): Module[] => (module.groups?.flatMap(flatModules) || []).concat(module)
-
-        const modules = flatModules(foam)
-          .filter((module) => regExp.test(module.label))
-          .sort((a, b) => b[extra] - a[extra])
-          .reduce(
-            (acc, module) => {
-              const group = !module.groups?.length ? 0 : 1
-              acc[group].push(module)
-              return acc
-            },
-            [[], []] as [Module[], Module[]]
-          )
-          .flat()
-
-        return {
-          foam,
-          modules: uniqBy(modules, 'label')
-        }
-      })
-      .filter((find) => find.modules.length)
-      .sort((a, b) => a.modules.length - b.modules.length)
+    const filtered = files.map((module) => {
+      return {
+        parent: module,
+        children: uniqBy(
+          flattenModules(module.groups).filter(m => regExp.test(m.label))
+            .map(m => ({
+              ...m,
+              isDirectory: extension(m.label) ? false : true
+            })),
+          'label'
+        )
+          .sort((a, b) => {
+            if (a.isDirectory && !b.isDirectory) return -1
+            if (!a.isDirectory && b.isDirectory) return 1
+            return b[extra] - a[extra]
+          }) as FilterModule[]
+      }
+    })
+    return filtered
   }, [regExp, files, extra])
 
-  const findModules = useMemo(
-    () => filtered.reduce<Module[]>((acc, find) => acc.concat(find.modules), []),
-    [filtered]
-  )
-
   const findModulesSize = useMemo(
-    () => findModules.reduce((acc, module) => acc + module[extra], 0),
-    [findModules, extra]
+    () => filtered.reduce((acc, module) => acc + module.parent[extra], 0),
+    [filtered, extra]
   )
 
   const handleChangeRegExp = (e: ChangeEvent<HTMLInputElement>) => {
@@ -71,8 +73,8 @@ export function SearchModules(props: SearchModulesProps) {
     }
   }
 
-  const handleMouseEnter = (module: Module) => {
-    const check = treemap.current?.check(module)
+  const handleMouseEnter = (module: FilterModule) => {
+    const check = treemap.current?.check(wrapperModuleAsSquarifiedModule(module))
     setAvailableMap({
       ...availableMap,
       [module.label]: !!check
@@ -91,53 +93,53 @@ export function SearchModules(props: SearchModulesProps) {
       {!!filtered.length && (
         <div>
           <span>
-            Count: 
-            {' '}
-            <strong>{filtered.length}</strong>
+            Count:
+            <strong>
+              {filtered.length}
+            </strong>
           </span>
           <Spacer inline />
           <span>
-            Total size: 
-            {' '}
-            <strong>{convertBytes(findModulesSize)}</strong>
+            Total size:
+            <strong>
+              {convertBytes(findModulesSize)}
+            </strong>
           </span>
         </div>
       )}
       <Spacer />
       {filtered.length
         ? (
-            filtered.map((find) => (
-              <div key={find.foam.label}>
-                <ModuleItem
-                  name={find.foam.label}
-                  stylex={{ fontStyle: 'bold' }}
-                />
-                <div>
-                  {find.modules.map((module) => (
-                    <ModuleItem
-                      key={module.label}
-                      name={module.label}
-                      size={module[extra]}
-                      pointer={availableMap[module.label]}
-                      onMouseEnter={() => handleMouseEnter(module)}
-                      onClick={() => treemap.current?.zoom(module)}
-                      stylex={{ fontStyle: 'italic' }}
-                    >
-                      {module.groups?.length ? <File /> : <Folder />}
-                      <Spacer inline />
-                    </ModuleItem>
-                  ))}
-                </div>
+          <>
+            {filtered.map((module) => (
+              <div key={module.parent.label}>
+                <ModuleItem name={module.parent.label} stylex={{ fontStyle: 'bold' }} />
+                {module.children.map((child) => (
+                  <ModuleItem
+                    key={child.label}
+                    name={child.label}
+                    size={child[extra]}
+                    pointer={availableMap[child.label]}
+                    onMouseEnter={() => handleMouseEnter(child)}
+                    onClick={() =>
+                      treemap.current?.zoom({ module: wrapperModuleAsSquarifiedModule(child), nativeEvent: Object.create(null) })}
+                    stylex={{ fontStyle: 'italic' }}
+                  >
+                    {child.isDirectory ? <Folder /> : <File />}
+                    <Spacer inline />
+                  </ModuleItem>
+                ))}
               </div>
-            ))
-          )
+            ))}
+          </>
+        )
         : (
           <div stylex={{ textAlign: 'center' }}>
             <Text span b width="100%">
               &quot;No modules found&quot;
             </Text>
           </div>
-          )}
+        )}
     </>
   )
 }

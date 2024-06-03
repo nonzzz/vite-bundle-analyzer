@@ -2,6 +2,7 @@
   "lineWidth": 140,
   "typescript": {
     "semiColons": "asi",
+    "indentWidth": 2,
     "quoteStyle": "preferSingle",
     "useTabs": false,
     "trailingCommas": "never",
@@ -9,6 +10,7 @@
     "importDeclaration.sortNamedImports": "maintain",
     "operatorPosition": "maintain",
     "jsx.quoteStyle": "preferDouble",
+    "jsx.bracketPosition": "maintain",
     "functionDeclaration.spaceBeforeParentheses": false
   },
   "json": {},
