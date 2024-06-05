@@ -12,6 +12,8 @@
     "resolveJsonModule": true,
     "module": "ESNext",
     "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "jsx": "react-jsx",
     "strict": true
   }
