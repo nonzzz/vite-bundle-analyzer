@@ -1,7 +1,15 @@
 /* eslint-disable no-use-before-define */
 
 import type { Module, SquarifiedModule } from './interface'
-import { STYLES, charCodeWidth, evaluateHueFromModule, findRelativeNode, hueAngleToColor, textOverflowEllipsis } from './shared'
+import {
+  STYLES,
+  charCodeWidth,
+  evaluateHueFromModule,
+  findRelativeNode,
+  findRelativeNodeByFilename,
+  hueAngleToColor,
+  textOverflowEllipsis
+} from './shared'
 import { squarify } from './squared'
 
 interface Shape {
@@ -154,7 +162,8 @@ export class Paint {
   zoom(node: PaintEvent<MouseEvent | WheelEvent>) {
   }
 
-  check(node: SquarifiedModule) {
+  check<T extends { filename: string }>(module: T) {
+    return !!findRelativeNodeByFilename(this.layoutNodes, module.filename)
   }
 
   dispose() {

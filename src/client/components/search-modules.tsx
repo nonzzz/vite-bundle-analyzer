@@ -74,7 +74,7 @@ export function SearchModules(props: SearchModulesProps) {
   }
 
   const handleMouseEnter = (module: FilterModule) => {
-    const check = treemap.current?.check(wrapperModuleAsSquarifiedModule(module))
+    const check = treemap.current?.check(module)
     setAvailableMap({
       ...availableMap,
       [module.label]: !!check

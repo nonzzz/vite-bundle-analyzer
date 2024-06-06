@@ -95,3 +95,21 @@ export function findRelativeNode(
 
   return visit(layoutNodes)
 }
+
+export function findRelativeNodeByFilename(layoutNodes: SquarifiedModule[], filename: string): SquarifiedModule | null {
+  const visit = (nodes: SquarifiedModule[]): SquarifiedModule | null => {
+    if (!nodes) return null
+
+    for (const layoutNode of nodes) {
+      if (layoutNode.node.filename === filename) {
+        return layoutNode
+      }
+      const node = visit(layoutNode.children)
+      if (node) return node
+    }
+
+    return null
+  }
+
+  return visit(layoutNodes)
+}
