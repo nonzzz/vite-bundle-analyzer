@@ -10,7 +10,7 @@ import {
   hueAngleToColor,
   textOverflowEllipsis
 } from './shared'
-import { squarify } from './squared'
+import { squarify } from './squarify'
 
 interface Shape {
   width: number
@@ -24,8 +24,6 @@ export interface PaintEvent<T> {
 
 export interface PaintOptions {
   onMousemove?: (this: Paint, event: PaintEvent<MouseEvent>) => void
-  onClick?: (this: Paint, event: PaintEvent<MouseEvent>) => void
-  onMouseWheel?: (this: Paint, event: PaintEvent<WheelEvent>) => void
 }
 
 const defaultShape = { width: 0, height: 0 }
@@ -212,16 +210,6 @@ export class Paint {
         this.canvas.style.cursor = 'pointer'
         if (evt.module) this.changeHoverNode(evt.module)
         this.options.onMousemove?.call(this, evt)
-      })
-    this.canvas.onclick = (e) =>
-      this.eventHandler(e, (evt) => {
-        this.canvas.style.cursor = 'default'
-        this.options.onClick?.call(this, evt)
-      })
-    this.canvas.onwheel = (e) =>
-      this.eventHandler(e, (evt) => {
-        e.preventDefault()
-        this.options.onMouseWheel?.call(this, evt)
       })
     this.canvas.onmouseout = () => this.changeHoverNode(null)
   }

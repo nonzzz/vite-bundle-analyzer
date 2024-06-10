@@ -2,7 +2,7 @@ import { ChangeEvent, useMemo, useState } from 'react'
 import type { Module, Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
-import { flattenModules, wrapperModuleAsSquarifiedModule } from '../components/treemap/shared'
+import { flattenModules } from '../components/treemap/shared'
 import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
@@ -121,8 +121,6 @@ export function SearchModules(props: SearchModulesProps) {
                     size={child[extra]}
                     pointer={availableMap[child.label]}
                     onMouseEnter={() => handleMouseEnter(child)}
-                    onClick={() =>
-                      treemap.current?.zoom({ module: wrapperModuleAsSquarifiedModule(child), nativeEvent: Object.create(null) })}
                     stylex={{ fontStyle: 'italic' }}
                   >
                     {child.isDirectory ? <Folder /> : <File />}

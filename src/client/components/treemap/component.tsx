@@ -5,7 +5,7 @@ import { useApplicationContext } from '../../context'
 import type { Sizes } from '../../interface'
 import { PaintEvent, createTreemap } from './treemap'
 import type { Module } from './interface'
-import { flattenModules, sortChildrenBySize } from './shared'
+import { sortChildrenBySize } from './shared'
 
 function handleModule(data: Module, size: Sizes) {
   if (Array.isArray(data.groups)) {
@@ -52,23 +52,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: ForwardedRef<Treema
       treemapInstance.current = treemap
       treemapInstance.current.mount(containerRef.current!)
       treemapInstance.current.setup({
-        onMousemove: handleMousemove,
-        onClick: function onClick(event) {
-          event.nativeEvent.preventDefault()
-          if (!event.module) return
-          handleMousemove({ ...event, module: null })
-          this.zoom(event)
-        },
-        onMouseWheel: function onMouseWheel(event) {
-          // wheelDelta has been deprecated
-          const { clientX, clientY, deltaY } = event.nativeEvent
-          const isZoomOut = deltaY > 0
-          if (isZoomOut) {
-            // this.zoomOut()
-          } else {
-            //
-          }
-        }
+        onMousemove: handleMousemove
       })
       window.addEventListener('resize', resize)
     }
