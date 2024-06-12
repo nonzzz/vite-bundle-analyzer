@@ -4,7 +4,7 @@ import { createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
-import type { Foam, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
+import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
@@ -22,7 +22,7 @@ function generateNodeId(id: string, cwd: string = defaultWd): string {
 
 interface WrappedChunk {
   code: Uint8Array
-  imports: string[],
+  imports: string[]
   dynamicImports: string[]
   moduleIds: string[]
   map: string
@@ -36,8 +36,8 @@ function findSourcemap(filename: string, sourcemapFileName: string, chunks: Outp
 }
 
 function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle, sourcemapFileName: string) {
-  const wrapped = <WrappedChunk>{}
-  const isChunk = bundle.type === 'chunk' 
+  const wrapped = <WrappedChunk> {}
+  const isChunk = bundle.type === 'chunk'
   wrapped.code = stringToByte(isChunk ? bundle.code : bundle.source)
   wrapped.map = findSourcemap(bundle.fileName, sourcemapFileName, chunks)
   wrapped.imports = isChunk ? bundle.imports : []
@@ -101,7 +101,7 @@ export class AnalyzerNode {
 
     const stats = createFileSystemTrie<KindStat>({ meta: { statSize: 0 } })
     const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, parsedSize: 0 } })
-    
+
     for (const info of infomations) {
       if (info.id[0] === '.') {
         const resolved = await pluginContext.resolve(info.id, this.originalId)
@@ -134,7 +134,7 @@ export class AnalyzerNode {
     stats.walk(stats.root, (c, p) => p.groups.push(c))
     sources.mergePrefixSingleDirectory()
     sources.walk(sources.root, (c, p) => p.groups.push(c))
-   
+
     this.stats = stats.root.groups
     this.source = sources.root.groups
     // Fix correect size
@@ -179,11 +179,11 @@ export class AnalyzerModule {
     this.modules.push(node)
   }
 
-  processFoamModule() {
+  processModule() {
     return this.modules.map((m) => {
       const { originalId: _, imports, ...rest } = m
       return { ...rest, imports: [...imports] }
-    }) as unknown as Foam[]
+    }) as Module[]
   }
 }
 

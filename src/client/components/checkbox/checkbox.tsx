@@ -14,7 +14,7 @@ export interface CheckboxEvent {
   preventDefault: () => void
   nativeEvent: React.ChangeEvent
 }
-  
+
 interface CheckboxIconProps {
   checked: boolean
   disabled: boolean
@@ -40,7 +40,7 @@ function CheckboxIcon(props: CheckboxIconProps) {
     cursor: 'pointer',
     ...(disabled && { opacity: 0.4, cursor: 'not-allowed' })
   }))
-  
+
   if (checked) {
     return (
       <svg viewBox="0 0 17 16" fill="none" {...c}>
@@ -64,10 +64,16 @@ function CheckboxIcon(props: CheckboxIconProps) {
 }
 
 function CheckboxComponent(props: CheckboxProps) {
-  const { 
-    checked, className: userClassName, style: userStyle, 
-    value = '', disabled = false, onChange, children, ...rest } =
-     props
+  const {
+    checked,
+    className: userClassName,
+    style: userStyle,
+    value = '',
+    disabled = false,
+    onChange,
+    children,
+    ...rest
+  } = props
   const { disabledAll, inGroup, values, updateState } = useCheckbox()
   const { SCALES } = useScale()
   const { className, style } = stylex.props(inline({
@@ -114,11 +120,11 @@ function CheckboxComponent(props: CheckboxProps) {
       const next = values.includes(value || '')
       if (next === selfChecked) return
       setSelfChecked(next)
-    } 
+    }
   }, [value, values, selfChecked, inGroup])
 
   return (
-    <label 
+    <label
       stylex={{
         display: 'inline-flex',
         justifyContent: 'center',
@@ -144,14 +150,15 @@ function CheckboxComponent(props: CheckboxProps) {
         type="checkbox"
         {...rest}
       />
-      <span stylex={{
-        fontSize: 'var(--checkbox-size)',
-        lineHeight: 'var(--checkbox-size)',
-        paddingLeft: 'calc(var(--checkbox-size) * 0.5)',
-        userSelect: 'none',
-        cursor: 'pointer',
-        ...(isDisabled && { cursor: 'not-allowed' })
-      }}
+      <span
+        stylex={{
+          fontSize: 'var(--checkbox-size)',
+          lineHeight: 'var(--checkbox-size)',
+          paddingLeft: 'calc(var(--checkbox-size) * 0.5)',
+          userSelect: 'none',
+          cursor: 'pointer',
+          ...(isDisabled && { cursor: 'not-allowed' })
+        }}
       >
         {children}
       </span>

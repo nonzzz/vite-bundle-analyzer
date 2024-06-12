@@ -69,7 +69,6 @@ function TextComponent({
    *    <Text /> => <p />
    *    <Text em /> => <em />
    *    <Text p em /> => <p><em>children</em></p>
-   *
    */
 
   const tag = useMemo(() => {

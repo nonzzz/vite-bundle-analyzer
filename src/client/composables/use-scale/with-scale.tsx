@@ -93,7 +93,7 @@ export const withScale = <T, P = {}>(
       getScaleProps: generateGetScaleProps(props),
       getAllScaleProps: generateGetAllScaleProps(props)
     }
-    
+
     return (
       <ScaleProvider value={scaleConfig}>
         <Render {...(innerProps as P)} ref={ref}>

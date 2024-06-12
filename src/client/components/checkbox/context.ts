@@ -4,7 +4,7 @@ import { noop } from 'foxact/noop'
 export interface CheckboxContext {
   disabledAll: boolean
   values: string[]
-  inGroup: boolean,
+  inGroup: boolean
   updateState: (val: string, checked: boolean) => void
 }
 

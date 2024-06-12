@@ -1,16 +1,16 @@
-import React, { useImperativeHandle, useRef, useState } from 'react'
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
 import { useClasses, useScale, withScale } from '../../composables'
 
 interface Props {
+  value?: string
   clearable?: boolean
 }
 
 type InputProps = Props & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof Props>
 
-function simulateChangeEvent(el: HTMLInputElement,
-  event: React.MouseEvent<HTMLDivElement>) {
+function simulateChangeEvent(el: HTMLInputElement, event: React.MouseEvent<HTMLDivElement>) {
   return {
     ...event,
     target: el,
@@ -19,17 +19,24 @@ function simulateChangeEvent(el: HTMLInputElement,
 }
 
 const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { 
-    className: userClassName, style: userStyle, clearable,
-    disabled, readOnly,
+  const {
+    className: userClassName,
+    style: userStyle,
+    clearable,
+    disabled,
+    readOnly,
     type,
+    value,
     onChange,
-    ...rest 
+    ...rest
   } = props
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const [selfValue, setSelfValue] = useState<string>()
+  const [selfValue, setSelfValue] = useState<string>('')
   const { SCALES } = useScale()
+
+  const isControlledComponent = useMemo(() => value !== undefined, [value])
+
   const { className, style } = stylex.props(inline({
     padding: 0,
     boxShadow: 'none',
@@ -67,35 +74,43 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
     inputRef.current.focus()
   }
 
+  useEffect(() => {
+    if (!isControlledComponent) return
+    setSelfValue(value || '')
+  }, [isControlledComponent, value])
+
   return (
-    <div stylex={{
-      display: 'inline-block',
-      boxSizing: 'border-box',
-      fontSize: SCALES.font(0.875),
-      width: SCALES.width(1, 'initial'),
-      padding: `${SCALES.pt(0)} ${SCALES.pr(0)} ${SCALES.pb(0)} ${SCALES.pl(0)}`,
-      margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
-      '--input-height': SCALES.height(2.25)
-    }}
-    >
-      <div stylex={{
-        display: 'inline-flex',
-        alignItems: 'center',
+    <div
+      stylex={{
+        display: 'inline-block',
+        boxSizing: 'border-box',
+        fontSize: SCALES.font(0.875),
         width: SCALES.width(1, 'initial'),
-        height: 'var(--input-height)'
+        padding: `${SCALES.pt(0)} ${SCALES.pr(0)} ${SCALES.pb(0)} ${SCALES.pl(0)}`,
+        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
+        '--input-height': SCALES.height(2.25)
       }}
-      >
-        <div stylex={{
+    >
+      <div
+        stylex={{
           display: 'inline-flex',
-          verticalAlign: 'middle',
           alignItems: 'center',
-          height: '100%',
-          flex: 1,
-          userSelect: 'none',
-          borderRadius: '6px',
-          border: '1px solid #666',
-          transition: 'border 0.2s ease 0s, color 0.2s ease 0s'
+          width: SCALES.width(1, 'initial'),
+          height: 'var(--input-height)'
         }}
+      >
+        <div
+          stylex={{
+            display: 'inline-flex',
+            verticalAlign: 'middle',
+            alignItems: 'center',
+            height: '100%',
+            flex: 1,
+            userSelect: 'none',
+            borderRadius: '6px',
+            border: '1px solid #666',
+            transition: 'border 0.2s ease 0s, color 0.2s ease 0s'
+          }}
         >
           <input
             type={type}
@@ -159,7 +174,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
     </div>
   )
 })
-  
+
 InputComponent.displayName = 'Input'
 
 export const Input = withScale(InputComponent)

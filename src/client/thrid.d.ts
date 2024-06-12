@@ -1,5 +1,4 @@
 declare module '@carrotsearch/foamtree' {
-
   export interface FoamDataObject extends NonNullable<unknown> {
     label: string
     filename?: string
@@ -98,9 +97,19 @@ declare module '@carrotsearch/foamtree' {
     labelColor?: 'auto'
   }
 
-  export type FoamTitleBarDecorator = (this: FoamContext, options: FoamTreeOptions, properties: any, variables: TitleBarDecoratorVariables) => void
+  export type FoamTitleBarDecorator = (
+    this: FoamContext,
+    options: FoamTreeOptions,
+    properties: any,
+    variables: TitleBarDecoratorVariables
+  ) => void
 
-  export type FoamGroupColorDecorator = (this: FoamContext, options: FoamTreeOptions, properties: any, variables: GroupColorVariables) => void
+  export type FoamGroupColorDecorator = (
+    this: FoamContext,
+    options: FoamTreeOptions,
+    properties: any,
+    variables: GroupColorVariables
+  ) => void
 
   export interface FoamEventObject {
     type: 'click' | 'dragstart'

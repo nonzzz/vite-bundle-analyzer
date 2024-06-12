@@ -1,4 +1,5 @@
 import path from 'path'
+import { createRequire } from 'module'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { stylex } from 'vite-plugin-stylex-dev'
@@ -6,24 +7,28 @@ import { viteMinify } from 'rollup-plugin-swc3'
 import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
 
-// Because esbuild can handle esm and cjs syntax
-// so we using cjs require to import data.json
+const _require = createRequire(import.meta.url)
+
 export default defineConfig(({ mode, command }) => {
-  const base = <UserConfig>{
-  
-    plugins: [react(), stylex({ enableStylexExtend: true }), Icons({ compiler: 'jsx', jsx: 'react' }), viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })],
+  const base = {
+    plugins: [
+      react(),
+      stylex({ enableStylexExtend: true }),
+      Icons({ compiler: 'jsx', jsx: 'react' }),
+      viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })
+    ],
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       cssMinify: 'lightningcss',
       emptyOutDir: true
     },
     base: './'
-  }
+  } as UserConfig
   if (mode === 'development') {
-    const mock = require('./data.json')
+    const mock = _require('./data.json')
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
-      'window.foamModule': JSON.stringify(mock)
+      'window.analyzeModule': JSON.stringify(mock)
     }
   }
   if (command === 'build') {

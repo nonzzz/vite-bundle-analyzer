@@ -4,7 +4,7 @@ import type { AddressInfo } from 'net'
 import path from 'path'
 import { generateInjectCode, injectHTMLTag } from './render'
 import { clientPath } from './shared'
-import type { Foam } from './interface'
+import type { Module } from './interface'
 import type { RenderOptions } from './render'
 
 const mimeTypes: Record<string, string> = {
@@ -12,9 +12,9 @@ const mimeTypes: Record<string, string> = {
   '.css': 'text/css'
 }
 
-function createStaticMiddleware(options: RenderOptions, foamModule: Foam[]) {
-  const cache: Map<string, { data: Buffer | string, mimeType: string }> = new Map()
-  
+function createStaticMiddleware(options: RenderOptions, analyzeModule: Module[]) {
+  const cache: Map<string, { data: Buffer | string; mimeType: string }> = new Map()
+
   return function staticMiddleware(req: http.IncomingMessage, res: http.ServerResponse) {
     const filePath = path.join(clientPath, req.url!)
     if (cache.has(filePath)) {
@@ -32,7 +32,7 @@ function createStaticMiddleware(options: RenderOptions, foamModule: Foam[]) {
         injectTo: 'body',
         descriptors: {
           kind: 'script',
-          text: generateInjectCode(foamModule, options.mode)
+          text: generateInjectCode(analyzeModule, options.mode)
         }
       })
       res.end(html)
@@ -57,13 +57,13 @@ function createStaticMiddleware(options: RenderOptions, foamModule: Foam[]) {
 
 export function createServer(port = 0) {
   const server = http.createServer()
- 
+
   server.listen(port, () => {
     console.log(`server run on http://localhost:${(server.address() as AddressInfo).port}`)
   })
 
-  const setup = (foamModule: Foam[], options: RenderOptions) => {
-    server.on('request', createStaticMiddleware(options, foamModule))
+  const setup = (analyzeModule: Module[], options: RenderOptions) => {
+    server.on('request', createStaticMiddleware(options, analyzeModule))
   }
 
   return {

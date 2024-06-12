@@ -12,7 +12,7 @@ export type CheckboxGroupProps = Props & Omit<React.HTMLAttributes<any>, keyof P
 
 const defaultValue: string[] = []
 
-function CheckboxGroupComponent(props: React.PropsWithChildren< CheckboxGroupProps>) {
+function CheckboxGroupComponent(props: React.PropsWithChildren<CheckboxGroupProps>) {
   const { children, value = defaultValue, disabled = false, onChange, ...rest } = props
   const { SCALES } = useScale()
   const [selfValue, setSelfValue] = useState<string[]>([])

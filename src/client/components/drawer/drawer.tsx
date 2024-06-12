@@ -7,7 +7,7 @@ import { DrawerWrapper } from './wrapper'
 interface Props {
   visible?: boolean
   onClose?: () => void
-  onContentClick?: (event: React. MouseEvent<HTMLElement>) => void
+  onContentClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
 export type DrawerProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
@@ -29,7 +29,7 @@ function DrawerComponent(props: DrawerProps) {
     setVisible(userVisible)
     setBodyHidden(userVisible)
   }, [setBodyHidden, userVisible])
-  
+
   const closeFromBackdrop = () => {
     closeDrawer()
   }
@@ -37,7 +37,9 @@ function DrawerComponent(props: DrawerProps) {
   return createPortal(
     <Backdrop onClick={closeFromBackdrop} visible={visible} width="100%">
       <DrawerWrapper visible={visible} {...rest}>{children}</DrawerWrapper>
-    </Backdrop>, portal)
+    </Backdrop>,
+    portal
+  )
 }
 
 DrawerComponent.displayName = 'Drawer'

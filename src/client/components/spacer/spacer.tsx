@@ -18,7 +18,6 @@ function SpacerComponent({ inline = false, ...props }: SpacerProps) {
         margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
         display: 'block',
         ...(inline && { display: 'inline-block' })
-       
       }}
       {...props}
     />

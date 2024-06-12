@@ -5,7 +5,7 @@ export function useClickAnyWhere(
 ) {
   useEffect(() => {
     const callback = (event: Event) => handler(event)
-    
+
     document.addEventListener('click', callback)
     return () => document.removeEventListener('click', callback)
   }, [handler])

@@ -61,7 +61,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
-  const plugin = <Plugin>{
+  const plugin = <Plugin> {
     name,
     apply: 'build',
     enforce: 'post',
@@ -80,7 +80,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
           const originalFunction = typeof reporter.writeBundle === 'function'
             ? reporter.writeBundle
             : reporter.writeBundle?.handler
-          const fn: Plugin['writeBundle'] = async function (...args) {
+          const fn: Plugin['writeBundle'] = async function writeBundle(...args) {
             await originalFunction?.apply(this, args)
             logger.info(generateSummaryMessage(analyzerModule.modules))
           }
@@ -105,7 +105,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
         config.build.sourcemap = true
       } else {
-      // force set sourcemap to ensure the result as accurate as possible.
+        // force set sourcemap to ensure the result as accurate as possible.
         config.build.sourcemap = 'hidden'
       }
     },
@@ -119,7 +119,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         const bundle = outputBundle[bundleName]
         const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
         if (pass && sourcemapFileName) {
-          await analyzerModule.addModule(bundle, sourcemapFileName) 
+          await analyzerModule.addModule(bundle, sourcemapFileName)
         }
         if (!store.previousSourcemapOption) {
           if (pass && sourcemapFileName) {
@@ -135,19 +135,19 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       switch (opts.analyzerMode) {
         case 'json': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')
-          const foamModule = analyzerModule.processFoamModule()
-          return fsp.writeFile(p, JSON.stringify(foamModule, null, 2), 'utf8')
+          const analyzeModule = analyzerModule.processModule()
+          return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
         case 'static': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
-          const foamModule = analyzerModule.processFoamModule()
-          const html = await renderView(foamModule, { title: reportTitle, mode: 'stat' })
+          const analyzeModule = analyzerModule.processModule()
+          const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
           return fsp.writeFile(p, html, 'utf8')
         }
         case 'server': {
-          const foamModule = analyzerModule.processFoamModule()
+          const analyzeModule = analyzerModule.processModule()
           const { setup, port } = createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
-          setup(foamModule, { title: reportTitle, mode: 'stat' })
+          setup(analyzeModule, { title: reportTitle, mode: 'stat' })
           if ((opts.openAnalyzer ?? true) && !isCI) {
             const address = `http://localhost:${port}`
             openBrowser(address)

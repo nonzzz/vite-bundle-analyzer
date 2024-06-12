@@ -1,70 +1,82 @@
-import { RefObject, useCallback, useRef, useState } from 'react'
-import { FoamDataObject } from '@carrotsearch/foamtree'
-import { ModuleSize, TreeMap, TreeMapComponent } from './components/tree-map'
-import { ApplicationContext, SIZE_RECORD } from './context'
-import type { ApplicationConfig } from './context'
-import { Spacer } from './components/spacer'
-import { Sidebar, SidebarProvider } from './components/side-bar'
-import type { ModeType } from './components/side-bar/side-bar'
+import { useCallback, useRef, useState } from 'react'
+import type { RefObject } from 'react'
+import { ComposeContextProvider } from 'foxact/compose-context-provider'
+import type { FoamDataObject } from '@carrotsearch/foamtree'
 import { Tooltip } from './components/tooltip'
 import { Text } from './components/text'
+import { Spacer } from './components/spacer'
+import { ApplicationProvider, TreemapProvider } from './context'
+import { Sidebar, SidebarProvider } from './components/side-bar'
+import { Treemap } from './components/treemap'
+import type { Module, TreeMapComponent } from './components/treemap'
+import { convertBytes } from './shared'
+
+interface ModuleSizeProps {
+  module: Module
+}
+
+function ModuleSize(props: ModuleSizeProps) {
+  const { module } = props
+  if (!module) return null
+
+  return (
+    <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+      <Text b p font="14px" mr={0.3}>Size:</Text>
+      <Text font="14px">{convertBytes(module.weight)}</Text>
+    </div>
+  )
+}
 
 export function App() {
   const treeMapRef = useRef<TreeMapComponent>()
-  const [sizes, setSizes] = useState<ApplicationConfig['sizes']>(SIZE_RECORD[window.defaultSizes])
-  const [foamModule] = useState<ApplicationConfig['foamModule']>(() => window.foamModule)
-  const [scence, setScence] = useState<Set<string>>(new Set())
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<FoamDataObject | null>(null)
-  // eslint-disable-next-line @eslint-react/no-unstable-context-value
-  const initialValue = {
-    sizes,
-    scence,
-    foamModule,
-    updateScence: setScence,
-    treemap: treeMapRef as RefObject<TreeMapComponent>
-  }
+  const [tooltipContent, setTooltipContent] = useState<Module | null>(Object.create(null))
 
-  const handleModeChange = (kind: ModeType) => {
-    setSizes(() => kind === 'Gzipped' ? 'gzipSize' : kind === 'Stat' ? 'statSize' : 'parsedSize')
-  }
+  const contexts = [
+    <ApplicationProvider key="app" />,
+    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreeMapComponent> }} />
+  ]
 
-  const handleGroupHover = useCallback((group: FoamDataObject | null) => {
-    setTooltipVisible(!!group)
-    setTooltipContent(() => group ? group : null)
+  const handleMousemove = useCallback((data: FoamDataObject) => {
+    setTooltipVisible(!!data)
+    setTooltipContent(() => data as Module)
   }, [])
 
   return (
-    <ApplicationContext.Provider
-      value={initialValue}
-    >
-      <div stylex={{
-        height: '100%',
-        width: '100%',
-        position: 'relative'
-      }}
+    <ComposeContextProvider contexts={contexts}>
+      <div
+        stylex={{
+          height: '100%',
+          width: '100%',
+          position: 'relative'
+        }}
       >
         <SidebarProvider>
-          <Sidebar foamModule={foamModule} mode={sizes} onModeChange={handleModeChange} onVisibleChange={(s) => setTooltipVisible(!s)} />
+          <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
-        <TreeMap ref={(instance: any) => treeMapRef.current = instance} onGroupHover={handleGroupHover} />
+        <Treemap ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
             <>
-              <Text p b font="14px">{tooltipContent.label}</Text>
+              <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+                <Text b font="14px" mr={0.3}>Id:</Text>
+                <Text font="14px">
+                  {tooltipContent.label}
+                </Text>
+              </div>
               <Spacer h={0.5} />
-              <ModuleSize module={tooltipContent} sizes="statSize" checkedSizes={sizes} />
-              <ModuleSize module={tooltipContent} sizes="parsedSize" checkedSizes={sizes} />
-              <ModuleSize module={tooltipContent} sizes="gzipSize" checkedSizes={sizes} />
-              <Text p font="12px">
-                path:
-                {' '}
-                {tooltipContent.filename}
-              </Text>
+              <ModuleSize module={tooltipContent} />
+              <Spacer h={0.5} />
+              <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+                <Text b font="14px" mr={0.3}>Path:</Text>
+                <Text font="14px">
+                  {tooltipContent.filename}
+                </Text>
+              </div>
             </>
           )}
         </Tooltip>
       </div>
-    </ApplicationContext.Provider>
+    </ComposeContextProvider>
   )
 }

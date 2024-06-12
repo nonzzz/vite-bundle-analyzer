@@ -46,6 +46,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
+    "dprint": "^0.46.0",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.2.1",
     "foxact": "^0.2.29",

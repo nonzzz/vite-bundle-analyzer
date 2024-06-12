@@ -40,9 +40,10 @@
 - Add rollup adapter.
 
 ```js
-import { analyzer, adapter } from "vite-bundle-analyzer";
+import { adapter, analyzer } from 'vite-bundle-analyzer'
 
-plugins: [adapter(analyzer())];
+plugins: ;
+;[adapter(analyzer())]
 ```
 
 ## 0.8.3

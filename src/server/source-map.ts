@@ -1,7 +1,7 @@
 import { SourceMapConsumer } from '@jridgewell/source-map'
 import type { ChunkMetadata } from './trie'
 
-// @jridgewell/source-map is an opinionated library 
+// @jridgewell/source-map is an opinionated library
 // So we should base on them to implement some missing or different features
 // Note: this file is unstable and may be changed in the future.
 // If I find a way to ditch the sourcemap
@@ -28,7 +28,7 @@ export function pickupContentFromSourcemap(rawSourcemap: string) {
     if (cur) {
       const code = consumer.sourceContentFor(cur, true)
       if (code) acc.push({ id: cur, code })
-    } 
+    }
     return acc
   }, [] as Array<ChunkMetadata>)
   consumer.destroy()

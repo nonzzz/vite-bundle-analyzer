@@ -5,4 +5,8 @@ function App() {
   return <div>111</div>
 }
 
-ReactDOM.createRoot(document.querySelector('#app')!).render(<React.StrictMode><App /></React.StrictMode>)
+ReactDOM.createRoot(document.querySelector('#app')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)

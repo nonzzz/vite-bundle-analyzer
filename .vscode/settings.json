@@ -1,13 +1,17 @@
 {
   "eslint.experimental.useFlatConfig": true,
-  "[markdown]":{
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "dprint.dprint",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
   },
-  "[yaml]":{
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "editor.formatOnSave": true,
   "[json]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

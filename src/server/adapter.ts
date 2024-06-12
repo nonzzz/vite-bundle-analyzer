@@ -9,7 +9,7 @@ export function adapter(userPlugin: VitePlugin) {
   const plugin = pick(userPlugin, ['name', 'generateBundle', 'closeBundle', 'api'])
   let root = process.cwd()
   const { store }: { store: AnalyzerStore } = plugin.api
-  return <Plugin>{
+  return <Plugin> {
     ...plugin,
     outputOptions(outputOptions) {
       if (outputOptions.dir) {

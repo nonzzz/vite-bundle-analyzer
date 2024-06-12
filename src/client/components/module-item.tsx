@@ -5,12 +5,12 @@ import { Text } from './text'
 import { Spacer } from './spacer'
 
 export interface ModuleItemProps {
-  name: string,
-  size?: number | null,
-  className?: string,
-  pointer?: boolean,
-  onClick?: () => void,
-  onMouseEnter?: () => void,
+  name: string
+  size?: number | null
+  className?: string
+  pointer?: boolean
+  onClick?: () => void
+  onMouseEnter?: () => void
 }
 
 export function ModuleItem(opts: PropsWithChildren<ModuleItemProps>) {
@@ -23,18 +23,20 @@ export function ModuleItem(opts: PropsWithChildren<ModuleItemProps>) {
       className={className}
       style={{ cursor: pointer ? 'pointer' : 'inherit' }}
     >
-      <div stylex={{
-        display: 'flex',
-        alignItems: 'center'
-      }}
+      <div
+        stylex={{
+          display: 'flex',
+          alignItems: 'center'
+        }}
       >
         {children}
-        <div stylex={{
-          flex: '1',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis'
-        }}
+        <div
+          stylex={{
+            flex: '1',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+          }}
         >
           {name}
         </div>

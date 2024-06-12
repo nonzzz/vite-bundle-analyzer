@@ -11,7 +11,7 @@ export const initialValue: SidebarStateContext = {
 
 const [SidebarProvider, useSidebarState, useSetSidebarState] = createContextState<SidebarStateContext>(initialValue)
 
-export { SidebarProvider, useSidebarState, useSetSidebarState }
+export { SidebarProvider, useSetSidebarState, useSidebarState }
 
 export function useToggleDrawerVisible() {
   const dispatch = useSetSidebarState()

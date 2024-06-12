@@ -5,7 +5,7 @@ install:
 
 client-analyze:
 	@echo "Analyzing client code..."
-	@yarn run vite build src/client --config analyze.config.ts
+	@yarn run vite build src/client --config analyze.config.mts
 	awk '{ print }' dist/client/stats.json > src/client/data.json
 
 build-all:cleanup  build-server build-client
@@ -36,3 +36,7 @@ test:
 lint:
 	@echo "Linting code..."
 	@yarn run lint
+
+format:
+	@echo "Formatting code..."
+	yarn exec dprint fmt

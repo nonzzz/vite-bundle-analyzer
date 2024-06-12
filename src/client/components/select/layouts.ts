@@ -5,7 +5,7 @@ export function getElementOffset(el?: HTMLElement | null | undefined) {
     return {
       top: 0,
       left: 0
-    } 
+    }
   }
   const { top, left } = el.getBoundingClientRect()
   return { top, left }

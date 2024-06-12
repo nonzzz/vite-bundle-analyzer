@@ -30,7 +30,7 @@ type PredicateFunction<T> = (value: T) => any
 export function uniqBy<T, K extends keyof T = keyof T>(array: T[], predicate: K | PredicateFunction<T>): T[] {
   const predicateFn = typeof predicate === 'function' ? predicate : (value: T) => value[predicate]
   const uniq = array.reduce((acc, value) => {
-    const key = <K>predicateFn(value)
+    const key = <K> predicateFn(value)
     if (!exists(acc[key])) {
       acc[key] = value
     }

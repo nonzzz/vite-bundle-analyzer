@@ -1,0 +1,24 @@
+{
+  "lineWidth": 140,
+  "typescript": {
+    "semiColons": "asi",
+    "indentWidth": 2,
+    "quoteStyle": "preferSingle",
+    "useTabs": false,
+    "trailingCommas": "never",
+    "module.sortImportDeclarations": "maintain",
+    "importDeclaration.sortNamedImports": "maintain",
+    "operatorPosition": "maintain",
+    "jsx.quoteStyle": "preferDouble",
+    "jsx.bracketPosition": "maintain",
+    "functionDeclaration.spaceBeforeParentheses": false
+  },
+  "json": {},
+  "markdown": {},
+  "excludes": ["**/node_modules", "**/*-lock.json", "yarn-4.1.1.cjs"],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.90.5.wasm",
+    "https://plugins.dprint.dev/json-0.19.2.wasm",
+    "https://plugins.dprint.dev/markdown-0.17.0.wasm"
+  ]
+}
