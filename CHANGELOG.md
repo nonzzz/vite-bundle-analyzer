@@ -1,3 +1,10 @@
+## 0.10.0
+
+# Improve
+
+- Using `@jridgewell/source-map` replace `source-map`. It can reduce 200kb at install stage.
+- Perf client rendering logic.
+
 ## 0.9.4
 
 # Patches
