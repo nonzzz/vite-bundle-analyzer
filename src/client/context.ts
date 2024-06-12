@@ -3,7 +3,7 @@ import type { RefObject } from 'react'
 import { noop } from 'foxact/noop'
 import { createContextState } from 'foxact/context-state'
 import type { Sizes } from './interface'
-import { TreemapInstance } from './components/treemap'
+import { TreeMapComponent } from './components/treemap'
 
 export interface ApplicationConfig {
   sizes: Sizes
@@ -12,7 +12,7 @@ export interface ApplicationConfig {
 }
 
 export interface TreemapConfig {
-  treemap: RefObject<TreemapInstance>
+  treemap: RefObject<TreeMapComponent>
 }
 
 export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {

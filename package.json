@@ -26,6 +26,7 @@
     "lint": "eslint . --fix"
   },
   "devDependencies": {
+    "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
     "@jridgewell/trace-mapping": "^0.3.25",

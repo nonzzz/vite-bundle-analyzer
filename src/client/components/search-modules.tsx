@@ -1,8 +1,9 @@
 import { ChangeEvent, useMemo, useState } from 'react'
-import type { Module, Sizes } from '../interface'
+import type { Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
-import { flattenModules, wrapperModuleAsSquarifiedModule } from '../components/treemap/shared'
+import { findRelativeModuleByFilename, flattenModules } from '../components/treemap/shared'
+import type { Module } from './treemap'
 import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
@@ -46,7 +47,7 @@ export function SearchModules(props: SearchModulesProps) {
             .map(m => ({
               ...m,
               isDirectory: extension(m.label) ? false : true
-            })),
+            })) as Omit<Module, 'groups'>[],
           'label'
         )
           .sort((a, b) => {
@@ -56,6 +57,7 @@ export function SearchModules(props: SearchModulesProps) {
           }) as FilterModule[]
       }
     })
+    console.log(filtered)
     return filtered
   }, [regExp, files, extra])
 
@@ -74,10 +76,9 @@ export function SearchModules(props: SearchModulesProps) {
   }
 
   const handleMouseEnter = (module: FilterModule) => {
-    const check = treemap.current?.check(module)
     setAvailableMap({
       ...availableMap,
-      [module.label]: !!check
+      [module.label]: true
     })
   }
 
@@ -121,8 +122,7 @@ export function SearchModules(props: SearchModulesProps) {
                     size={child[extra]}
                     pointer={availableMap[child.label]}
                     onMouseEnter={() => handleMouseEnter(child)}
-                    onClick={() =>
-                      treemap.current?.zoom({ module: wrapperModuleAsSquarifiedModule(child), nativeEvent: Object.create(null) })}
+                    onClick={() => treemap.current?.zoom(findRelativeModuleByFilename(module.parent, child.filename)!)}
                     stylex={{ fontStyle: 'italic' }}
                   >
                     {child.isDirectory ? <Folder /> : <File />}

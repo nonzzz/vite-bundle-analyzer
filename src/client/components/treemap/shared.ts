@@ -1,8 +1,7 @@
-import { hashCode } from '../../shared'
-import type { Module, SquarifiedModule } from './interface'
+import type { Module } from './interface'
 
 export function sortChildrenBySize(a: Module, b: Module) {
-  return b.size - a.size || +(a.id > b.id) - +(a.id < b.id)
+  return b.weight - a.weight || +(a.id > b.id) - +(a.id < b.id)
 }
 
 export function flattenModules<T extends Record<string, any> & { groups: T[] }>(modules: T[]): Omit<T, 'groups'>[] {
@@ -17,99 +16,14 @@ export function flattenModules<T extends Record<string, any> & { groups: T[] }>(
   return flattend
 }
 
-export function wrapperModuleAsSquarifiedModule<T extends Record<string, any>>(module: T): SquarifiedModule {
-  return {
-    node: module,
-    layout: [0, 0, 0, 0],
-    children: []
-  }
-}
-
-export function hueAngleToColor(hue: number, depth: number) {
-  const saturation = 60 - depth * 5
-  const lightness = 50 + depth * 5
-  return `hsla(${hue}deg, ${Math.max(saturation, 30)}%, ${Math.min(lightness, 70)}%, 0.9)`
-}
-
-export function evaluateHueFromModule(module: Module) {
-  const { filename } = module
-  const arc = Math.PI * 2
-  const isNumeric = (s: string) => {
-    const cp = s.charCodeAt(0)
-    return cp >= 48 && cp <= 57
-  }
-  const hash = isNumeric(filename) ? (parseInt(filename) / 1000) * arc : hashCode(filename)
-  return Math.round(Math.abs(hash) % arc)
-}
-
-export const STYLES = {
-  PADDING: 5,
-  HEAD_HEIGHT: 20,
-  INSET_X: 10,
-  INSET_Y: 20 + 5,
-  DOT_CHAR_CODE: 46,
-  ANIMATION_DURATION: 300
-}
-
-export function charCodeWidth(c: CanvasRenderingContext2D, ch: number) {
-  return c.measureText(String.fromCharCode(ch)).width
-}
-
-export function textOverflowEllipsis(c: CanvasRenderingContext2D, text: string, width: number, ellipsisWidth: number): [string, number] {
-  if (width < ellipsisWidth) {
-    return ['', 0]
-  }
-  let textWidth = 0
-  let i = 0
-  while (i < text.length) {
-    const charWidth = charCodeWidth(c, text.charCodeAt(i))
-    if (width < textWidth + charWidth + ellipsisWidth) {
-      return [text.slice(0, i) + '...', textWidth + ellipsisWidth]
+export function findRelativeModuleByFilename(module: Module, filename: string): Module | null {
+  if (!module) return null
+  if (module.filename === filename) return module
+  if (module.groups) {
+    for (const m of module.groups) {
+      const result = findRelativeModuleByFilename(m, filename)
+      if (result) return result
     }
-    textWidth += charWidth
-    i++
   }
-  return [text, textWidth]
-}
-
-export function findRelativeNode(
-  canvas: HTMLCanvasElement,
-  mouseEvent: MouseEvent,
-  layoutNodes: SquarifiedModule[]
-): SquarifiedModule | null {
-  let { pageX: mouseX, pageY: mouseY } = mouseEvent
-  for (let el: HTMLElement | null = canvas; el; el = el.offsetParent as HTMLElement | null) {
-    mouseX -= el.offsetLeft
-    mouseY -= el.offsetTop
-  }
-  const visit = (nodes: SquarifiedModule[]): SquarifiedModule | null => {
-    if (!nodes) return null
-    for (const node of nodes) {
-      const [x, y, w, h] = node.layout
-      if (mouseX >= x && mouseY >= y && mouseX < x + w && mouseY < y + h) {
-        return visit(node.children) || node
-      }
-    }
-    return null
-  }
-
-  return visit(layoutNodes)
-}
-
-export function findRelativeNodeByFilename(layoutNodes: SquarifiedModule[], filename: string): SquarifiedModule | null {
-  const visit = (nodes: SquarifiedModule[]): SquarifiedModule | null => {
-    if (!nodes) return null
-
-    for (const layoutNode of nodes) {
-      if (layoutNode.node.filename === filename) {
-        return layoutNode
-      }
-      const node = visit(layoutNode.children)
-      if (node) return node
-    }
-
-    return null
-  }
-
-  return visit(layoutNodes)
+  return null
 }

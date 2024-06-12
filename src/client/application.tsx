@@ -1,45 +1,45 @@
 import { useCallback, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { ComposeContextProvider } from 'foxact/compose-context-provider'
+import type { FoamDataObject } from '@carrotsearch/foamtree'
 import { Tooltip } from './components/tooltip'
 import { Text } from './components/text'
 import { Spacer } from './components/spacer'
 import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
 import { Treemap } from './components/treemap'
-import type { PaintEvent, SquarifiedModule, TreemapInstance } from './components/treemap'
+import type { Module, TreeMapComponent } from './components/treemap'
 import { convertBytes } from './shared'
 
 interface ModuleSizeProps {
-  module: SquarifiedModule
+  module: Module
 }
 
 function ModuleSize(props: ModuleSizeProps) {
-  const { module: { node } } = props
-  if (!node) return null
+  const { module } = props
+  if (!module) return null
 
   return (
     <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
       <Text b p font="14px" mr={0.3}>Size:</Text>
-      <Text font="14px">{convertBytes(node.size)}</Text>
+      <Text font="14px">{convertBytes(module.weight)}</Text>
     </div>
   )
 }
 
 export function App() {
-  const treeMapRef = useRef<TreemapInstance>()
+  const treeMapRef = useRef<TreeMapComponent>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<SquarifiedModule | null>(Object.create(null))
+  const [tooltipContent, setTooltipContent] = useState<Module | null>(Object.create(null))
 
   const contexts = [
     <ApplicationProvider key="app" />,
-    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreemapInstance> }} />
+    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreeMapComponent> }} />
   ]
 
-  const handleMousemove = useCallback((event: PaintEvent<MouseEvent>) => {
-    const { module } = event
-    setTooltipVisible(!!module)
-    setTooltipContent(() => module)
+  const handleMousemove = useCallback((data: FoamDataObject) => {
+    setTooltipVisible(!!data)
+    setTooltipContent(() => data as Module)
   }, [])
 
   return (
@@ -56,12 +56,12 @@ export function App() {
         </SidebarProvider>
         <Treemap ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
         <Tooltip visible={tooltipVisible}>
-          {tooltipContent?.node && (
+          {tooltipContent && (
             <>
               <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
                 <Text b font="14px" mr={0.3}>Id:</Text>
                 <Text font="14px">
-                  {tooltipContent.node.label}
+                  {tooltipContent.label}
                 </Text>
               </div>
               <Spacer h={0.5} />
@@ -70,7 +70,7 @@ export function App() {
               <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
                 <Text b font="14px" mr={0.3}>Path:</Text>
                 <Text font="14px">
-                  {tooltipContent.node.filename}
+                  {tooltipContent.filename}
                 </Text>
               </div>
             </>

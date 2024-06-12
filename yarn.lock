@@ -312,6 +312,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carrotsearch/foamtree@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "@carrotsearch/foamtree@npm:3.5.1"
+  checksum: 10/fb24bdede0e9891f1c3c60388f0914adf3579bc4c3b3976dd65f752ef7dc016f84be80aa4cc184452602936479ee13e56ac460838f53596c5edddc0fb79142ec
+  languageName: node
+  linkType: hard
+
 "@dprint/darwin-arm64@npm:0.46.0":
   version: 0.46.0
   resolution: "@dprint/darwin-arm64@npm:0.46.0"
@@ -6092,6 +6099,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-bundle-analyzer@workspace:."
   dependencies:
+    "@carrotsearch/foamtree": "npm:^3.5.1"
     "@iconify-json/ph": "npm:^1.1.12"
     "@jridgewell/source-map": "npm:^0.3.6"
     "@jridgewell/trace-mapping": "npm:^0.3.25"
