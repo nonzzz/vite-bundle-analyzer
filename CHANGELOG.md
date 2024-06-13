@@ -1,3 +1,15 @@
+## 0.10.2
+
+# Patches
+
+- Respect output options.
+
+## 0.10.1
+
+# Patches
+
+- Fix server mode should ensure the safe port.
+
 ## 0.10.0
 
 # Improve

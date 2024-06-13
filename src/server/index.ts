@@ -68,6 +68,10 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
     api: {
       store
     },
+    buildStart() {
+      // If this plugin is called twice in the same process, reset the store to disable the previous sourcemap option.
+      store.previousSourcemapOption = false
+    },
     configResolved(config) {
       defaultWd = path.resolve(config.root, config.build.outDir ?? '')
       logger = config.logger
