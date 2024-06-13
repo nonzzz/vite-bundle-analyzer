@@ -146,7 +146,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         }
         case 'server': {
           const analyzeModule = analyzerModule.processModule()
-          const { setup, port } = createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
+          const { setup, port } = await createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
           setup(analyzeModule, { title: reportTitle, mode: 'stat' })
           if ((opts.openAnalyzer ?? true) && !isCI) {
             const address = `http://localhost:${port}`

@@ -1,6 +1,6 @@
 import http from 'http'
 import fs from 'fs'
-import type { AddressInfo } from 'net'
+import net from 'net'
 import path from 'path'
 import { generateInjectCode, injectHTMLTag } from './render'
 import { clientPath } from './shared'
@@ -55,11 +55,57 @@ function createStaticMiddleware(options: RenderOptions, analyzeModule: Module[])
   }
 }
 
-export function createServer(port = 0) {
-  const server = http.createServer()
+async function ensureEmptyPort(preferredPort: number) {
+  const getPort = () => Math.floor(Math.random() * (65535 - 1024 + 1)) + 1024
 
-  server.listen(port, () => {
-    console.log(`server run on http://localhost:${(server.address() as AddressInfo).port}`)
+  const checkPort = async (port: number): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const server = net.createServer()
+      server.once('error', (err: any) => {
+        if (err.code === 'EADDRINUSE') {
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
+      server.once('listening', () => {
+        server.close(() => {
+          resolve(true)
+        })
+      })
+      server.listen(port, 'localhost')
+    })
+  }
+  if (preferredPort === 0) {
+    let portAvailable = false
+    let randomPort = 0
+    while (!portAvailable) {
+      randomPort = getPort()
+      portAvailable = await checkPort(randomPort)
+    }
+    return randomPort
+  }
+  let portAvailable = await checkPort(preferredPort)
+  if (portAvailable) {
+    return preferredPort
+  } else {
+    let nextPort = preferredPort + 1
+    while (true) {
+      portAvailable = await checkPort(nextPort)
+      if (portAvailable) {
+        return nextPort
+      }
+      nextPort++
+    }
+  }
+}
+
+export async function createServer(port = 0) {
+  const server = http.createServer()
+  const safePort = await ensureEmptyPort(port)
+
+  server.listen(safePort, () => {
+    console.log(`server run on http://localhost:${safePort}`)
   })
 
   const setup = (analyzeModule: Module[], options: RenderOptions) => {
@@ -69,7 +115,7 @@ export function createServer(port = 0) {
   return {
     setup,
     get port() {
-      return (server.address() as AddressInfo).port
+      return safePort
     }
   }
 }
