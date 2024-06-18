@@ -12,7 +12,8 @@ module.exports = nonzzz(
       '**/*.d.ts'
     ],
     rules: {
-      'stylistic/indent': 'off'
+      'stylistic/indent': 'off',
+      'stylistic/space-before-function-paren': 'off'
     }
   }
 )
