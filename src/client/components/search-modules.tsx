@@ -57,7 +57,6 @@ export function SearchModules(props: SearchModulesProps) {
           }) as FilterModule[]
       }
     })
-    console.log(filtered)
     return filtered
   }, [regExp, files, extra])
 

@@ -1,3 +1,9 @@
+## 0.10.3
+
+# Patches
+
+- Fix static report does not work. #29
+
 ## 0.10.2
 
 # Patches
