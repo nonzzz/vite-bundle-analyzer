@@ -10,8 +10,8 @@ export interface RenderOptions {
 interface Descriptor {
   kind: 'script' | 'style'
   text: string
+  attrs?: string[]
 }
-
 interface InjectHTMLTagOptions {
   html: string
   injectTo: 'body' | 'head'
@@ -22,7 +22,12 @@ interface InjectHTMLTagOptions {
 export function injectHTMLTag(options: InjectHTMLTagOptions) {
   const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
   options.descriptors = Array.isArray(options.descriptors) ? options.descriptors : [options.descriptors]
-  const descriptors = options.descriptors.map(d => `<${d.kind}>${d.text}</${d.kind}>`)
+  const descriptors = options.descriptors.map(d => {
+    if (d.attrs && d.attrs.length > 0) {
+      return `<${d.kind} ${d.attrs.join(' ')}>${d.text}</${d.kind}>`
+    }
+    return `<${d.kind}>${d.text}</${d.kind}>`
+  })
   return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
 }
 
@@ -49,7 +54,11 @@ export async function renderView(analyzeModule: Module[], options: RenderOptions
   html = injectHTMLTag({
     html,
     injectTo: 'head',
-    descriptors: assets.map(({ fileType, content }) => ({ kind: fileType === 'js' ? 'script' : 'style', text: content }))
+    descriptors: assets.map(({ fileType, content }) => ({
+      kind: fileType === 'js' ? 'script' : 'style',
+      text: content,
+      attrs: fileType === 'js' ? ['type="module"'] : []
+    }))
   })
   html = injectHTMLTag({
     html,

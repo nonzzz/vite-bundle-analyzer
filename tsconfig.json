@@ -8,13 +8,14 @@
     "skipLibCheck": true,
     "target": "ESNext",
     "lib": ["esnext", "DOM", "DOM.Iterable"],
-    "types": ["unplugin-icons/types/react", "react", "@stylex-extend/react"],
+    "types": ["unplugin-icons/types/react", "react"],
     "resolveJsonModule": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@stylex-extend/react",
     "strict": true
   }
 }
