@@ -89,9 +89,6 @@ importers:
       '@rollup/plugin-esm-shim':
         specifier: ^0.1.7
         version: 0.1.7(patch_hash=dpfqm63lv6t4kdn4hi77llr2su)(rollup@4.18.0)
-      '@rollup/plugin-json':
-        specifier: ^6.1.0
-        version: 6.1.0(rollup@4.18.0)
       '@rollup/plugin-node-resolve':
         specifier: ^15.2.3
         version: 15.2.3(rollup@4.18.0)
@@ -667,15 +664,6 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
-  '@rollup/plugin-json@6.1.0':
-    resolution: {integrity: sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -3228,12 +3216,6 @@ snapshots:
   '@rollup/plugin-esm-shim@0.1.7(patch_hash=dpfqm63lv6t4kdn4hi77llr2su)(rollup@4.18.0)':
     dependencies:
       magic-string: 0.30.10
-    optionalDependencies:
-      rollup: 4.18.0
-
-  '@rollup/plugin-json@6.1.0(rollup@4.18.0)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@4.18.0)
     optionalDependencies:
       rollup: 4.18.0
 

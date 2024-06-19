@@ -1,7 +1,6 @@
 import path from 'path'
 import type { Logger, Plugin } from 'vite'
 import colors from 'picocolors'
-import { name } from '../../package.json'
 import { opener } from './opener'
 import { renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
@@ -51,7 +50,7 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
 }
 
 function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summary: true }): Plugin {
-  const { reportTitle = name } = opts
+  const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   const store: AnalyzerStore = {
     previousSourcemapOption: false,
@@ -62,7 +61,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
   let logger: Logger
   let workspaceRoot = process.cwd()
   const plugin = <Plugin> {
-    name,
+    name: 'vite-bundle-anlyzer',
     apply: 'build',
     enforce: 'post',
     api: {

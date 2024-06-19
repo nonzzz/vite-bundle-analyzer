@@ -1,16 +1,12 @@
-import { builtinModules, createRequire } from 'module'
+import { builtinModules } from 'module'
 import { defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import { minify, swc } from 'rollup-plugin-swc3'
-import json from '@rollup/plugin-json'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-
+import pkg from './package.json' assert { type: 'json' }
 import shim from '@rollup/plugin-esm-shim'
 
-const _require = createRequire(import.meta.url)
-const { dependencies } = _require('./package.json')
-
-const external = [...Object.keys(dependencies), ...builtinModules]
+const external = [...Object.keys(pkg.dependencies), ...builtinModules]
 
 export default defineConfig([
   {
@@ -21,7 +17,6 @@ export default defineConfig([
       { file: 'dist/index.js', format: 'cjs', exports: 'named' }
     ],
     plugins: [
-      json(),
       nodeResolve(),
       shim(),
       swc(),

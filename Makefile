@@ -5,7 +5,7 @@ install:
 
 client-analyze:
 	@echo "Analyzing client code..."
-	@pnpm run vite build src/client --config analyze.config.mts
+	@pnpm exec vite build src/client --config analyze.config.mts
 	awk '{ print }' dist/client/stats.json > src/client/data.json
 
 build-all:cleanup  build-server build-client
@@ -19,11 +19,11 @@ build-client:
 
 build-server:
 	@echo "Building server code..."
-	@pnpm exec rollup --config rollup.config.ts --configPlugin swc3
+	@pnpm exec rollup --config rollup.config.mts --configPlugin swc3
 
 dev-server:
 	@echo "Starting server in development mode..."
-	@pnpm exec rollup --config rollup.config.ts --configPlugin swc3 --watch
+	@pnpm exec rollup --config rollup.config.mts --configPlugin swc3 --watch
 
 dev-client:
 	@echo "Starting client in development mode..."

@@ -14,10 +14,10 @@
   },
   "scripts": {
     "dev": "vite src/client",
-    "dev:plugin": "rollup --config rollup.config.ts --configPlugin swc3 --watch",
+    "dev:plugin": "rollup --config rollup.config.mts --configPlugin swc3 --watch",
     "build": "pnpm run build:client & pnpm run build:plugin",
     "build:client": "vite build src/client",
-    "build:plugin": "rollup --config rollup.config.ts --configPlugin swc3",
+    "build:plugin": "rollup --config rollup.config.mts --configPlugin swc3",
     "test": "c8 -r=lcov ava __tests__/*.spec.ts",
     "lint": "eslint . --fix"
   },
@@ -27,7 +27,6 @@
     "@jridgewell/source-map": "^0.3.6",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@rollup/plugin-esm-shim": "^0.1.7",
-    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@stylex-extend/core": "^0.3.1",
     "@stylex-extend/react": "^0.3.1",
