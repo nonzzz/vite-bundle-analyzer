@@ -59,9 +59,13 @@ export default defineConfig({
 | `openAnalyzer` | `boolean`              | `true`        | Open the static website. (Only works on `analyzerMode` is `server` ) |
 | `summary`      | `boolean`              | `true`        | Show full chunk info to stdout.                                      |
 
-### LICENSE
+### Sponsors
 
-[MIT](./LICENSE)
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/nonzzz/sponsors/sponsorkit/sponsors.svg">
+    <img src="https://cdn.jsdelivr.net/gh/nonzzz/sponsors/sponsorkit/sponsors.svg"/>
+  </a>
+</p>
 
 ### Contributions
 
@@ -79,3 +83,7 @@ request.
   </a>
   <!-- Add more contributors as needed -->
 </p>
+
+### LICENSE
+
+[MIT](./LICENSE)
