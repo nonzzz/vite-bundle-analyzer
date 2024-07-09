@@ -23,13 +23,13 @@ export interface ChunkMetadata {
 export interface GroupWithNode {
   groups: Array<GroupWithNode>
   // eslint-disable-next-line no-use-before-define
-  children?: Map<string, Node<any>>
+  children?: Map<string, Node>
   filename: string
   label: string
   [prop: string]: any
 }
 
-export class Node<T> implements NodeDescriptor<T> {
+export class Node<T = {}> implements NodeDescriptor<T> {
   kind: Kind
   meta: T
   filename: string
@@ -91,14 +91,15 @@ export class FileSystemTrie<T> {
     }
   }
 
-  walk(node: Node<T>, handler: (child: GroupWithNode, parent: GroupWithNode) => any) {
+  walk<T>(node: Node<T>, handler: (child: GroupWithNode, parent: Node<T>) => void) {
     if (!node.children.size) return
     for (const [id, childNode] of node.children.entries()) {
       const child: GroupWithNode = { ...childNode.meta, label: id, groups: childNode.groups, filename: childNode.filename }
       if (childNode.isEndOfPath) {
-        delete (child as any).groups
+        // @ts-expect-error
+        delete child.groups
       }
-      handler(child, node as unknown as GroupWithNode)
+      handler(child, node)
       this.walk(childNode, handler)
       if (child.groups && child.groups.length) {
         switch (node.kind) {
