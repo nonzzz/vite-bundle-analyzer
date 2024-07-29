@@ -6,7 +6,7 @@ module.exports = nonzzz(
     ignores: [
       'dist',
       'node_modules',
-      'examples/vue/dist',
+      'examples/vue/dist/**',
       'examples/vue/node_modules',
       '__tests__/dist',
       '**/*.d.ts'

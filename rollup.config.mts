@@ -3,8 +3,8 @@ import { defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import { minify, swc } from 'rollup-plugin-swc3'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import pkg from './package.json' assert { type: 'json' }
 import shim from '@rollup/plugin-esm-shim'
+import pkg from './package.json' assert { type: 'json' }
 
 const external = [...Object.keys(pkg.dependencies), ...builtinModules]
 
