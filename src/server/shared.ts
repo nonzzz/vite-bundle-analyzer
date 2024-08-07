@@ -3,6 +3,7 @@ import utils from 'util'
 import fs from 'fs'
 import path from 'path'
 import type { InputType, ZlibOptions } from 'zlib'
+import debug from 'debug'
 
 export * from '../shared'
 
@@ -82,3 +83,10 @@ export function isFileReadable(filename: string): boolean {
     return false
   }
 }
+
+export function createDebug(namespace: string) {
+  const log = debug(namespace)
+  return log
+}
+
+export const analyzerDebug = createDebug('vite:bundle-analyzer')

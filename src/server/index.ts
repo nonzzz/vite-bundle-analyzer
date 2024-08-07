@@ -7,7 +7,7 @@ import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { createServer } from './server'
-import { convertBytes, fsp } from './shared'
+import { analyzerDebug, convertBytes, fsp } from './shared'
 
 const isCI = !!process.env.CI
 
@@ -60,6 +60,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
+
   const plugin = <Plugin> {
     name: 'vite-bundle-anlyzer',
     apply: 'build',
@@ -68,8 +69,10 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       store
     },
     buildStart() {
+      analyzerDebug('Start to analyze bundle')
       // If this plugin is called twice in the same process, reset the store to disable the previous sourcemap option.
       store.previousSourcemapOption = false
+      analyzerDebug('Reset sourcemap option to ' + '\'' + store.previousSourcemapOption + '\'')
     },
     configResolved(config) {
       defaultWd = path.resolve(config.root, config.build.outDir ?? '')
@@ -111,6 +114,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         // force set sourcemap to ensure the result as accurate as possible.
         config.build.sourcemap = 'hidden'
       }
+      analyzerDebug('Sourcemap option is set to ' + '\'' + config.build.sourcemap + '\'')
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
@@ -121,6 +125,8 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       for (const bundleName in outputBundle) {
         const bundle = outputBundle[bundleName]
         const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
+        const sourceMapStatus = sourcemapFileName ? true : false
+        analyzerDebug('Processing chunk ' + '\'' + bundle.fileName + '\'.' + 'Chunk status: ' + pass + '. ' + 'Sourcemap status: ' + sourceMapStatus + '.')
         if (pass && sourcemapFileName) {
           await analyzerModule.addModule(bundle, sourcemapFileName)
         }
@@ -135,6 +141,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       if (opts.summary && !hasViteReporter) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
+      analyzerDebug('Finish analyze bundle.' + analyzerModule.modules.length + 'chunks found.') 
       switch (opts.analyzerMode) {
         case 'json': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')

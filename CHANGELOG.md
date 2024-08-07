@@ -1,3 +1,7 @@
+## 0.10.4
+
+- Add debug info.
+
 ## 0.10.3
 
 # Patches

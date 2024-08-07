@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:debug":"vite build --debug",
     "preview": "vite preview"
   },
   "devDependencies": {

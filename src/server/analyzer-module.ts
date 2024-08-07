@@ -1,6 +1,6 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
-import { createGzip, slash, stringToByte } from './shared'
+import { analyzerDebug, createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
@@ -113,6 +113,8 @@ export class AnalyzerNode {
       stats.insert(generateNodeId(info.id, workspaceRoot), { kind: 'stat', meta: { statSize } })
     }
 
+    analyzerDebug('Start analyze stats: module ' + '\'' + this.originalId + '\'' + ' find ' + infomations.length + ' modules')
+
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
     // It's will cause dead lock.(Altough this is a race case.)
@@ -121,6 +123,8 @@ export class AnalyzerNode {
       return path.join(workspaceRoot, relatived)
     })
 
+    let count = 0
+
     for (const id in chunks) {
       if (!KNOWN_EXT_NAME.includes(path.extname(id))) continue
       const code = chunks[id]
@@ -128,7 +132,10 @@ export class AnalyzerNode {
       const { byteLength: gzipSize } = await compress(b)
       const parsedSize = b.byteLength
       sources.insert(generateNodeId(id, workspaceRoot), { kind: 'source', meta: { gzipSize, parsedSize } })
+      count++
     }
+
+    analyzerDebug('Start analyze source: module ' + '\'' + this.originalId + '\'' + ' find ' + count + ' chunks')
 
     stats.mergePrefixSingleDirectory()
     stats.walk(stats.root, (c, p) => p.groups.push(c))
