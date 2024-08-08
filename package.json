@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "description": "a vite bundle analyzer",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -15,18 +15,18 @@
   "scripts": {
     "dev": "vite src/client",
     "dev:plugin": "rollup --config rollup.config.mts --configPlugin swc3 --watch",
-    "build": "pnpm run build:client & pnpm run build:plugin",
+    "build": "pnpm run build:client && pnpm run build:plugin",
     "build:client": "vite build src/client",
     "build:plugin": "rollup --config rollup.config.mts --configPlugin swc3",
     "test": "c8 -r=lcov ava __tests__/*.spec.ts",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
-    "@types/debug": "4.1.12",
     "@carrotsearch/foamtree": "^3.5.1",
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
     "@jridgewell/trace-mapping": "^0.3.25",
+    "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-esm-shim": "^0.1.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@stylex-extend/core": "^0.3.1",
@@ -40,6 +40,7 @@
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
+    "ansis": "^3.3.2",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
     "dprint": "^0.46.0",
@@ -60,10 +61,6 @@
   },
   "license": "MIT",
   "author": "kanno",
-  "dependencies": {
-    "picocolors": "^1.0.0",
-    "debug": "^4.3.6"
-  },
   "pnpm": {
     "overrides": {
       "vite": "^5.2.8",

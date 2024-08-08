@@ -1,3 +1,8 @@
+## 0.10.5
+
+- Reduce debug info package size.
+- Makesure tool can be work.
+
 ## 0.10.4
 
 - Add debug info.

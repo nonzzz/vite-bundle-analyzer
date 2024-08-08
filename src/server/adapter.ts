@@ -12,6 +12,7 @@ export function adapter(userPlugin: VitePlugin) {
   return <Plugin> {
     ...plugin,
     outputOptions(outputOptions) {
+      if (store.hasSetSourcemapOption) return
       if (outputOptions.dir) {
         root = outputOptions.dir
       }

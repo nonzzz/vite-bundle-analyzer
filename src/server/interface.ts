@@ -70,5 +70,6 @@ export type AnalyzerPluginOptions = AnalyzerPluginOptionsWithServer | AnalyzerPl
 
 export interface AnalyzerStore {
   previousSourcemapOption: boolean
+  hasSetSourcemapOption: boolean
   analyzerModule: AnalyzerModule
 }

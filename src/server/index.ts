@@ -1,6 +1,6 @@
 import path from 'path'
 import type { Logger, Plugin } from 'vite'
-import colors from 'picocolors'
+import ansis from 'ansis'
 import { opener } from './opener'
 import { renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
@@ -15,7 +15,7 @@ function openBrowser(address: string) {
   opener([address])
 }
 
-const formatNumber = (number: number | string) => colors.dim(colors.bold(number))
+const formatNumber = (number: number | string) => ansis.dim(ansis.bold(number + ''))
 
 const formatSize = (number: number) => formatNumber(convertBytes(number))
 
@@ -54,6 +54,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   const store: AnalyzerStore = {
     previousSourcemapOption: false,
+    hasSetSourcemapOption: false,
     analyzerModule
   }
   let defaultWd = process.cwd()
@@ -67,12 +68,6 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
     enforce: 'post',
     api: {
       store
-    },
-    buildStart() {
-      analyzerDebug('Start to analyze bundle')
-      // If this plugin is called twice in the same process, reset the store to disable the previous sourcemap option.
-      store.previousSourcemapOption = false
-      analyzerDebug('Reset sourcemap option to ' + '\'' + store.previousSourcemapOption + '\'')
     },
     configResolved(config) {
       defaultWd = path.resolve(config.root, config.build.outDir ?? '')
@@ -98,15 +93,16 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
           }
         }
       }
-    },
-    config(config) {
-      if (config.build?.sourcemap) {
+      // Alough it's not a good practice to modify the config object directly, but it's the only way to make it work.
+      // If you have a better solution, please PR.
+      // const isrepated = config.plugins.
+
+      if (!store.hasSetSourcemapOption) {
+        store.hasSetSourcemapOption = true
+       if (config.build?.sourcemap) {
         store.previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
           ? config.build.sourcemap
           : config.build.sourcemap === 'hidden'
-      }
-      if (!config.build) {
-        config.build = {}
       }
       if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
         config.build.sourcemap = true
@@ -115,6 +111,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
         config.build.sourcemap = 'hidden'
       }
       analyzerDebug('Sourcemap option is set to ' + '\'' + config.build.sourcemap + '\'')
+      }
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
@@ -141,7 +138,7 @@ function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summar
       if (opts.summary && !hasViteReporter) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
-      analyzerDebug('Finish analyze bundle.' + analyzerModule.modules.length + 'chunks found.') 
+      analyzerDebug('Finish analyze bundle.' + analyzerModule.modules.length + ' chunks found.') 
       switch (opts.analyzerMode) {
         case 'json': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')

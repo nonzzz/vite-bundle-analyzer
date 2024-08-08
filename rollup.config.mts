@@ -4,9 +4,9 @@ import dts from 'rollup-plugin-dts'
 import { minify, swc } from 'rollup-plugin-swc3'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import shim from '@rollup/plugin-esm-shim'
-import pkg from './package.json' assert { type: 'json' }
+import commonjs from '@rollup/plugin-commonjs'
 
-const external = [...Object.keys(pkg.dependencies), ...builtinModules]
+const external = [...builtinModules]
 
 export default defineConfig([
   {
@@ -17,6 +17,7 @@ export default defineConfig([
       { file: 'dist/index.js', format: 'cjs', exports: 'named' }
     ],
     plugins: [
+      commonjs(),
       nodeResolve(),
       shim(),
       swc(),

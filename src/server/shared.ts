@@ -3,7 +3,8 @@ import utils from 'util'
 import fs from 'fs'
 import path from 'path'
 import type { InputType, ZlibOptions } from 'zlib'
-import debug from 'debug'
+import ansis from 'ansis'
+import { noop } from 'foxact/noop'
 
 export * from '../shared'
 
@@ -85,8 +86,13 @@ export function isFileReadable(filename: string): boolean {
 }
 
 export function createDebug(namespace: string) {
-  const log = debug(namespace)
-  return log
+  const hasDebug = process.env.DEBUG || process.env.ANALYZE_DEBUG
+  if (hasDebug) {
+      return (...args: any[]) => {
+          console.log(ansis.hex('#5B45DE')(`[${namespace}]`), ...args)
+      }
+  }
+  return noop
 }
-
+// https://github.com/vitejs/vite/blob/main/packages/vite/bin/vite.js#L14-L33
 export const analyzerDebug = createDebug('vite:bundle-analyzer')
