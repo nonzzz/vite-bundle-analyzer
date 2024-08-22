@@ -11,6 +11,11 @@ import { analyzerDebug, convertBytes, fsp } from './shared'
 
 const isCI = !!process.env.CI
 
+const defaultOptions: AnalyzerPluginOptions = { 
+  analyzerMode: 'server',
+  summary: true 
+}
+
 function openBrowser(address: string) {
   opener([address])
 }
@@ -49,7 +54,9 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
   return [isChunk, isChunk ? chunk.sourcemapFileName : null]
 }
 
-function analyzer(opts: AnalyzerPluginOptions = { analyzerMode: 'server', summary: true }): Plugin {
+function analyzer(opts: AnalyzerPluginOptions): Plugin {
+  opts = opts ? { ...defaultOptions, ...opts } : defaultOptions
+
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   const store: AnalyzerStore = {
