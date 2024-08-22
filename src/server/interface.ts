@@ -56,13 +56,13 @@ export interface BasicAnalyzerPluginOptions {
 }
 
 export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOptions {
-  analyzerMode: 'server'
+  analyzerMode?: 'server'
   analyzerPort?: number | 'auto'
   openAnalyzer?: boolean
 }
 
 export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOptions {
-  analyzerMode: 'static' | 'json'
+  analyzerMode?: 'static' | 'json'
   fileName?: string
 }
 
