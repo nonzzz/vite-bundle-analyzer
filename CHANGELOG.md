@@ -1,3 +1,13 @@
+## 0.10.6
+
+- Make default options happy.
+
+
+### credits
+
+@a145789
+
+
 ## 0.10.5
 
 - Reduce debug info package size.

@@ -54,7 +54,7 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
   return [isChunk, isChunk ? chunk.sourcemapFileName : null]
 }
 
-function analyzer(opts: AnalyzerPluginOptions): Plugin {
+function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   opts = opts ? { ...defaultOptions, ...opts } : defaultOptions
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
