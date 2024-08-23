@@ -84,6 +84,17 @@ request.
   <!-- Add more contributors as needed -->
 </p>
 
+
+### DEBUG
+
+If you're using vite you can get the logs with `vite build --debug` and then extreact the part relevant to `analyze` plugin. Or using `cross-env` to setup `ANALYZE_DEBUG=true` in your local.
+env.
+
+### Why i get the chunk size is empty?
+
+If you're use a plugin that break the `sourcemap` it will affect the analyze plugin. I know it's stupid, But is the way to get the size close to the actual size. Like `@vitejs/plugin-legacy` don't prvide
+the correctly sourcemap for legacy chunk. For some reason, no analysis will be provided for those module.
+
 ### LICENSE
 
 [MIT](./LICENSE)
