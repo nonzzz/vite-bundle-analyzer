@@ -155,7 +155,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         case 'static': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
           const analyzeModule = analyzerModule.processModule()
-          const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
+          const html = await renderView(analyzeModule, { title: reportTitle, mode: 'parsed' })
           return fsp.writeFile(p, html, 'utf8')
         }
         case 'server': {
