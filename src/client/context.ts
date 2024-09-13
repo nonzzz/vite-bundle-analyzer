@@ -22,7 +22,7 @@ export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
 }
 
 const defaultApplicationContext = <ApplicationConfig> {
-  sizes: SIZE_RECORD[window.defaultSizes],
+  sizes:window.isCacheLastSiezMode ? sessionStorage.getItem('currentSizeMode') || SIZE_RECORD[window.defaultSizes] : SIZE_RECORD[window.defaultSizes] ,
   analyzeModule: window.analyzeModule,
   scence: new Set(),
   updateScence: noop

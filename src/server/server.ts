@@ -32,7 +32,7 @@ function createStaticMiddleware(options: RenderOptions, analyzeModule: Module[])
         injectTo: 'body',
         descriptors: {
           kind: 'script',
-          text: generateInjectCode(analyzeModule, options.mode)
+          text: generateInjectCode(analyzeModule, options.mode,options.isCacheLastSiezMode)
         }
       })
       res.end(html)

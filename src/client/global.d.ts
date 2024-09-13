@@ -5,5 +5,6 @@ declare global {
   interface Window {
     defaultSizes: DefaultSizes
     analyzeModule: Array<Module>
+    isCacheLastSiezMode:boolean
   }
 }

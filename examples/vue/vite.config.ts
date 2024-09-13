@@ -5,5 +5,5 @@ import Components from 'unplugin-vue-components/vite'
 import { analyzer } from 'vite-bundle-analyzer'
 
 export default defineConfig({
-  plugins: [vue(), Components({ resolvers: [VarletUIResolver()] }), analyzer({ analyzerMode: 'server', openAnalyzer: false })]
+  plugins: [vue(), Components({ resolvers: [VarletUIResolver()] }), analyzer({ analyzerMode: 'server', openAnalyzer: false,isCacheLastSiezMode:true })]
 })

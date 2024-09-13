@@ -5,6 +5,7 @@ import type { DefaultSizes, Module } from './interface'
 export interface RenderOptions {
   title: string
   mode: DefaultSizes
+  isCacheLastSiezMode: boolean
 }
 
 interface Descriptor {
@@ -33,9 +34,9 @@ export function injectHTMLTag(options: InjectHTMLTagOptions) {
 
 // https://tc39.es/ecma262/#sec-putvalue
 // Using var instead of set attr to window we can reduce 9 bytes
-export function generateInjectCode(analyzeModule: Module[], mode: string) {
+export function generateInjectCode(analyzeModule: Module[], mode: string,isCacheLastSiezMode:boolean) {
   const { stringify } = JSON
-  return `var defaultSizes=${stringify(mode)},analyzeModule=${stringify(analyzeModule)};`
+  return `var defaultSizes=${stringify(mode)},analyzeModule=${stringify(analyzeModule)},isCacheLastSiezMode=${stringify(isCacheLastSiezMode)};`
 }
 
 export async function renderView(analyzeModule: Module[], options: RenderOptions) {
@@ -65,7 +66,7 @@ export async function renderView(analyzeModule: Module[], options: RenderOptions
     injectTo: 'body',
     descriptors: {
       kind: 'script',
-      text: generateInjectCode(analyzeModule, options.mode)
+      text: generateInjectCode(analyzeModule, options.mode,options.isCacheLastSiezMode)
     }
   })
   return html

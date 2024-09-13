@@ -36,6 +36,10 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 
+  useEffect(()=>{
+    sessionStorage.setItem('currentSizeMode',userMode)
+  },[userMode])
+
   const entrypointChunks = useMemo(() => analyzeModule.filter(chunk => chunk.isEntry), [analyzeModule])
 
   const handleFilterByEntrypoints = (entrypoint: string | string[]) => {

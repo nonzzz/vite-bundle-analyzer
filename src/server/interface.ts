@@ -53,6 +53,8 @@ export interface BasicAnalyzerPluginOptions {
   analyzerMode?: AnalyzerMode
   reportTitle?: string
   gzipOptions?: ZlibOptions
+  defaultSizesMode?: DefaultSizes
+  isCacheLastSiezMode?: boolean
 }
 
 export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOptions {

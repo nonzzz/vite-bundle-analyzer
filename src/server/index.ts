@@ -155,13 +155,13 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         case 'static': {
           const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
           const analyzeModule = analyzerModule.processModule()
-          const html = await renderView(analyzeModule, { title: reportTitle, mode: 'parsed' })
+          const html = await renderView(analyzeModule, { title: reportTitle, mode: opts?.defaultSizesMode || 'stat',isCacheLastSiezMode:opts?.isCacheLastSiezMode || false })
           return fsp.writeFile(p, html, 'utf8')
         }
         case 'server': {
           const analyzeModule = analyzerModule.processModule()
           const { setup, port } = await createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
-          setup(analyzeModule, { title: reportTitle, mode: 'stat' })
+          setup(analyzeModule, { title: reportTitle, mode: opts?.defaultSizesMode || 'stat',isCacheLastSiezMode:opts?.isCacheLastSiezMode || false })
           if ((opts.openAnalyzer ?? true) && !isCI) {
             const address = `http://localhost:${port}`
             openBrowser(address)
