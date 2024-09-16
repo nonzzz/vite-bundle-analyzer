@@ -1,6 +1,6 @@
 {
   "eslint.useFlatConfig": true,
-  "dprint.path": "../node_modules/.bin/dprint",
+  "dprint.path": "./node_modules/.bin/dprint",
   "editor.defaultFormatter": "dprint.dprint",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"

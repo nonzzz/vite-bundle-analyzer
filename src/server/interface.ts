@@ -26,11 +26,7 @@ export type OutputChunk = Extract<OutputBundle[0], { type: 'chunk' }>
 export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 
 export type AnalyzerMode = 'static' | 'json' | 'server'
-// `vite-plugin-analyzer` reports three values of size. (Same as `webpack-bundle-analyzer`)
-// But still have to retell it here
-// `stat` This is the `input` size of your file, before any transformations like minification.
-// `parsed` This is the `output` size of your bundle files. (In vite's, vite will using terser or esbuild to minified size of your code.)
-// `gzip` This is the size of running the parsed bundles/modules through gzip compression.
+
 export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
 
 export interface Module {
@@ -61,12 +57,22 @@ export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOpti
   openAnalyzer?: boolean
 }
 
-export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOptions {
-  analyzerMode?: 'static' | 'json'
+export interface AnalyzerPluginOptionsWithJson extends BasicAnalyzerPluginOptions {
+  analyzerMode?: 'json'
   fileName?: string
 }
 
-export type AnalyzerPluginOptions = AnalyzerPluginOptionsWithServer | AnalyzerPluginOptionsWithStatic
+export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOptions {
+  analyzerMode?: 'static'
+  analyzerPort?: number | 'auto'
+  openAnalyzer?: boolean
+  fileName?: string
+}
+
+export type AnalyzerPluginOptions =
+  | AnalyzerPluginOptionsWithServer
+  | AnalyzerPluginOptionsWithStatic
+  | AnalyzerPluginOptionsWithJson
 
 export interface AnalyzerStore {
   previousSourcemapOption: boolean

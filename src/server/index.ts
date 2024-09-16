@@ -2,18 +2,17 @@ import path from 'path'
 import type { Logger, Plugin } from 'vite'
 import ansis from 'ansis'
 import { opener } from './opener'
-import { renderView } from './render'
+import { arena, createServer, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
-import { createServer } from './server'
 import { analyzerDebug, convertBytes, fsp } from './shared'
 
 const isCI = !!process.env.CI
 
-const defaultOptions: AnalyzerPluginOptions = { 
+const defaultOptions: AnalyzerPluginOptions = {
   analyzerMode: 'server',
-  summary: true 
+  summary: true
 }
 
 function openBrowser(address: string) {
@@ -55,7 +54,7 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
 }
 
 function analyzer(opts?: AnalyzerPluginOptions): Plugin {
-  opts = opts ? { ...defaultOptions, ...opts } : defaultOptions
+  opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
@@ -68,6 +67,10 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
+  const preferOpenServer = opts.analyzerMode === 'server' || opts.analyzerMode === 'static'
+  const preferSilent = opts.analyzerMode === 'json' || (opts.analyzerMode === 'static' && !opts.openAnalyzer)
+
+  const b = arena()
 
   const plugin = <Plugin> {
     name: 'vite-bundle-anlyzer',
@@ -106,18 +109,18 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
 
       if (!store.hasSetSourcemapOption) {
         store.hasSetSourcemapOption = true
-       if (config.build?.sourcemap) {
-        store.previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
-          ? config.build.sourcemap
-          : config.build.sourcemap === 'hidden'
-      }
-      if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
-        config.build.sourcemap = true
-      } else {
-        // force set sourcemap to ensure the result as accurate as possible.
-        config.build.sourcemap = 'hidden'
-      }
-      analyzerDebug('Sourcemap option is set to ' + '\'' + config.build.sourcemap + '\'')
+        if (config.build?.sourcemap) {
+          store.previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
+            ? config.build.sourcemap
+            : config.build.sourcemap === 'hidden'
+        }
+        if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
+          config.build.sourcemap = true
+        } else {
+          // force set sourcemap to ensure the result as accurate as possible.
+          config.build.sourcemap = 'hidden'
+        }
+        analyzerDebug('Sourcemap option is set to ' + "'" + config.build.sourcemap + "'")
       }
     },
     async generateBundle(_, outputBundle) {
@@ -130,7 +133,9 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         const bundle = outputBundle[bundleName]
         const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
         const sourceMapStatus = sourcemapFileName ? true : false
-        analyzerDebug('Processing chunk ' + '\'' + bundle.fileName + '\'.' + 'Chunk status: ' + pass + '. ' + 'Sourcemap status: ' + sourceMapStatus + '.')
+        analyzerDebug(
+          'Processing chunk ' + "'" + bundle.fileName + "'." + 'Chunk status: ' + pass + '. ' + 'Sourcemap status: ' + sourceMapStatus + '.'
+        )
         if (pass && sourcemapFileName) {
           await analyzerModule.addModule(bundle, sourcemapFileName)
         }
@@ -145,32 +150,39 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
       if (opts.summary && !hasViteReporter) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
-      analyzerDebug('Finish analyze bundle.' + analyzerModule.modules.length + ' chunks found.') 
-      switch (opts.analyzerMode) {
-        case 'json': {
-          const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.json` : 'stats.json')
-          const analyzeModule = analyzerModule.processModule()
+      analyzerDebug('Finish analyze bundle.' + analyzerModule.modules.length + ' chunks found.')
+      const analyzeModule = analyzerModule.processModule()
+
+      if (preferSilent) {
+        const output = 'fileName' in opts ? opts.fileName : 'stats'
+        const p = path.join(defaultWd, `${output}.${opts.analyzerMode === 'json' ? 'json' : 'html'}`)
+        if (opts.analyzerMode === 'json') {
           return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
-        case 'static': {
-          const p = path.join(defaultWd, opts.fileName ? `${opts.fileName}.html` : 'stats.html')
-          const analyzeModule = analyzerModule.processModule()
-          const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
-          return fsp.writeFile(p, html, 'utf8')
-        }
-        case 'server': {
-          const analyzeModule = analyzerModule.processModule()
-          const { setup, port } = await createServer((opts.analyzerPort === 'auto' ? 0 : opts.analyzerPort) ?? 8888)
-          setup(analyzeModule, { title: reportTitle, mode: 'stat' })
-          if ((opts.openAnalyzer ?? true) && !isCI) {
-            const address = `http://localhost:${port}`
-            openBrowser(address)
-          }
-          break
-        }
-        default:
-          throw new Error('Invalidate Option `analyzerMode`')
+        const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
+        fsp.writeFile(p, html, 'utf8')
+        b.into(html)
       }
+
+      if (preferOpenServer) {
+        const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
+        b.into(html)
+        const { setup, port } = await createServer(
+          'analyzerPort' in opts
+            ? opts.analyzerPort === 'auto'
+              ? 0
+              : opts.analyzerPort
+            : 8888
+        )
+        setup({ title: reportTitle, mode: 'stat', arena: b })
+        if (('openAnalyzer' in opts ? opts.openAnalyzer : true) && !isCI) {
+          const address = `http://localhost:${port}`
+          openBrowser(address)
+        }
+        return
+      }
+
+      throw new Error('Invalidate Option `analyzerMode`')
     }
   }
 
