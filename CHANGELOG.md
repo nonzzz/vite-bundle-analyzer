@@ -1,12 +1,17 @@
+## 0.11.0
+
+# Improves & Features
+
+- Add new option `defaultSizes`. #19
+- Static mode support generating living server.(This version will open the client automatically, If you don't want please set `openAnalyzer` as `false`.) #37
+
 ## 0.10.6
 
 - Make default options happy.
 
-
 ### credits
 
 @a145789
-
 
 ## 0.10.5
 
