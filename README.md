@@ -43,21 +43,22 @@ export default defineConfig({
   ]
 })
 
-// If you are using it in rollup you can import 'adapter' from package.
+// If you are using it in rollup or others support rollup plugin system you can import 'adapter' from package.
 // Then use it with adapter(analyzer())
 ```
 
 ## Options
 
-| params         | type                   | default       | description                                                          |
-| -------------- | ---------------------- | ------------- | -------------------------------------------------------------------- |
-| `analyzerMode` | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                  |
-| `fileName`     | `string`               | `stats`       | The name of the static product.（No need to include `.ext` name）    |
-| `reportTitle`  | `string`               | `plugin name` | Report website title.                                                |
-| `gzipOptions`  | `Record<string,any>`   | `{}`          | Compression options. (details see `zlib module`)                     |
-| `analyzerPort` | `number\|'auto'`       | `8888`        | static server port.                                                  |
-| `openAnalyzer` | `boolean`              | `true`        | Open the static website. (Only works on `analyzerMode` is `server` ) |
-| `summary`      | `boolean`              | `true`        | Show full chunk info to stdout.                                      |
+| params           | type                   | default       | description                                                                      |
+| ---------------- | ---------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `analyzerMode`   | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                              |
+| `fileName`       | `string`               | `stats`       | The name of the static product.（No suffix name）                                |
+| `reportTitle`    | `string`               | `plugin name` | Report website title.                                                            |
+| `gzipOptions`    | `Record<string,any>`   | `{}`          | Compression options. (Details see `zlib module`)                                 |
+| `analyzerPort`   | `number\|'auto'`       | `8888`        | static server port.                                                              |
+| `openAnalyzer`   | `boolean`              | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
+| `defaultSizes`｜ | `stat\|parsed\|gzip`   | `stat`        | The default type selected in the client page                                     |
+| `summary`        | `boolean`              | `true`        | Show full chunk info to stdout.                                                  |
 
 ### Sponsors
 
@@ -83,7 +84,6 @@ request.
   </a>
   <!-- Add more contributors as needed -->
 </p>
-
 
 ### DEBUG
 

@@ -48,6 +48,7 @@ export interface BasicAnalyzerPluginOptions {
   summary?: boolean
   analyzerMode?: AnalyzerMode
   reportTitle?: string
+  defaultSizes?: DefaultSizes
   gzipOptions?: ZlibOptions
 }
 

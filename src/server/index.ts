@@ -12,6 +12,7 @@ const isCI = !!process.env.CI
 
 const defaultOptions: AnalyzerPluginOptions = {
   analyzerMode: 'server',
+  defaultSizes: 'stat',
   summary: true
 }
 
@@ -159,13 +160,13 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         if (opts.analyzerMode === 'json') {
           return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
-        const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
+        const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         fsp.writeFile(p, html, 'utf8')
         b.into(html)
       }
 
       if (preferOpenServer) {
-        const html = await renderView(analyzeModule, { title: reportTitle, mode: 'stat' })
+        const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         b.into(html)
         const { setup, port } = await createServer(
           'analyzerPort' in opts
