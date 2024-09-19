@@ -1,3 +1,9 @@
+## 0.11.1
+
+# Patches
+
+- Fix #38
+
 ## 0.11.0
 
 # Improves & Features

@@ -68,8 +68,8 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
-  const preferOpenServer = opts.analyzerMode === 'server' || opts.analyzerMode === 'static'
-  const preferSilent = opts.analyzerMode === 'json' || (opts.analyzerMode === 'static' && !opts.openAnalyzer)
+  const preferLivingServer = opts.analyzerMode === 'server' || opts.analyzerMode === 'static'
+  const preferSilent = opts.analyzerMode === 'json' || opts.analyzerMode === 'static'
 
   const b = arena()
 
@@ -163,9 +163,12 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         fsp.writeFile(p, html, 'utf8')
         b.into(html)
+        if (opts.analyzerMode === 'static' && !opts.openAnalyzer) {
+          return
+        }
       }
 
-      if (preferOpenServer) {
+      if (preferLivingServer) {
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         b.into(html)
         const { setup, port } = await createServer(

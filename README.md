@@ -49,16 +49,16 @@ export default defineConfig({
 
 ## Options
 
-| params           | type                   | default       | description                                                                      |
-| ---------------- | ---------------------- | ------------- | -------------------------------------------------------------------------------- |
-| `analyzerMode`   | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                              |
-| `fileName`       | `string`               | `stats`       | The name of the static product.（No suffix name）                                |
-| `reportTitle`    | `string`               | `plugin name` | Report website title.                                                            |
-| `gzipOptions`    | `Record<string,any>`   | `{}`          | Compression options. (Details see `zlib module`)                                 |
-| `analyzerPort`   | `number\|'auto'`       | `8888`        | static server port.                                                              |
-| `openAnalyzer`   | `boolean`              | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
-| `defaultSizes`｜ | `stat\|parsed\|gzip`   | `stat`        | The default type selected in the client page                                     |
-| `summary`        | `boolean`              | `true`        | Show full chunk info to stdout.                                                  |
+| params         | type                   | default       | description                                                                      |
+| -------------- | ---------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `analyzerMode` | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                              |
+| `fileName`     | `string`               | `stats`       | The name of the static product.（No suffix name）                                |
+| `reportTitle`  | `string`               | `plugin name` | Report website title.                                                            |
+| `gzipOptions`  | `Record<string,any>`   | `{}`          | Compression options. (Details see `zlib module`)                                 |
+| `analyzerPort` | `number\|'auto'`       | `8888`        | static server port.                                                              |
+| `openAnalyzer` | `boolean`              | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
+| `defaultSizes` | `stat\|parsed\|gzip`   | `stat`        | The default type selected in the client page                                     |
+| `summary`      | `boolean`              | `true`        | Show full chunk info to stdout.                                                  |
 
 ### Sponsors
 
@@ -94,6 +94,10 @@ env.
 
 If you're use a plugin that break the `sourcemap` it will affect the analyze plugin. I know it's stupid, But is the way to get the size close to the actual size. Like `@vitejs/plugin-legacy` don't prvide
 the correctly sourcemap for legacy chunk. For some reason, no analysis will be provided for those module.
+
+### Why when i specify analyzerMode as static and set openAnalyzer as false don't create a liviing server?
+
+I don't want to add new option to control living server.
 
 ### LICENSE
 
