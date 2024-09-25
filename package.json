@@ -29,8 +29,9 @@
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-esm-shim": "^0.1.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@stylex-extend/core": "^0.3.1",
-    "@stylex-extend/react": "^0.3.1",
+    "@stylex-extend/core": "^0.4.1",
+    "@stylex-extend/react": "^0.4.1",
+    "@stylex-extend/vite": "^0.4.1",
     "@stylexjs/stylex": "^0.6.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
@@ -56,8 +57,7 @@
     "rollup-plugin-swc3": "^0.11.2",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
-    "vite": "^5.2.8",
-    "vite-plugin-stylex-dev": "^0.7.4"
+    "vite": "^5.2.8"
   },
   "license": "MIT",
   "author": "kanno",

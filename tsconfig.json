@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "target": "ESNext",
     "lib": ["esnext", "DOM", "DOM.Iterable"],
-    "types": ["unplugin-icons/types/react", "react"],
+    "types": ["unplugin-icons/types/react", "react", "@stylex-extend/vite/client"],
     "resolveJsonModule": true,
     "module": "ESNext",
     "moduleResolution": "node",

@@ -2,7 +2,7 @@ import path from 'path'
 import { createRequire } from 'module'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { stylex } from 'vite-plugin-stylex-dev'
+import { stylex } from '@stylex-extend/vite'
 import { viteMinify } from 'rollup-plugin-swc3'
 import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
@@ -13,7 +13,7 @@ export default defineConfig(({ mode, command }) => {
   const base = {
     plugins: [
       react(),
-      stylex({ enableStylexExtend: true }),
+      stylex(),
       Icons({ compiler: 'jsx', jsx: 'react' }),
       viteMinify({ mangle: true, module: true, compress: true, sourceMap: true })
     ],

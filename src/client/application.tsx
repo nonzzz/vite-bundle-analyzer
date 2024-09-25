@@ -10,6 +10,8 @@ import { Sidebar, SidebarProvider } from './components/side-bar'
 import { Treemap } from './components/treemap'
 import type { Module, TreeMapComponent } from './components/treemap'
 import { convertBytes } from './shared'
+import './css-baseline'
+import 'virtual:stylex.css'
 
 interface ModuleSizeProps {
   module: Module

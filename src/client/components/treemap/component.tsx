@@ -131,6 +131,8 @@ export const Treemap = forwardRef<TreeMapComponent, TreeMapProps>(function TreeM
       onMousemove?.(group)
     }
     if (!foamTreeInstance.current && containerRef.current) {
+      const { height, width } = containerRef.current.getBoundingClientRect()
+      if (!height || !width) return
       foamTreeInstance.current = new FoamTree({
         element: containerRef.current,
         layout: 'squarified',
