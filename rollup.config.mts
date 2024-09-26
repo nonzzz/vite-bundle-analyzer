@@ -1,7 +1,7 @@
 import { builtinModules } from 'module'
 import { defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
-import { minify, swc } from 'rollup-plugin-swc3'
+import { swc } from 'rollup-plugin-swc3'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import shim from '@rollup/plugin-esm-shim'
 import commonjs from '@rollup/plugin-commonjs'
@@ -20,8 +20,8 @@ export default defineConfig([
       commonjs(),
       nodeResolve(),
       shim(),
-      swc(),
-      minify({ mangle: true, module: true, compress: true, sourceMap: true })
+      swc()
+      // minify({ mangle: true, module: true, compress: true, sourceMap: true })
     ]
   },
   {

@@ -29,9 +29,9 @@
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-esm-shim": "^0.1.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "@stylex-extend/core": "^0.4.1",
-    "@stylex-extend/react": "^0.4.1",
-    "@stylex-extend/vite": "^0.4.1",
+    "@stylex-extend/core": "^0.4.3",
+    "@stylex-extend/react": "^0.4.3",
+    "@stylex-extend/vite": "^0.4.3",
     "@stylexjs/stylex": "^0.6.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
@@ -63,7 +63,6 @@
   "author": "kanno",
   "pnpm": {
     "overrides": {
-      "vite": "^5.2.8",
       "@types/react": "^18.2.31",
       "array-includes": "npm:@nolyfill/array-includes@^1",
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",

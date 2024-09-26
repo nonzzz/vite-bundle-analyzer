@@ -35,14 +35,14 @@ function findSourcemap(filename: string, sourcemapFileName: string, chunks: Outp
   throw new Error(`[analyzer error]: Missing sourcemap for ${filename}.`)
 }
 
-function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle, sourcemapFileName: string) {
+function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle, sourcemapFileName?: string) {
   const wrapped = <WrappedChunk> {}
   const isChunk = bundle.type === 'chunk'
   wrapped.code = stringToByte(isChunk ? bundle.code : bundle.source)
-  wrapped.map = findSourcemap(bundle.fileName, sourcemapFileName, chunks)
+  wrapped.map = sourcemapFileName ? findSourcemap(bundle.fileName, sourcemapFileName, chunks) : isChunk ? bundle.map?.toString()! : ''
   wrapped.imports = isChunk ? bundle.imports : []
   wrapped.dynamicImports = isChunk ? bundle.dynamicImports : []
-  wrapped.moduleIds = isChunk ? bundle.moduleIds : []
+  wrapped.moduleIds = isChunk ? Object.keys(bundle.modules) : []
   wrapped.filename = bundle.fileName
   wrapped.isEntry = isChunk ? bundle.isEntry : false
   return wrapped
@@ -104,16 +104,14 @@ export class AnalyzerNode {
 
     for (const info of infomations) {
       if (info.id[0] === '.') {
-        const resolved = await pluginContext.resolve(info.id, this.originalId)
-        if (!resolved) continue
-        info.id = resolved.id
+        info.id = path.resolve(workspaceRoot, info.id)
       }
       const statSize = stringToByte(info.code).byteLength
       this.statSize += statSize
       stats.insert(generateNodeId(info.id, workspaceRoot), { kind: 'stat', meta: { statSize } })
     }
 
-    analyzerDebug('Start analyze stats: module ' + '\'' + this.originalId + '\'' + ' find ' + infomations.length + ' modules')
+    analyzerDebug('Start analyze stats: module ' + "'" + this.originalId + "'" + ' find ' + infomations.length + ' modules')
 
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
@@ -135,7 +133,15 @@ export class AnalyzerNode {
       count++
     }
 
-    analyzerDebug('Start analyze source: module ' + '\'' + this.originalId + '\'' + ' find ' + count + ' chunks')
+    if (count === 0 && KNOWN_EXT_NAME.includes(path.extname(this.originalId))) {
+      const b = bundle.code
+      const { byteLength: gzipSize } = await compress(b)
+      const parsedSize = b.byteLength
+      sources.insert(generateNodeId(this.originalId, workspaceRoot), { kind: 'source', meta: { gzipSize, parsedSize } })
+      count++
+    }
+
+    analyzerDebug('Start analyze source: module ' + "'" + this.originalId + "'" + ' find ' + count + ' chunks')
 
     stats.mergePrefixSingleDirectory()
     stats.walk(stats.root, (c, p) => p.groups.push(c))
@@ -179,7 +185,7 @@ export class AnalyzerModule {
     this.chunks = chunks
   }
 
-  async addModule(bundle: OutputChunk | OutputAsset, sourcemapFileName: string) {
+  async addModule(bundle: OutputChunk | OutputAsset, sourcemapFileName?: string) {
     const wrapped = wrapBundleChunk(bundle, this.chunks, sourcemapFileName)
     const node = createAnalyzerNode(wrapped.filename)
     await node.setup(wrapped, this.pluginContext!, this.compress, this.workspaceRoot)

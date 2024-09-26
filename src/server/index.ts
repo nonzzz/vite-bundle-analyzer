@@ -43,15 +43,19 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
   return `${formatNumber(count)} chunks of ${formatSize(meta.parsed)} ${extra ? `(${extra})` : ''}`
 }
 
-function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle): [boolean, string | null] {
-  const { type } = chunk
-  if (type === 'asset' && path.extname(chunk.fileName) === '.js') {
+function expectFile(fileName: string, ext: string) {
+  return path.extname(fileName) === ext
+}
+
+function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle): [boolean, string | undefined] {
+  // https://github.com/rollup/rollup/blob/master/CHANGELOG.md#features-22
+  // So we should check it and implement a polyfill.
+  if (expectFile(chunk.fileName, '.js')) {
     const possiblePath = chunk.fileName + '.map'
     if (possiblePath in allChunks) return [true, possiblePath]
-    return [true, null]
+    return [true, undefined]
   }
-  const isChunk = type === 'chunk'
-  return [isChunk, isChunk ? chunk.sourcemapFileName : null]
+  return [false, undefined]
 }
 
 function analyzer(opts?: AnalyzerPluginOptions): Plugin {
@@ -134,15 +138,23 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         const bundle = outputBundle[bundleName]
         const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
         const sourceMapStatus = sourcemapFileName ? true : false
+
         analyzerDebug(
           'Processing chunk ' + "'" + bundle.fileName + "'." + 'Chunk status: ' + pass + '. ' + 'Sourcemap status: ' + sourceMapStatus + '.'
         )
-        if (pass && sourcemapFileName) {
+        if (pass) {
+          // For classical
           await analyzerModule.addModule(bundle, sourcemapFileName)
         }
         if (!store.previousSourcemapOption) {
-          if (pass && sourcemapFileName) {
-            Reflect.deleteProperty(outputBundle, sourcemapFileName)
+          if (pass) {
+            if (sourcemapFileName) {
+              Reflect.deleteProperty(outputBundle, sourcemapFileName)
+              continue
+            }
+            if (bundle.type === 'chunk') {
+              Reflect.deleteProperty(bundle, 'map')
+            }
           }
         }
       }

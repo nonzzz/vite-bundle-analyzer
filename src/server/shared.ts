@@ -10,6 +10,7 @@ export * from '../shared'
 
 export const fsp = fs.promises
 const encoder = new TextEncoder()
+const decoder = new TextDecoder()
 const gzip = utils.promisify(zlib.gzip)
 
 const defaultGzipOptions = <ZlibOptions> {
@@ -38,6 +39,11 @@ export function slash(path: string) {
 export function stringToByte(b: string | Uint8Array) {
   if (typeof b === 'string') return encoder.encode(b)
   return b
+}
+
+export function byteToString(b: string | Uint8Array) {
+  if (typeof b === 'string') return b
+  return decoder.decode(b)
 }
 
 export async function readAll(entry: string) {
@@ -88,9 +94,9 @@ export function isFileReadable(filename: string): boolean {
 export function createDebug(namespace: string) {
   const hasDebug = process.env.DEBUG || process.env.ANALYZE_DEBUG
   if (hasDebug) {
-      return (...args: any[]) => {
-          console.log(ansis.hex('#5B45DE')(`[${namespace}]`), ...args)
-      }
+    return (...args: any[]) => {
+      console.log(ansis.hex('#5B45DE')(`[${namespace}]`), ...args)
+    }
   }
   return noop
 }

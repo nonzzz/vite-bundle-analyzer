@@ -1,5 +1,6 @@
 import { SourceMapConsumer } from '@jridgewell/source-map'
 import type { ChunkMetadata } from './trie'
+import { byteToString } from './shared'
 
 // @jridgewell/source-map is an opinionated library
 // So we should base on them to implement some missing or different features
@@ -19,11 +20,9 @@ function parse(s: string) {
   return JSON.parse(s)
 }
 
-// sourcemap is using UTF-16 decoding or encoding the input string
-const decoder = new TextDecoder()
-
 export function pickupContentFromSourcemap(rawSourcemap: string) {
   const consumer = new Sourcemap(rawSourcemap)
+
   const result = consumer.sources.reduce((acc, cur) => {
     if (cur) {
       const code = consumer.sourceContentFor(cur, true)
@@ -40,7 +39,7 @@ export function pickupMappingsFromCodeBinary(bytes: Uint8Array, rawSourcemap: st
   const grouped: Record<string, string> = {}
   let line = 1
   let column = 0
-  const code = decoder.decode(bytes)
+  const code = byteToString(bytes)
   for (let i = 0; i < code.length; i++, column++) {
     const { source } = consumer.originalPositionFor({ line, column })
     if (source != null) {
