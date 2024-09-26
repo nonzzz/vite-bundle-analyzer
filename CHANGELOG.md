@@ -1,3 +1,9 @@
+## 0.12.0
+
+# Improves
+
+- Minimum support for `vite@3.1.0`.
+
 ## 0.11.1
 
 # Patches

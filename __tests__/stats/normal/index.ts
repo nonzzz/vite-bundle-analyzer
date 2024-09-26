@@ -11,6 +11,7 @@ export default createMockStats('normal.js', {
   isEntry: true,
   map,
   moduleIds: [],
+  modules: {},
   type: 'chunk'
 }, [
   { filename: 'normal.js', label: 'normal.js', statSize: getByteLen(code), parsedSize: getByteLen(code), mapSize: getByteLen(map) }

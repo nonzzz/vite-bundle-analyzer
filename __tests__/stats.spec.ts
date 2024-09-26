@@ -31,6 +31,7 @@ async function runStatTest(data: ReturnType<typeof createMockStats>, t: Executio
   if (Array.isArray(expect)) {
     assert(module[0], expect[0], Object.keys(expect[0]) as (keyof Module)[], t)
   }
+  t.pass()
 }
 
 test('normal', async (t) => {
