@@ -1,3 +1,7 @@
+## 0.12.1
+
+Better debug log info.
+
 ## 0.12.0
 
 # Improves

@@ -23,7 +23,7 @@ build-server:
 
 dev-server:
 	@echo "Starting server in development mode..."
-	@pnpm exec rollup --config rollup.config.mts --configPlugin swc3 --watch
+	@export NODE_ENV=development && pnpm exec rollup --config rollup.config.mts --configPlugin swc3 --watch
 
 dev-client:
 	@echo "Starting client in development mode..."

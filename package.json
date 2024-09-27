@@ -1,7 +1,7 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "0.12.0",
-  "description": "a vite bundle analyzer",
+  "version": "0.12.1",
+  "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "vite src/client",
-    "dev:plugin": "rollup --config rollup.config.mts --configPlugin swc3 --watch",
+    "dev:plugin": "export NODE_ENV=development && rollup --config rollup.config.mts --configPlugin swc3 --watch",
     "build": "pnpm run build:client && pnpm run build:plugin",
     "build:client": "vite build src/client",
     "build:plugin": "rollup --config rollup.config.mts --configPlugin swc3",
@@ -92,7 +92,8 @@
     "rollup",
     "rollup-plugin",
     "vite-plugin",
-    "bundle-analyzer"
+    "bundle-analyzer",
+    "rollup-bundle-analyzer"
   ],
   "ava": {
     "files": [

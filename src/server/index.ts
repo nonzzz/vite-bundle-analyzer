@@ -125,7 +125,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           // force set sourcemap to ensure the result as accurate as possible.
           config.build.sourcemap = 'hidden'
         }
-        analyzerDebug('Sourcemap option is set to ' + "'" + config.build.sourcemap + "'")
+        analyzerDebug(`plugin status is ${config.build.sourcemap ? ansis.green('ok') : ansis.red('invalid')}`)
       }
     },
     async generateBundle(_, outputBundle) {
@@ -137,11 +137,6 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
       for (const bundleName in outputBundle) {
         const bundle = outputBundle[bundleName]
         const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
-        const sourceMapStatus = sourcemapFileName ? true : false
-
-        analyzerDebug(
-          'Processing chunk ' + "'" + bundle.fileName + "'." + 'Chunk status: ' + pass + '. ' + 'Sourcemap status: ' + sourceMapStatus + '.'
-        )
         if (pass) {
           // For classical
           await analyzerModule.addModule(bundle, sourcemapFileName)
@@ -163,7 +158,6 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
       if (opts.summary && !hasViteReporter) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
-      analyzerDebug('Finish analyze bundle.' + analyzerModule.modules.length + ' chunks found.')
       const analyzeModule = analyzerModule.processModule()
 
       if (preferSilent) {
@@ -195,10 +189,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           const address = `http://localhost:${port}`
           openBrowser(address)
         }
-        return
       }
-
-      throw new Error('Invalidate Option `analyzerMode`')
     }
   }
 

@@ -1,3 +1,11 @@
+// MIT LICENSE
+// Copyright (c) Domenic Denicola
+// https://github.com/domenic/opener/blob/master/LICENSE.txt
+
+// This implementation is based on the `opener` package (It's no longer maintained)
+// But we fixed the wsl/wsl2 (maybe)
+// In past versions. The wsl/wsl2 os release might be `Microsoft` but now it's full lowercase `microsoft`
+
 import os from 'os'
 import child_process from 'child_process'
 

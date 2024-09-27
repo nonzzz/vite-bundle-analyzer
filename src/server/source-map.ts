@@ -36,7 +36,8 @@ export function pickupContentFromSourcemap(rawSourcemap: string) {
 
 export function pickupMappingsFromCodeBinary(bytes: Uint8Array, rawSourcemap: string, formatter: (id: string) => string) {
   const consumer = new Sourcemap(rawSourcemap)
-  const grouped: Record<string, string> = {}
+  const grouped: Record<string, string | Uint8Array> = {}
+  const files = new Set<string>()
   let line = 1
   let column = 0
   const code = byteToString(bytes)
@@ -51,6 +52,7 @@ export function pickupMappingsFromCodeBinary(bytes: Uint8Array, rawSourcemap: st
         grouped[id] = ''
       }
       grouped[id] += char
+      files.add(id)
     }
 
     if (code[i] === '\n') {
@@ -59,5 +61,5 @@ export function pickupMappingsFromCodeBinary(bytes: Uint8Array, rawSourcemap: st
     }
   }
   consumer.destroy()
-  return grouped
+  return { grouped, files }
 }

@@ -1,5 +1,6 @@
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
+import ansis from 'ansis'
 import { analyzerDebug, createGzip, slash, stringToByte } from './shared'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
@@ -46,6 +47,10 @@ function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle
   wrapped.filename = bundle.fileName
   wrapped.isEntry = isChunk ? bundle.isEntry : false
   return wrapped
+}
+
+function printDebugLog(namespace: string, id: string, total: number) {
+  analyzerDebug(`[${namespace}]: ${ansis.yellow(id)} find ${ansis.bold(ansis.green(total + ''))} relative modules.`)
 }
 
 export class AnalyzerNode {
@@ -111,17 +116,20 @@ export class AnalyzerNode {
       stats.insert(generateNodeId(info.id, workspaceRoot), { kind: 'stat', meta: { statSize } })
     }
 
-    analyzerDebug('Start analyze stats: module ' + "'" + this.originalId + "'" + ' find ' + infomations.length + ' modules')
+    printDebugLog('stats', this.originalId, infomations.length)
 
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
     // It's will cause dead lock.(Altough this is a race case.)
-    const chunks = pickupMappingsFromCodeBinary(bundle.code, map, (id: string) => {
+    const { grouped: chunks, files } = pickupMappingsFromCodeBinary(bundle.code, map, (id: string) => {
       const relatived = path.relative(workspaceRoot, id)
       return path.join(workspaceRoot, relatived)
     })
 
-    let count = 0
+    if (!files.size) {
+      chunks[this.originalId] = bundle.code
+      files.add(this.originalId)
+    }
 
     for (const id in chunks) {
       if (!KNOWN_EXT_NAME.includes(path.extname(id))) continue
@@ -130,18 +138,9 @@ export class AnalyzerNode {
       const { byteLength: gzipSize } = await compress(b)
       const parsedSize = b.byteLength
       sources.insert(generateNodeId(id, workspaceRoot), { kind: 'source', meta: { gzipSize, parsedSize } })
-      count++
     }
 
-    if (count === 0 && KNOWN_EXT_NAME.includes(path.extname(this.originalId))) {
-      const b = bundle.code
-      const { byteLength: gzipSize } = await compress(b)
-      const parsedSize = b.byteLength
-      sources.insert(generateNodeId(this.originalId, workspaceRoot), { kind: 'source', meta: { gzipSize, parsedSize } })
-      count++
-    }
-
-    analyzerDebug('Start analyze source: module ' + "'" + this.originalId + "'" + ' find ' + count + ' chunks')
+    printDebugLog('source', this.originalId, files.size)
 
     stats.mergePrefixSingleDirectory()
     stats.walk(stats.root, (c, p) => p.groups.push(c))
