@@ -17,7 +17,7 @@ export interface FileListProps<F> {
 
 const styles = stylex.create({
   baseline: {
-    ':not(#__unused__) > div': {
+    ':not(#_) > div': {
       alignItems: 'baseline'
     }
   }

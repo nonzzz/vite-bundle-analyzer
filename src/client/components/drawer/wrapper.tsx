@@ -35,19 +35,19 @@ function DrawerWrapper(props: React.PropsWithChildren<DrawerWrapperProps>) {
     transition: 'opacity, transform 400ms cubic-bezier(0.1, 0.6, 0.1, 1)',
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    ':not(#__unused__).wrapper-enter': {
+    ':not(#_).wrapper-enter': {
       opacity: 0,
       transform: 'translate3d(-100%, 0, 0)'
     },
-    ':not(#__unused__).wrapper-enter-active': {
+    ':not(#_).wrapper-enter-active': {
       opacity: 1,
       transform: 'translate3d(0, 0, 0)'
     },
-    ':not(#__unused__).wrapper-leave': {
+    ':not(#_).wrapper-leave': {
       opacity: 1,
       transition: 'opacity, transform 400ms cubic-bezier(0.1, 0.2, 0.1, 1)'
     },
-    ':not(#__unused__).wrapper-leave-active': {
+    ':not(#_).wrapper-leave-active': {
       opacity: 0.4,
       transform: 'translate3d(-100%, 0, 0)'
     },

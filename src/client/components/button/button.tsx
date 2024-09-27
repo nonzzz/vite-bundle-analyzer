@@ -33,7 +33,7 @@ const styles = stylex.create({
     color: '#666',
     alignItems: 'center',
     zIndex: 1,
-    ':not(#__unused__)  svg': {
+    ':not(#_)  svg': {
       background: 'transparent',
       height: 'calc(var(--button-height) / 2.35)',
       width: 'calc(var(--button-height) / 2.35)'

@@ -52,7 +52,7 @@ function SelectMultipleValue({
         backgroundColor: '#eaeaea',
         color: '#444',
         margin: '3px',
-        ':not(#__unused__) >div:not(.clear-icon)': {
+        ':not(#_) >div:not(.clear-icon)': {
           borderRadius: 0,
           backgroundColor: 'transparent',
           padding: 0,

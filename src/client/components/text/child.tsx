@@ -42,22 +42,22 @@ function TextChild({
   const { className, style } = stylex.props(inline({
     width: SCALES.width(1, 'auto'),
     height: SCALES.height(1, 'auto'),
-    ':not(#__unused__).font': {
+    ':not(#_).font': {
       fontSize: SCALES.font(1, 'inherit')
     },
-    ':not(#__unused__).mx': {
+    ':not(#_).mx': {
       marginLeft: SCALES.ml(0, 'revert'),
       marginRight: SCALES.mr(0, 'revert')
     },
-    ':not(#__unused__).my': {
+    ':not(#_).my': {
       marginTop: SCALES.mt(0, 'revert'),
       marginBottom: SCALES.mb(0, 'revert')
     },
-    ':not(#__unused__).px': {
+    ':not(#_).px': {
       paddingLeft: SCALES.pl(0, 'revert'),
       paddingRight: SCALES.pr(0, 'revert')
     },
-    ':not(#__unused__).py': {
+    ':not(#_).py': {
       paddingTop: SCALES.pt(0, 'revert'),
       paddingBottom: SCALES.pb(0, 'revert')
     }

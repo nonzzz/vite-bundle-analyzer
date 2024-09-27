@@ -199,14 +199,14 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
               marginRight: '1.25em',
               fontSize: 'var(--select-font-size)',
               color: '#999',
-              ':not(#__unused__) div': {
+              ':not(#_) div': {
                 borderRadius: 0,
                 backgroundColor: 'transparent',
                 padding: 0,
                 margin: 0,
                 color: 'inherit'
               },
-              ':not(#__unused__) div:hover': {
+              ':not(#_) div:hover': {
                 borderRadius: 0,
                 backgroundColor: 'transparent',
                 padding: 0,
@@ -233,7 +233,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
             display: 'flex',
             alignItems: 'center',
             color: '#666',
-            ':not(#__unused__) svg': {
+            ':not(#_) svg': {
               color: 'inherit',
               stroke: 'currentColor',
               transition: 'all 200ms ease',
