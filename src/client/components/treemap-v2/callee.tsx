@@ -2,11 +2,11 @@ import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
 import { useApplicationContext } from '../../context'
 import { Treemap } from './component'
 import type { TreemapComponentInstance } from './component'
-import { DuckModule, wrapperAsModule } from './squarify'
-import { Module } from './interface'
+import { wrapperAsModule } from './squarify'
+import { PaintEventMap } from './treemap'
 
 export interface TreemapProps {
-  onMousemove: (data: any) => void
+  onMousemove: PaintEventMap['mousemove']
 }
 
 export const TreemapV2 = forwardRef((props: TreemapProps, ref) => {
@@ -15,8 +15,7 @@ export const TreemapV2 = forwardRef((props: TreemapProps, ref) => {
 
   useImperativeHandle(ref, () => instance.current!)
 
-  // @ts-expect-error
-  const visibleChunks = useMemo<DuckModule<Module>>(() => {
+  const visibleChunks = useMemo(() => {
     return analyzeModule.filter(m => scence.has(m.label)).map(m => {
       const { stats, source, ...rest } = m
       const groups = sizes === 'statSize' ? stats : source

@@ -2,7 +2,7 @@ import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useRef } 
 import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
 import { PaintOptions, createTreemap } from './treemap'
-import { DuckModule } from './squarify'
+import type { DuckModule } from './interface'
 
 export interface TreemapProps<T> {
   options?: PaintOptions<T>
