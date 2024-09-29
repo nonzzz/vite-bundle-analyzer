@@ -9,6 +9,7 @@ import type { SelectInstance } from '../select'
 import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
+import { sortChildrenBySize } from '../treemap-v2/squarify'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
 import Menu from '~icons/ph/list'
 
@@ -29,10 +30,12 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const [entrypoints, setEntrypoints] = useState<string[]>([])
   const selectRef = useRef<SelectInstance>(null)
 
-  const allChunks = useMemo(() =>
-    analyzeModule
-      .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
-      .sort((a, b) => b[userMode] - a[userMode]), [analyzeModule, userMode, entrypoints])
+  const allChunks = useMemo(() => {
+    const points = new Set(entrypoints)
+    return analyzeModule.filter(chunk => !points.size || points.has(chunk.label) || chunk.imports.some(id => points.has(id)))
+      .map((chunk) => ({ ...chunk, groups: userMode === 'statSize' ? chunk.stats : chunk.source }))
+      .sort((a, b) => sortChildrenBySize(a, b, userMode, 'label'))
+  }, [analyzeModule, userMode, entrypoints])
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 

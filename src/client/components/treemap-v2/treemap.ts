@@ -1,8 +1,12 @@
+/* eslint-disable no-use-before-define */
 // Alough foamtree is very useful, but we don't need too much function.
 // so implement a simple and lightweight treemap component.
 
 export interface PaintOptions<T> {
   data: T
+  evt?: {
+    mousemove?: (this: Paint, data: any) => void
+  }
 }
 
 export interface PaintRect {
@@ -31,6 +35,8 @@ class Paint {
     return this
   }
 
+  zoom() {}
+
   private get ctx() {
     return this.context!
   }
@@ -39,7 +45,12 @@ class Paint {
     return this._canvas!
   }
 
+  private eventHandler<T extends MouseEvent | WheelEvent>(e: T, handler: (evt: any) => void) {
+    handler(e)
+  }
+
   private draw() {
+    //
   }
 
   dispose() {
@@ -67,7 +78,16 @@ class Paint {
     this.draw()
   }
 
-  setOptions<T>(options: PaintOptions<T>) {
+  setOptions<T>(options?: PaintOptions<T>) {
+    if (!options || !this.canvas) return
+    const { evt: userEvent } = options
+    if (userEvent) {
+      this.canvas.onmousemove = (e) =>
+        this.eventHandler(e, (evt) => {
+          this.canvas.style.cursor = 'pointer'
+          userEvent.mousemove?.call(this, null)
+        })
+    }
   }
 }
 

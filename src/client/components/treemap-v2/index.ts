@@ -1,1 +1,1 @@
-export { Treemap as TreemapV2 } from './component'
+export { TreemapV2 } from './callee'

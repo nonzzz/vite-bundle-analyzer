@@ -1,7 +1,7 @@
 import type { Module } from './interface'
 
-export function sortChildrenBySize(a: Module, b: Module) {
-  return b.weight - a.weight || +(a.id > b.id) - +(a.id < b.id)
+export function sortChildrenBySize(a: Module, b: Module, condtion: string = 'size', fallbackCondition: string = 'id') {
+  return b[condtion] - a[condtion] || +(a[fallbackCondition] > b[fallbackCondition]) - +(a[fallbackCondition] < b[fallbackCondition])
 }
 
 export function flattenModules<T extends Record<string, any> & { groups: T[] }>(modules: T[]): Omit<T, 'groups'>[] {

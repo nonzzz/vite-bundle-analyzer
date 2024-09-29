@@ -7,9 +7,11 @@ import { Text } from './components/text'
 import { Spacer } from './components/spacer'
 import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
-import { Treemap } from './components/treemap'
+
+// import { Treemap } from './components/treemap'
 import { TreemapV2 } from './components/treemap-v2'
-import type { Module, TreeMapComponent } from './components/treemap'
+import type { Module } from './components/treemap-v2/interface'
+import type { TreeMapComponent } from './components/treemap'
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
@@ -57,7 +59,7 @@ export function App() {
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
-        <TreemapV2 />
+        <TreemapV2 ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
         {/* <Treemap ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} /> */}
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (

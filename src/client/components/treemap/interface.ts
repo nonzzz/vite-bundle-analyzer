@@ -1,7 +1,7 @@
 import { Module as _Module } from '../../interface'
 
 export type Module = _Module & {
-  weight: number
+  weight?: number
   groups: Module[]
   [prop: string]: any
 }
