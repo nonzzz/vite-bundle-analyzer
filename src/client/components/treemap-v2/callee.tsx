@@ -2,8 +2,8 @@ import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
 import { useApplicationContext } from '../../context'
 import { Treemap } from './component'
 import type { TreemapComponentInstance } from './component'
-import { wrapperAsModule } from './squarify'
-import { PaintEventMap } from './treemap'
+import { sortChildrenBySize, wrapperAsModule } from './squarify'
+import type { PaintEventMap } from './treemap'
 
 export interface TreemapProps {
   onMousemove: PaintEventMap['mousemove']
@@ -21,7 +21,18 @@ export const TreemapV2 = forwardRef((props: TreemapProps, ref) => {
       const groups = sizes === 'statSize' ? stats : source
       return wrapperAsModule({ ...rest, groups }, sizes)
     })
+      .sort(sortChildrenBySize)
   }, [analyzeModule, scence, sizes])
 
-  return <Treemap ref={(c) => instance.current = c!} options={{ data: visibleChunks, evt: { mousemove: props.onMousemove } }} />
+  const eventMap = useMemo(() => {
+    return {
+      mousemove: props.onMousemove
+    }
+  }, [props.onMousemove])
+
+  const options = useMemo(() => {
+    return { data: visibleChunks, evt: eventMap }
+  }, [visibleChunks, eventMap])
+
+  return <Treemap ref={(c) => instance.current = c!} options={options} />
 })

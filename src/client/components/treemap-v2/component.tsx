@@ -2,7 +2,7 @@ import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useRef } 
 import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
 import { PaintOptions, createTreemap } from './treemap'
-import type { DuckModule } from './interface'
+import type { NativeModule } from './interface'
 
 export interface TreemapProps<T> {
   options?: PaintOptions<T>
@@ -11,7 +11,7 @@ export interface TreemapProps<T> {
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
 // eslint-disable-next-line no-unused-vars
-export const Treemap = forwardRef(<_, P>(props: TreemapProps<DuckModule<P>>, ref: Ref<TreemapComponentInstance>) => {
+export const Treemap = forwardRef(<_, P extends NativeModule>(props: TreemapProps<P>, ref: Ref<TreemapComponentInstance>) => {
   const root = useRef<HTMLDivElement | null>(null)
   const instanceRef = useRef<TreemapComponentInstance>()
 

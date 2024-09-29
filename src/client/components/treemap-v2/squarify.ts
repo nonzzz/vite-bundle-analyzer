@@ -5,7 +5,7 @@
 // so we no need to sort the module at client side. (unlike the original squarify algorithm)
 
 import type { Sizes } from '../../interface'
-import type { DuckModule, Module } from './interface'
+import type { DuckModule, Module, NativeModule } from './interface'
 
 // steps: recursive splitting.
 // 1. find the shortest side of the rectangle.
@@ -91,11 +91,25 @@ import type { DuckModule, Module } from './interface'
 //    if
 // end
 
-export function squarify(data: DuckModule<Module>[], x: number, y: number, w: number, h: number) {
+export function squarify<T = NativeModule>(data: DuckModule<T>[], x: number, y: number, w: number, h: number) {
   //
+  const result: Module[] = []
+
+  if (!data.length) return result
+  const recursion = (start: number, x: number, y: number, w: number, h: number) => {
+    while (start < data.length) {
+      const totalSize = data.slice(start).reduce((acc, cur) => acc + cur.size, 0)
+      //
+      console.log('totalSize', totalSize)
+      start++
+    }
+  }
+
+  recursion(0, x, y, w, h)
+  return result
 }
 
-export function sortChildrenBySize<T extends DuckModule<T>>(
+export function sortChildrenBySize<T extends DuckModule>(
   a: T,
   b: T,
   condtion: string = 'size',
@@ -123,7 +137,8 @@ export function flattenModules<
 
 export function wrapperAsModule<T extends DuckModule<T>>(data: T, sizes: Sizes) {
   if (Array.isArray(data.groups)) {
-    data.groups = data.groups.map((m) => wrapperAsModule(m as T, sizes))
+    // @ts-expect-error
+    data.groups = data.groups.map((m) => wrapperAsModule(m as T, sizes)).sort(sortChildrenBySize)
   }
   return { ...data, size: data[sizes] satisfies number }
 }
