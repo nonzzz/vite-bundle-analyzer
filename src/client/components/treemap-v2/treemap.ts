@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
 // Alough foamtree is very useful, but we don't need too much function.
 // so implement a simple and lightweight treemap component.
-import {} from './squarify'
-import type { DuckModule, Module } from './interface'
+import { squarify } from './squarify'
+import type { DuckModule, NativeModule } from './interface'
 
 export interface PaintEvent<E> {
   nativeEvent: E
@@ -13,8 +13,8 @@ export interface PaintEventMap {
   mousemove: (this: Paint, event: PaintEvent<MouseEvent>) => void
 }
 
-export interface PaintOptions<T = DuckModule<Module>[]> {
-  data: T[]
+export interface PaintOptions<T> {
+  data: DuckModule<T>[]
   evt?: Partial<PaintEventMap>
 }
 
@@ -23,18 +23,25 @@ export interface PaintRect {
   h: number
 }
 
+function createPaintEventHandler(canvas: HTMLCanvasElement, eventType: keyof PaintEventMap, handler: EventListener) {
+  canvas.addEventListener(eventType, handler)
+  return { handler }
+}
+
 class Paint {
   private mountNode: HTMLDivElement | null
   private _canvas: HTMLCanvasElement | null
   private context: CanvasRenderingContext2D | null
   private rect: PaintRect
-  private data: DuckModule<Module>[]
+  private data: DuckModule<NativeModule>[]
+  private eventMaps: Record<string, EventListener>
   constructor() {
     this.mountNode = null
     this._canvas = null
     this.context = null
     this.data = []
     this.rect = { w: 0, h: 0 }
+    this.eventMaps = Object.create(null)
   }
 
   init(element: HTMLElement) {
@@ -55,26 +62,49 @@ class Paint {
     return this._canvas!
   }
 
-  private eventHandler<T extends MouseEvent | WheelEvent>(e: T, handler: (evt: any) => void) {
-    handler(e)
+  private eventHandler<T extends keyof PaintEventMap, E extends Event>(type: T, e: E, handler: PaintEventMap[T]) {
+    switch (type) {
+      case 'mousemove':
+        this.canvas.style.cursor = 'pointer'
+        break
+    }
+    handler.call(this, {
+      nativeEvent: e as unknown as MouseEvent,
+      module: {}
+    })
   }
 
   private draw() {
     //
   }
 
-  dispose() {
+  private deinitEventMaps() {
+    if (this.eventMaps) {
+      for (const evt in this.eventMaps) {
+        this.canvas.removeEventListener(evt, this.eventMaps[evt])
+      }
+    }
+  }
+
+  private deinit(release = false) {
     if (!this.mountNode) return
+    this.deinitEventMaps()
     this.mountNode.removeChild(this.canvas!)
-    this.mountNode = null
+    if (release) {
+      this.mountNode = null
+    }
     this._canvas = null
     this.context = null
     this.data = []
     this.rect = { w: 0, h: 0 }
   }
 
+  dispose() {
+    this.deinit(true)
+  }
+
   resize() {
-    if (!this.mountNode) return
+    if (!this.mountNode || !this.canvas) return
     const previousRect = { ...this.rect }
     const ratio = window.devicePixelRatio || 1
     const { width, height } = this.mountNode.getBoundingClientRect()
@@ -85,22 +115,40 @@ class Paint {
     this.ctx.scale(ratio, ratio)
     if (previousRect.w !== width || previousRect.h !== height) {
       // squarify layout
+      squarify(this.data, 0, 0, width, height)
     }
     this.draw()
   }
 
-  setOptions(options?: PaintOptions<DuckModule<Module>>) {
-    if (!options || !this.canvas) return
+  setOptions<T extends NativeModule>(options?: PaintOptions<T>) {
+    if (!options) return
     const { evt: userEvent, data } = options
     this.data = data
-    this.resize()
-    if (userEvent) {
-      this.canvas.onmousemove = (e) =>
-        this.eventHandler(e, (evt) => {
-          this.canvas.style.cursor = 'pointer'
-          userEvent.mousemove?.call(this, evt)
-        })
+    const unReady = !this.data.length
+    if (unReady) {
+      if (this.mountNode && this.canvas) {
+        this.deinit()
+      }
+      return
     }
+    if (!this._canvas) {
+      this.init(this.mountNode!)
+    }
+
+    this.deinitEventMaps()
+
+    if (userEvent) {
+      for (const evt in userEvent) {
+        const { handler } = createPaintEventHandler(this.canvas, evt as keyof PaintEventMap, (e) => {
+          this.eventHandler(evt as keyof PaintEventMap, e, userEvent[evt as keyof PaintEventMap]!)
+        })
+        const nativeEventName = 'on' + evt
+        this.eventMaps[nativeEventName] = handler
+        // @ts-expect-error
+        this.canvas[nativeEventName] = handler
+      }
+    }
+    this.resize()
   }
 }
 

@@ -1,4 +1,4 @@
-type NativeModule = typeof window.analyzeModule[number]
+export type NativeModule = typeof window.analyzeModule[number]
 
 export type Module = NativeModule & {
   layout: [number, number, number, number]
@@ -7,4 +7,4 @@ export type Module = NativeModule & {
   [key: string]: any
 }
 
-export type DuckModule<T> = Record<string, any> & { groups: T[] }
+export type DuckModule<T = NativeModule> = Record<string, any> & { groups: T[] }
