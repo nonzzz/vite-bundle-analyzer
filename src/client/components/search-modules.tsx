@@ -1,9 +1,9 @@
 import { ChangeEvent, useMemo, useState } from 'react'
-import type { Sizes } from '../interface'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
-import { findRelativeModuleByFilename, flattenModules } from '../components/treemap/shared'
-import type { Module } from './treemap'
+import { findRelativeModuleByFilename } from '../components/treemap/shared'
+import type { Module, Sizes } from '../interface'
+import { flattenModules } from './treemap-v2/squarify'
 import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
@@ -11,23 +11,16 @@ import { ModuleItem } from './module-item'
 import Folder from '~icons/ph/folder'
 import File from '~icons/ph/file-duotone'
 
-export interface SearchModulesProps {
-  files: Module[]
+export interface SearchModulesProps<F> {
+  files: F[]
   extra: Sizes
 }
 
-function extension(filename: string) {
-  const match = filename.match(/\.([^.]+)$/)
-  return match ? `${match[1]}` : ''
-}
-
-type ExcludeGroupsModule = Omit<Module, 'groups'>
-
-type FilterModule = ExcludeGroupsModule & {
+type FilterModule = Omit<Module, 'groups'> & {
   isDirectory: boolean
 }
 
-export function SearchModules(props: SearchModulesProps) {
+export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
   const { treemap } = useTreemapContext()
 
   const { extra, files } = props
@@ -39,25 +32,24 @@ export function SearchModules(props: SearchModulesProps) {
     if (!regExp) {
       return []
     }
-    const filtered = files.map((module) => {
+    return files.map(module => {
       return {
         parent: module,
         children: uniqBy(
-          flattenModules(module.groups).filter(m => regExp.test(m.label))
-            .map(m => ({
-              ...m,
-              isDirectory: extension(m.label) ? false : true
-            })) as Omit<Module, 'groups'>[],
+          flattenModules<Module, FilterModule>(
+            module.groups
+          ).filter(m => regExp.test(m.label)).map((m) => {
+            console.log(m)
+            return ({ ...m, isDirectory: !/\.(\w+)$/.test(m.label) })
+          }),
           'label'
-        )
-          .sort((a, b) => {
-            if (a.isDirectory && !b.isDirectory) return -1
-            if (!a.isDirectory && b.isDirectory) return 1
-            return b[extra] - a[extra]
-          }) as FilterModule[]
+        ).sort((a, b) => {
+          if (a.isDirectory && !b.isDirectory) return -1
+          if (!a.isDirectory && b.isDirectory) return 1
+          return b[extra] - a[extra]
+        })
       }
     })
-    return filtered
   }, [regExp, files, extra])
 
   const findModulesSize = useMemo(
@@ -120,8 +112,6 @@ export function SearchModules(props: SearchModulesProps) {
                     name={child.label}
                     size={child[extra]}
                     pointer={availableMap[child.label]}
-                    onMouseEnter={() => handleMouseEnter(child)}
-                    onClick={() => treemap.current?.zoom(findRelativeModuleByFilename(module.parent, child.filename)!)}
                     stylex={{ fontStyle: 'italic' }}
                   >
                     {child.isDirectory ? <Folder /> : <File />}
