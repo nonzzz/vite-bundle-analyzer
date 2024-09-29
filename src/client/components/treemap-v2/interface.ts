@@ -6,3 +6,5 @@ export type Module = NativeModule & {
   groups: Module[]
   [key: string]: any
 }
+
+export type DuckModule<T> = Record<string, any> & { groups: T[] }

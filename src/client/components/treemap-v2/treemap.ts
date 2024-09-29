@@ -1,12 +1,21 @@
 /* eslint-disable no-use-before-define */
 // Alough foamtree is very useful, but we don't need too much function.
 // so implement a simple and lightweight treemap component.
+import {} from './squarify'
+import type { DuckModule, Module } from './interface'
 
-export interface PaintOptions<T> {
-  data: T
-  evt?: {
-    mousemove?: (this: Paint, data: any) => void
-  }
+export interface PaintEvent<E> {
+  nativeEvent: E
+  module: any
+}
+
+export interface PaintEventMap {
+  mousemove: (this: Paint, event: PaintEvent<MouseEvent>) => void
+}
+
+export interface PaintOptions<T = DuckModule<Module>[]> {
+  data: T[]
+  evt?: Partial<PaintEventMap>
 }
 
 export interface PaintRect {
@@ -19,10 +28,12 @@ class Paint {
   private _canvas: HTMLCanvasElement | null
   private context: CanvasRenderingContext2D | null
   private rect: PaintRect
+  private data: DuckModule<Module>[]
   constructor() {
     this.mountNode = null
     this._canvas = null
     this.context = null
+    this.data = []
     this.rect = { w: 0, h: 0 }
   }
 
@@ -31,7 +42,6 @@ class Paint {
     this._canvas = document.createElement('canvas')
     this.context = this.canvas.getContext('2d')
     this.mountNode.appendChild(this.canvas)
-    this.resize()
     return this
   }
 
@@ -59,6 +69,7 @@ class Paint {
     this.mountNode = null
     this._canvas = null
     this.context = null
+    this.data = []
     this.rect = { w: 0, h: 0 }
   }
 
@@ -73,19 +84,21 @@ class Paint {
     this.canvas.style.cssText = `width: ${width}px; height: ${height}px`
     this.ctx.scale(ratio, ratio)
     if (previousRect.w !== width || previousRect.h !== height) {
-      //
+      // squarify layout
     }
     this.draw()
   }
 
-  setOptions<T>(options?: PaintOptions<T>) {
+  setOptions(options?: PaintOptions<DuckModule<Module>>) {
     if (!options || !this.canvas) return
-    const { evt: userEvent } = options
+    const { evt: userEvent, data } = options
+    this.data = data
+    this.resize()
     if (userEvent) {
       this.canvas.onmousemove = (e) =>
         this.eventHandler(e, (evt) => {
           this.canvas.style.cursor = 'pointer'
-          userEvent.mousemove?.call(this, null)
+          userEvent.mousemove?.call(this, evt)
         })
     }
   }

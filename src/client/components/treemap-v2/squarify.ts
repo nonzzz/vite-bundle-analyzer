@@ -5,8 +5,7 @@
 // so we no need to sort the module at client side. (unlike the original squarify algorithm)
 
 import type { Sizes } from '../../interface'
-
-export type DuckModule<T> = Record<string, any> & { groups: T[] }
+import type { DuckModule, Module } from './interface'
 
 // steps: recursive splitting.
 // 1. find the shortest side of the rectangle.
@@ -91,6 +90,10 @@ export type DuckModule<T> = Record<string, any> & { groups: T[] }
 //       squarify(children, [], width())
 //    if
 // end
+
+export function squarify(data: DuckModule<Module>[], x: number, y: number, w: number, h: number) {
+  //
+}
 
 export function sortChildrenBySize<T extends DuckModule<T>>(
   a: T,
