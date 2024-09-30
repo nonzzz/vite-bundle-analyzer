@@ -18,7 +18,7 @@
     "build": "pnpm run build:client && pnpm run build:plugin",
     "build:client": "vite build src/client",
     "build:plugin": "rollup --config rollup.config.mts --configPlugin swc3",
-    "test": "c8 -r=lcov ava __tests__/*.spec.ts",
+    "test": "vitest",
     "lint": "eslint . --fix"
   },
   "devDependencies": {
@@ -35,15 +35,13 @@
     "@stylexjs/stylex": "^0.6.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
-    "@swc-node/register": "^1.9.0",
     "@swc/core": "^1.4.16",
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^2.1.1",
     "ansis": "^3.3.2",
-    "ava": "^5.3.1",
-    "c8": "^8.0.1",
     "dprint": "^0.46.0",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.2.1",
@@ -57,7 +55,8 @@
     "rollup-plugin-swc3": "^0.11.2",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
-    "vite": "^5.2.8"
+    "vite": "^5.2.8",
+    "vitest": "^2.1.1"
   },
   "license": "MIT",
   "author": "kanno",
@@ -94,18 +93,5 @@
     "vite-plugin",
     "bundle-analyzer",
     "rollup-bundle-analyzer"
-  ],
-  "ava": {
-    "files": [
-      "__tests__/*.spec.ts",
-      "e2e/**/*.spec.ts"
-    ],
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "@swc-node/register"
-    ],
-    "timeout": "30s"
-  }
+  ]
 }
