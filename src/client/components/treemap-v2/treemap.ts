@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 // Alough foamtree is very useful, but we don't need too much function.
 // so implement a simple and lightweight treemap component.
+import { hashCode } from '../../shared'
 import { squarify } from './squarify'
 import type { DuckModule, NativeModule } from './interface'
 
@@ -28,6 +29,70 @@ function createPaintEventHandler(canvas: HTMLCanvasElement, eventType: keyof Pai
   return { handler }
 }
 
+function getColorMappings<T = NativeModule>(data: T[]) {
+  const colorMappings: Record<string, string> = {}
+
+  const chunkNamePartIndex = ((data: NativeModule[]) => {
+    const splitChunkNames = data.map((m) => m.label.split(/[^a-z0-9]/iu))
+    const longestSplitName = Math.max(...splitChunkNames.map((parts) => parts.length))
+    const namePart = {
+      index: 0,
+      votes: 0
+    }
+    for (let i = longestSplitName - 1; i >= 0; i--) {
+      const identifierVotes = {
+        name: 0,
+        hash: 0,
+        ext: 0
+      }
+      let lastChunkPart = ''
+      for (const splitChunkName of splitChunkNames) {
+        const part = splitChunkName[i]
+        if (part === undefined || part === '') {
+          continue
+        }
+        if (part === lastChunkPart) {
+          identifierVotes.ext++
+        } else if (/[a-z]/u.test(part) && /[0-9]/u.test(part) && part.length === lastChunkPart.length) {
+          identifierVotes.hash++
+        } else if (/^[a-z]+$/iu.test(part) || /^[0-9]+$/u.test(part)) {
+          identifierVotes.name++
+        }
+        lastChunkPart = part
+      }
+      if (identifierVotes.name >= namePart.votes) {
+        namePart.index = i
+        namePart.votes = identifierVotes.name
+      }
+    }
+    return namePart.index
+  })(data as NativeModule[])
+
+  const toColor = (chunkLabel: string, depth: number) => {
+    const s = chunkLabel.split(/[^a-z0-9]/iu)[chunkNamePartIndex] || chunkLabel
+    const hash = /[^0-9]/.test(s) ? hashCode(s) : (parseInt(s) / 1000) * 360
+    const saturation = 60 - depth * 5
+    const lightness = 50 + depth * 5
+    return `hsla(${Math.round(Math.abs(hash) % 360)}deg, ${Math.max(saturation, 30)}%, ${Math.min(lightness, 70)}%, 0.9)`
+  }
+
+  const assignColorByDirectory = (data: NativeModule, root: NativeModule, depth: number) => {
+    colorMappings[data.filename] = toColor(root.filename, depth)
+    depth = depth-- < 0 ? 0 : depth
+    if (data.groups) {
+      for (const child of data.groups) {
+        assignColorByDirectory(child, root, depth)
+      }
+    }
+  }
+  for (const child of data) {
+    // @ts-expect-error
+    assignColorByDirectory(child as NativeModule, child as NativeModule, child.groups.length ?? 0)
+  }
+
+  return colorMappings
+}
+
 class Paint {
   private mountNode: HTMLDivElement | null
   private _canvas: HTMLCanvasElement | null
@@ -35,6 +100,7 @@ class Paint {
   private rect: PaintRect
   private data: DuckModule<NativeModule>[]
   private eventMaps: Record<string, EventListener>
+  private colorMappings: Record<string, string>
   constructor() {
     this.mountNode = null
     this._canvas = null
@@ -42,6 +108,7 @@ class Paint {
     this.data = []
     this.rect = { w: 0, h: 0 }
     this.eventMaps = Object.create(null)
+    this.colorMappings = Object.create(null)
   }
 
   init(element: HTMLElement) {
@@ -75,7 +142,6 @@ class Paint {
   }
 
   private draw() {
-    //
   }
 
   private deinitEventMaps() {
@@ -97,6 +163,7 @@ class Paint {
     this.context = null
     this.data = []
     this.rect = { w: 0, h: 0 }
+    this.colorMappings = Object.create(null)
   }
 
   dispose() {
@@ -124,6 +191,7 @@ class Paint {
     if (!options) return
     const { evt: userEvent, data } = options
     this.data = data
+    this.colorMappings = getColorMappings(this.data)
     const unReady = !this.data.length
     if (unReady) {
       if (this.mountNode && this.canvas) {
