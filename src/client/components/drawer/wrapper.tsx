@@ -1,8 +1,9 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import { clsx } from 'clsx'
 import { CSSTransition } from '../css-transition'
-import { useClasses, useScale } from '../../composables'
+import { useScale } from '../../composables'
 
 interface Props {
   visible?: boolean
@@ -59,7 +60,7 @@ function DrawerWrapper(props: React.PropsWithChildren<DrawerWrapperProps>) {
     width: SCALES.width(1, 'auto'),
     height: SCALES.height(1, '100%')
   }))
-  const classes = useClasses(className, 'wrapper')
+  const classes = clsx(className, 'wrapper')
 
   return (
     <CSSTransition name="wrapper" visible={visible} clearTime={300}>

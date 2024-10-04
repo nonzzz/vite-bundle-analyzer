@@ -44,6 +44,7 @@
     "ansis": "^3.3.2",
     "ava": "^5.3.1",
     "c8": "^8.0.1",
+    "clsx": "^2.1.1",
     "dprint": "^0.46.0",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.2.1",
@@ -72,7 +73,8 @@
       "object.assign": "npm:@nolyfill/object.assign@^1",
       "object.entries": "npm:@nolyfill/object.entries@^1",
       "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
-      "object.values": "npm:@nolyfill/object.values@^1"
+      "object.values": "npm:@nolyfill/object.values@^1",
+      "es-iterator-helpers": "npm:@nolyfill/es-iterator-helpers@^1"
     },
     "patchedDependencies": {
       "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch"
@@ -107,5 +109,6 @@
       "@swc-node/register"
     ],
     "timeout": "30s"
-  }
+  },
+  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }

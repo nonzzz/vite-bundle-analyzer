@@ -2,8 +2,8 @@ import React, { useRef } from 'react'
 import type { MouseEvent } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { injectGlobalStyle } from '@stylex-extend/core'
+import { clsx } from 'clsx'
 import { CSSTransition } from '../css-transition'
-import { useClasses } from '../../composables'
 
 interface Props {
   onClick?: (event: MouseEvent<HTMLElement>) => void
@@ -113,12 +113,12 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
       <CSSTransition name="backdrop-wrapper" visible={visible} clearTime={300}>
         <div
           role="presentation"
-          className={useClasses(stylex.props(styles.backdrop).className, backdropClassName, 'backdrop')}
+          className={clsx(stylex.props(styles.backdrop).className, backdropClassName, 'backdrop')}
           onClick={handleClick}
           onMouseUp={handleMouseUp}
           {...props}
         >
-          <div className={useClasses(stylex.props(styles.layer).className, layerClassName, 'layer')} />
+          <div className={clsx(stylex.props(styles.layer).className, layerClassName, 'layer')} />
           <div
             role="presentation"
             onClick={onContentClick}
