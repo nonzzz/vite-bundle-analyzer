@@ -1,7 +1,8 @@
 import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
-import { useClasses, useScale, withScale } from '../../composables'
+import { clsx } from 'clsx'
+import { useScale, withScale } from '../../composables'
 
 interface Props {
   value?: string
@@ -57,7 +58,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
 
   useImperativeHandle(ref, () => inputRef.current!)
 
-  const classes = useClasses('input', className, userClassName)
+  const classes = clsx('input', className, userClassName)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled || readOnly) return

@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
-import { useClasses, useScale, withScale } from '../../composables'
+import { clsx } from 'clsx'
+import { useScale, withScale } from '../../composables'
 import { useCheckbox } from './context'
 
 export interface CheckboxEventTarget {
@@ -88,7 +89,7 @@ function CheckboxComponent(props: CheckboxProps) {
     fontSize: 0,
     backgroundColor: 'transparent'
   }))
-  const classes = useClasses(className, userClassName)
+  const classes = clsx(className, userClassName)
   const [selfChecked, setSelfChecked] = useState<boolean>(false)
   const isDisabled = inGroup ? disabledAll || disabled : disabled
 

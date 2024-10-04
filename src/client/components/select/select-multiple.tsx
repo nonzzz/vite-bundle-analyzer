@@ -1,7 +1,7 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
-import { useClasses } from '../../composables'
+import { clsx } from 'clsx'
 
 interface Props {
   disabled: boolean
@@ -29,7 +29,7 @@ function SelectMultipleValue({
     visibility: 'visible',
     opacity: 1
   }))
-  const classes = useClasses('clear-icon', className)
+  const classes = clsx('clear-icon', className)
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault()

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
-import { useClasses, useScale } from '../../composables'
+import { clsx } from 'clsx'
+import { useScale } from '../../composables'
 
 export interface Props {
   tag: keyof JSX.IntrinsicElements
@@ -63,7 +64,7 @@ function TextChild({
     }
   }))
 
-  const classes = useClasses(className, classNames)
+  const classes = clsx(className, classNames)
 
   return (
     <Component className={classes} style={style} {...props}>

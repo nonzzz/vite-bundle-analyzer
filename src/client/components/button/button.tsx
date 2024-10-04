@@ -1,7 +1,8 @@
 import React from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
-import { useClasses, useScale, withScale } from '../../composables'
+import { clsx } from 'clsx'
+import { useScale, withScale } from '../../composables'
 
 interface Props {
   icon?: React.ReactNode
@@ -109,14 +110,12 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
         lineHeight: SCALES.height(2.5),
         fontSize: SCALES.font(0.875),
         height: SCALES.height(2.5),
-        padding: `${SCALES.pt(0)} ${auto ? SCALES.pr(1.15) : SCALES.pr(1.375)} ${SCALES.pt(0)} ${
-          auto ? SCALES.pl(1.15) : SCALES.pl(1.375)
-        }`,
-        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${
-          SCALES.ml(
-            0
-          )
-        }`,
+        padding: `${SCALES.pt(0)} ${auto ? SCALES.pr(1.15) : SCALES.pr(1.375)} ${SCALES.pt(0)} ${auto ? SCALES.pl(1.15) : SCALES.pl(1.375)
+          }`,
+        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(
+          0
+        )
+          }`,
         '--button-height': SCALES.height(2.5),
         '--button-icon-padding': SCALES.pl(0.727),
         ...(auto && { width: 'auto' }),
@@ -128,7 +127,7 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
       })
     )
 
-    const classes = useClasses('button', className, userClassName)
+    const classes = clsx('button', className, userClassName)
 
     return (
       <button

@@ -1,12 +1,10 @@
 import { useEffect } from 'react'
 
 export function useClickAnyWhere(
-  handler: (event: Event) => void
+  handler: (this: Document, ev: MouseEvent) => void
 ) {
   useEffect(() => {
-    const callback = (event: Event) => handler(event)
-
-    document.addEventListener('click', callback)
-    return () => document.removeEventListener('click', callback)
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
   }, [handler])
 }

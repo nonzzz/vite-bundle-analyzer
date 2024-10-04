@@ -61,11 +61,11 @@ const SelectDropdown = React.forwardRef<
   })
   useEffect(() => {
     if (!ref || !ref.current) return
-    ref.current.addEventListener('mouseenter', updateRect)
+    const internalDropdownEl = ref.current
+    internalDropdownEl.addEventListener('mouseenter', updateRect)
     /* istanbul ignore next */
     return () => {
-      if (!ref || !ref.current) return
-      ref.current.removeEventListener('mouseenter', updateRect)
+      internalDropdownEl.removeEventListener('mouseenter', updateRect)
     }
   }, [ref, updateRect])
 
