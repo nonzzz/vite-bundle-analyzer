@@ -16,6 +16,7 @@ cleanup:
 build-client:
 	@echo "Building client code..."
 	@pnpm exec vite build src/client
+	make clean-html
 
 build-server:
 	@echo "Building server code..."
@@ -40,3 +41,17 @@ lint:
 format:
 	@echo "Formatting code..."
 	pnpm exec dprint fmt
+
+clean-html:
+	@echo "Cleaning up html file..."
+	@awk 'BEGIN \
+		{ RS=""; FS=""; ORS="" } \
+		{ \
+			gsub(/<script[^>]*>[\\s\\S]*?<\/script>/, ""); \
+			gsub(/<link[^>]*rel="stylesheet"[^>]*>/, ""); \
+			gsub(/<title>[^<]*<\/title>/, ""); \
+			gsub(/[ \t\n\r]+/, " "); \
+			print \
+        } \
+    ' dist/client/index.html > dist/client/index.tmp && \
+    mv dist/client/index.tmp dist/client/index.html

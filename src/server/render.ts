@@ -17,7 +17,7 @@ export interface ServerOptions extends RenderOptions {
 }
 
 interface Descriptor {
-  kind: 'script' | 'style'
+  kind: 'script' | 'style' | 'title'
   text: string
   attrs?: string[]
 }
@@ -57,17 +57,17 @@ export async function renderView(analyzeModule: Module[], options: RenderOptions
 
   const assets = clientAssets.filter(a => ['js', 'css'].includes(a.fileType))
   let html = await fsp.readFile(path.join(clientPath, 'index.html'), 'utf8')
-  html = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
-  html = html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/gi, '')
-  html = html.replace(/<title>(.*?)<\/title>/, `<title>${options.title}</title>`)
   html = injectHTMLTag({
     html,
     injectTo: 'head',
-    descriptors: assets.map(({ fileType, content }) => ({
-      kind: fileType === 'js' ? 'script' : 'style',
-      text: content,
-      attrs: fileType === 'js' ? ['type="module"'] : []
-    }))
+    descriptors: [
+      { text: options.title, kind: 'title' },
+      ...assets.map(({ fileType, content }) => ({
+        kind: fileType === 'js' ? 'script' : 'style',
+        text: content,
+        attrs: fileType === 'js' ? ['type="module"'] : []
+      })) satisfies Descriptor[]
+    ]
   })
   html = injectHTMLTag({
     html,
