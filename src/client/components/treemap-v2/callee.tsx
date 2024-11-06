@@ -1,12 +1,11 @@
-import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import { c2m, sortChildrenByKey } from 'squarified'
 import { useApplicationContext } from '../../context'
 import { Treemap } from './component'
 import type { TreemapComponentInstance } from './component'
-import { sortChildrenBySize, wrapperAsModule } from './squarify'
-import type { PaintEventMap } from './treemap'
 
 export interface TreemapProps {
-  onMousemove: PaintEventMap['mousemove']
+  onMousemove: any
 }
 
 export const TreemapV2 = forwardRef((props: TreemapProps, ref) => {
@@ -16,23 +15,25 @@ export const TreemapV2 = forwardRef((props: TreemapProps, ref) => {
   useImperativeHandle(ref, () => instance.current!)
 
   const visibleChunks = useMemo(() => {
-    return analyzeModule.filter(m => scence.has(m.label)).map(m => {
-      const { stats, source, ...rest } = m
-      const groups = sizes === 'statSize' ? stats : source
-      return wrapperAsModule({ ...rest, groups }, sizes)
-    })
-      .sort(sortChildrenBySize)
+    const filtered = analyzeModule.filter((m) => scence.has(m.label))
+    const sortedData = sortChildrenByKey(
+      filtered.map(
+        (item) => c2m({ ...item, groups: sizes === 'statSize' ? item.stats : item.source }, sizes, (d) => ({ ...d, id: d.filename }))
+      ),
+      'weight'
+    )
+    return sortedData
   }, [analyzeModule, scence, sizes])
 
-  const eventMap = useMemo(() => {
-    return {
-      mousemove: props.onMousemove
+  useEffect(() => {
+    if (visibleChunks.length && instance.current) {
+      instance.current.setOptions({ data: visibleChunks })
+      instance.current.on('mousemove', props.onMousemove)
+      instance.current.on('click', function(metadata) {
+        this.zoom(metadata.module)
+      })
     }
-  }, [props.onMousemove])
+  }, [visibleChunks, props.onMousemove])
 
-  const options = useMemo(() => {
-    return { data: visibleChunks, evt: eventMap }
-  }, [visibleChunks, eventMap])
-
-  return <Treemap ref={(c) => instance.current = c!} options={options} />
+  return <Treemap ref={(c) => instance.current = c!} />
 })

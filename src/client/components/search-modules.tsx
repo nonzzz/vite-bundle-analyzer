@@ -1,9 +1,8 @@
 import { ChangeEvent, useMemo, useState } from 'react'
+import { flattenModule } from 'squarified'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
-import { findRelativeModuleByFilename } from '../components/treemap/shared'
 import type { Module, Sizes } from '../interface'
-import { flattenModules } from './treemap-v2/squarify'
 import { Text } from './text'
 import { Spacer } from './spacer'
 import { Input } from './input'
@@ -36,7 +35,7 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
       return {
         parent: module,
         children: uniqBy(
-          flattenModules<Module, FilterModule>(
+          flattenModule(
             module.groups
           ).filter(m => regExp.test(m.label)).map((m) => {
             console.log(m)

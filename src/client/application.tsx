@@ -1,23 +1,19 @@
 import { useCallback, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { ComposeContextProvider } from 'foxact/compose-context-provider'
-import type { FoamDataObject } from '@carrotsearch/foamtree'
 import { Tooltip } from './components/tooltip'
 import { Text } from './components/text'
 import { Spacer } from './components/spacer'
 import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
-
-// import { Treemap } from './components/treemap'
 import { TreemapV2 } from './components/treemap-v2'
-import type { Module } from './components/treemap-v2/interface'
 import type { TreeMapComponent } from './components/treemap'
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
 
 interface ModuleSizeProps {
-  module: Module
+  module: any
 }
 
 function ModuleSize(props: ModuleSizeProps) {
@@ -35,16 +31,18 @@ function ModuleSize(props: ModuleSizeProps) {
 export function App() {
   const treeMapRef = useRef<TreeMapComponent>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<Module | null>(Object.create(null))
+  const [tooltipContent, setTooltipContent] = useState<any | null>(Object.create(null))
 
   const contexts = [
     <ApplicationProvider key="app" />,
     <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreeMapComponent> }} />
   ]
 
-  const handleMousemove = useCallback((data: FoamDataObject) => {
-    setTooltipVisible(!!data)
-    setTooltipContent(() => data as Module)
+  const handleMousemove = useCallback((data: any) => {
+    setTooltipVisible(!!data.module)
+    if (data.module) {
+      setTooltipContent(() => data.module.node as Module)
+    }
   }, [])
 
   return (
@@ -60,7 +58,6 @@ export function App() {
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
         <TreemapV2 ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
-        {/* <Treemap ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} /> */}
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
             <>

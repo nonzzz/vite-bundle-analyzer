@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { noop } from 'foxact/noop'
+import { sortChildrenByKey } from 'squarified'
 import { Text } from '../text'
 import { useApplicationContext, useToggleSize, useUpdateScence } from '../../context'
 import { tuple } from '../../shared'
@@ -9,7 +10,6 @@ import type { SelectInstance } from '../select'
 import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
-import { sortChildrenBySize } from '../treemap-v2/squarify'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
 import Menu from '~icons/ph/list'
 
@@ -32,9 +32,12 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
 
   const allChunks = useMemo(() => {
     const points = new Set(entrypoints)
-    return analyzeModule.filter(chunk => !points.size || points.has(chunk.label) || chunk.imports.some(id => points.has(id)))
-      .map((chunk) => ({ ...chunk, groups: userMode === 'statSize' ? chunk.stats : chunk.source }))
-      .sort((a, b) => sortChildrenBySize(a, b, userMode, 'label'))
+    return sortChildrenByKey(
+      analyzeModule.filter(chunk => !points.size || points.has(chunk.label) || chunk.imports.some(id => points.has(id)))
+        .map((chunk) => ({ ...chunk, groups: userMode === 'statSize' ? chunk.stats : chunk.source })),
+      userMode,
+      'label'
+    )
   }, [analyzeModule, userMode, entrypoints])
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])

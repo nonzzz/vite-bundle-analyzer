@@ -1,17 +1,15 @@
 import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
 import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
-import { PaintOptions, createTreemap } from './treemap'
-import type { NativeModule } from './interface'
-
-export interface TreemapProps<T> {
-  options?: PaintOptions<T>
-}
+import { createTreemap, presetDecorator } from 'squarified'
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
+export interface TreemapProps {
+}
+
 // eslint-disable-next-line no-unused-vars
-export const Treemap = forwardRef(<_, P extends NativeModule>(props: TreemapProps<P>, ref: Ref<TreemapComponentInstance>) => {
+export const Treemap = forwardRef(<_, P>(props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
   const root = useRef<HTMLDivElement | null>(null)
   const instanceRef = useRef<TreemapComponentInstance>()
 
@@ -35,7 +33,9 @@ export const Treemap = forwardRef(<_, P extends NativeModule>(props: TreemapProp
   const callbackRef = useCallback((el: HTMLDivElement | null) => {
     if (el) {
       // element is mounted
-      instanceRef.current = createTreemap().init(el)
+      instanceRef.current = createTreemap()
+      instanceRef.current.use('decorator', presetDecorator)
+      instanceRef.current.init(el)
     } else {
       // element is unmounted
       instanceRef.current?.dispose()
@@ -43,10 +43,6 @@ export const Treemap = forwardRef(<_, P extends NativeModule>(props: TreemapProp
     }
     root.current = el
   }, [])
-
-  useEffect(() => {
-    instanceRef.current?.setOptions(props?.options)
-  }, [props.options])
 
   return <div ref={callbackRef} {...inline({ height: '100%', width: '100%', position: 'relative' })}></div>
 })
