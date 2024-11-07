@@ -26,9 +26,6 @@ importers:
 
   .:
     devDependencies:
-      '@carrotsearch/foamtree':
-        specifier: ^3.5.1
-        version: 3.5.1
       '@iconify-json/ph':
         specifier: ^1.1.12
         version: 1.1.13
@@ -129,8 +126,8 @@ importers:
         specifier: ^0.11.2
         version: 0.11.2(@swc/core@1.6.1)(rollup@4.18.0)
       squarified:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.1
+        version: 0.1.1
       typescript:
         specifier: ^5.2.2
         version: 5.4.5
@@ -358,9 +355,6 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
-
-  '@carrotsearch/foamtree@3.5.1':
-    resolution: {integrity: sha512-73YfG2jauHoC3fs0IVWcW8uI9u8lOS50SKLF25QiUVbNvIoJ1fuJtLQWBfhK8D8WQYMNP4P5Hcxa2FWayITI2A==}
 
   '@dprint/darwin-arm64@0.46.3':
     resolution: {integrity: sha512-1ycDpGvclGHF3UG5V6peymPDg6ouNTqM6BjhVELQ6zwr+X98AMhq/1slgO8hwHtPcaS5qhTAS+PkzOmBJRegow==}
@@ -2855,8 +2849,8 @@ packages:
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
-  squarified@0.1.0:
-    resolution: {integrity: sha512-1DeQ8xlnTlEcEdbzL8ZHwZ5Z/wiOC070emcYtQAOJQTdfhc0IweNfowsRCAB7hF1VOCCyUdE578HzRNwAYa74A==}
+  squarified@0.1.1:
+    resolution: {integrity: sha512-CIY9rj8h3StUeznrf/Iw9mYE2QVQC/hfeHdYBwe71PYA8UVdeCq+ei8Dpzy6U0MV/9JypCYAntCz280ZXRR3wQ==}
 
   stack-utils@2.0.6:
     resolution: {integrity: sha512-XlkWvfIm6RmsWtNJx+uqtKLS8eqFbxUg0ZzLXqY0caEy9l7hruX8IpiDnjsLavoBgqCCR71TqWO8MaXYheJ3RQ==}
@@ -3426,8 +3420,6 @@ snapshots:
       to-fast-properties: 2.0.0
 
   '@bcoe/v8-coverage@0.2.3': {}
-
-  '@carrotsearch/foamtree@3.5.1': {}
 
   '@dprint/darwin-arm64@0.46.3':
     optional: true
@@ -5936,7 +5928,7 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  squarified@0.1.0: {}
+  squarified@0.1.1: {}
 
   stack-utils@2.0.6:
     dependencies:

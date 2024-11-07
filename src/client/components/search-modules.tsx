@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, useState } from 'react'
+import { ChangeEvent, useCallback, useMemo, useState } from 'react'
 import { flattenModule } from 'squarified'
 import { convertBytes, uniqBy } from '../shared'
 import { useTreemapContext } from '../context'
@@ -38,7 +38,6 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
           flattenModule(
             module.groups
           ).filter(m => regExp.test(m.label)).map((m) => {
-            console.log(m)
             return ({ ...m, isDirectory: !/\.(\w+)$/.test(m.label) })
           }),
           'label'
@@ -71,6 +70,10 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
       [module.label]: true
     })
   }
+
+  const handleFocusModule = useCallback((filename: string) => {
+    treemap.current?.zoom(filename)
+  }, [treemap])
 
   return (
     <>
@@ -112,6 +115,8 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
                     size={child[extra]}
                     pointer={availableMap[child.label]}
                     stylex={{ fontStyle: 'italic' }}
+                    onMouseEnter={() => handleMouseEnter(child)}
+                    onClick={() => handleFocusModule(child.filename)}
                   >
                     {child.isDirectory ? <Folder /> : <File />}
                     <Spacer inline />

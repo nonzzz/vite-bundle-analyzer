@@ -27,7 +27,7 @@ export default defineConfig(({ mode, command }) => {
   if (mode === 'development') {
     const mock = _require('./data.json')
     base.define = {
-      'window.defaultSizes': JSON.stringify('parsed'),
+      'window.defaultSizes': JSON.stringify('stat'),
       'window.analyzeModule': JSON.stringify(mock)
     }
   }

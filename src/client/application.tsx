@@ -1,19 +1,21 @@
 import { useCallback, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { ComposeContextProvider } from 'foxact/compose-context-provider'
+import type { NativeModule, PrimitiveEventMetadata } from 'squarified'
 import { Tooltip } from './components/tooltip'
 import { Text } from './components/text'
 import { Spacer } from './components/spacer'
 import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
-import { TreemapV2 } from './components/treemap-v2'
-import type { TreeMapComponent } from './components/treemap'
+import { Treemap } from './components/treemap'
+import type { TreemapComponentInstance } from './components/treemap'
+
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
 
 interface ModuleSizeProps {
-  module: any
+  module: NativeModule
 }
 
 function ModuleSize(props: ModuleSizeProps) {
@@ -29,19 +31,19 @@ function ModuleSize(props: ModuleSizeProps) {
 }
 
 export function App() {
-  const treeMapRef = useRef<TreeMapComponent>()
+  const treeMapRef = useRef<TreemapComponentInstance>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<any | null>(Object.create(null))
+  const [tooltipContent, setTooltipContent] = useState<NativeModule | null>(Object.create(null))
 
   const contexts = [
     <ApplicationProvider key="app" />,
-    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreeMapComponent> }} />
+    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreemapComponentInstance> }} />
   ]
 
-  const handleMousemove = useCallback((data: any) => {
+  const handleMousemove = useCallback((data: PrimitiveEventMetadata<'mousemove'>) => {
     setTooltipVisible(!!data.module)
     if (data.module) {
-      setTooltipContent(() => data.module.node as Module)
+      setTooltipContent(() => data.module.node)
     }
   }, [])
 
@@ -57,7 +59,7 @@ export function App() {
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
-        <TreemapV2 ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
+        <Treemap ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
             <>
