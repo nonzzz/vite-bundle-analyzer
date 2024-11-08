@@ -1,3 +1,16 @@
+## 0.13.0
+
+# Major
+
+Replace `@carrotsearch/foamtree` with `squarified`. For some reason i think the two library are similar. (And the new one can reduce 200kb)
+And the new library can better customize the function.
+
+Before `v0.13.0` the client look like [classic](./imgs/classic.gif)
+
+The new client
+
+[now](./imgs/now.png)
+
 ## 0.12.1
 
 Better debug log info.
