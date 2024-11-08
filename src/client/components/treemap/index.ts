@@ -1,2 +1,2 @@
-export * from './component'
-export * from './interface'
+export { Treemap } from './component'
+export type { TreemapComponentInstance } from './component'

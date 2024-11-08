@@ -1,20 +1,21 @@
 import { useCallback, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import { ComposeContextProvider } from 'foxact/compose-context-provider'
-import type { FoamDataObject } from '@carrotsearch/foamtree'
+import type { NativeModule, PrimitiveEventMetadata } from 'squarified'
 import { Tooltip } from './components/tooltip'
 import { Text } from './components/text'
 import { Spacer } from './components/spacer'
 import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
 import { Treemap } from './components/treemap'
-import type { Module, TreeMapComponent } from './components/treemap'
+import type { TreemapComponentInstance } from './components/treemap'
+
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
 
 interface ModuleSizeProps {
-  module: Module
+  module: NativeModule
 }
 
 function ModuleSize(props: ModuleSizeProps) {
@@ -30,18 +31,20 @@ function ModuleSize(props: ModuleSizeProps) {
 }
 
 export function App() {
-  const treeMapRef = useRef<TreeMapComponent>()
+  const treeMapRef = useRef<TreemapComponentInstance>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<Module | null>(Object.create(null))
+  const [tooltipContent, setTooltipContent] = useState<NativeModule | null>(Object.create(null))
 
   const contexts = [
     <ApplicationProvider key="app" />,
-    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreeMapComponent> }} />
+    <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreemapComponentInstance> }} />
   ]
 
-  const handleMousemove = useCallback((data: FoamDataObject) => {
-    setTooltipVisible(!!data)
-    setTooltipContent(() => data as Module)
+  const handleMousemove = useCallback((data: PrimitiveEventMetadata<'mousemove'>) => {
+    setTooltipVisible(!!data.module)
+    if (data.module) {
+      setTooltipContent(() => data.module.node)
+    }
   }, [])
 
   return (

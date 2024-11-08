@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { noop } from 'foxact/noop'
+import { sortChildrenByKey } from 'squarified'
 import { Text } from '../text'
 import { useApplicationContext, useToggleSize, useUpdateScence } from '../../context'
 import { tuple } from '../../shared'
@@ -29,10 +30,15 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const [entrypoints, setEntrypoints] = useState<string[]>([])
   const selectRef = useRef<SelectInstance>(null)
 
-  const allChunks = useMemo(() =>
-    analyzeModule
-      .filter(chunk => !entrypoints.length || entrypoints.some(id => chunk.label === id || chunk.imports.includes(id)))
-      .sort((a, b) => b[userMode] - a[userMode]), [analyzeModule, userMode, entrypoints])
+  const allChunks = useMemo(() => {
+    const points = new Set(entrypoints)
+    return sortChildrenByKey(
+      analyzeModule.filter(chunk => !points.size || points.has(chunk.label) || chunk.imports.some(id => points.has(id)))
+        .map((chunk) => ({ ...chunk, groups: userMode === 'statSize' ? chunk.stats : chunk.source })),
+      userMode,
+      'label'
+    )
+  }, [analyzeModule, userMode, entrypoints])
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 
