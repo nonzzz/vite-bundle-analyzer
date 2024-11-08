@@ -1,8 +1,9 @@
 import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
-import { c2m, createTreemap, presetDecorator, sortChildrenByKey } from 'squarified'
-import { PrimitiveEventCallback } from 'squarified'
+import { c2m, createTreemap, defaultFontOptions, defaultLayoutOptions, getNodeDepth, sortChildrenByKey } from 'squarified'
+import type { ColorMappings, NativeModule, PrimitiveEventCallback, RenderDecorator, TreemapLayout } from 'squarified'
+import { hashCode } from '../../shared'
 import { useApplicationContext } from '../../context'
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
@@ -11,8 +12,91 @@ export interface TreemapProps {
   onMousemove: PrimitiveEventCallback<'mousemove'>
 }
 
-// eslint-disable-next-line no-unused-vars
-export const Treemap = forwardRef(<_, P>(props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
+function findBestChunkPartIndex(data: NativeModule[]) {
+  const splitChunkNames = data.map((chunk) => chunk.id.split(/[^a-z0-9]/iu))
+  const longestSplitName = Math.max(...splitChunkNames.map((parts) => parts.length))
+  const namePart = {
+    index: 0,
+    votes: 0
+  }
+  for (let i = longestSplitName - 1; i >= 0; i--) {
+    const identifierVotes = {
+      name: 0,
+      hash: 0,
+      ext: 0
+    }
+    let lastChunkPart = ''
+    for (const splitChunkName of splitChunkNames) {
+      const part = splitChunkName[i]
+      if (part === undefined || part === '') {
+        continue
+      }
+      if (part === lastChunkPart) {
+        identifierVotes.ext++
+      } else if (/[a-z]/u.test(part) && /[0-9]/u.test(part) && part.length === lastChunkPart.length) {
+        identifierVotes.hash++
+      } else if (/^[a-z]+$/iu.test(part) || /^[0-9]+$/u.test(part)) {
+        identifierVotes.name++
+      }
+      lastChunkPart = part
+    }
+    if (identifierVotes.name >= namePart.votes) {
+      namePart.index = i
+      namePart.votes = identifierVotes.name
+    }
+  }
+  return namePart.index
+}
+
+function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
+  return chunkLabel.split(/[^a-z0-9]/iu)[chunkNamePartIndex] || chunkLabel
+}
+
+function calculateColorByChunk(module: NativeModule, groupRootId: string, chunkPartIndex: number) {
+  const colorMappings: ColorMappings = {}
+  if (module.groups && Array.isArray(module.groups)) {
+    for (const group of module.groups) {
+      Object.assign(colorMappings, calculateColorByChunk(group, groupRootId, chunkPartIndex))
+    }
+  }
+  const chunkName = getChunkNamePart(groupRootId, chunkPartIndex)
+  const hash = /[^0-9]/.test(chunkName) ? hashCode(chunkName) : (parseInt(chunkName) / 1000) * 360
+  const depth = getNodeDepth(module)
+  const hue = (Math.round(Math.abs(hash) % 360) + depth * 15) % 360
+  const saturation = 70 + (depth * 3) % 30
+  const lightness = 60 + (depth * 2) % 20
+  colorMappings[module.id] = {
+    mode: 'hsl',
+    desc: {
+      h: hue,
+      s: saturation,
+      l: lightness
+    }
+  }
+  return colorMappings
+}
+
+function evaluateColorMappings(data: NativeModule[]) {
+  const colorMappings: ColorMappings = {}
+  const chunkPartIndex = findBestChunkPartIndex(data)
+  for (const module of data) {
+    const groupRootId = module.id
+    Object.assign(colorMappings, calculateColorByChunk(module, groupRootId, chunkPartIndex))
+  }
+
+  return colorMappings
+}
+
+function layoutDecorator(app: TreemapLayout) {
+  const decorator: RenderDecorator = {
+    font: defaultFontOptions,
+    layout: defaultLayoutOptions,
+    color: { mappings: evaluateColorMappings(app.data) }
+  }
+  Object.assign(app.decorator, decorator)
+}
+
+export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
   const root = useRef<HTMLDivElement | null>(null)
   const instanceRef = useRef<TreemapComponentInstance>()
   const { analyzeModule, sizes, scence } = useApplicationContext()
@@ -49,7 +133,7 @@ export const Treemap = forwardRef(<_, P>(props: TreemapProps, ref: Ref<TreemapCo
     if (el) {
       // element is mounted
       instanceRef.current = createTreemap()
-      instanceRef.current.use('decorator', presetDecorator)
+      instanceRef.current.use('decorator', layoutDecorator)
       instanceRef.current.init(el)
     } else {
       // element is unmounted
