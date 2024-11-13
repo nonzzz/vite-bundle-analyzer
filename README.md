@@ -97,6 +97,12 @@ the correctly sourcemap for legacy chunk. For some reason, no analysis will be p
 
 I don't want to add new option to control living server.
 
+### For vite based framework or library!!!
+
+If you're using `vitepress` or `remix` or `qwik` and etc who based on the `vite` framework. Normally it will run two vite instance during build phase. So you
+should ensure that `analyzerMode` as `server`.(If you pass `static` or `json` for the `analyzerMode` i can't promise the final result.) Like `vitpress` will remove
+something (I don't know why? Maybe it's run with race?)
+
 ### LICENSE
 
 [MIT](./LICENSE)

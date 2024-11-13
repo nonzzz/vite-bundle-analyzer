@@ -4,6 +4,7 @@ import type { Plugin as VitePlugin } from 'vite'
 import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerStore } from './interface'
 import { pick } from './shared'
+import { states } from './states'
 
 export function adapter(userPlugin: VitePlugin) {
   const plugin = pick(userPlugin, ['name', 'generateBundle', 'closeBundle', 'api'])
@@ -12,14 +13,15 @@ export function adapter(userPlugin: VitePlugin) {
   return <Plugin> {
     ...plugin,
     outputOptions(outputOptions) {
-      if (store.hasSetSourcemapOption) return
+      if (states.hasSetupSourcemapOption) return
+      states.hasSetupSourcemapOption = true
       if (outputOptions.dir) {
         root = outputOptions.dir
       }
       store.analyzerModule.workspaceRoot = searchForWorkspaceRoot(root)
       // setup sourcemap hack
       if ('sourcemap' in outputOptions) {
-        store.previousSourcemapOption = typeof outputOptions.sourcemap === 'boolean'
+        states.lastSourcemapOption = typeof outputOptions.sourcemap === 'boolean'
           ? outputOptions.sourcemap
           : outputOptions.sourcemap === 'hidden'
       }

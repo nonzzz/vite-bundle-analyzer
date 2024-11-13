@@ -76,7 +76,10 @@ export type AnalyzerPluginOptions =
   | AnalyzerPluginOptionsWithJson
 
 export interface AnalyzerStore {
-  previousSourcemapOption: boolean
-  hasSetSourcemapOption: boolean
   analyzerModule: AnalyzerModule
+}
+
+export interface SharedStates {
+  lastSourcemapOption: boolean
+  hasSetupSourcemapOption: boolean
 }

@@ -1,0 +1,746 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 3cb6f1888a6d0626d8572df47d1d325bbeef7232..089f6630ba25c16731ea1b4fb1a85a3c01e17be5 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -22,13 +22,26 @@ declare class Matrix2D {
+     private roate;
+ }
+ 
+-declare class Display {
++declare const enum DisplayType {
++    Graph = "Graph",
++    Box = "Box",
++    Rect = "Rect",
++    Text = "Text"
++}
++declare abstract class Display {
+     parent: Display | null;
+     id: number;
+     matrix: Matrix2D;
++    abstract get __instanceOf__(): string;
+     constructor();
+     destory(): void;
+ }
++interface GraphStyleSheet {
++    stroke: string;
++    opacity: number;
++    font: string;
++    lineWidth: number;
++}
+ interface LocOptions {
+     width: number;
+     height: number;
+@@ -56,7 +69,7 @@ interface Instruction {
+     textAlign(...args: any[]): void;
+ }
+ declare function createInstruction(): Instruction;
+-declare class S extends Display {
++declare abstract class S extends Display {
+     width: number;
+     height: number;
+     x: number;
+@@ -70,9 +83,15 @@ declare class S extends Display {
+ }
+ declare abstract class Graph extends S {
+     instruction: ReturnType<typeof createInstruction>;
++    __refresh__: boolean;
++    __options__: Partial<LocOptions>;
++    abstract style: GraphStyleSheet;
+     constructor(options?: Partial<GraphOptions>);
+     abstract create(): void;
++    abstract clone(): Graph;
++    abstract get __shape__(): string;
+     render(ctx: CanvasRenderingContext2D): void;
++    get __instanceOf__(): DisplayType.Graph;
+ }
+ 
+ declare class Box extends Display {
+@@ -81,6 +100,8 @@ declare class Box extends Display {
+     add(...elements: Display[]): void;
+     remove(...elements: Display[]): void;
+     destory(): void;
++    get __instanceOf__(): DisplayType.Box;
++    clone(): Box;
+ }
+ 
+ interface RGBColor {
+diff --git a/dist/index.js b/dist/index.js
+index 07946dacfe15af5d6aee43f5831fcf7500f912c5..8348bef51d469f7d1ade405b12723a2769109217 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -107,6 +107,17 @@ const SELF_ID = {
+         return this.id++;
+     }
+ };
++var DisplayType;
++(function(DisplayType) {
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Graph"] = "Graph";
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Box"] = "Box";
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Rect"] = "Rect";
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Text"] = "Text";
++})(DisplayType || (DisplayType = {}));
+ class Display {
+     parent;
+     id;
+@@ -212,25 +223,54 @@ class S extends Display {
+ }
+ class Graph extends S {
+     instruction;
++    __refresh__;
++    __options__;
+     constructor(options = {}){
+         super(options);
+         this.instruction = createInstruction();
++        // For better performance
++        this.__refresh__ = true;
++        this.__options__ = options;
+     }
+     render(ctx) {
+         this.create();
+-        this.instruction.mods.forEach((mod)=>{
+-            const direct = mod[0];
++        const cap = this.instruction.mods.length;
++        for(let i = 0; i < cap; i++){
++            const mod = this.instruction.mods[i];
++            const [direct, ...args] = mod;
+             if (direct in ASSIGN_MAPPINGS) {
+                 // @ts-expect-error
+-                ctx[direct] = mod[1];
+-                return;
++                ctx[direct] = args[0];
++                continue;
+             }
+             // @ts-expect-error
+-            ctx[direct].apply(ctx, ...mod.slice(1));
+-        });
++            ctx[direct].apply(ctx, ...args);
++        }
++    }
++    get __instanceOf__() {
++        return "Graph";
+     }
+ }
+ 
++function isGraph(display) {
++    return display.__instanceOf__ === DisplayType.Graph;
++}
++function isBox(display) {
++    return display.__instanceOf__ === DisplayType.Box;
++}
++function isRect(display) {
++    return isGraph(display) && display.__shape__ === DisplayType.Rect;
++}
++function isText(display) {
++    return isGraph(display) && display.__shape__ === DisplayType.Text;
++}
++const asserts = {
++    isGraph,
++    isBox,
++    isRect,
++    isText
++};
++
+ class Box extends Display {
+     elements;
+     constructor(){
+@@ -262,6 +302,34 @@ class Box extends Display {
+         this.elements.forEach((element)=>element.parent = null);
+         this.elements.length = 0;
+     }
++    get __instanceOf__() {
++        return DisplayType.Box;
++    }
++    clone() {
++        const box = new Box();
++        if (this.elements.length) {
++            const traverse = (elements, parent)=>{
++                const els = [];
++                const cap = elements.length;
++                for(let i = 0; i < cap; i++){
++                    const element = elements[i];
++                    if (asserts.isBox(element)) {
++                        const box = new Box();
++                        box.parent = parent;
++                        box.add(...traverse(element.elements, box));
++                        els.push(box);
++                    } else if (asserts.isGraph(element)) {
++                        const el = element.clone();
++                        el.parent = parent;
++                        els.push(el);
++                    }
++                }
++                return els;
++            };
++            box.add(...traverse(this.elements, box));
++        }
++        return box;
++    }
+ }
+ 
+ // Runtime is designed for graph element
+@@ -302,6 +370,9 @@ class Rect extends Graph {
+         super(options);
+         this.style = options.style || Object.create(null);
+     }
++    get __shape__() {
++        return DisplayType.Rect;
++    }
+     create() {
+         if (this.style.fill) {
+             this.instruction.fillStyle(runtime.evaluateFillStyle(this.style.fill, this.style.opacity));
+@@ -315,6 +386,12 @@ class Rect extends Graph {
+             this.instruction.strokeRect(0, 0, this.width, this.height);
+         }
+     }
++    clone() {
++        return new Rect({
++            ...this.style,
++            ...this.__options__
++        });
++    }
+ }
+ 
+ class Text extends Graph {
+@@ -334,6 +411,15 @@ class Text extends Graph {
+             this.instruction.fillText(this.text, 0, 0);
+         }
+     }
++    clone() {
++        return new Text({
++            ...this.style,
++            ...this.__options__
++        });
++    }
++    get __shape__() {
++        return DisplayType.Text;
++    }
+ }
+ 
+ class Event {
+@@ -449,27 +535,32 @@ let Schedule$1 = class Schedule extends Box {
+     // execute all graph elements
+     execute(render, graph = this) {
+         render.ctx.save();
+-        let matrix = graph.matrix;
+-        this.applyTransform(matrix);
+-        if (graph instanceof Box) {
+-            const cap = graph.elements.length;
++        if (asserts.isBox(graph)) {
++            const elements = graph.elements;
++            const cap = elements.length;
++            const matrices = new Array(cap);
+             for(let i = 0; i < cap; i++){
+-                const element = graph.elements[i];
+-                matrix = element.matrix.create({
+-                    a: 1,
+-                    b: 0,
+-                    c: 0,
+-                    d: 1,
+-                    e: 0,
+-                    f: 0
+-                });
+-                if (element instanceof Graph) {
+-                    matrix.transform(element.x, element.y, element.scaleX, element.scaleY, element.rotation, element.skewX, element.skewY);
++                const element = elements[i];
++                if (asserts.isGraph(element)) {
++                    matrices[i] = element.matrix.create({
++                        a: 1,
++                        b: 0,
++                        c: 0,
++                        d: 1,
++                        e: 0,
++                        f: 0
++                    });
++                    matrices[i].transform(element.x, element.y, element.scaleX, element.scaleY, element.rotation, element.skewX, element.skewY);
+                 }
++            }
++            for(let i = 0; i < cap; i++){
++                const element = elements[i];
+                 this.execute(render, element);
+             }
+         }
+-        if (graph instanceof Graph) {
++        if (asserts.isGraph(graph)) {
++            const matrix = graph.matrix;
++            this.applyTransform(matrix);
+             graph.render(render.ctx);
+         }
+         render.ctx.restore();
+@@ -477,13 +568,15 @@ let Schedule$1 = class Schedule extends Box {
+ };
+ 
+ function traverse(graphs, handler) {
+-    graphs.forEach((graph)=>{
+-        if (graph instanceof Box) {
++    const len = graphs.length;
++    for(let i = 0; i < len; i++){
++        const graph = graphs[i];
++        if (asserts.isBox(graph)) {
+             traverse(graph.elements, handler);
+         } else if (graph instanceof Graph) {
+             handler(graph);
+         }
+-    });
++    }
+ }
+ const etoile = {
+     Schedule: Schedule$1,
+@@ -691,7 +784,7 @@ function squarify(data, rect, layoutDecorator) {
+ 
+ function applyForOpacity(graph, lastState, nextState, easedProgress) {
+     const alpha = lastState + (nextState - lastState) * easedProgress;
+-    if (graph instanceof Rect) {
++    if (asserts.isRect(graph)) {
+         graph.style.opacity = alpha;
+     }
+ }
+@@ -1115,52 +1208,43 @@ function isScrollWheelOrRightButtonOnMouseupAndDown(e) {
+ const defaultRegistries = [
+     registerModuleForSchedule(new SelfEvent())
+ ];
+-function charCodeWidth(c, ch) {
+-    return c.measureText(String.fromCharCode(ch)).width;
++function measureTextWidth(c, text) {
++    return c.measureText(text).width;
+ }
+-function evaluateOptimalFontSize(c, text, width, fontRange, fontFamily, height) {
+-    height = Math.floor(height);
+-    let optimalFontSize = fontRange.min;
+-    for(let fontSize = fontRange.min; fontSize <= fontRange.max; fontSize++){
+-        c.font = `${fontSize}px ${fontFamily}`;
+-        let textWidth = 0;
+-        const textHeight = fontSize;
+-        let i = 0;
+-        while(i < text.length){
+-            const codePointWidth = charCodeWidth(c, text.charCodeAt(i));
+-            textWidth += codePointWidth;
+-            i++;
+-        }
+-        if (textWidth >= width) {
+-            const overflow = textWidth - width;
+-            const ratio = overflow / textWidth;
+-            const newFontSize = Math.abs(Math.floor(fontSize - fontSize * ratio));
+-            optimalFontSize = newFontSize || fontRange.min;
+-            break;
++function evaluateOptimalFontSize(c, text, font, desiredW, desiredH) {
++    desiredW = Math.floor(desiredW);
++    desiredH = Math.floor(desiredH);
++    const { range, family } = font;
++    let min = range.min;
++    let max = range.max;
++    const cache = new Map();
++    while(max - min >= 1){
++        const current = min + (max - min) / 2;
++        if (!cache.has(current)) {
++            c.font = `${current}px ${family}`;
++            const metrics = c.measureText(text);
++            const width = metrics.width;
++            const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
++            cache.set(current, {
++                width,
++                height
++            });
+         }
+-        if (textHeight >= height) {
+-            const overflow = textHeight - height;
+-            const ratio = overflow / textHeight;
+-            const newFontSize = Math.abs(Math.floor(fontSize - fontSize * ratio));
+-            optimalFontSize = newFontSize || fontRange.min;
+-            break;
++        const { width, height } = cache.get(current);
++        if (width > desiredW || height > desiredH) {
++            max = current;
++        } else {
++            min = current;
+         }
+-        optimalFontSize = fontSize;
+     }
+-    return optimalFontSize;
++    return Math.floor(min);
+ }
+ function getSafeText(c, text, width) {
+     const ellipsisWidth = c.measureText('...').width;
+     if (width < ellipsisWidth) {
+         return false;
+     }
+-    let textWidth = 0;
+-    let i = 0;
+-    while(i < text.length){
+-        const codePointWidth = charCodeWidth(c, text.charCodeAt(i));
+-        textWidth += codePointWidth;
+-        i++;
+-    }
++    const textWidth = measureTextWidth(c, text);
+     if (textWidth < width) {
+         return {
+             text,
+@@ -1258,9 +1342,12 @@ class TreemapLayout extends Schedule {
+         });
+         this.fgBox.add(rect);
+         this.render.ctx.textBaseline = 'middle';
+-        const optimalFontSize = evaluateOptimalFontSize(this.render.ctx, node.node.label, w - rectGap * 2, fontSize, fontFamily, node.children.length ? Math.round(titleHeight / 2) + rectGap : h);
++        const optimalFontSize = evaluateOptimalFontSize(this.render.ctx, node.node.id, {
++            range: fontSize,
++            family: fontFamily
++        }, w - rectGap * 2, node.children.length ? Math.round(titleHeight / 2) + rectGap : h);
+         this.render.ctx.font = `${optimalFontSize}px ${fontFamily}`;
+-        if (h > titleHeight) {
++        if (h > optimalFontSize) {
+             const result = getSafeText(this.render.ctx, node.node.label, w - rectGap * 2);
+             if (!result) return;
+             const { text, width } = result;
+@@ -1271,7 +1358,9 @@ class TreemapLayout extends Schedule {
+             }
+             this.fgBox.add(createTitleText(text, textX, textY, `${optimalFontSize}px ${fontFamily}`, color));
+         } else {
+-            const ellipsisWidth = 3 * charCodeWidth(this.render.ctx, 46);
++            if (!w || !h) return;
++            const ellipsisWidth = measureTextWidth(this.render.ctx, '...');
++            if (ellipsisWidth >= w || optimalFontSize >= h) return;
+             const textX = x + Math.round((w - ellipsisWidth) / 2);
+             const textY = y + Math.round(h / 2);
+             this.fgBox.add(createTitleText('...', textX, textY, `${optimalFontSize}px ${fontFamily}`, color));
+diff --git a/dist/index.mjs b/dist/index.mjs
+index c7a657155b36d4ab969089843def70cb80071391..7e752973d1edb2907abc8cf753e912c6e73feafa 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -105,6 +105,17 @@ const SELF_ID = {
+         return this.id++;
+     }
+ };
++var DisplayType;
++(function(DisplayType) {
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Graph"] = "Graph";
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Box"] = "Box";
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Rect"] = "Rect";
++    // eslint-disable-next-line no-unused-vars
++    DisplayType["Text"] = "Text";
++})(DisplayType || (DisplayType = {}));
+ class Display {
+     parent;
+     id;
+@@ -210,25 +221,54 @@ class S extends Display {
+ }
+ class Graph extends S {
+     instruction;
++    __refresh__;
++    __options__;
+     constructor(options = {}){
+         super(options);
+         this.instruction = createInstruction();
++        // For better performance
++        this.__refresh__ = true;
++        this.__options__ = options;
+     }
+     render(ctx) {
+         this.create();
+-        this.instruction.mods.forEach((mod)=>{
+-            const direct = mod[0];
++        const cap = this.instruction.mods.length;
++        for(let i = 0; i < cap; i++){
++            const mod = this.instruction.mods[i];
++            const [direct, ...args] = mod;
+             if (direct in ASSIGN_MAPPINGS) {
+                 // @ts-expect-error
+-                ctx[direct] = mod[1];
+-                return;
++                ctx[direct] = args[0];
++                continue;
+             }
+             // @ts-expect-error
+-            ctx[direct].apply(ctx, ...mod.slice(1));
+-        });
++            ctx[direct].apply(ctx, ...args);
++        }
++    }
++    get __instanceOf__() {
++        return "Graph";
+     }
+ }
+ 
++function isGraph(display) {
++    return display.__instanceOf__ === DisplayType.Graph;
++}
++function isBox(display) {
++    return display.__instanceOf__ === DisplayType.Box;
++}
++function isRect(display) {
++    return isGraph(display) && display.__shape__ === DisplayType.Rect;
++}
++function isText(display) {
++    return isGraph(display) && display.__shape__ === DisplayType.Text;
++}
++const asserts = {
++    isGraph,
++    isBox,
++    isRect,
++    isText
++};
++
+ class Box extends Display {
+     elements;
+     constructor(){
+@@ -260,6 +300,34 @@ class Box extends Display {
+         this.elements.forEach((element)=>element.parent = null);
+         this.elements.length = 0;
+     }
++    get __instanceOf__() {
++        return DisplayType.Box;
++    }
++    clone() {
++        const box = new Box();
++        if (this.elements.length) {
++            const traverse = (elements, parent)=>{
++                const els = [];
++                const cap = elements.length;
++                for(let i = 0; i < cap; i++){
++                    const element = elements[i];
++                    if (asserts.isBox(element)) {
++                        const box = new Box();
++                        box.parent = parent;
++                        box.add(...traverse(element.elements, box));
++                        els.push(box);
++                    } else if (asserts.isGraph(element)) {
++                        const el = element.clone();
++                        el.parent = parent;
++                        els.push(el);
++                    }
++                }
++                return els;
++            };
++            box.add(...traverse(this.elements, box));
++        }
++        return box;
++    }
+ }
+ 
+ // Runtime is designed for graph element
+@@ -300,6 +368,9 @@ class Rect extends Graph {
+         super(options);
+         this.style = options.style || Object.create(null);
+     }
++    get __shape__() {
++        return DisplayType.Rect;
++    }
+     create() {
+         if (this.style.fill) {
+             this.instruction.fillStyle(runtime.evaluateFillStyle(this.style.fill, this.style.opacity));
+@@ -313,6 +384,12 @@ class Rect extends Graph {
+             this.instruction.strokeRect(0, 0, this.width, this.height);
+         }
+     }
++    clone() {
++        return new Rect({
++            ...this.style,
++            ...this.__options__
++        });
++    }
+ }
+ 
+ class Text extends Graph {
+@@ -332,6 +409,15 @@ class Text extends Graph {
+             this.instruction.fillText(this.text, 0, 0);
+         }
+     }
++    clone() {
++        return new Text({
++            ...this.style,
++            ...this.__options__
++        });
++    }
++    get __shape__() {
++        return DisplayType.Text;
++    }
+ }
+ 
+ class Event {
+@@ -447,27 +533,32 @@ let Schedule$1 = class Schedule extends Box {
+     // execute all graph elements
+     execute(render, graph = this) {
+         render.ctx.save();
+-        let matrix = graph.matrix;
+-        this.applyTransform(matrix);
+-        if (graph instanceof Box) {
+-            const cap = graph.elements.length;
++        if (asserts.isBox(graph)) {
++            const elements = graph.elements;
++            const cap = elements.length;
++            const matrices = new Array(cap);
+             for(let i = 0; i < cap; i++){
+-                const element = graph.elements[i];
+-                matrix = element.matrix.create({
+-                    a: 1,
+-                    b: 0,
+-                    c: 0,
+-                    d: 1,
+-                    e: 0,
+-                    f: 0
+-                });
+-                if (element instanceof Graph) {
+-                    matrix.transform(element.x, element.y, element.scaleX, element.scaleY, element.rotation, element.skewX, element.skewY);
++                const element = elements[i];
++                if (asserts.isGraph(element)) {
++                    matrices[i] = element.matrix.create({
++                        a: 1,
++                        b: 0,
++                        c: 0,
++                        d: 1,
++                        e: 0,
++                        f: 0
++                    });
++                    matrices[i].transform(element.x, element.y, element.scaleX, element.scaleY, element.rotation, element.skewX, element.skewY);
+                 }
++            }
++            for(let i = 0; i < cap; i++){
++                const element = elements[i];
+                 this.execute(render, element);
+             }
+         }
+-        if (graph instanceof Graph) {
++        if (asserts.isGraph(graph)) {
++            const matrix = graph.matrix;
++            this.applyTransform(matrix);
+             graph.render(render.ctx);
+         }
+         render.ctx.restore();
+@@ -475,13 +566,15 @@ let Schedule$1 = class Schedule extends Box {
+ };
+ 
+ function traverse(graphs, handler) {
+-    graphs.forEach((graph)=>{
+-        if (graph instanceof Box) {
++    const len = graphs.length;
++    for(let i = 0; i < len; i++){
++        const graph = graphs[i];
++        if (asserts.isBox(graph)) {
+             traverse(graph.elements, handler);
+         } else if (graph instanceof Graph) {
+             handler(graph);
+         }
+-    });
++    }
+ }
+ const etoile = {
+     Schedule: Schedule$1,
+@@ -689,7 +782,7 @@ function squarify(data, rect, layoutDecorator) {
+ 
+ function applyForOpacity(graph, lastState, nextState, easedProgress) {
+     const alpha = lastState + (nextState - lastState) * easedProgress;
+-    if (graph instanceof Rect) {
++    if (asserts.isRect(graph)) {
+         graph.style.opacity = alpha;
+     }
+ }
+@@ -1113,52 +1206,43 @@ function isScrollWheelOrRightButtonOnMouseupAndDown(e) {
+ const defaultRegistries = [
+     registerModuleForSchedule(new SelfEvent())
+ ];
+-function charCodeWidth(c, ch) {
+-    return c.measureText(String.fromCharCode(ch)).width;
++function measureTextWidth(c, text) {
++    return c.measureText(text).width;
+ }
+-function evaluateOptimalFontSize(c, text, width, fontRange, fontFamily, height) {
+-    height = Math.floor(height);
+-    let optimalFontSize = fontRange.min;
+-    for(let fontSize = fontRange.min; fontSize <= fontRange.max; fontSize++){
+-        c.font = `${fontSize}px ${fontFamily}`;
+-        let textWidth = 0;
+-        const textHeight = fontSize;
+-        let i = 0;
+-        while(i < text.length){
+-            const codePointWidth = charCodeWidth(c, text.charCodeAt(i));
+-            textWidth += codePointWidth;
+-            i++;
+-        }
+-        if (textWidth >= width) {
+-            const overflow = textWidth - width;
+-            const ratio = overflow / textWidth;
+-            const newFontSize = Math.abs(Math.floor(fontSize - fontSize * ratio));
+-            optimalFontSize = newFontSize || fontRange.min;
+-            break;
++function evaluateOptimalFontSize(c, text, font, desiredW, desiredH) {
++    desiredW = Math.floor(desiredW);
++    desiredH = Math.floor(desiredH);
++    const { range, family } = font;
++    let min = range.min;
++    let max = range.max;
++    const cache = new Map();
++    while(max - min >= 1){
++        const current = min + (max - min) / 2;
++        if (!cache.has(current)) {
++            c.font = `${current}px ${family}`;
++            const metrics = c.measureText(text);
++            const width = metrics.width;
++            const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
++            cache.set(current, {
++                width,
++                height
++            });
+         }
+-        if (textHeight >= height) {
+-            const overflow = textHeight - height;
+-            const ratio = overflow / textHeight;
+-            const newFontSize = Math.abs(Math.floor(fontSize - fontSize * ratio));
+-            optimalFontSize = newFontSize || fontRange.min;
+-            break;
++        const { width, height } = cache.get(current);
++        if (width > desiredW || height > desiredH) {
++            max = current;
++        } else {
++            min = current;
+         }
+-        optimalFontSize = fontSize;
+     }
+-    return optimalFontSize;
++    return Math.floor(min);
+ }
+ function getSafeText(c, text, width) {
+     const ellipsisWidth = c.measureText('...').width;
+     if (width < ellipsisWidth) {
+         return false;
+     }
+-    let textWidth = 0;
+-    let i = 0;
+-    while(i < text.length){
+-        const codePointWidth = charCodeWidth(c, text.charCodeAt(i));
+-        textWidth += codePointWidth;
+-        i++;
+-    }
++    const textWidth = measureTextWidth(c, text);
+     if (textWidth < width) {
+         return {
+             text,
+@@ -1256,9 +1340,12 @@ class TreemapLayout extends Schedule {
+         });
+         this.fgBox.add(rect);
+         this.render.ctx.textBaseline = 'middle';
+-        const optimalFontSize = evaluateOptimalFontSize(this.render.ctx, node.node.label, w - rectGap * 2, fontSize, fontFamily, node.children.length ? Math.round(titleHeight / 2) + rectGap : h);
++        const optimalFontSize = evaluateOptimalFontSize(this.render.ctx, node.node.id, {
++            range: fontSize,
++            family: fontFamily
++        }, w - rectGap * 2, node.children.length ? Math.round(titleHeight / 2) + rectGap : h);
+         this.render.ctx.font = `${optimalFontSize}px ${fontFamily}`;
+-        if (h > titleHeight) {
++        if (h > optimalFontSize) {
+             const result = getSafeText(this.render.ctx, node.node.label, w - rectGap * 2);
+             if (!result) return;
+             const { text, width } = result;
+@@ -1269,7 +1356,9 @@ class TreemapLayout extends Schedule {
+             }
+             this.fgBox.add(createTitleText(text, textX, textY, `${optimalFontSize}px ${fontFamily}`, color));
+         } else {
+-            const ellipsisWidth = 3 * charCodeWidth(this.render.ctx, 46);
++            if (!w || !h) return;
++            const ellipsisWidth = measureTextWidth(this.render.ctx, '...');
++            if (ellipsisWidth >= w || optimalFontSize >= h) return;
+             const textX = x + Math.round((w - ellipsisWidth) / 2);
+             const textY = y + Math.round(h / 2);
+             this.fgBox.add(createTitleText('...', textX, textY, `${optimalFontSize}px ${fontFamily}`, color));

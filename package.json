@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -77,7 +77,8 @@
       "es-iterator-helpers": "npm:@nolyfill/es-iterator-helpers@^1"
     },
     "patchedDependencies": {
-      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch"
+      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch",
+      "squarified@0.1.1": "patches/squarified@0.1.1.patch"
     }
   },
   "files": [

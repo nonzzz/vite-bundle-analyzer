@@ -21,6 +21,9 @@ patchedDependencies:
   '@rollup/plugin-esm-shim@0.1.7':
     hash: dpfqm63lv6t4kdn4hi77llr2su
     path: patches/@rollup__plugin-esm-shim@0.1.7.patch
+  squarified@0.1.1:
+    hash: hfstrsrzrawotmj3zv6nr5jkiq
+    path: patches/squarified@0.1.1.patch
 
 importers:
 
@@ -127,7 +130,7 @@ importers:
         version: 0.11.2(@swc/core@1.6.1)(rollup@4.18.0)
       squarified:
         specifier: ^0.1.1
-        version: 0.1.1
+        version: 0.1.1(patch_hash=hfstrsrzrawotmj3zv6nr5jkiq)
       typescript:
         specifier: ^5.2.2
         version: 5.4.5
@@ -5928,7 +5931,7 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  squarified@0.1.1: {}
+  squarified@0.1.1(patch_hash=hfstrsrzrawotmj3zv6nr5jkiq): {}
 
   stack-utils@2.0.6:
     dependencies:

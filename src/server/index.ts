@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 import type { Logger, Plugin } from 'vite'
 import ansis from 'ansis'
 import { opener } from './opener'
@@ -7,6 +8,7 @@ import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { analyzerDebug, convertBytes, fsp } from './shared'
+import { states } from './states'
 
 const isCI = !!process.env.CI
 
@@ -58,14 +60,15 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
   return [false, undefined]
 }
 
+// Design for race condition is called
+let callCount = 0
+
 function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
   const store: AnalyzerStore = {
-    previousSourcemapOption: false,
-    hasSetSourcemapOption: false,
     analyzerModule
   }
   let defaultWd = process.cwd()
@@ -108,25 +111,27 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           }
         }
       }
-      // Alough it's not a good practice to modify the config object directly, but it's the only way to make it work.
-      // If you have a better solution, please PR.
-      // const isrepated = config.plugins.
-
-      if (!store.hasSetSourcemapOption) {
-        store.hasSetSourcemapOption = true
-        if (config.build?.sourcemap) {
-          store.previousSourcemapOption = typeof config.build.sourcemap === 'boolean'
+      // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
+      // for multiple build process. So we should ensure the sourcemap option is set correctly.
+      if (!states.hasSetupSourcemapOption) {
+        states.hasSetupSourcemapOption = true
+        if ('sourcemap' in config.build) {
+          states.lastSourcemapOption = typeof config.build.sourcemap === 'boolean'
             ? config.build.sourcemap
             : config.build.sourcemap === 'hidden'
+          if (config.build.sourcemap === 'inline') {
+            // verbose the warning
+            logger.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
+          }
         }
-        if (typeof config.build.sourcemap === 'boolean' && config.build.sourcemap) {
-          config.build.sourcemap = true
-        } else {
-          // force set sourcemap to ensure the result as accurate as possible.
-          config.build.sourcemap = 'hidden'
-        }
-        analyzerDebug(`plugin status is ${config.build.sourcemap ? ansis.green('ok') : ansis.red('invalid')}`)
       }
+
+      if (typeof config.build.sourcemap === 'boolean') {
+        config.build.sourcemap = true
+      } else {
+        config.build.sourcemap = 'hidden'
+      }
+      analyzerDebug(`plugin status is ${config.build.sourcemap ? ansis.green('ok') : ansis.red('invalid')}`)
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
@@ -141,7 +146,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           // For classical
           await analyzerModule.addModule(bundle, sourcemapFileName)
         }
-        if (!store.previousSourcemapOption) {
+        if (!states.lastSourcemapOption) {
           if (pass) {
             if (sourcemapFileName) {
               Reflect.deleteProperty(outputBundle, sourcemapFileName)
@@ -159,10 +164,14 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
       const analyzeModule = analyzerModule.processModule()
+      callCount++
 
       if (preferSilent) {
         const output = 'fileName' in opts ? opts.fileName : 'stats'
-        const p = path.join(defaultWd, `${output}.${opts.analyzerMode === 'json' ? 'json' : 'html'}`)
+        let p = path.join(defaultWd, `${output}.${opts.analyzerMode === 'json' ? 'json' : 'html'}`)
+        if (fs.existsSync(p)) {
+          p = path.join(defaultWd, `${output}-${callCount}.${opts.analyzerMode === 'json' ? 'json' : 'html'}`)
+        }
         if (opts.analyzerMode === 'json') {
           return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
@@ -175,6 +184,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
       }
 
       if (preferLivingServer) {
+        callCount--
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         b.into(html)
         const { setup, port } = await createServer(
@@ -182,13 +192,14 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
             ? opts.analyzerPort === 'auto'
               ? 0
               : opts.analyzerPort
-            : 8888
+            : 8888 + callCount
         )
         setup({ title: reportTitle, mode: 'stat', arena: b })
         if (('openAnalyzer' in opts ? opts.openAnalyzer : true) && !isCI) {
           const address = `http://localhost:${port}`
           openBrowser(address)
         }
+        callCount++
       }
     }
   }

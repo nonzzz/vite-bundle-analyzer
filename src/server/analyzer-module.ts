@@ -186,6 +186,7 @@ export class AnalyzerModule {
 
   async addModule(bundle: OutputChunk | OutputAsset, sourcemapFileName?: string) {
     const wrapped = wrapBundleChunk(bundle, this.chunks, sourcemapFileName)
+    if (!wrapped.map && !wrapped.moduleIds.length) return
     const node = createAnalyzerNode(wrapped.filename)
     await node.setup(wrapped, this.pluginContext!, this.compress, this.workspaceRoot)
     this.modules.push(node)

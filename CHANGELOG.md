@@ -1,3 +1,9 @@
+## 0.13.1
+
+# Patches
+
+- Fix the fuck vitepress static generator can't work!!!
+
 ## 0.13.0
 
 # Major
