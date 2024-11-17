@@ -35,11 +35,11 @@ dev-client:
 
 test:
 	@echo "Running tests..."
-	@pnpm run test
+	@pnpm exec vitest --coverage
 
 lint:
 	@echo "Linting code..."
-	@pnpm run lint
+	@pnpm exec eslint . --fix
 
 format:
 	@echo "Formatting code..."
