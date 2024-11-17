@@ -131,6 +131,9 @@ importers:
       squarified:
         specifier: ^0.1.2
         version: 0.1.2
+      tinyexec:
+        specifier: ^0.3.1
+        version: 0.3.1
       typescript:
         specifier: ^5.2.2
         version: 5.4.5
@@ -140,6 +143,9 @@ importers:
       vite:
         specifier: ^5.2.8
         version: 5.3.1(@types/node@20.14.5)(lightningcss@1.25.1)
+      vite3:
+        specifier: npm:vite@3
+        version: vite@3.1.0
       vitest:
         specifier: ^2.1.5
         version: 2.1.5(@types/node@20.14.5)(lightningcss@1.25.1)

@@ -8,13 +8,7 @@
   "bin": {
     "analyze": "dist/bin.js"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
+  "exports": "./src/server/index.ts",
   "devDependencies": {
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
@@ -51,10 +45,12 @@
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-swc3": "^0.11.2",
     "squarified": "^0.1.2",
+    "tinyexec": "^0.3.1",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.5",
+    "vite3": "npm:vite@3"
   },
   "license": "MIT",
   "author": "kanno",

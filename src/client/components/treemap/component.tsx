@@ -105,7 +105,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     const filtered = analyzeModule.filter((m) => scence.has(m.label))
     const sortedData = sortChildrenByKey(
       filtered.map(
-        (item) => c2m({ ...item, groups: sizes === 'statSize' ? item.stats : item.source }, sizes, (d) => ({ ...d, id: d.filename }))
+        (item) => c2m({ ...item, groups: sizes === 'statSize' ? item.stats : item.source }, sizes, (d) => ({ ...d, id: d.label }))
       ),
       'weight'
     )
