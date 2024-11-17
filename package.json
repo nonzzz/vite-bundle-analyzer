@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "bin": {
+    "analyze": "dist/bin.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -44,6 +47,7 @@
     "ava": "^5.3.1",
     "c8": "^8.0.1",
     "clsx": "^2.1.1",
+    "commander": "^12.1.0",
     "dprint": "^0.46.0",
     "eslint": "^8.49.0",
     "eslint-config-kagura": "^2.2.1",
@@ -55,7 +59,7 @@
     "rollup": "^4.13.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-swc3": "^0.11.2",
-    "squarified": "^0.1.1",
+    "squarified": "^0.1.2",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
     "vite": "^5.2.8"
@@ -77,8 +81,7 @@
       "es-iterator-helpers": "npm:@nolyfill/es-iterator-helpers@^1"
     },
     "patchedDependencies": {
-      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch",
-      "squarified@0.1.1": "patches/squarified@0.1.1.patch"
+      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch"
     }
   },
   "files": [

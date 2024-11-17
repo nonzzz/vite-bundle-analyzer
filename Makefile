@@ -21,6 +21,9 @@ build-client:
 build-server:
 	@echo "Building server code..."
 	@pnpm exec rollup --config rollup.config.mts --configPlugin swc3
+	-rm -rf dist/cli.mjs
+	awk '{ print }' bin.txt > dist/bin.js
+
 
 dev-server:
 	@echo "Starting server in development mode..."
