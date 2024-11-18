@@ -1,7 +1,7 @@
 import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
-import { c2m, createTreemap, defaultFontOptions, defaultLayoutOptions, getNodeDepth, sortChildrenByKey } from 'squarified'
+import { c2m, createTreemap, defaultFontOptions, defaultLayoutOptions, sortChildrenByKey } from 'squarified'
 import type { ColorMappings, NativeModule, PrimitiveEventCallback, RenderDecorator, TreemapLayout } from 'squarified'
 import { hashCode } from '../../shared'
 import { useApplicationContext } from '../../context'
@@ -12,76 +12,81 @@ export interface TreemapProps {
   onMousemove: PrimitiveEventCallback<'mousemove'>
 }
 
-function findBestChunkPartIndex(data: NativeModule[]) {
-  const splitChunkNames = data.map((chunk) => chunk.id.split(/[^a-z0-9]/iu))
-  const longestSplitName = Math.max(...splitChunkNames.map((parts) => parts.length))
-  const namePart = {
-    index: 0,
-    votes: 0
-  }
-  for (let i = longestSplitName - 1; i >= 0; i--) {
-    const identifierVotes = {
-      name: 0,
-      hash: 0,
-      ext: 0
-    }
-    let lastChunkPart = ''
-    for (const splitChunkName of splitChunkNames) {
-      const part = splitChunkName[i]
-      if (part === undefined || part === '') {
-        continue
-      }
-      if (part === lastChunkPart) {
-        identifierVotes.ext++
-      } else if (/[a-z]/u.test(part) && /[0-9]/u.test(part) && part.length === lastChunkPart.length) {
-        identifierVotes.hash++
-      } else if (/^[a-z]+$/iu.test(part) || /^[0-9]+$/u.test(part)) {
-        identifierVotes.name++
-      }
-      lastChunkPart = part
-    }
-    if (identifierVotes.name >= namePart.votes) {
-      namePart.index = i
-      namePart.votes = identifierVotes.name
-    }
-  }
-  return namePart.index
-}
-
-function getChunkNamePart(chunkLabel: string, chunkNamePartIndex: number) {
-  return chunkLabel.split(/[^a-z0-9]/iu)[chunkNamePartIndex] || chunkLabel
-}
-
-function calculateColorByChunk(module: NativeModule, groupRootId: string, chunkPartIndex: number) {
+function evaluateColorMappings(data: NativeModule[]): ColorMappings {
   const colorMappings: ColorMappings = {}
-  if (module.groups && Array.isArray(module.groups)) {
-    for (const group of module.groups) {
-      Object.assign(colorMappings, calculateColorByChunk(group, groupRootId, chunkPartIndex))
-    }
+
+  const hashToHue = (id: string): number => {
+    const hash = Math.abs(hashCode(id))
+    return hash % 360
   }
-  const chunkName = getChunkNamePart(groupRootId, chunkPartIndex)
-  const hash = /[^0-9]/.test(chunkName) ? hashCode(chunkName) : (parseInt(chunkName) / 1000) * 360
-  const depth = getNodeDepth(module)
-  const hue = (Math.round(Math.abs(hash) % 360) + depth * 15) % 360
-  const saturation = 70 + (depth * 3) % 30
-  const lightness = 60 + (depth * 2) % 20
-  colorMappings[module.id] = {
-    mode: 'hsl',
-    desc: {
+
+  const lightScale = (depth: number) => 70 - depth * 5
+  const baseSaturation = 40
+  const siblingHueShift = 20
+
+  const rc = 0.2126
+  const gc = 0.7152
+  const bc = 0.0722
+
+  const hslToRgb = (h: number, s: number, l: number): { r: number; g: number; b: number } => {
+    const a = s * Math.min(l, 1 - l)
+    const f = (n: number) => {
+      const k = (n + h / 30) % 12
+      return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)
+    }
+    return { r: f(0), g: f(8), b: f(4) }
+  }
+
+  const calculateLuminance = (r: number, g: number, b: number): number => {
+    return rc * r + gc * g + bc * b
+  }
+
+  const calculateColor = (
+    module: NativeModule,
+    depth: number,
+    parentHue: number | null,
+    siblingIndex: number,
+    totalSiblings: number
+  ) => {
+    const nodeHue = hashToHue(module.id)
+    const hue = parentHue !== null
+      ? (parentHue + siblingHueShift * siblingIndex / totalSiblings) % 360
+      : nodeHue
+    const lightness = lightScale(depth)
+
+    const hslColor = {
       h: hue,
-      s: saturation,
-      l: lightness
+      s: baseSaturation,
+      l: lightness / 100
+    }
+    const { r, g, b } = hslToRgb(hslColor.h, hslColor.s / 100, hslColor.l)
+    const luminance = calculateLuminance(r, g, b)
+
+    if (luminance < 0.6) {
+      hslColor.l += 0.2
+    } else if (luminance > 0.8) {
+      hslColor.l -= 0.1
+    }
+
+    hslColor.l *= 100
+
+    colorMappings[module.id] = {
+      mode: 'hsl',
+      desc: hslColor
+    }
+
+    if (module.groups && Array.isArray(module.groups)) {
+      const totalChildren = module.groups.length
+      for (let i = 0; i < totalChildren; i++) {
+        const child = module.groups[i]
+        calculateColor(child, depth + 1, hue, i, totalChildren)
+      }
     }
   }
-  return colorMappings
-}
 
-function evaluateColorMappings(data: NativeModule[]) {
-  const colorMappings: ColorMappings = {}
-  const chunkPartIndex = findBestChunkPartIndex(data)
-  for (const module of data) {
-    const groupRootId = module.id
-    Object.assign(colorMappings, calculateColorByChunk(module, groupRootId, chunkPartIndex))
+  for (let i = 0; i < data.length; i++) {
+    const module = data[i]
+    calculateColor(module, 0, null, i, data.length)
   }
 
   return colorMappings
