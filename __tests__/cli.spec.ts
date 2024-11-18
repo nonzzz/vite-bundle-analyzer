@@ -2,7 +2,7 @@ import path from 'path'
 import url from 'url'
 import fs from 'fs'
 import { x } from 'tinyexec'
-import { describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it } from 'vitest'
 
 const cliPath = path.join(process.cwd(), 'dist/cli.js')
 
@@ -13,6 +13,9 @@ function execCli(args: string[] = []) {
 const defaultWd = path.join(url.fileURLToPath(new URL('./', import.meta.url)), 'fixtures')
 
 describe('Cli', () => {
+  afterAll(() => {
+    fs.rmSync(path.join(defaultWd, 'normal', 'dist'), { recursive: true })
+  })
   it('must need a config ', async () => {
     const { stderr } = await execCli()
     expect(stderr).toBe("error: required option '-c, --config <path>' not specified\n")

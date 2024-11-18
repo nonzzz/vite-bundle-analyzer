@@ -11,7 +11,7 @@ import type { AnalyzerPluginOptions } from '../src/server'
 type LoggerMessage = { type: string; message: string }
 type FakeLogger = Logger & { messages: LoggerMessage[]; clear: () => void }
 
-const defaultWd = __dirname
+const defaultWd = path.dirname(new URL(import.meta.url).pathname)
 
 const fixturePath = path.join(defaultWd, 'fixtures')
 
