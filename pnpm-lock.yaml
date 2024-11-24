@@ -129,8 +129,8 @@ importers:
         specifier: ^0.11.2
         version: 0.11.2(@swc/core@1.6.1)(rollup@4.18.0)
       squarified:
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.2.0
+        version: 0.2.0
       tinyexec:
         specifier: ^0.3.1
         version: 0.3.1
@@ -2672,8 +2672,8 @@ packages:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
 
-  squarified@0.1.2:
-    resolution: {integrity: sha512-FhWEDnTemSzaFYuyxfJmvAjGVlkNDs9NHuUVwWmp++25SwusTH8GZRvAqV9dEgxX+1we9NBkGvZhv2ys9MCTCQ==}
+  squarified@0.2.0:
+    resolution: {integrity: sha512-ZHCES0e7LEFurWp1RJDu3emNs5gZPKTvEeu7Qtr8HFsVPvla+VZ5yWLOUe3D1vHQa0gcxAe3giLoxZEWb71Bfw==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -5616,7 +5616,7 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
-  squarified@0.1.2: {}
+  squarified@0.2.0: {}
 
   stackback@0.0.2: {}
 
