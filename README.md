@@ -58,6 +58,14 @@ export default defineConfig({
 | `defaultSizes` | `stat\|parsed\|gzip`   | `stat`        | The default type selected in the client page                                     |
 | `summary`      | `boolean`              | `true`        | Show full chunk info to stdout.                                                  |
 
+## ClI
+
+This plugin provides cli util `analyze`. Add --help to check actual options. It can be used like:
+
+```bash
+$ analyze -c "your vite config path"
+```
+
 ### Sponsors
 
 <p align="center">

@@ -1,5 +1,4 @@
-import test from 'ava'
-import type { ExecutionContext } from 'ava'
+import { describe, expect, it } from 'vitest'
 import { createAnalyzerModule } from '../src/server/analyzer-module'
 import { pick } from '../src/shared'
 import type { Module, PluginContext } from '../src/server/interface'
@@ -13,15 +12,15 @@ const mockRollupContext = <PluginContext> {
   }
 }
 
-function assert(act: Module, expect: Module, fields: (keyof Module)[], t: ExecutionContext<unknown>) {
+function assert(act: Module, exp: Module, fields: (keyof Module)[]) {
   const graph = pick(act, fields)
   for (const key in graph) {
     const k = key as keyof typeof graph
-    t.is(graph[k], expect[k], `${k} failed`)
+    expect(graph[k]).toEqual(exp[k])
   }
 }
 
-async function runStatTest(data: ReturnType<typeof createMockStats>, t: ExecutionContext<unknown>) {
+async function runStatTest(data: ReturnType<typeof createMockStats>) {
   const analyzerModule = createAnalyzerModule()
   const { chunk, chunkName, expect, sourceMapFileName, map } = data
   analyzerModule.setupRollupChunks({ [chunkName]: { ...chunk, fileName: chunkName }, [sourceMapFileName]: { source: map } as any })
@@ -29,11 +28,12 @@ async function runStatTest(data: ReturnType<typeof createMockStats>, t: Executio
   await analyzerModule.addModule({ ...chunk, fileName: chunkName }, sourceMapFileName)
   const module = analyzerModule.processModule()
   if (Array.isArray(expect)) {
-    assert(module[0], expect[0], Object.keys(expect[0]) as (keyof Module)[], t)
+    assert(module[0], expect[0], Object.keys(expect[0]) as (keyof Module)[])
   }
-  t.pass()
 }
 
-test('normal', async (t) => {
-  await runStatTest(normal, t)
+describe('Stats', () => {
+  it('normal', async () => {
+    runStatTest(normal)
+  })
 })

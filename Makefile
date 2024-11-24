@@ -1,3 +1,5 @@
+ROLLUP = pnpm exec rollup --config rollup.config.mts --configPlugin swc3
+
 install:
 	@echo "Using berry to install dependencies..."
 	corepack enable
@@ -20,11 +22,14 @@ build-client:
 
 build-server:
 	@echo "Building server code..."
-	@pnpm exec rollup --config rollup.config.mts --configPlugin swc3
+	@$(ROLLUP)
+	-rm -rf dist/cli.mjs
+	awk '{ print }' bin.txt > dist/bin.js
+
 
 dev-server:
 	@echo "Starting server in development mode..."
-	@export NODE_ENV=development && pnpm exec rollup --config rollup.config.mts --configPlugin swc3 --watch
+	@export NODE_ENV=development && $(ROLLUP) --watch
 
 dev-client:
 	@echo "Starting client in development mode..."
@@ -32,11 +37,11 @@ dev-client:
 
 test:
 	@echo "Running tests..."
-	@pnpm run test
+	@pnpm exec vitest --coverage
 
 lint:
 	@echo "Linting code..."
-	@pnpm run lint
+	@pnpm exec eslint . --fix
 
 format:
 	@echo "Formatting code..."
