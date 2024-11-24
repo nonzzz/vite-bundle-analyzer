@@ -1,3 +1,15 @@
+## 0.14.0
+
+# Feature & Improves
+
+- Add a simple cli tool. use like:
+
+```bash
+$ analyze -c ./vite.config.ts
+```
+
+- Adjust treemap background color
+
 ## 0.13.1
 
 # Patches
