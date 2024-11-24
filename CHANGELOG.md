@@ -1,3 +1,9 @@
+## 0.14.1
+
+# Patches
+
+- Fix error shebang.
+
 ## 0.14.0
 
 # Feature & Improves
