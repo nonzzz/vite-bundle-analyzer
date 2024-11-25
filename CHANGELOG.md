@@ -1,3 +1,9 @@
+## 0.14.2
+
+# Patches
+
+- Fix `type='module'` can't work.
+
 ## 0.14.1
 
 # Patches
@@ -33,7 +39,7 @@ Before `v0.13.0` the client look like [classic](./imgs/classic.gif)
 
 The new client
 
-[now](./imgs/now.png)
+[now](./imgs/now.gif)
 
 ## 0.12.1
 

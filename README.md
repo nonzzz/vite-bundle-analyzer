@@ -13,6 +13,10 @@
   </a>
 </p>
 
+<p align="center">
+  <img src="./imgs/now.gif" width="640" height="320" />
+</p>
+
 > [!WARNING]
 > Vite's enable minify by default.There for you will see that the parsed size is larger than actual size.This is because the bundle info
 > provide by rollup isn't compressed.(If you care about this problem you can choose anothr plugins.)
