@@ -20,7 +20,8 @@ export default defineConfig(({ mode, command }) => {
     build: {
       outDir: path.join(process.cwd(), 'dist', 'client'),
       cssMinify: 'lightningcss',
-      emptyOutDir: true
+      emptyOutDir: true,
+      modulePreload: false
     },
     base: './'
   } as UserConfig
