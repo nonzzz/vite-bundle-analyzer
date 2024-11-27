@@ -17,12 +17,6 @@ const defaultGzipOptions = <ZlibOptions> {
   level: zlib.constants.Z_DEFAULT_LEVEL
 }
 
-const ___dirname = path.dirname(new URL(import.meta.url).pathname)
-
-export const clientPath = slash(path.join(___dirname, 'client'))
-
-export const clientAssetsPath = slash(path.join(clientPath, 'assets'))
-
 export function createGzip(options: ZlibOptions = {}) {
   options = Object.assign(defaultGzipOptions, options)
   return (buf: InputType) => {

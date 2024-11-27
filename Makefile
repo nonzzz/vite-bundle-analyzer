@@ -1,4 +1,5 @@
-ROLLUP = pnpm exec rollup --config rollup.config.mts --configPlugin swc3
+ROLLUP = ./node_modules/.bin/rollup --config rollup.config.mts --configPlugin swc3
+TSX = ./node_modules/.bin/tsx
 
 install:
 	@echo "Using berry to install dependencies..."
@@ -10,7 +11,10 @@ client-analyze:
 	@pnpm exec vite build src/client --config analyze.config.mts
 	awk '{ print }' dist/client/stats.json > src/client/data.json
 
-build-all:cleanup  build-server build-client
+build-all:cleanup build-server cleaup-client
+
+cleaup-client:
+	-rm -rf dist/client
 
 cleanup:
 	-rm -rf dist
@@ -20,8 +24,9 @@ build-client:
 	@pnpm exec vite build src/client
 	make clean-html
 
-build-server:
+build-server: build-client
 	@echo "Building server code..."
+	@$(TSX) ./pre-compile.mts > dist/html.mjs
 	@$(ROLLUP)
 	-rm -rf dist/cli.mjs
 	awk '{ print }' bin.txt > dist/bin.js

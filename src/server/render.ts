@@ -1,11 +1,10 @@
-import path from 'path'
 import { Readable } from 'stream'
 import http from 'http'
 import net from 'net'
 import zlib from 'zlib'
 import ansis from 'ansis'
 import type { DefaultSizes, Module } from './interface'
-import { clientAssetsPath, clientPath, fsp, readAll, stringToByte } from './shared'
+import { stringToByte } from './shared'
 
 export interface RenderOptions {
   title: string
@@ -16,7 +15,7 @@ export interface ServerOptions extends RenderOptions {
   arena: ReturnType<typeof arena>
 }
 
-interface Descriptor {
+export interface Descriptor {
   kind: 'script' | 'style' | 'title'
   text: string
   attrs?: string[]
@@ -47,26 +46,16 @@ export function generateInjectCode(analyzeModule: Module[], mode: string) {
   return `var defaultSizes=${stringify(mode)},analyzeModule=${stringify(analyzeModule)};`
 }
 
-export async function renderView(analyzeModule: Module[], options: RenderOptions) {
-  const clientAssetsPaths = await readAll(clientAssetsPath)
-  const clientAssets = await Promise.all(clientAssetsPaths.map(async (p) => {
-    const fileType = path.extname(p).replace('.', '')
-    const content = await fsp.readFile(p, 'utf8')
-    return { fileType, content }
-  }))
+// For better integrated, user prefer to pre compile this part without cli. (can reduce nearly 40kb)
+// In built mode according flag inject a fake chunk at the output
 
-  const assets = clientAssets.filter(a => ['js', 'css'].includes(a.fileType))
-  let html = await fsp.readFile(path.join(clientPath, 'index.html'), 'utf8')
+export async function renderView(analyzeModule: Module[], options: RenderOptions) {
+  let { html } = await import('html.mjs')
   html = injectHTMLTag({
     html,
     injectTo: 'head',
     descriptors: [
-      { text: options.title, kind: 'title' },
-      ...assets.map(({ fileType, content }) => ({
-        kind: fileType === 'js' ? 'script' : 'style',
-        text: content,
-        attrs: fileType === 'js' ? ['type="module"'] : []
-      })) satisfies Descriptor[]
+      { text: options.title, kind: 'title' }
     ]
   })
   html = injectHTMLTag({

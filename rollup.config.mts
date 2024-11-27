@@ -24,6 +24,14 @@ export default defineConfig([
     plugins: [
       commonjs(),
       nodeResolve(),
+      {
+        name: 'resolve-template',
+        resolveId(id) {
+          if (id === 'html.mjs') {
+            return { id: './html.mjs', external: true }
+          }
+        }
+      },
       shim(),
       swc(),
       env !== 'development' && minify({ mangle: true, module: true, compress: true, sourceMap: true })
