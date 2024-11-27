@@ -87,6 +87,34 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     api: {
       store
     },
+    config(config) {
+      // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
+      // for multiple build process. So we should ensure the sourcemap option is set correctly.
+      if (!states.hasSetupSourcemapOption) {
+        states.hasSetupSourcemapOption = true
+        if (!config.build) {
+          config.build = {}
+        }
+        if ('sourcemap' in config.build) {
+          states.lastSourcemapOption = typeof config.build.sourcemap === 'boolean'
+            ? config.build.sourcemap
+            : config.build.sourcemap === 'hidden'
+          if (config.build.sourcemap === 'inline') {
+            // verbose the warning
+            logger.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
+          }
+        }
+      }
+      if (config.build) {
+        if (typeof config.build.sourcemap === 'boolean') {
+          config.build.sourcemap = true
+        } else {
+          config.build.sourcemap = 'hidden'
+        }
+        analyzerDebug(`plugin status is ${config.build.sourcemap ? ansis.green('ok') : ansis.red('invalid')}`)
+      }
+      return config
+    },
     configResolved(config) {
       defaultWd = path.resolve(config.root, config.build.outDir ?? '')
       logger = config.logger
@@ -111,27 +139,6 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           }
         }
       }
-      // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
-      // for multiple build process. So we should ensure the sourcemap option is set correctly.
-      if (!states.hasSetupSourcemapOption) {
-        states.hasSetupSourcemapOption = true
-        if ('sourcemap' in config.build) {
-          states.lastSourcemapOption = typeof config.build.sourcemap === 'boolean'
-            ? config.build.sourcemap
-            : config.build.sourcemap === 'hidden'
-          if (config.build.sourcemap === 'inline') {
-            // verbose the warning
-            logger.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
-          }
-        }
-      }
-
-      if (typeof config.build.sourcemap === 'boolean') {
-        config.build.sourcemap = true
-      } else {
-        config.build.sourcemap = 'hidden'
-      }
-      analyzerDebug(`plugin status is ${config.build.sourcemap ? ansis.green('ok') : ansis.red('invalid')}`)
     },
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)

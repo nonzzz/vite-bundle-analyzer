@@ -32,7 +32,7 @@
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "@vitest/coverage-v8": "^2.1.5",
     "ansis": "^3.3.2",
     "c8": "^8.0.1",
@@ -54,7 +54,7 @@
     "tinyexec": "^0.3.1",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
-    "vite": "^5.2.8",
+    "vite": "^6",
     "vitest": "^2.1.5",
     "tsx": "^4.19.2"
   },
