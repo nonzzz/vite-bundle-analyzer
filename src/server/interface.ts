@@ -77,9 +77,6 @@ export type AnalyzerPluginOptions =
 
 export interface AnalyzerStore {
   analyzerModule: AnalyzerModule
-}
-
-export interface SharedStates {
   lastSourcemapOption: boolean
   hasSetupSourcemapOption: boolean
 }

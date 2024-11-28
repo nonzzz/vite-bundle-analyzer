@@ -8,7 +8,6 @@ import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { analyzerDebug, convertBytes, fsp } from './shared'
-import { states } from './states'
 
 const isCI = !!process.env.CI
 
@@ -63,14 +62,20 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
 // Design for race condition is called
 let callCount = 0
 
+// There is a possibility that multiple called.
+// Thre're two scenarios:
+// First, user create multiple build task each config object is isolated.
+// Second, user use the same config object but the build task is parallel. (Like vitepress or vuepress)
+// However, about sourcemap state should always declare in the plugin object to makesure those scenarios can be handled.
+// callCount is specifically for the Second scenario.
+// If someone has a better idea, PR welcome.
+
 function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
-  const store: AnalyzerStore = {
-    analyzerModule
-  }
+  const store: AnalyzerStore = { analyzerModule, lastSourcemapOption: false, hasSetupSourcemapOption: false }
   let defaultWd = process.cwd()
   let hasViteReporter = true
   let logger: Logger
@@ -90,19 +95,16 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     config(config) {
       // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
       // for multiple build process. So we should ensure the sourcemap option is set correctly.
-      if (!states.hasSetupSourcemapOption) {
-        states.hasSetupSourcemapOption = true
-        if (!config.build) {
-          config.build = {}
-        }
-        if ('sourcemap' in config.build) {
-          states.lastSourcemapOption = typeof config.build.sourcemap === 'boolean'
-            ? config.build.sourcemap
-            : config.build.sourcemap === 'hidden'
-          if (config.build.sourcemap === 'inline') {
-            // verbose the warning
-            logger.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
-          }
+      if (!config.build) {
+        config.build = {}
+      }
+      if ('sourcemap' in config.build && !store.hasSetupSourcemapOption) {
+        store.lastSourcemapOption = typeof config.build.sourcemap === 'boolean'
+          ? config.build.sourcemap
+          : config.build.sourcemap === 'hidden'
+        if (config.build.sourcemap === 'inline') {
+          // verbose the warning
+          logger.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
         }
       }
       if (config.build) {
@@ -113,6 +115,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         }
         analyzerDebug(`plugin status is ${config.build.sourcemap ? ansis.green('ok') : ansis.red('invalid')}`)
       }
+      store.hasSetupSourcemapOption = true
       return config
     },
     configResolved(config) {
@@ -153,7 +156,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           // For classical
           await analyzerModule.addModule(bundle, sourcemapFileName)
         }
-        if (!states.lastSourcemapOption) {
+        if (!store.lastSourcemapOption) {
           if (pass) {
             if (sourcemapFileName) {
               Reflect.deleteProperty(outputBundle, sourcemapFileName)

@@ -1,3 +1,7 @@
+## 0.15.1
+
+- Revert the recent change to avoid bundling crash. (This usually happends when running mulitple instances.)
+
 ## 0.15.0
 
 # Improves
