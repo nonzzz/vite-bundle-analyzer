@@ -5,13 +5,36 @@ import path from 'path'
 import fsp from 'fs/promises'
 
 import { readAll } from './src/server/shared'
-import { injectHTMLTag } from './src/server/render'
-import type { Descriptor } from './src/server/render'
 
 const defaultWd = process.cwd()
 
 const clientPath = path.join(defaultWd, 'dist', 'client')
 const clientAssetsPath = path.join(clientPath, 'assets')
+
+export interface Descriptor {
+  kind: 'script' | 'style' | 'title'
+  text: string
+  attrs?: string[]
+}
+
+interface InjectHTMLTagOptions {
+  html: string
+  injectTo: 'body' | 'head'
+  descriptors: Descriptor | Descriptor[]
+}
+
+// Refactor this function
+function injectHTMLTag(options: InjectHTMLTagOptions) {
+  const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
+  options.descriptors = Array.isArray(options.descriptors) ? options.descriptors : [options.descriptors]
+  const descriptors = options.descriptors.map(d => {
+    if (d.attrs && d.attrs.length > 0) {
+      return `<${d.kind} ${d.attrs.join(' ')}>${d.text}</${d.kind}>`
+    }
+    return `<${d.kind}>${d.text}</${d.kind}>`
+  })
+  return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
+}
 
 async function main() {
   const clientAssetsPaths = await readAll(clientAssetsPath)
@@ -26,6 +49,7 @@ async function main() {
     html,
     injectTo: 'head',
     descriptors: [
+      { text: '<--title-->', kind: 'title' },
       ...assets.map(({ fileType, content }) => ({
         kind: fileType === 'js' ? 'script' : 'style',
         text: content,
@@ -33,7 +57,18 @@ async function main() {
       })) satisfies Descriptor[]
     ]
   })
-  process.stdout.write(`export const html =  ${JSON.stringify(html)}`)
+  html = injectHTMLTag({
+    html,
+    injectTo: 'body',
+    descriptors: {
+      kind: 'script',
+      text: '<--module-->'
+    } satisfies Descriptor | Descriptor[]
+  })
+
+  process.stdout.write(`export function html (title, module) {
+    return ${JSON.stringify(html)}.replace('<--title-->', title).replace('<--module-->', module)
+    }`)
 }
 
 main()

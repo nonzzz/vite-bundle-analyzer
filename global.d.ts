@@ -5,5 +5,5 @@ type DeepPartial<T> = T extends object ? {
   T
 
 declare module 'html.mjs' {
-  export const html: string
+  export function html(title: string, module: string): string
 }
