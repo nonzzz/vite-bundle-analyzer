@@ -1,3 +1,11 @@
+## 0.1.5.0
+
+# Improves
+
+- Support vite6.
+- Reduce bundle size.
+- Improve plugin integration support
+
 ## 0.14.3
 
 Bump client deps.
