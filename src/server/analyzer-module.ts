@@ -118,6 +118,10 @@ export class AnalyzerNode {
 
     printDebugLog('stats', this.originalId, infomations.length)
 
+    // Check map again
+
+    if (!map) return
+
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
     // It's will cause dead lock.(Altough this is a race case.)
@@ -181,7 +185,8 @@ export class AnalyzerModule {
   }
 
   setupRollupChunks(chunks: OutputBundle) {
-    this.chunks = chunks
+    // For multiple formats.
+    Object.assign(this.chunks, chunks)
   }
 
   async addModule(bundle: OutputChunk | OutputAsset, sourcemapFileName?: string) {

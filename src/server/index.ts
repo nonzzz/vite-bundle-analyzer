@@ -5,7 +5,7 @@ import ansis from 'ansis'
 import { opener } from './opener'
 import { arena, createServer, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
-import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
+import type { AnalyzerPluginOptions, AnalyzerStore, Module, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { analyzerDebug, convertBytes, fsp } from './shared'
 
@@ -17,7 +17,7 @@ const defaultOptions: AnalyzerPluginOptions = {
   summary: true
 }
 
-function openBrowser(address: string) {
+export function openBrowser(address: string) {
   opener([address])
 }
 
@@ -44,14 +44,12 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
   return `${formatNumber(count)} chunks of ${formatSize(meta.parsed)} ${extra ? `(${extra})` : ''}`
 }
 
-function expectFile(fileName: string, ext: string) {
-  return path.extname(fileName) === ext
-}
-
 function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle): [boolean, string | undefined] {
   // https://github.com/rollup/rollup/blob/master/CHANGELOG.md#features-22
-  // So we should check it and implement a polyfill.
-  if (expectFile(chunk.fileName, '.js')) {
+  if (/\.(c|m)?js$/.test(chunk.fileName)) {
+    if (chunk && 'sourcemapFileName' in chunk) {
+      if (chunk.sourcemapFileName && chunk.sourcemapFileName in allChunks) return [true, chunk.sourcemapFileName]
+    }
     const possiblePath = chunk.fileName + '.map'
     if (possiblePath in allChunks) return [true, possiblePath]
     return [true, undefined]
@@ -90,7 +88,8 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     apply: 'build',
     enforce: 'post',
     api: {
-      store
+      store,
+      processModule: () => analyzerModule.processModule()
     },
     config(config) {
       // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
@@ -146,6 +145,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
       analyzerModule.setupRollupChunks(outputBundle)
+      const cleanup: Array<{ bundle: OutputChunk | OutputAsset; sourcemapFileName: string | undefined }> = []
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)
       // A funny thing is that 'Import with Query Suffixes' vite might think the worker is assets
       // So we should wrapper them as a chunk node.
@@ -155,21 +155,26 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         if (pass) {
           // For classical
           await analyzerModule.addModule(bundle, sourcemapFileName)
+          cleanup.push({ sourcemapFileName, bundle })
         }
-        if (!store.lastSourcemapOption) {
-          if (pass) {
-            if (sourcemapFileName) {
-              Reflect.deleteProperty(outputBundle, sourcemapFileName)
-              continue
-            }
-            if (bundle.type === 'chunk') {
-              Reflect.deleteProperty(bundle, 'map')
-            }
+      }
+      if (!store.lastSourcemapOption) {
+        cleanup.forEach((b) => {
+          if (b.sourcemapFileName) {
+            Reflect.deleteProperty(outputBundle, b.sourcemapFileName)
           }
-        }
+          if (b.bundle.type === 'chunk') {
+            Reflect.deleteProperty(b, 'map')
+          }
+        })
       }
     },
     async closeBundle() {
+      if (typeof opts.analyzerMode === 'function') {
+        opts.analyzerMode(analyzerModule.processModule())
+        return
+      }
+
       if (opts.summary && !hasViteReporter) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
@@ -221,3 +226,9 @@ export { analyzer }
 export { adapter } from './adapter'
 export { analyzer as default }
 export type { AnalyzerPluginOptions } from './interface'
+export * from './render'
+
+export interface AnalyzerPluginInternalAPI {
+  store: AnalyzerStore
+  processModule(): Module[]
+}

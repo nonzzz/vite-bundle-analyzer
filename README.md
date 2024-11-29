@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="./imgs/now.gif" width="640" height="320" />
+  <img src="https://cdn.jsdelivr.net/gh/nonzzz/vite-bundle-analyzer/imgs/now.gif" width="640" height="320" />
 </p>
 
 > [!WARNING]
@@ -51,16 +51,16 @@ export default defineConfig({
 
 ## Options
 
-| params         | type                   | default       | description                                                                      |
-| -------------- | ---------------------- | ------------- | -------------------------------------------------------------------------------- |
-| `analyzerMode` | `server\|static\|json` | `server`      | In `server` will create a static server to preview.                              |
-| `fileName`     | `string`               | `stats`       | The name of the static product.（No suffix name）                                |
-| `reportTitle`  | `string`               | `plugin name` | Report website title.                                                            |
-| `gzipOptions`  | `Record<string,any>`   | `{}`          | Compression options. (Details see `zlib module`)                                 |
-| `analyzerPort` | `number\|'auto'`       | `8888`        | static server port.                                                              |
-| `openAnalyzer` | `boolean`              | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
-| `defaultSizes` | `stat\|parsed\|gzip`   | `stat`        | The default type selected in the client page                                     |
-| `summary`      | `boolean`              | `true`        | Show full chunk info to stdout.                                                  |
+| params         | type                             | default       | description                                                                      |
+| -------------- | -------------------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `analyzerMode` | `server\|static\|json\|function` | `server`      | In `server` will create a static server to preview.                              |
+| `fileName`     | `string`                         | `stats`       | The name of the static product.（No suffix name）                                |
+| `reportTitle`  | `string`                         | `plugin name` | Report website title.                                                            |
+| `gzipOptions`  | `Record<string,any>`             | `{}`          | Compression options. (Details see `zlib module`)                                 |
+| `analyzerPort` | `number\|'auto'`                 | `8888`        | static server port.                                                              |
+| `openAnalyzer` | `boolean`                        | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
+| `defaultSizes` | `stat\|parsed\|gzip`             | `stat`        | The default type selected in the client page                                     |
+| `summary`      | `boolean`                        | `true`        | Show full chunk info to stdout.                                                  |
 
 ## ClI
 
@@ -114,6 +114,60 @@ I don't want to add new option to control living server.
 If you're using `vitepress` or `remix` or `qwik` and etc who based on the `vite` framework. Normally it will run two vite instance during build phase. So you
 should ensure that `analyzerMode` as `server`.(If you pass `static` or `json` for the `analyzerMode` i can't promise the final result.) Like `vitpress` will remove
 something (I don't know why? Maybe it's run with race?)
+
+### Integrated
+
+Integrate this plugin into your rollup/vite tool. The following is a list of exposed APIs.
+
+```ts
+// For integrate it as custom analyzer
+
+// Returns the HTML string
+declare function renderView(analyzeModule: Module[], options: RenderOptions): Promise<string>
+
+// Create a static living server.
+declare function createServer(port?: number, silent?: boolean): Promise<{
+  setup: (options: ServerOptions) => void
+  readonly port: number
+}>
+
+declare function createStaticMiddleware(options: ServerOptions): (req: http.IncomingMessage, res: http.ServerResponse) => void
+
+declare function arena(): {
+  rs: Readable
+  into(b: string | Uint8Array): void
+  refresh(): void
+}
+
+declare function openBrowser(address: string): void
+
+// example
+
+const b = arena()
+
+renderView(data, options).then((html) => {
+  b.into(html)
+  const { setup } = createServer(...args)
+  setup({ title: 'vite-bundle-analyzer', mode: 'stat', arena: b })
+})
+
+// If you want set this plugin in rollup output plugins. you should wrapper plugin `generateBundle` by your self.
+
+const { api, generateBundle, ...rest } = analyzer()
+
+const data = []
+
+const myAnalyzerPlugin = {
+  ...reset,
+  api,
+  async generateBundle(...args) {
+    await generateBundle.apply(this, args)
+    data.push(api.processModule())
+  }
+}
+
+// .... your logic
+```
 
 ### LICENSE
 

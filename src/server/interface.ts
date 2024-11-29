@@ -44,9 +44,11 @@ export interface Module {
   isAsset?: boolean
 }
 
+export type CustomAnalyzerModule = (analyzeModule: Module[]) => void
+
 export interface BasicAnalyzerPluginOptions {
   summary?: boolean
-  analyzerMode?: AnalyzerMode
+  analyzerMode?: AnalyzerMode | CustomAnalyzerModule
   reportTitle?: string
   defaultSizes?: DefaultSizes
   gzipOptions?: ZlibOptions
@@ -70,10 +72,15 @@ export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOpti
   fileName?: string
 }
 
+export interface AnalyzerPluginOptionsWithCustom extends BasicAnalyzerPluginOptions {
+  analyzerMode: CustomAnalyzerModule
+}
+
 export type AnalyzerPluginOptions =
   | AnalyzerPluginOptionsWithServer
   | AnalyzerPluginOptionsWithStatic
   | AnalyzerPluginOptionsWithJson
+  | AnalyzerPluginOptionsWithCustom
 
 export interface AnalyzerStore {
   analyzerModule: AnalyzerModule
