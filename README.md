@@ -161,7 +161,7 @@ const myAnalyzerPlugin = {
   ...reset,
   api,
   async generateBundle(...args) {
-    await generateBundle.call(this, args)
+    await generateBundle.apply(this, args)
     data.push(api.processModule())
   }
 }

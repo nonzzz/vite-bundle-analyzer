@@ -11,6 +11,11 @@ client-analyze:
 	@pnpm exec vite build src/client --config analyze.config.mts
 	awk '{ print }' dist/client/stats.json > src/client/data.json
 
+server-analyze:
+	@echo "Analyzing server code..."
+	-rm -rf analysis
+	./node_modules/.bin/rollup --config analyze.server.mjs
+
 build-all:cleanup build-server cleaup-client
 
 cleaup-client:
