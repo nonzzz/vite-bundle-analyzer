@@ -23,7 +23,7 @@ export interface Descriptor {
 
 // https://tc39.es/ecma262/#sec-putvalue
 // Using var instead of set attr to window we can reduce 9 bytes
-export function generateInjectCode(analyzeModule: Module[], mode: string) {
+function generateInjectCode(analyzeModule: Module[], mode: string) {
   const { stringify } = JSON
   return `var defaultSizes=${stringify(mode)},analyzeModule=${stringify(analyzeModule)};`
 }
@@ -58,7 +58,7 @@ export function arena() {
   }
 }
 
-function createStaticMiddleware(options: ServerOptions) {
+export function createStaticMiddleware(options: ServerOptions) {
   return function staticMiddleware(req: http.IncomingMessage, res: http.ServerResponse) {
     if (req.url === '/') {
       res.setHeader('Content-Type', 'text/html; charset=utf8;')
@@ -69,7 +69,7 @@ function createStaticMiddleware(options: ServerOptions) {
   }
 }
 
-async function ensureEmptyPort(preferredPort: number) {
+export async function ensureEmptyPort(preferredPort: number) {
   const getPort = () => Math.floor(Math.random() * (65535 - 1024 + 1)) + 1024
 
   const checkPort = async (port: number): Promise<boolean> => {
@@ -114,11 +114,12 @@ async function ensureEmptyPort(preferredPort: number) {
   }
 }
 
-export async function createServer(port = 0) {
+export async function createServer(port = 0, silent = false) {
   const server = http.createServer()
   const safePort = await ensureEmptyPort(port)
 
   server.listen(safePort, () => {
+    if (silent) return
     console.log('server run on ', ansis.hex('#5B45DE')(`http://localhost:${safePort}`))
   })
 

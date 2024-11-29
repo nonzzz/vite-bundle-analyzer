@@ -17,7 +17,7 @@ const defaultOptions: AnalyzerPluginOptions = {
   summary: true
 }
 
-function openBrowser(address: string) {
+export function openBrowser(address: string) {
   opener([address])
 }
 
@@ -170,6 +170,11 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
       }
     },
     async closeBundle() {
+      if (typeof opts.analyzerMode === 'function') {
+        opts.analyzerMode(analyzerModule.processModule())
+        return
+      }
+
       if (opts.summary && !hasViteReporter) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
@@ -221,3 +226,4 @@ export { analyzer }
 export { adapter } from './adapter'
 export { analyzer as default }
 export type { AnalyzerPluginOptions } from './interface'
+export * from './render'
