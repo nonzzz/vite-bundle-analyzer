@@ -150,6 +150,23 @@ renderView(data, options).then((html) => {
   const { setup } = createServer(...args)
   setup({ title: 'vite-bundle-analyzer', mode: 'stat', arena: b })
 })
+
+// If you want set this plugin in rollup output plugins. you should wrapper plugin `generateBundle` by your self.
+
+const { api, generateBundle, ...rest } = analyzer()
+
+const data = []
+
+const myAnalyzerPlugin = {
+  ...reset,
+  api,
+  async generateBundle(...args) {
+    await generateBundle.call(this, args)
+    data.push(api.processModule())
+  }
+}
+
+// .... your logic
 ```
 
 ### LICENSE

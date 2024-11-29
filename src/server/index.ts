@@ -5,7 +5,7 @@ import ansis from 'ansis'
 import { opener } from './opener'
 import { arena, createServer, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
-import type { AnalyzerPluginOptions, AnalyzerStore, OutputAsset, OutputBundle, OutputChunk } from './interface'
+import type { AnalyzerPluginOptions, AnalyzerStore, Module, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { analyzerDebug, convertBytes, fsp } from './shared'
 
@@ -90,7 +90,8 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     apply: 'build',
     enforce: 'post',
     api: {
-      store
+      store,
+      processModule: () => analyzerModule.processModule()
     },
     config(config) {
       // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
@@ -227,3 +228,8 @@ export { adapter } from './adapter'
 export { analyzer as default }
 export type { AnalyzerPluginOptions } from './interface'
 export * from './render'
+
+export interface AnalyzerPluginInternalAPI {
+  store: AnalyzerStore
+  processModule(): Module[]
+}
