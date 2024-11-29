@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/nonzzz/vite-bundle-analyzer/imgs/now.gif" width="640" height="320" />
+  <img src="https://cdn.jsdelivr.net/gh/nonzzz/vite-bundle-analyzer@latest/imgs/now.gif" width="640" height="320" />
 </p>
 
 > [!WARNING]
