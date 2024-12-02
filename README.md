@@ -141,6 +141,8 @@ declare function arena(): {
 
 declare function openBrowser(address: string): void
 
+declare function injectHTMLTag(options: InjectHTMLTagOptions): string
+
 // example
 
 const b = arena()

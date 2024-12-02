@@ -1,5 +1,6 @@
 import { Readable } from 'stream'
 import http from 'http'
+import { EventEmitter } from 'events'
 import net from 'net'
 import zlib from 'zlib'
 import ansis from 'ansis'
@@ -161,3 +162,55 @@ export function injectHTMLTag(options: InjectHTMLTagOptions) {
 }
 
 export type { AllowedMagicType, QueryKind } from '../client/special'
+
+export interface SSEMessageBody {
+  event: string
+  data: string
+}
+
+// This exposes an event stream to clients using server-sent events:
+// https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
+export class SSE {
+  private activeStreams: EventEmitter[] = []
+
+  serverEventStream(req: http.IncomingMessage, res: http.ServerResponse) {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+      'access-control-allow-origin': '*'
+    })
+    res.write('retry: 500\n')
+    res.write(':\n\n')
+    res.flushHeaders()
+    const stream = new EventEmitter()
+    this.activeStreams.push(stream)
+    const keepAliveInterval = setInterval(() => {
+      res.write(':\n\n')
+      res.flushHeaders()
+    }, 3000)
+    stream.on('message', (msg) => {
+      res.write(`event: ${msg.event}\ndata: ${msg.data}\n\n`)
+      res.flushHeaders()
+    })
+    req.on('close', () => {
+      clearInterval(keepAliveInterval)
+      this.removeStream(stream)
+      res.end()
+    })
+  }
+
+  sendEvent(event: string, data: string) {
+    const message: SSEMessageBody = { event, data }
+    this.activeStreams.forEach((stream) => {
+      stream.emit('message', message)
+    })
+  }
+
+  private removeStream(stream: EventEmitter) {
+    const index = this.activeStreams.indexOf(stream)
+    if (index !== -1) {
+      this.activeStreams.splice(index, 1)
+    }
+  }
+}

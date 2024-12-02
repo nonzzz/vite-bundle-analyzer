@@ -80,7 +80,8 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
   useEffect(() => {
     instanceRef.current?.on('click', function(metadata) {
       this.zoom(metadata.module)
-      createMagicEvent('graph:click', metadata.module)
+      const evt = createMagicEvent('graph:click', metadata.module)
+      window.dispatchEvent(evt)
     })
   }, [])
 
