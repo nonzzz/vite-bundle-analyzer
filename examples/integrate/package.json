@@ -1,0 +1,10 @@
+{
+  "name": "analyzer-exmaple-vite3",
+  "type": "module",
+  "scripts": {
+    "dev": "node main.mjs"
+  },
+  "devDependencies": {
+    "vite-bundle-analyzer": "workspace: *"
+  }
+}
