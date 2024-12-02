@@ -3,7 +3,10 @@ import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
 import { c2m, createTreemap, presetDecorator, sortChildrenByKey } from 'squarified'
 import type { PrimitiveEventCallback } from 'squarified'
-import { useApplicationContext } from '../../context'
+import { useApplicationContext, useToggleSize } from '../../context'
+import { createMagicEvent } from '../../special'
+import type { QueryKind } from '../../special'
+import { useQueryParams } from '../../composables'
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
@@ -15,6 +18,9 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
   const root = useRef<HTMLDivElement | null>(null)
   const instanceRef = useRef<TreemapComponentInstance>()
   const { analyzeModule, sizes, scence } = useApplicationContext()
+
+  const queryParams = useQueryParams()
+  const toggleSize = useToggleSize()
 
   const visibleChunks = useMemo(() => {
     const filtered = analyzeModule.filter((m) => scence.has(m.label))
@@ -42,6 +48,13 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     return noop
   }, [])
 
+  useEffect(() => {
+    const size = queryParams.get('size') as QueryKind
+    if (size) {
+      toggleSize(size === 'gzip' ? 'gzipSize' : size === 'stat' ? 'statSize' : 'parsedSize')
+    }
+  }, [queryParams, toggleSize])
+
   useImperativeHandle(ref, () => instanceRef.current!)
 
   const callbackRef = useCallback((el: HTMLDivElement | null) => {
@@ -67,6 +80,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
   useEffect(() => {
     instanceRef.current?.on('click', function(metadata) {
       this.zoom(metadata.module)
+      createMagicEvent('graph:click', metadata.module)
     })
   }, [])
 

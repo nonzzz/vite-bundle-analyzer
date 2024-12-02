@@ -225,7 +225,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
 export { analyzer }
 export { adapter } from './adapter'
 export { analyzer as default }
-export type { AnalyzerPluginOptions } from './interface'
+export type { AnalyzerMode, AnalyzerPluginOptions, DefaultSizes, Module } from './interface'
 export * from './render'
 
 export interface AnalyzerPluginInternalAPI {

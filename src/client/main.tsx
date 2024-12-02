@@ -8,3 +8,5 @@ ReactDOM.createRoot(element).render(
     <App />
   </React.StrictMode>
 )
+
+window.React = React

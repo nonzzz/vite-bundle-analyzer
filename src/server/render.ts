@@ -134,3 +134,30 @@ export async function createServer(port = 0, silent = false) {
     }
   }
 }
+
+export interface Descriptor {
+  kind: 'script' | 'style' | 'title'
+  text: string
+  attrs?: string[]
+}
+
+interface InjectHTMLTagOptions {
+  html: string
+  injectTo: 'body' | 'head'
+  descriptors: Descriptor | Descriptor[]
+}
+
+// Refactor this function
+export function injectHTMLTag(options: InjectHTMLTagOptions) {
+  const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
+  options.descriptors = Array.isArray(options.descriptors) ? options.descriptors : [options.descriptors]
+  const descriptors = options.descriptors.map(d => {
+    if (d.attrs && d.attrs.length > 0) {
+      return `<${d.kind} ${d.attrs.join(' ')}>${d.text}</${d.kind}>`
+    }
+    return `<${d.kind}>${d.text}</${d.kind}>`
+  })
+  return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
+}
+
+export type { AllowedMagicType, QueryKind } from '../client/special'
