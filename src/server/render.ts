@@ -59,17 +59,6 @@ export function arena() {
   }
 }
 
-export function createStaticMiddleware(options: ServerOptions) {
-  return function staticMiddleware(req: http.IncomingMessage, res: http.ServerResponse) {
-    if (req.url === '/') {
-      res.setHeader('Content-Type', 'text/html; charset=utf8;')
-      res.setHeader('Content-Encoding', 'gzip')
-      options.arena.rs.pipe(zlib.createGzip()).pipe(res)
-      options.arena.refresh()
-    }
-  }
-}
-
 export async function ensureEmptyPort(preferredPort: number) {
   const getPort = () => Math.floor(Math.random() * (65535 - 1024 + 1)) + 1024
 
@@ -91,6 +80,7 @@ export async function ensureEmptyPort(preferredPort: number) {
       server.listen(port, 'localhost')
     })
   }
+
   if (preferredPort === 0) {
     let portAvailable = false
     let randomPort = 0
@@ -115,8 +105,9 @@ export async function ensureEmptyPort(preferredPort: number) {
   }
 }
 
+// This is a simple usage
 export async function createServer(port = 0, silent = false) {
-  const server = http.createServer()
+  const server = createNativeServer()
   const safePort = await ensureEmptyPort(port)
 
   server.listen(safePort, () => {
@@ -125,7 +116,14 @@ export async function createServer(port = 0, silent = false) {
   })
 
   const setup = (options: ServerOptions) => {
-    server.on('request', createStaticMiddleware(options))
+    server.get('/', (_, res) => {
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf8;',
+        'content-Encoding': 'gzip'
+      })
+      options.arena.rs.pipe(zlib.createGzip()).pipe(res)
+      options.arena.refresh()
+    })
   }
 
   return {
@@ -134,6 +132,52 @@ export async function createServer(port = 0, silent = false) {
       return safePort
     }
   }
+}
+
+export type Middleware = (req: http.IncomingMessage, res: http.ServerResponse, next: () => void) => void
+
+export interface CreateNativeServerContext {
+  use: (middleware: Middleware) => void
+  get: (path: string, middleware: Middleware) => void
+  listen: (port: number, callback?: () => void) => void
+}
+
+export function createNativeServer() {
+  const middlewares: Middleware[] = []
+  const routes: Record<string, Middleware> = {}
+
+  const use = (middleware: Middleware) => {
+    middlewares.push(middleware)
+  }
+
+  const get = (path: string, middleware: Middleware) => {
+    routes[path] = middleware
+  }
+
+  const handle = (req: http.IncomingMessage, res: http.ServerResponse) => {
+    const path = req.url
+    const _middlewares = [...middlewares]
+
+    const routeHandler = routes[path || '']
+    if (routeHandler) {
+      _middlewares.push(routeHandler)
+    }
+    let idx = 0
+    const next = () => {
+      const middleware = _middlewares[idx++]
+      if (middleware) {
+        middleware(req, res, next)
+      }
+    }
+    next()
+  }
+
+  const listen = (port: number, callback?: () => void) => {
+    const server = http.createServer((req, res) => handle(req, res))
+    server.listen(port, callback)
+  }
+
+  return <CreateNativeServerContext> { use, get, listen }
 }
 
 export interface Descriptor {
