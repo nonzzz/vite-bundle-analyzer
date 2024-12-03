@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { createElement, useEffect, useMemo, useRef, useState } from 'react'
 import { noop } from 'foxact/noop'
 import { sortChildrenByKey } from 'squarified'
 import { Text } from '../text'
@@ -10,6 +10,7 @@ import type { SelectInstance } from '../select'
 import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
+import { IS_CUSTOM_SIDE_BAR } from '../../special'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
 import Menu from '~icons/ph/list'
 
@@ -24,11 +25,12 @@ export interface SidebarProps {
 export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const { drawerVisibile } = useSidebarState()
   const toggleDrawerVisible = useToggleDrawerVisible()
-  const { scence, analyzeModule, sizes: userMode } = useApplicationContext()
+  const { scence, analyzeModule, sizes: userMode, ui } = useApplicationContext()
   const updateScence = useUpdateScence()
   const toggleSize = useToggleSize()
   const [entrypoints, setEntrypoints] = useState<string[]>([])
   const selectRef = useRef<SelectInstance>(null)
+  const customMainRef = useRef<HTMLDivElement>(null)
 
   const allChunks = useMemo(() => {
     const points = new Set(entrypoints)
@@ -73,6 +75,9 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
           ...(drawerVisibile && { visibility: 'hidden' })
         }}
       />
+      <div ref={customMainRef} id="customMain">
+        {createElement(ui.Main ? ui.Main : 'div', null)}
+      </div>
       <Drawer
         visible={drawerVisibile}
         padding={0}
@@ -102,32 +107,42 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
               ))}
             </div>
           </div>
-          <div>
-            <Text p b h3>Filter by entrypoints:</Text>
-            <Select
-              ref={selectRef}
-              scale={0.75}
-              placeholder="Select endpoints"
-              multiple
-              width="95.5%"
-              onChange={handleFilterByEntrypoints}
-            >
-              {entrypointChunks.map(chunk => <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>)}
-            </Select>
-          </div>
-          <div>
-            <Text p b h3>Search modules:</Text>
-            <SearchModules extra={userMode} files={allChunks} />
-          </div>
-          <div>
-            <Text p b h3>Show Chunks:</Text>
-            <FileList
-              files={allChunks}
-              extra={userMode}
-              scence={scence}
-              onChange={(v) => updateScence(new Set(v))}
-            />
-          </div>
+          {IS_CUSTOM_SIDE_BAR
+            ? (
+              <div id="customSideBar">
+                {createElement(ui.SideBar ? ui.SideBar : 'div', null)}
+              </div>
+            )
+            : (
+              <>
+                <div>
+                  <Text p b h3>Filter by entrypoints:</Text>
+                  <Select
+                    ref={selectRef}
+                    scale={0.75}
+                    placeholder="Select endpoints"
+                    multiple
+                    width="95.5%"
+                    onChange={handleFilterByEntrypoints}
+                  >
+                    {entrypointChunks.map(chunk => <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>)}
+                  </Select>
+                </div>
+                <div>
+                  <Text p b h3>Search modules:</Text>
+                  <SearchModules extra={userMode} files={allChunks} />
+                </div>
+                <div>
+                  <Text p b h3>Show Chunks:</Text>
+                  <FileList
+                    files={allChunks}
+                    extra={userMode}
+                    scence={scence}
+                    onChange={(v) => updateScence(new Set(v))}
+                  />
+                </div>
+              </>
+            )}
         </Drawer.Content>
       </Drawer>
     </>

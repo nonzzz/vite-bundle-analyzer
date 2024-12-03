@@ -2,9 +2,10 @@
   "name": "analyzer-exmaple-vite3",
   "type": "module",
   "scripts": {
-    "dev": "node main.js"
+    "dev": "node --import tsx/esm ./main.ts"
   },
   "devDependencies": {
-    "vite-bundle-analyzer": "workspace: *"
+    "vite-bundle-analyzer": "workspace: *",
+    "@esbuild-kit/esm-loader": "^2.6.5"
   }
 }
