@@ -24,6 +24,6 @@ jobs:
           if [[ $TAG_NAME == *"-beta."* ]]; then
             npm publish --tag beta --provenance --access public
           else
-          npm publish --provenance --access public
+            npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
