@@ -2,13 +2,19 @@ import { createContext, useCallback, useContext } from 'react'
 import type { RefObject } from 'react'
 import { noop } from 'foxact/noop'
 import { createContextState } from 'foxact/context-state'
-import type { Sizes } from './interface'
+import type { Module, Sizes } from './interface'
 import type { TreemapComponentInstance } from './components/treemap'
+import type { SendUIMessage } from './special'
 
+export interface UI {
+  SideBar: SendUIMessage['Component'] | null
+  Main: SendUIMessage['Component'] | null
+}
 export interface ApplicationConfig {
   sizes: Sizes
-  analyzeModule: typeof window.analyzeModule
+  analyzeModule: Module[]
   scence: Set<string>
+  ui: UI
 }
 
 export interface TreemapConfig {
@@ -25,6 +31,7 @@ const defaultApplicationContext = <ApplicationConfig> {
   sizes: SIZE_RECORD[window.defaultSizes],
   analyzeModule: window.analyzeModule,
   scence: new Set(),
+  ui: { Main: null, SideBar: null },
   updateScence: noop
 }
 
@@ -44,6 +51,20 @@ export function useUpdateScence() {
 export function useToggleSize() {
   const dispatch = useSetApplicationContext()
   return useCallback((sizes: Sizes) => dispatch(pre => ({ ...pre, sizes })), [dispatch])
+}
+
+export function useUpdateUI() {
+  const dispatch = useSetApplicationContext()
+  return useCallback(
+    (type: 'SideBar' | 'Main', element: SendUIMessage['Component'] | null) =>
+      dispatch(pre => ({ ...pre, ui: { ...pre.ui, [type]: element } })),
+    [dispatch]
+  )
+}
+
+export function useUpdateAnalyzeModule() {
+  const dispatch = useSetApplicationContext()
+  return useCallback((modules: Module[]) => dispatch(pre => ({ ...pre, analyzeModule: modules })), [dispatch])
 }
 
 const TreemapContext = createContext(defaultTreemapContext)

@@ -126,30 +126,31 @@ Integrate this plugin into your rollup/vite tool. The following is a list of exp
 declare function renderView(analyzeModule: Module[], options: RenderOptions): Promise<string>
 
 // Create a static living server.
-declare function createServer(port?: number, silent?: boolean): Promise<{
-  setup: (options: ServerOptions) => void
-  readonly port: number
-}>
-
-declare function createStaticMiddleware(options: ServerOptions): (req: http.IncomingMessage, res: http.ServerResponse) => void
-
-declare function arena(): {
-  rs: Readable
-  into(b: string | Uint8Array): void
-  refresh(): void
-}
+declare function createServer(): CreateServerContext
 
 declare function openBrowser(address: string): void
 
+declare function injectHTMLTag(options: InjectHTMLTagOptions): string
+
+declare class SSE {
+  private activeStreams
+  serverEventStream(req: http.IncomingMessage, res: http.ServerResponse): void
+  sendEvent(event: string, data: string): void
+  private removeStream
+}
+
 // example
 
-const b = arena()
+const server = createServer()
 
-renderView(data, options).then((html) => {
-  b.into(html)
-  const { setup } = createServer(...args)
-  setup({ title: 'vite-bundle-analyzer', mode: 'stat', arena: b })
+server.get('/', async (c) => {
+  let html = await renderView(data, { title: 'Vite Bundle Analyzer', mode: 'parsed' })
+  c.res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-cache' })
+  c.res.write(html)
+  c.res.end()
 })
+
+server.listen(3000)
 
 // If you want set this plugin in rollup output plugins. you should wrapper plugin `generateBundle` by your self.
 

@@ -9,7 +9,7 @@ import type { UserConfig } from 'vite'
 
 const _require = createRequire(import.meta.url)
 
-export default defineConfig(({ mode, command }) => {
+export default defineConfig(({ mode }) => {
   const base = {
     plugins: [
       react(),
@@ -32,15 +32,14 @@ export default defineConfig(({ mode, command }) => {
       'window.analyzeModule': JSON.stringify(mock)
     }
   }
-  if (command === 'build') {
-    base.resolve = {
-      alias: [
-        { find: 'react', replacement: 'preact/compat' },
-        { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
-        { find: 'react-dom', replacement: 'preact/compat' },
-        { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
-      ]
-    }
+
+  base.resolve = {
+    alias: [
+      { find: 'react', replacement: 'preact/compat' },
+      { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
+      { find: 'react-dom', replacement: 'preact/compat' },
+      { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
+    ]
   }
   return base
 })

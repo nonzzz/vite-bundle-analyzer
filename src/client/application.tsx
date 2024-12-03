@@ -9,10 +9,10 @@ import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
 import { Treemap } from './components/treemap'
 import type { TreemapComponentInstance } from './components/treemap'
-
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
+import { Receiver } from './receiver'
 
 interface ModuleSizeProps {
   module: NativeModule
@@ -56,6 +56,7 @@ export function App() {
           position: 'relative'
         }}
       >
+        <Receiver />
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>

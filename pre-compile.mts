@@ -3,38 +3,14 @@
 
 import path from 'path'
 import fsp from 'fs/promises'
-
+import { injectHTMLTag } from './src/server/render'
 import { readAll } from './src/server/shared'
+import type { Descriptor } from './src/server/render'
 
 const defaultWd = process.cwd()
 
 const clientPath = path.join(defaultWd, 'dist', 'client')
 const clientAssetsPath = path.join(clientPath, 'assets')
-
-export interface Descriptor {
-  kind: 'script' | 'style' | 'title'
-  text: string
-  attrs?: string[]
-}
-
-interface InjectHTMLTagOptions {
-  html: string
-  injectTo: 'body' | 'head'
-  descriptors: Descriptor | Descriptor[]
-}
-
-// Refactor this function
-function injectHTMLTag(options: InjectHTMLTagOptions) {
-  const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
-  options.descriptors = Array.isArray(options.descriptors) ? options.descriptors : [options.descriptors]
-  const descriptors = options.descriptors.map(d => {
-    if (d.attrs && d.attrs.length > 0) {
-      return `<${d.kind} ${d.attrs.join(' ')}>${d.text}</${d.kind}>`
-    }
-    return `<${d.kind}>${d.text}</${d.kind}>`
-  })
-  return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
-}
 
 async function main() {
   const clientAssetsPaths = await readAll(clientAssetsPath)
