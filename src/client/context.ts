@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext } from 'react'
 import type { RefObject } from 'react'
 import { noop } from 'foxact/noop'
 import { createContextState } from 'foxact/context-state'
-import type { Sizes } from './interface'
+import type { Module, Sizes } from './interface'
 import type { TreemapComponentInstance } from './components/treemap'
 import type { SendUIMessage } from './special'
 
@@ -12,7 +12,7 @@ export interface UI {
 }
 export interface ApplicationConfig {
   sizes: Sizes
-  analyzeModule: typeof window.analyzeModule
+  analyzeModule: Module[]
   scence: Set<string>
   ui: UI
 }
@@ -60,6 +60,11 @@ export function useUpdateUI() {
       dispatch(pre => ({ ...pre, ui: { ...pre.ui, [type]: element } })),
     [dispatch]
   )
+}
+
+export function useUpdateAnalyzeModule() {
+  const dispatch = useSetApplicationContext()
+  return useCallback((modules: Module[]) => dispatch(pre => ({ ...pre, analyzeModule: modules })), [dispatch])
 }
 
 const TreemapContext = createContext(defaultTreemapContext)

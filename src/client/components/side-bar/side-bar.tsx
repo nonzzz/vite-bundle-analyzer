@@ -75,9 +75,11 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
           ...(drawerVisibile && { visibility: 'hidden' })
         }}
       />
-      <div ref={customMainRef} id="customMain">
-        {createElement(ui.Main ? ui.Main : 'div', null)}
-      </div>
+      {IS_CUSTOM_SIDE_BAR && (
+        <div ref={customMainRef} id="customMain">
+          {createElement(ui.Main ? ui.Main : 'div', null)}
+        </div>
+      )}
       <Drawer
         visible={drawerVisibile}
         padding={0}
