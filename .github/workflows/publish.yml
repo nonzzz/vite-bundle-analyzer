@@ -20,6 +20,10 @@ jobs:
       - name: Pack and Publish
         run: |
           make build-all
+          TAG_NAME=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+          if [[ $TAG_NAME == *"-beta."* ]]; then
+            npm publish --tag beta --provenance --access public
+          else
           npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

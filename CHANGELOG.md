@@ -1,3 +1,7 @@
+## 0.16.0-beta.1
+
+Add more friendly API for integrate.
+
 ## 0.15.2
 
 Expose `render` and other methods to better integrate into custom tools.
