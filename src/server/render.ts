@@ -1,19 +1,11 @@
-import { Readable } from 'stream'
 import http from 'http'
 import { EventEmitter } from 'events'
 import net from 'net'
-import zlib from 'zlib'
-import ansis from 'ansis'
 import type { DefaultSizes, Module } from './interface'
-import { stringToByte } from './shared'
 
 export interface RenderOptions {
   title: string
   mode: DefaultSizes
-}
-
-export interface ServerOptions extends RenderOptions {
-  arena: ReturnType<typeof arena>
 }
 
 export interface Descriptor {
@@ -35,28 +27,6 @@ function generateInjectCode(analyzeModule: Module[], mode: string) {
 export async function renderView(analyzeModule: Module[], options: RenderOptions) {
   const { html } = await import('html.mjs')
   return html(options.title, generateInjectCode(analyzeModule, options.mode))
-}
-
-export function arena() {
-  let hasSet = false
-  let binary: Uint8Array
-  return {
-    rs: new Readable(),
-    into(b: string | Uint8Array) {
-      if (hasSet) return
-      this.rs.push(b)
-      this.rs.push(null)
-      if (!binary) {
-        binary = stringToByte(b)
-      }
-      hasSet = true
-    },
-    refresh() {
-      hasSet = false
-      this.rs = new Readable()
-      this.into(binary)
-    }
-  }
 }
 
 export async function ensureEmptyPort(preferredPort: number) {
@@ -105,44 +75,22 @@ export async function ensureEmptyPort(preferredPort: number) {
   }
 }
 
-// This is a simple usage
-export async function createServer(port = 0, silent = false) {
-  const server = createNativeServer()
-  const safePort = await ensureEmptyPort(port)
-
-  server.listen(safePort, () => {
-    if (silent) return
-    console.log('server run on ', ansis.hex('#5B45DE')(`http://localhost:${safePort}`))
-  })
-
-  const setup = (options: ServerOptions) => {
-    server.get('/', (_, res) => {
-      res.writeHead(200, {
-        'Content-Type': 'text/html; charset=utf8;',
-        'content-Encoding': 'gzip'
-      })
-      options.arena.rs.pipe(zlib.createGzip()).pipe(res)
-      options.arena.refresh()
-    })
-  }
-
-  return {
-    setup,
-    get port() {
-      return safePort
-    }
-  }
+export interface C {
+  req: http.IncomingMessage
+  res: http.ServerResponse
+  query: Record<string, string>
+  params: Record<string, string>
 }
 
-export type Middleware = (req: http.IncomingMessage, res: http.ServerResponse, next: () => void) => void
+export type Middleware = (c: C, next: () => void) => void
 
-export interface CreateNativeServerContext {
+export interface CreateServerContext {
   use: (middleware: Middleware) => void
   get: (path: string, middleware: Middleware) => void
   listen: (port: number, callback?: () => void) => void
 }
 
-export function createNativeServer() {
+export function createServer() {
   const middlewares: Middleware[] = []
   const routes: Record<string, Middleware> = {}
 
@@ -155,18 +103,37 @@ export function createNativeServer() {
   }
 
   const handle = (req: http.IncomingMessage, res: http.ServerResponse) => {
-    const path = req.url
+    const parsedUrl = new URL(req.url || '', `http://${req.headers.host}`)
+    const path = parsedUrl.pathname || ''
+    const query = Object.fromEntries(parsedUrl.searchParams.entries())
     const _middlewares = [...middlewares]
+    const c: C = { req, res, query, params: {} }
 
-    const routeHandler = routes[path || '']
+    const routeHandler = Object.keys(routes).find(route => {
+      const regex = new RegExp(`^${route.replace(/:\w+/g, '\\w+')}$`)
+      return regex.test(path)
+    })
+
     if (routeHandler) {
-      _middlewares.push(routeHandler)
+      const regex = new RegExp(`^${routeHandler.replace(/:\w+/g, '(\\w+)')}$`)
+      const match = path.match(regex)
+
+      if (match) {
+        const keys = routeHandler.split('/').filter(part => part.startsWith(':')).map(part => part.substring(1))
+        c.params = keys.reduce((acc, key, index) => {
+          acc[key] = match[index + 1]
+          return acc
+        }, {} as Record<string, string>)
+      }
+
+      _middlewares.push(routes[routeHandler])
     }
+
     let idx = 0
     const next = () => {
       const middleware = _middlewares[idx++]
       if (middleware) {
-        middleware(req, res, next)
+        middleware(c, next)
       }
     }
     next()
@@ -177,7 +144,7 @@ export function createNativeServer() {
     server.listen(port, callback)
   }
 
-  return <CreateNativeServerContext> { use, get, listen }
+  return <CreateServerContext> { use, get, listen }
 }
 
 export interface Descriptor {

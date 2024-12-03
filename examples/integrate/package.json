@@ -2,7 +2,7 @@
   "name": "analyzer-exmaple-vite3",
   "type": "module",
   "scripts": {
-    "dev": "node main.mjs"
+    "dev": "node main.js"
   },
   "devDependencies": {
     "vite-bundle-analyzer": "workspace: *"

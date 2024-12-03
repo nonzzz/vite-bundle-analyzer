@@ -1,13 +1,15 @@
 import path from 'path'
 import fs from 'fs'
+import { Readable } from 'stream'
+import zlib from 'zlib'
 import type { Logger, Plugin } from 'vite'
 import ansis from 'ansis'
 import { opener } from './opener'
-import { arena, createServer, renderView } from './render'
+import { createServer, ensureEmptyPort, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
 import type { AnalyzerPluginOptions, AnalyzerStore, Module, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
-import { analyzerDebug, convertBytes, fsp } from './shared'
+import { analyzerDebug, convertBytes, fsp, stringToByte } from './shared'
 
 const isCI = !!process.env.CI
 
@@ -19,6 +21,28 @@ const defaultOptions: AnalyzerPluginOptions = {
 
 export function openBrowser(address: string) {
   opener([address])
+}
+
+function arena() {
+  let hasSet = false
+  let binary: Uint8Array
+  return {
+    rs: new Readable(),
+    into(b: string | Uint8Array) {
+      if (hasSet) return
+      this.rs.push(b)
+      this.rs.push(null)
+      if (!binary) {
+        binary = stringToByte(b)
+      }
+      hasSet = true
+    },
+    refresh() {
+      hasSet = false
+      this.rs = new Readable()
+      this.into(binary)
+    }
+  }
 }
 
 const formatNumber = (number: number | string) => ansis.dim(ansis.bold(number + ''))
@@ -202,14 +226,26 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
         callCount--
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         b.into(html)
-        const { setup, port } = await createServer(
+        const port = await ensureEmptyPort(
           'analyzerPort' in opts
             ? opts.analyzerPort === 'auto'
               ? 0
-              : opts.analyzerPort
+              : (opts.analyzerPort || 0)
             : 8888 + callCount
         )
-        setup({ title: reportTitle, mode: 'stat', arena: b })
+        const server = createServer()
+        server.get('/', (c) => {
+          c.res.writeHead(200, {
+            'Content-Type': 'text/html; charset=utf8;',
+            'content-Encoding': 'gzip'
+          })
+          b.rs.pipe(zlib.createGzip()).pipe(c.res)
+          b.refresh()
+        })
+
+        server.listen(port, () => {
+          console.log('server run on ', ansis.hex('#5B45DE')(`http://localhost:${port}`))
+        })
         if (('openAnalyzer' in opts ? opts.openAnalyzer : true) && !isCI) {
           const address = `http://localhost:${port}`
           openBrowser(address)
