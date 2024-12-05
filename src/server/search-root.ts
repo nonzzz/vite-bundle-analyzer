@@ -3,6 +3,7 @@
 
 import fs from 'fs'
 import path from 'path'
+import type { PackageJSONMetadata } from './interface'
 import { isFileReadable } from './shared'
 
 const ROOT_FILES = ['pnpm-workspace.yaml', 'lerna.json']
@@ -15,7 +16,7 @@ function hasWorkspacePackageJSON(root: string): boolean {
     return false
   }
   try {
-    const content = JSON.parse(fs.readFileSync(s, 'utf-8')) || {}
+    const content = (JSON.parse(fs.readFileSync(s, 'utf-8')) || {}) as unknown as PackageJSONMetadata
     return !!content.workspaces
   } catch {
     return false
@@ -35,11 +36,11 @@ function hasPackageJSON(root: string) {
  * Search up for the nearest `package.json`
  */
 export function searchForPackageRoot(current: string, root = current): string {
-  if (hasPackageJSON(current)) return current
+  if (hasPackageJSON(current)) { return current }
 
   const dir = path.dirname(current)
   // reach the fs root
-  if (!dir || dir === current) return root
+  if (!dir || dir === current) { return root }
 
   return searchForPackageRoot(dir, root)
 }
@@ -52,12 +53,12 @@ export function searchForWorkspaceRoot(
   current: string,
   root = searchForPackageRoot(current)
 ): string {
-  if (hasRootFile(current)) return current
-  if (hasWorkspacePackageJSON(current)) return current
+  if (hasRootFile(current)) { return current }
+  if (hasWorkspacePackageJSON(current)) { return current }
 
   const dir = path.dirname(current)
   // reach the fs root
-  if (!dir || dir === current) return root
+  if (!dir || dir === current) { return root }
 
   return searchForWorkspaceRoot(dir, root)
 }

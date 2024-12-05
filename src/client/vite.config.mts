@@ -1,13 +1,11 @@
-import path from 'path'
-import { createRequire } from 'module'
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import { stylex } from '@stylex-extend/vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 import { viteMinify } from 'rollup-plugin-swc3'
 import Icons from 'unplugin-icons/vite'
+import { defineConfig } from 'vite'
 import type { UserConfig } from 'vite'
-
-const _require = createRequire(import.meta.url)
+import mock from './data.json' with { type: 'json' }
 
 export default defineConfig(({ mode }) => {
   const base = {
@@ -26,7 +24,7 @@ export default defineConfig(({ mode }) => {
     base: './'
   } as UserConfig
   if (mode === 'development') {
-    const mock = _require('./data.json')
+    // const mock = _require('./data.json')
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
       'window.analyzeModule': JSON.stringify(mock)

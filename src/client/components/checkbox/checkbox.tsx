@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useScale, withScale } from '../../composables'
 import { useCheckbox } from './context'
 
@@ -94,32 +94,32 @@ function CheckboxComponent(props: CheckboxProps) {
   const isDisabled = inGroup ? disabledAll || disabled : disabled
 
   const handleChange = useCallback((e: React.ChangeEvent) => {
-    if (disabled) return
+    if (disabled) { return }
     const evt: CheckboxEvent = {
       target: {
         checked: !selfChecked
       },
-      stopPropagation: e.stopPropagation,
-      preventDefault: e.preventDefault,
+      stopPropagation: () => e.stopPropagation(),
+      preventDefault: () => e.preventDefault(),
       nativeEvent: e
     }
     if (inGroup) {
       updateState(value || '', !selfChecked)
     }
-    setSelfChecked(pre => !pre)
+    setSelfChecked((pre) => !pre)
     onChange?.(evt)
   }, [onChange, disabled, selfChecked, value, inGroup, updateState])
 
   useEffect(() => {
-    if (checked === undefined) return
+    if (checked === undefined) { return }
     setSelfChecked(checked)
   }, [checked])
 
   useEffect(() => {
     if (inGroup) {
-      if (!values.length) return setSelfChecked(false)
+      if (!values.length) { return setSelfChecked(false) }
       const next = values.includes(value || '')
-      if (next === selfChecked) return
+      if (next === selfChecked) { return }
       setSelfChecked(next)
     }
   }, [value, values, selfChecked, inGroup])

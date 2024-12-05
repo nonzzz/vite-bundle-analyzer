@@ -1,5 +1,5 @@
-import type { ZlibOptions } from 'zlib'
 import type { HookHandler, Plugin } from 'vite'
+import type { ZlibOptions } from 'zlib'
 import { AnalyzerModule } from './analyzer-module'
 
 type RenderChunkFunction = NonNullable<HookHandler<Plugin['renderChunk']>>
@@ -81,4 +81,18 @@ export interface AnalyzerStore {
   analyzerModule: AnalyzerModule
   lastSourcemapOption: boolean
   hasSetupSourcemapOption: boolean
+}
+
+export interface ExportFields {
+  import?: string
+  require?: string
+  default?: string
+}
+
+export interface PackageJSONMetadata {
+  type: 'commonjs' | 'module'
+  main?: string
+  module?: string
+  exports?: Record<string, ExportFields | string>
+  [prop: string]: Any
 }

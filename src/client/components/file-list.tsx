@@ -1,18 +1,17 @@
-import { useMemo } from 'react'
 import stylex from '@stylexjs/stylex'
-import { noop } from 'foxact/noop'
+import { useMemo } from 'react'
 import type { Module, Sizes } from '../interface'
-import { Spacer } from './spacer'
 import { Checkbox } from './checkbox'
 import type { CheckboxEvent } from './checkbox'
 import { ModuleItem } from './module-item'
+import { Spacer } from './spacer'
 
 export interface FileListProps<F> {
   files: F[]
   extra: Sizes
   scence: Set<string>
 
-  onChange(values: string[]): void
+  onChange: (values: string[]) => void
 }
 
 const styles = stylex.create({
@@ -24,7 +23,7 @@ const styles = stylex.create({
 })
 
 export function FileList<F extends Module>(props: FileListProps<F>) {
-  const { scence, files: userFiles, extra = 'statSize', onChange = noop } = props
+  const { scence, files: userFiles, extra = 'statSize', onChange } = props
 
   const [all, ...files] = useMemo(
     () =>
@@ -34,7 +33,7 @@ export function FileList<F extends Module>(props: FileListProps<F>) {
           acc[0].extra += meta.extra
           acc.push(meta)
           return acc
-        }, [{ name: 'All', extra: 0 }] as { name: string; extra: number }[]),
+        }, [{ name: 'All', extra: 0 }] as { name: string, extra: number }[]),
     [userFiles, extra]
   )
 
@@ -44,13 +43,13 @@ export function FileList<F extends Module>(props: FileListProps<F>) {
   )
 
   const groupValues = useMemo(() => {
-    if (checkAll) return userFiles.map(v => v.label)
+    if (checkAll) { return userFiles.map((v) => v.label) }
     return Array.from(scence)
   }, [checkAll, scence, userFiles])
 
   const handleChange = (e: CheckboxEvent) => {
     const { checked } = e.target
-    onChange(checked ? userFiles.map(v => v.label) : [])
+    onChange(checked ? userFiles.map((v) => v.label) : [])
   }
   return (
     <div
@@ -69,7 +68,7 @@ export function FileList<F extends Module>(props: FileListProps<F>) {
       </ModuleItem>
       <Spacer h={0.75} />
       <Checkbox.Group font="14px" scale={0.85} value={groupValues} onChange={onChange}>
-        {files.map(file => (
+        {files.map((file) => (
           <ModuleItem name={file.name} size={file.extra} key={file.name} {...stylex.props(styles.baseline)}>
             <Checkbox value={file.name} />
           </ModuleItem>

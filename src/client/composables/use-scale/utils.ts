@@ -3,8 +3,8 @@ import { GetAllScalePropsFunction, GetScalePropsFunction, ScalePropKeys, ScalePr
 export const generateGetScaleProps = <P>(
   props: P & ScaleProps
 ): GetScalePropsFunction => {
-  const getScaleProps: GetScalePropsFunction = keyOrKeys => {
-    if (!Array.isArray(keyOrKeys)) return props[keyOrKeys]
+  const getScaleProps: GetScalePropsFunction = (keyOrKeys) => {
+    if (!Array.isArray(keyOrKeys)) { return props[keyOrKeys] }
     let value = undefined
     for (const key of keyOrKeys) {
       const currentValue = props[key]
@@ -21,11 +21,11 @@ export const generateGetAllScaleProps = <P>(
   props: P & ScaleProps
 ): GetAllScalePropsFunction => {
   const getAllScaleProps: GetAllScalePropsFunction = () => {
-    const scaleProps: ScaleProps = {}
+    const scaleProps: Record<string, string | number> = {}
     for (const key of ScalePropKeys) {
       const value = props[key as keyof ScaleProps]
       if (typeof value !== 'undefined') {
-        scaleProps[key as keyof ScaleProps] = value as any
+        scaleProps[key] = value
       }
     }
     return scaleProps

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useScale, withScale } from '../../composables'
-import { Ellipsis } from './ellipsis'
 import { useSelect } from './context'
+import { Ellipsis } from './ellipsis'
 
 interface Props {
   value?: string
@@ -9,7 +9,7 @@ interface Props {
   preventAllEvents?: boolean
 }
 
-export type SelectOptionProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type SelectOptionProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function SelectOptionComponent(props: React.PropsWithChildren<SelectOptionProps>) {
   const { children, value: initialValue, preventAllEvents = false, disabled = false, ...rest } = props
@@ -18,32 +18,32 @@ function SelectOptionComponent(props: React.PropsWithChildren<SelectOptionProps>
   const isDisabled = useMemo(() => disabled || disableAll, [disabled, disableAll])
 
   const selected = useMemo(() => {
-    if (!value) return false
-    if (typeof value === 'string') return initialValue === value
+    if (!value) { return false }
+    if (typeof value === 'string') { return initialValue === value }
     return value.includes(initialValue + '')
   }, [value, initialValue])
 
   const color = useMemo(() => {
-    if (isDisabled) return '#888'
+    if (isDisabled) { return '#888' }
     return selected ? '#000' : '#666'
   }, [selected, isDisabled])
 
   const bgColor = useMemo(() => {
-    if (isDisabled) return '#fafafa'
+    if (isDisabled) { return '#fafafa' }
     return selected ? '#eaeaea' : '#fff'
   }, [selected, isDisabled])
 
   const hoverBgColor = useMemo(() => {
-    if (isDisabled || selected) return bgColor
+    if (isDisabled || selected) { return bgColor }
     return '#fafafa'
   }, [isDisabled, bgColor, selected])
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (preventAllEvents) return
+    if (preventAllEvents) { return }
     event.stopPropagation()
     event.nativeEvent.stopImmediatePropagation()
     event.preventDefault()
-    if (isDisabled) return
+    if (isDisabled) { return }
     updateValue?.(initialValue!)
   }
 

@@ -1,7 +1,7 @@
-import React from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
+import React from 'react'
 import { useScale, withScale } from '../../composables'
 
 interface Props {
@@ -47,7 +47,7 @@ function getButtonChildrenWithIcon(
   icon: React.ReactNode,
   children: React.ReactNode
 ) {
-  if (!icon) return <div {...stylex.props(styles.text)}>{children}</div>
+  if (!icon) { return <div {...stylex.props(styles.text)}>{children}</div> }
   if (icon && !children) {
     return (
       <span
@@ -110,12 +110,14 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
         lineHeight: SCALES.height(2.5),
         fontSize: SCALES.font(0.875),
         height: SCALES.height(2.5),
-        padding: `${SCALES.pt(0)} ${auto ? SCALES.pr(1.15) : SCALES.pr(1.375)} ${SCALES.pt(0)} ${auto ? SCALES.pl(1.15) : SCALES.pl(1.375)
-          }`,
-        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(
-          0
-        )
-          }`,
+        padding: `${SCALES.pt(0)} ${auto ? SCALES.pr(1.15) : SCALES.pr(1.375)} ${SCALES.pt(0)} ${
+          auto ? SCALES.pl(1.15) : SCALES.pl(1.375)
+        }`,
+        margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${
+          SCALES.ml(
+            0
+          )
+        }`,
         '--button-height': SCALES.height(2.5),
         '--button-icon-padding': SCALES.pl(0.727),
         ...(auto && { width: 'auto' }),

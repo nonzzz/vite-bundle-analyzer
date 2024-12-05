@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/no-clone-element */
 import React, { useEffect, useState } from 'react'
 
 interface Props {
@@ -57,7 +58,8 @@ function CSSTransition({
 
   return React.cloneElement(children, {
     ...props,
-    // @ts-expect-error
+    // @ts-expect-error safe
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     className: `${children.props.className} ${className} ${classes}`
   })
 }

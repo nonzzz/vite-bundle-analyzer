@@ -1,10 +1,10 @@
-import zlib from 'zlib'
-import utils from 'util'
-import fs from 'fs'
-import path from 'path'
-import type { InputType, ZlibOptions } from 'zlib'
 import ansis from 'ansis'
 import { noop } from 'foxact/noop'
+import fs from 'fs'
+import path from 'path'
+import utils from 'util'
+import zlib from 'zlib'
+import type { InputType, ZlibOptions } from 'zlib'
 
 export * from '../shared'
 
@@ -28,17 +28,17 @@ export function createGzip(options: ZlibOptions = {}) {
 // Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 export function slash(path: string) {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path)
-  if (isExtendedLengthPath) return path
+  if (isExtendedLengthPath) { return path }
   return path.replace(/\\/g, '/')
 }
 
 export function stringToByte(b: string | Uint8Array) {
-  if (typeof b === 'string') return encoder.encode(b)
+  if (typeof b === 'string') { return encoder.encode(b) }
   return b
 }
 
 export function byteToString(b: string | Uint8Array) {
-  if (typeof b === 'string') return b
+  if (typeof b === 'string') { return b }
   return decoder.decode(b)
 }
 
@@ -90,7 +90,7 @@ export function isFileReadable(filename: string): boolean {
 export function createDebug(namespace: string) {
   const hasDebug = process.env.DEBUG || process.env.ANALYZE_DEBUG
   if (hasDebug) {
-    return (...args: any[]) => {
+    return (...args: unknown[]) => {
       console.log(ansis.hex('#5B45DE')(`[${namespace}]`), ...args)
     }
   }

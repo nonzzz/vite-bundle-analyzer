@@ -2,9 +2,9 @@ import React, { useCallback, useImperativeHandle, useMemo, useRef, useState } fr
 import type { ReactNode } from 'react'
 import { useScale, withScale } from '../../composables'
 import { Provider } from './context'
+import { SelectDropdown } from './dropdown'
 import { Ellipsis } from './ellipsis'
 import { SelectMultipleValue } from './select-multiple'
-import { SelectDropdown } from './dropdown'
 
 interface Props {
   disabled?: boolean
@@ -15,7 +15,7 @@ interface Props {
   clearable?: boolean
 }
 
-export type SelectProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type SelectProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 export type SelectInstance = {
   destory: () => void
@@ -23,26 +23,28 @@ export type SelectInstance = {
 
 function getSelectValue(value: string | string[] | undefined, next: string, multiple: boolean) {
   if (multiple) {
-    if (!Array.isArray(value)) return [next]
-    if (!value.includes(next)) return [...value, next]
-    return value.filter(item => item !== next)
+    if (!Array.isArray(value)) { return [next] }
+    if (!value.includes(next)) { return [...value, next] }
+    return value.filter((item) => item !== next)
   }
   return next
 }
 
-function pickChildByProps(children: ReactNode | undefined, key: string, value: any) {
+function pickChildByProps(children: ReactNode | undefined, key: string, value: string | string[] | undefined) {
   const target: ReactNode[] = []
   const isArray = Array.isArray(value)
-  const withoutPropChildren = React.Children.map(children, item => {
-    if (!React.isValidElement(item)) return null
-    if (!item.props) return item
+  const withoutPropChildren = React.Children.map(children, (item) => {
+    if (!React.isValidElement(item)) { return null }
+    if (!item.props) { return item }
     if (isArray) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (value.includes(item.props[key])) {
         target.push(item)
         return null
       }
       return item
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (item.props[key] === value) {
       target.push(item)
       return null
@@ -63,13 +65,13 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
   const [visible, setVisible] = useState<boolean>(false)
 
   const [value, setValue] = useState<string | string[] | undefined>(() => {
-    if (!multiple) return userValue
-    if (Array.isArray(userValue)) return userValue
+    if (!multiple) { return userValue }
+    if (Array.isArray(userValue)) { return userValue }
     return typeof userValue === 'undefined' ? [] : [userValue]
   })
 
   const isEmpty = useMemo(() => {
-    if (!Array.isArray(value)) return !value
+    if (!Array.isArray(value)) { return !value }
     return value.length === 0
   }, [value])
 
@@ -88,14 +90,15 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
 
   const selectChild = useMemo(() => {
     const [, optionChildren] = pickChildByProps(children, 'value', value)
-    return React.Children.map(optionChildren, child => {
-      if (!React.isValidElement(child)) return null
-      // @ts-expect-error
+    return React.Children.map(optionChildren, (child) => {
+      if (!React.isValidElement(child)) { return null }
+      // @ts-expect-error safe
       const el = React.cloneElement(child, { preventAllEvents: true })
-      if (!multiple) return el
+      if (!multiple) { return el }
       return (
         <SelectMultipleValue
           disabled={disabled}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           onClear={clearable ? () => updateValue(child.props.value) : null}
         >
           {el}
@@ -119,7 +122,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
     event.stopPropagation()
     event.nativeEvent.stopImmediatePropagation()
     event.preventDefault()
-    if (disabled) return
+    if (disabled) { return }
     updateVisible(!visible)
     event.preventDefault()
   }

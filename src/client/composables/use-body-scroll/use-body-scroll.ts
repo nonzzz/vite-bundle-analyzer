@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import type { Dispatch, RefObject, SetStateAction } from 'react'
 
 export type ElementStackItem = {
-  overflow: string
+  overflow: string,
   paddingRight: string
 }
 
 export type BodyScrollOptions = {
-  scrollLayer?: boolean
+  scrollLayer?: boolean,
   delayReset?: number
 }
 
@@ -33,8 +33,8 @@ export function useBodyScroll(
   elementRef?: RefObject<HTMLElement> | null,
   options?: BodyScrollOptions
 ): [boolean, Dispatch<SetStateAction<boolean>>] {
-  // @ts-expect-error
-  if (typeof document === 'undefined') return [false, (t: boolean) => t]
+  // @ts-expect-error safe
+  if (typeof document === 'undefined') { return [false, (t: boolean) => t] }
   const elRef = elementRef || useRef<HTMLElement>(document.body)
   const [hidden, setHidden] = useState<boolean>(false)
   const safeOptions = {
@@ -43,10 +43,10 @@ export function useBodyScroll(
   }
 
   useEffect(() => {
-    if (!elRef || !elRef.current) return
+    if (!elRef || !elRef.current) { return }
     const lastOverflow = elRef.current.style.overflow
     if (hidden) {
-      if (elementStack.has(elRef.current)) return
+      if (elementStack.has(elRef.current)) { return }
       const paddingRight = getOwnerPaddingRight(elRef.current)
       const scrollbarWidth = getOwnerScrollbarWidth(elRef.current)
       elementStack.set(elRef.current, {
@@ -59,11 +59,11 @@ export function useBodyScroll(
     }
 
     // reset element overflow
-    if (!elementStack.has(elRef.current)) return
+    if (!elementStack.has(elRef.current)) { return }
 
     const reset = (el: HTMLElement) => {
       const store = elementStack.get(el) as ElementStackItem
-      if (!store) return
+      if (!store) { return }
       el.style.overflow = store.overflow
       el.style.paddingRight = store.paddingRight
       elementStack.delete(el)

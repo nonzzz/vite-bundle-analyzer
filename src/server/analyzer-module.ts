@@ -129,10 +129,12 @@ export class AnalyzerNode {
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
     // It's will cause dead lock.(Altough this is a race case.)
-    const { grouped: chunks, files } = pickupMappingsFromCodeBinary(bundle.code, map, (id: string) => {
+    const { grouped, files } = pickupMappingsFromCodeBinary(bundle.code, map, (id: string) => {
       const relatived = path.relative(workspaceRoot, id)
       return path.join(workspaceRoot, relatived)
     })
+
+    const chunks: Record<string, Uint8Array | string> = grouped
 
     if (!files.size) {
       chunks[this.originalId] = bundle.code

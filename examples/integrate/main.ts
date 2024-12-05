@@ -1,7 +1,7 @@
 import { SSE, createServer, injectHTMLTag, renderView } from 'vite-bundle-analyzer'
-import type { Module } from 'vite-bundle-analyzer'
+import type { C, Module } from 'vite-bundle-analyzer'
 import data from '../../src/client/data.json' with { type: 'json' }
-import { CLIENT_CUSTOM_RENDER_SCRIPT } from './ui.jsx'
+import { CLIENT_CUSTOM_RENDER_SCRIPT } from './ui'
 
 const sse = new SSE()
 
@@ -24,21 +24,30 @@ const CLIENT_EVENT_STREAM = `
 
 const server = createServer()
 
-server.get('/', async (c) => {
-  let html = await renderView(data as Module[], { title: 'Vite Bundle Analyzer', mode: 'parsed' })
-  html = injectHTMLTag({
-    html,
-    injectTo: 'body',
-    descriptors: [
-      { kind: 'script', text: GRAPH_CLICK_SCRIPT },
-      { kind: 'script', text: CLIENT_EVENT_STREAM },
-      { kind: 'script', text: CLIENT_CUSTOM_RENDER_SCRIPT }
-    ]
+function asyncMiddleware(fn: (c: C, next: () => void) => Promise<void>) {
+  return (c: C, next: () => void) => {
+    Promise.resolve(fn(c, next)).catch(next)
+  }
+}
+
+server.get(
+  '/',
+  asyncMiddleware(async (c) => {
+    let html = await renderView(data as Module[], { title: 'Vite Bundle Analyzer', mode: 'parsed' })
+    html = injectHTMLTag({
+      html,
+      injectTo: 'body',
+      descriptors: [
+        { kind: 'script', text: GRAPH_CLICK_SCRIPT },
+        { kind: 'script', text: CLIENT_EVENT_STREAM },
+        { kind: 'script', text: CLIENT_CUSTOM_RENDER_SCRIPT }
+      ]
+    })
+    c.res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-cache' })
+    c.res.write(html)
+    c.res.end()
   })
-  c.res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-cache' })
-  c.res.write(html)
-  c.res.end()
-})
+)
 
 server.get('/nonzzz', (c, next) => {
   if (c.req.headers.accept === 'text/event-stream') {

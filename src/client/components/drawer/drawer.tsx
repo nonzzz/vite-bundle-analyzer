@@ -10,7 +10,7 @@ interface Props {
   onContentClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
-export type DrawerProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type DrawerProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function DrawerComponent(props: DrawerProps) {
   const { visible: userVisible, children, onClose, ...rest } = props
@@ -25,7 +25,7 @@ function DrawerComponent(props: DrawerProps) {
   }
 
   useEffect(() => {
-    if (typeof userVisible === 'undefined') return
+    if (typeof userVisible === 'undefined') { return }
     setVisible(userVisible)
     setBodyHidden(userVisible)
   }, [setBodyHidden, userVisible])
@@ -33,7 +33,7 @@ function DrawerComponent(props: DrawerProps) {
   const closeFromBackdrop = () => {
     closeDrawer()
   }
-  if (!portal) return null
+  if (!portal) { return null }
   return createPortal(
     <Backdrop onClick={closeFromBackdrop} visible={visible} width="100%">
       <DrawerWrapper visible={visible} {...rest}>{children}</DrawerWrapper>

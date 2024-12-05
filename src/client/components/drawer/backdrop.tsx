@@ -1,8 +1,8 @@
+import { injectGlobalStyle } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
+import { clsx } from 'clsx'
 import React, { useRef } from 'react'
 import type { MouseEvent } from 'react'
-import * as stylex from '@stylexjs/stylex'
-import { injectGlobalStyle } from '@stylex-extend/core'
-import { clsx } from 'clsx'
 import { CSSTransition } from '../css-transition'
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   layerClassName?: string
 }
 
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>
+type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>
 export type BackdropProps = Props & NativeAttrs
 
 const styles = stylex.create({
@@ -94,11 +94,11 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
   }) => {
     const isContentMouseDown = useRef(false)
     const handleClick = (event: MouseEvent<HTMLElement>) => {
-      if (isContentMouseDown.current) return
+      if (isContentMouseDown.current) { return }
       onClick?.(event)
     }
     const handleMouseUp = () => {
-      if (!isContentMouseDown.current) return
+      if (!isContentMouseDown.current) { return }
       const timer = setTimeout(() => {
         isContentMouseDown.current = false
         clearTimeout(timer)

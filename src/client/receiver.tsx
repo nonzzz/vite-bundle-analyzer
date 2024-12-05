@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
+import { useUpdateAnalyzeModule, useUpdateUI } from './context'
 import type { SendFilterMessage, SendUIMessage } from './special'
 import { createMagicEvent } from './special'
-import { useUpdateAnalyzeModule, useUpdateUI } from './context'
 
 export function Receiver() {
   const updateUI = useUpdateUI()
@@ -21,14 +21,14 @@ export function Receiver() {
       }
     }
 
-    // @ts-expect-error
+    // @ts-expect-error custom-event
     window.addEventListener('send:ui', handler)
-    // @ts-expect-error
+    // @ts-expect-error custom-event
     window.addEventListener('send:filter', filterHandler)
     return () => {
-      // @ts-expect-error
+      // @ts-expect-error custom-event
       window.removeEventListener('send:ui', handler)
-      // @ts-expect-error
+      // @ts-expect-error custom-event
       window.removeEventListener('send:filter', filterHandler)
     }
   }, [updateUI, updateAnalyzeModule])
