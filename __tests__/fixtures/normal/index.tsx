@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-function App() {
+export function App() {
   return <div>111</div>
 }
 

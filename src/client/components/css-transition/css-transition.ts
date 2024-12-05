@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/no-clone-element */
 import React, { useEffect, useState } from 'react'
 
 interface Props {

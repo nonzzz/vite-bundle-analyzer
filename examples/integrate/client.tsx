@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 export function SideBar() {
   const { useState } = window.React
 

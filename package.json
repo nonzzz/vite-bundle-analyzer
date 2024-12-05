@@ -16,6 +16,7 @@
     }
   },
   "devDependencies": {
+    "@eslint-sukka/react": "^6.12.0",
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
     "@rollup/plugin-commonjs": "^26.0.1",
@@ -62,16 +63,7 @@
   "pnpm": {
     "overrides": {
       "@types/react": "^18.2.31",
-      "array-includes": "npm:@nolyfill/array-includes@^1",
-      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@^1",
-      "array.prototype.flatmap": "npm:@nolyfill/array.prototype.flatmap@^1",
-      "hasown": "npm:@nolyfill/hasown@^1",
-      "is-core-module": "npm:@nolyfill/is-core-module@^1",
-      "object.assign": "npm:@nolyfill/object.assign@^1",
-      "object.entries": "npm:@nolyfill/object.entries@^1",
-      "object.fromentries": "npm:@nolyfill/object.fromentries@^1",
-      "object.values": "npm:@nolyfill/object.values@^1",
-      "es-iterator-helpers": "npm:@nolyfill/es-iterator-helpers@^1"
+      "is-core-module": "npm:@nolyfill/is-core-module@^1"
     },
     "patchedDependencies": {
       "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch",

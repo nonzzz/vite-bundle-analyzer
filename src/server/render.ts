@@ -94,6 +94,7 @@ export function createServer() {
   const middlewares: Middleware[] = []
   const routes: Record<string, Middleware> = {}
 
+  // eslint-disable-next-line @eslint-react/hooks-extra/no-redundant-custom-hook
   const use = (middleware: Middleware) => {
     middlewares.push(middleware)
   }

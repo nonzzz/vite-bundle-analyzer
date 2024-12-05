@@ -87,17 +87,11 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
       {!!filtered.length && (
         <div>
           <span>
-            Count:
-            <strong>
-              {filtered.length}
-            </strong>
+            Count: <strong>{filtered.length}</strong>
           </span>
           <Spacer inline />
           <span>
-            Total size:
-            <strong>
-              {convertBytes(findModulesSize)}
-            </strong>
+            Total size:<strong>{convertBytes(findModulesSize)}</strong>
           </span>
         </div>
       )}

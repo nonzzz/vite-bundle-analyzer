@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
 import * as stylex from '@stylexjs/stylex'
+import React, { useEffect, useRef } from 'react'
 
 interface Props {
   x: number
@@ -33,16 +33,17 @@ const ButtonDrip: React.FC<ButtonDrip> = ({
   color,
   onCompleted
 }) => {
-  const dripRef = useRef<HTMLDivElement>(null)
+  const dripRef = useRef<HTMLDivElement | null>(null)
   const top = Number.isNaN(+y) ? 0 : y - 10
   const left = Number.isNaN(+x) ? 0 : x - 10
 
   useEffect(() => {
-    if (!dripRef.current) return
+    if (!dripRef.current) { return }
     dripRef.current.addEventListener('animationend', onCompleted)
     return () => {
-      if (!dripRef.current) return
+      if (!dripRef.current) { return }
       dripRef.current.removeEventListener('animationend', onCompleted)
+      dripRef.current = null
     }
   })
 

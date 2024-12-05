@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export function useQueryParams() {
-  const [queryParams, setQueryParams] = useState(new URLSearchParams(window.location.search))
+  const [queryParams, setQueryParams] = useState(() => new URLSearchParams(window.location.search))
 
   useEffect(() => {
     const handleUrlChange = () => {
