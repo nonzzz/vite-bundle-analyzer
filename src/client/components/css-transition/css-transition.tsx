@@ -58,6 +58,7 @@ function CSSTransition({
   return React.cloneElement(children, {
     ...props,
     // @ts-expect-error safe
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     className: `${children.props.className} ${className} ${classes}`
   })
 }

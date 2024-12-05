@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { CSSTransition } from '../css-transition'
 import { useClickAnyWhere, useDOMObserver, usePortal, useResize } from '../../composables'
-import { getRefRect } from './layouts'
+import { CSSTransition } from '../css-transition'
 import { useSelect } from './context'
+import { getRefRect } from './layouts'
 
 interface Props {
   visible: boolean
 }
 
-export type SelectDropdownProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type SelectDropdownProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 interface ReactiveDomReact {
   top: number
@@ -60,7 +60,7 @@ const SelectDropdown = React.forwardRef<
     updateRect()
   })
   useEffect(() => {
-    if (!ref || !ref.current) return
+    if (!ref || !ref.current) { return }
     const internalDropdownEl = ref.current
     internalDropdownEl.addEventListener('mouseenter', updateRect)
     /* istanbul ignore next */
@@ -78,7 +78,7 @@ const SelectDropdown = React.forwardRef<
     event.preventDefault()
   }
 
-  if (!ref || !el) return null
+  if (!ref || !el) { return null }
 
   return createPortal(
     <CSSTransition visible={visible}>

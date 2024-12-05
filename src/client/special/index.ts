@@ -4,7 +4,7 @@ export const ALLOWED_MAGIC_TYPE = ['graph:click', 'client:ready', 'send:ui', 'se
 
 export type AllowedMagicType = typeof ALLOWED_MAGIC_TYPE[number]
 
-export function createMagicEvent(type: AllowedMagicType, data: any) {
+export function createMagicEvent(type: AllowedMagicType, data: Empty) {
   return new CustomEvent(type, { detail: data })
 }
 

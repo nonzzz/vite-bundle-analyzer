@@ -20,16 +20,15 @@ interface Props {
   className?: string
 }
 
- 
 type ElementMap = { [k in keyof JSX.IntrinsicElements]?: boolean }
 
-type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>
+type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>
 export type TextProps = Props & NativeAttrs
 
 type TextRenderableElements = Array<keyof JSX.IntrinsicElements>
 
 const getModifierChild = (tags: TextRenderableElements, children: ReactNode) => {
-  if (!tags.length) return children
+  if (!tags.length) { return children }
   const nextTag = tags.slice(1, tags.length)
   return <TextChild tag={tags[0]}>{getModifierChild(nextTag, children)}</TextChild>
 }
@@ -72,8 +71,8 @@ function TextComponent({
    */
 
   const tag = useMemo(() => {
-    if (names[0]) return names[0]
-    if (inlineNames[0]) return inlineNames[0]
+    if (names[0]) { return names[0] }
+    if (inlineNames[0]) { return inlineNames[0] }
     return 'p' as keyof JSX.IntrinsicElements
   }, [names, inlineNames])
 
@@ -82,7 +81,7 @@ function TextComponent({
   ) as TextRenderableElements
 
   const modifers = useMemo(() => {
-    if (!renderableChildElements.length) return children
+    if (!renderableChildElements.length) { return children }
     return getModifierChild(renderableChildElements, children)
   }, [renderableChildElements, children])
 

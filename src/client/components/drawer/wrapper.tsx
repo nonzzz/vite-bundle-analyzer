@@ -1,15 +1,15 @@
-import React from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
-import { CSSTransition } from '../css-transition'
+import React from 'react'
 import { useScale } from '../../composables'
+import { CSSTransition } from '../css-transition'
 
 interface Props {
   visible?: boolean
 }
 
-export type DrawerWrapperProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type DrawerWrapperProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function DrawerWrapper(props: React.PropsWithChildren<DrawerWrapperProps>) {
   const { visible, children } = props

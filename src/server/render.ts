@@ -35,7 +35,7 @@ export async function ensureEmptyPort(preferredPort: number) {
   const checkPort = async (port: number): Promise<boolean> => {
     return new Promise((resolve) => {
       const server = net.createServer()
-      server.once('error', (err: any) => {
+      server.once('error', (err: Error & { code: string }) => {
         if (err.code === 'EADDRINUSE') {
           resolve(false)
         } else {
@@ -200,7 +200,7 @@ export class SSE {
       res.write(':\n\n')
       res.flushHeaders()
     }, 3000)
-    stream.on('message', (msg) => {
+    stream.on('message', (msg: SSEMessageBody) => {
       res.write(`event: ${msg.event}\ndata: ${msg.data}\n\n`)
       res.flushHeaders()
     })

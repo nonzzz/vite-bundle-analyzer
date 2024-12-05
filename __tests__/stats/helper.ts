@@ -1,6 +1,6 @@
 import { SourceMapGenerator } from '@jridgewell/source-map'
-import { stringToByte } from '../../src/server/shared'
 import type { Module, OutputAsset, OutputChunk } from '../../src/server/interface'
+import { stringToByte } from '../../src/server/shared'
 
 export function createMockStats(
   chunkName: string,
@@ -8,11 +8,11 @@ export function createMockStats(
   expect: Array<DeepPartial<Module>> | DeepPartial<Module>
 ) {
   return { chunk, expect, chunkName, sourceMapFileName: chunkName + '.map', map: (chunk as OutputChunk).map } as unknown as {
-    chunkName: string
-    chunk: OutputChunk | OutputAsset
-    expect: Module | Module[]
-    sourceMapFileName: string
-    map: any
+    chunkName: string,
+    chunk: OutputChunk | OutputAsset,
+    expect: Module | Module[],
+    sourceMapFileName: string,
+    map: string
   }
 }
 

@@ -8,7 +8,7 @@ interface Props {
   onChange?: (values: string[]) => void
 }
 
-export type CheckboxGroupProps = Props & Omit<React.HTMLAttributes<any>, keyof Props>
+export type CheckboxGroupProps = Props & Omit<React.HTMLAttributes<unknown>, keyof Props>
 
 const defaultValue: string[] = []
 
@@ -18,7 +18,7 @@ function CheckboxGroupComponent(props: React.PropsWithChildren<CheckboxGroupProp
   const [selfValue, setSelfValue] = useState<string[]>([])
 
   const updateState = useCallback((val: string, checked: boolean) => {
-    const removed = selfValue.filter(v => v !== val)
+    const removed = selfValue.filter((v) => v !== val)
     const next = checked ? [...removed, val] : removed
     setSelfValue(next)
     onChange?.(next)

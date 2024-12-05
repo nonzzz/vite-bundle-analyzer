@@ -15,7 +15,7 @@ interface Props {
   clearable?: boolean
 }
 
-export type SelectProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type SelectProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 export type SelectInstance = {
   destory: () => void
@@ -30,19 +30,21 @@ function getSelectValue(value: string | string[] | undefined, next: string, mult
   return next
 }
 
-function pickChildByProps(children: ReactNode | undefined, key: string, value: any) {
+function pickChildByProps(children: ReactNode | undefined, key: string, value: string | string[] | undefined) {
   const target: ReactNode[] = []
   const isArray = Array.isArray(value)
   const withoutPropChildren = React.Children.map(children, (item) => {
     if (!React.isValidElement(item)) { return null }
     if (!item.props) { return item }
     if (isArray) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (value.includes(item.props[key])) {
         target.push(item)
         return null
       }
       return item
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (item.props[key] === value) {
       target.push(item)
       return null
@@ -96,6 +98,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
       return (
         <SelectMultipleValue
           disabled={disabled}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           onClear={clearable ? () => updateValue(child.props.value) : null}
         >
           {el}

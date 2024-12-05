@@ -5,7 +5,7 @@ interface Props {
   inline?: boolean
 }
 
-export type SpacerProps = Omit<React.HTMLAttributes<any>, keyof Props> & Props
+export type SpacerProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function SpacerComponent({ inline = false, ...props }: SpacerProps) {
   const { SCALES } = useScale()

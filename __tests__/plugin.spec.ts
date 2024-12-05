@@ -1,15 +1,15 @@
-import path from 'path'
 import fs from 'fs'
 import { create, destroy } from 'memdisk'
+import path from 'path'
 
-import { afterAll, describe, expect, it } from 'vitest'
-import { type Logger, build } from 'vite'
 import react from '@vitejs/plugin-react'
+import { type Logger, build } from 'vite'
+import { afterAll, describe, expect, it } from 'vitest'
 import { analyzer } from '../dist'
 import type { AnalyzerPluginOptions } from '../src/server'
 
-type LoggerMessage = { type: string; message: string }
-type FakeLogger = Logger & { messages: LoggerMessage[]; clear: () => void }
+type LoggerMessage = { type: string, message: string }
+type FakeLogger = Logger & { messages: LoggerMessage[], clear: () => void }
 
 const defaultWd = path.dirname(new URL(import.meta.url).pathname)
 
@@ -27,7 +27,7 @@ function sleep(delay: number) {
 const createLogger = (): FakeLogger => {
   const messages: LoggerMessage[] = []
   return new Proxy({}, {
-    get(target: any, key: string): any {
+    get(target: unknown, key: string): unknown {
       if (key === 'messages') {
         return messages
       }
@@ -81,13 +81,13 @@ describe('Plugin', () => {
   it('log summary', async () => {
     const logger = createLogger()
     await createBuildServer('normal', { analyzerMode: 'json', summary: true }, logger)
-    const actual = logger.messages.find(log => log.message.includes('chunks of'))
+    const actual = logger.messages.find((log) => log.message.includes('chunks of'))
     expect(!!actual).toBeTruthy()
   })
   it('not log summary', async () => {
     const logger = createLogger()
     await createBuildServer('normal', { analyzerMode: 'json', summary: false }, logger)
-    const actual = logger.messages.some(log => log.message.includes('chunks of'))
+    const actual = logger.messages.some((log) => log.message.includes('chunks of'))
     expect(actual).toBeFalsy()
   })
 })

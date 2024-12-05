@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
+import React, { useMemo } from 'react'
 import { useScale } from '../../composables'
 
 export interface Props {
@@ -9,7 +9,7 @@ export interface Props {
   className?: string
 }
 
-type NativeAttrs = Omit<React.DetailsHTMLAttributes<any>, keyof Props>
+type NativeAttrs = Omit<React.DetailsHTMLAttributes<unknown>, keyof Props>
 export type TextChildProps = Props & NativeAttrs
 
 function TextChild({
@@ -34,7 +34,7 @@ function TextChild({
       { value: font, className: 'font' }
     ]
     const scaleClassNames = keys.reduce((pre, next) => {
-      if (typeof next.value === 'undefined') return pre
+      if (typeof next.value === 'undefined') { return pre }
       return `${pre} ${next.className}`
     }, '')
     return `${scaleClassNames} ${userClassName}`.trim()

@@ -25,7 +25,7 @@ export function exists(value: unknown): boolean {
   return value !== null && value !== undefined
 }
 
-type PredicateFunction<T> = (value: T) => any
+type PredicateFunction<T> = (value: T) => unknown
 
 export function uniqBy<T, K extends keyof T = keyof T>(array: T[], predicate: K | PredicateFunction<T>): T[] {
   const predicateFn = typeof predicate === 'function' ? predicate : (value: T) => value[predicate]

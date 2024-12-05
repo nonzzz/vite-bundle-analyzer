@@ -1,6 +1,6 @@
 export type Kind = 'stat' | 'source'
 
-interface NodeDescriptor<T = Record<string, any>> {
+interface NodeDescriptor<T = Record<string, Empty>> {
   kind: Kind
   meta: T
   filename: string
@@ -26,7 +26,7 @@ export interface GroupWithNode {
   children?: Map<string, Node>
   filename: string
   label: string
-  [prop: string]: any
+  [prop: string]: Any
 }
 
 export class Node<T = Empty> implements NodeDescriptor<T> {

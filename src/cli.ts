@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 import url from 'url'
 import { analyzer } from './server'
-import type { AnalyzerMode, DefaultSizes } from './server/interface'
+import type { AnalyzerMode, DefaultSizes, ExportFields, PackageJSONMetadata } from './server/interface'
 import { searchForWorkspaceRoot } from './server/search-root'
 
 let BREAK_LINE = '\n'
@@ -58,6 +58,8 @@ function searchForPackageInNodeModules(name: string, currentDir: string) {
   return null
 }
 
+type EntryModule = string | ExportFields | undefined
+
 // Desgin for type: module
 // I know @dual-bundle/import-meta-resolve but i won't use it. We only need to import package not relative path.
 export function importMetaResolve(name: string) {
@@ -67,23 +69,22 @@ export function importMetaResolve(name: string) {
     throw new Error(`Cannot find module '${name}' in '${workspaceRoot}'`)
   }
   const packageJSONPath = path.join(packageRoot, 'package.json')
-  const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, 'utf-8'))
+  const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, 'utf-8')) as unknown as PackageJSONMetadata
 
-  let entryPoint = packageJSON.module || packageJSON.main
+  let entryPoint: EntryModule = packageJSON.module || packageJSON.main
   const isESM = packageJSON.type === 'module'
   if (packageJSON.exports && !entryPoint) {
     entryPoint = packageJSON.exports['.'] || packageJSON.exports['./index'] || packageJSON.exports['./index.js']
     stop: for (;;) {
       if (typeof entryPoint === 'string') { break stop }
-      if (isESM && entryPoint.import) {
-        entryPoint = entryPoint.import
-      } else {
-        if (entryPoint.require) {
-          entryPoint = entryPoint.require
+      if (entryPoint) {
+        if (isESM) {
+          entryPoint = entryPoint.import || entryPoint.default
+        } else {
+          entryPoint = entryPoint.require || entryPoint.default
         }
-      }
-      if (entryPoint.default) {
-        entryPoint = entryPoint.default
+      } else {
+        break stop
       }
     }
   }

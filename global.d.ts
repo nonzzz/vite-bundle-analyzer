@@ -9,3 +9,6 @@ declare module 'html.mjs' {
 }
 
 type Empty = NonNullable<unknown>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any
