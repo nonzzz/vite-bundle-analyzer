@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { Dispatch, RefObject, SetStateAction } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 export type ElementStackItem = {
   overflow: string,
@@ -30,19 +30,17 @@ const getOwnerScrollbarWidth = (element: Element): number => {
 }
 
 export function useBodyScroll(
-  elementRef?: RefObject<HTMLElement> | null,
   options?: BodyScrollOptions
 ): [boolean, Dispatch<SetStateAction<boolean>>] {
-  // @ts-expect-error safe
-  if (typeof document === 'undefined') { return [false, (t: boolean) => t] }
-  const elRef = elementRef || useRef<HTMLElement>(document.body)
+  const elRef = useRef<HTMLElement>(document.body)
   const [hidden, setHidden] = useState<boolean>(false)
-  const safeOptions = {
-    ...defaultOptions,
-    ...(options || {})
-  }
+  
 
   useEffect(() => {
+    const safeOptions = {
+      ...defaultOptions,
+      ...(options || {})
+    }
     if (!elRef || !elRef.current) { return }
     const lastOverflow = elRef.current.style.overflow
     if (hidden) {
@@ -70,10 +68,10 @@ export function useBodyScroll(
     }
 
     const timer = window.setTimeout(() => {
-      reset(elRef.current!)
+      reset(elRef.current)
       window.clearTimeout(timer)
     }, safeOptions.delayReset)
-  }, [hidden, elRef])
+  }, [hidden, options])
 
   return [hidden, setHidden]
 }

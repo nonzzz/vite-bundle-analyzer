@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import React, { useImperativeHandle, useRef, useState } from 'react'
 import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
 import { clsx } from 'clsx'
@@ -27,16 +27,18 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
     disabled,
     readOnly,
     type,
-    value,
+    value = '',
     onChange,
     ...rest
   } = props
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const [selfValue, setSelfValue] = useState<string>('')
+  const [selfValue, setSelfValue] = useState<string>(value)
   const { SCALES } = useScale()
 
-  const isControlledComponent = useMemo(() => value !== undefined, [value])
+  if (value !== selfValue) {
+    setSelfValue(value || '')
+  }
 
   const { className, style } = stylex.props(inline({
     padding: 0,
@@ -74,11 +76,6 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
     onChange?.(changeEvent)
     inputRef.current.focus()
   }
-
-  useEffect(() => {
-    if (!isControlledComponent) return
-    setSelfValue(value || '')
-  }, [isControlledComponent, value])
 
   return (
     <div

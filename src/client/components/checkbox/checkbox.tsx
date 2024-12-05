@@ -1,7 +1,7 @@
 import { inline } from '@stylex-extend/core'
 import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useScale, withScale } from '../../composables'
 import { useCheckbox } from './context'
 
@@ -66,7 +66,7 @@ function CheckboxIcon(props: CheckboxIconProps) {
 
 function CheckboxComponent(props: CheckboxProps) {
   const {
-    checked,
+    checked = false,
     className: userClassName,
     style: userStyle,
     value = '',
@@ -90,8 +90,21 @@ function CheckboxComponent(props: CheckboxProps) {
     backgroundColor: 'transparent'
   }))
   const classes = clsx(className, userClassName)
-  const [selfChecked, setSelfChecked] = useState<boolean>(false)
+  const [selfChecked, setSelfChecked] = useState<boolean>(checked)
   const isDisabled = inGroup ? disabledAll || disabled : disabled
+
+  if (inGroup) {
+    if (!value.length) {
+      setSelfChecked(false)
+    } else {
+      const next = values.includes(value)
+      if (next !== selfChecked) {
+        setSelfChecked(next)
+      }
+    }
+  } else {
+    setSelfChecked(checked)
+  }
 
   const handleChange = useCallback((e: React.ChangeEvent) => {
     if (disabled) { return }
@@ -109,20 +122,6 @@ function CheckboxComponent(props: CheckboxProps) {
     setSelfChecked((pre) => !pre)
     onChange?.(evt)
   }, [onChange, disabled, selfChecked, value, inGroup, updateState])
-
-  useEffect(() => {
-    if (checked === undefined) { return }
-    setSelfChecked(checked)
-  }, [checked])
-
-  useEffect(() => {
-    if (inGroup) {
-      if (!values.length) { return setSelfChecked(false) }
-      const next = values.includes(value || '')
-      if (next === selfChecked) { return }
-      setSelfChecked(next)
-    }
-  }, [value, values, selfChecked, inGroup])
 
   return (
     <label

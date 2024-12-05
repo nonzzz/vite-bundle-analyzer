@@ -50,7 +50,7 @@ const SelectDropdown = React.forwardRef<
     setRect({ top, left, right, width: nativeWidth })
   }, [ref])
 
-  useResize(updateRect)
+  useResize(ref, updateRect)
 
   useClickAnyWhere(() => {
     setRect(defaultRect)

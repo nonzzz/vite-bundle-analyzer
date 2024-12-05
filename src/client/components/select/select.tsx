@@ -37,7 +37,7 @@ function pickChildByProps(children: ReactNode | undefined, key: string, value: s
     if (!React.isValidElement(item)) { return null }
     if (!item.props) { return item }
     if (isArray) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
       if (value.includes(item.props[key])) {
         target.push(item)
         return null
@@ -98,7 +98,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
       return (
         <SelectMultipleValue
           disabled={disabled}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
           onClear={clearable ? () => updateValue(child.props.value) : null}
         >
           {el}

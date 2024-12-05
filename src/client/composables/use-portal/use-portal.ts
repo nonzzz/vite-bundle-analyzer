@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 
 function getId() {
   return Math.random().toString(32).slice(2, 10)
@@ -15,19 +15,17 @@ export function usePortal(
   getContainer?: () => HTMLElement | null
 ): HTMLElement {
   const id = `analyzer-plugin-${selectId}`
-  const [elSnapshot, setElSnapshot] = useState<HTMLElement>(() => createElement(id))
 
-  useEffect(() => {
+  const elSnapshot = useMemo(()=> {
     const customContainer = getContainer ? getContainer() : null
     const parentElement = customContainer || document.body
     const hasElement = parentElement.querySelector<HTMLElement>(`#${id}`)
     const el = hasElement || createElement(id)
-
     if (!hasElement) {
       parentElement.appendChild(el)
     }
-    setElSnapshot(el)
-  }, [])
+    return el
+  }, [getContainer, id])
 
   return elSnapshot
 }

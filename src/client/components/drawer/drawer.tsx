@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useBodyScroll, usePortal, withScale } from '../../composables'
 import { Backdrop } from './backdrop'
@@ -13,22 +13,21 @@ interface Props {
 export type DrawerProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function DrawerComponent(props: DrawerProps) {
-  const { visible: userVisible, children, onClose, ...rest } = props
+  const { visible: userVisible = false, children, onClose, ...rest } = props
   const portal = usePortal('drawer')
-  const [visible, setVisible] = useState<boolean>(false)
-  const [, setBodyHidden] = useBodyScroll(null, { delayReset: 300 })
+  const [visible, setVisible] = useState<boolean>(userVisible)
+  const [, setBodyHidden] = useBodyScroll({ delayReset: 300 })
+
+  if (typeof userVisible !== 'undefined' && userVisible !== visible) {
+    setVisible(userVisible)
+    setBodyHidden(userVisible)
+  }
 
   const closeDrawer = () => {
     onClose?.()
     setVisible(false)
     setBodyHidden(false)
   }
-
-  useEffect(() => {
-    if (typeof userVisible === 'undefined') { return }
-    setVisible(userVisible)
-    setBodyHidden(userVisible)
-  }, [setBodyHidden, userVisible])
 
   const closeFromBackdrop = () => {
     closeDrawer()

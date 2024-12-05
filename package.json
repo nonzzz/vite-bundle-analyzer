@@ -67,7 +67,7 @@
     },
     "patchedDependencies": {
       "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch",
-      "@jridgewell/source-map": "patches/@jridgewell__source-map.patch"
+      "@jridgewell/source-map@0.3.6": "patches/@jridgewell__source-map@0.3.6.patch"
     }
   },
   "files": [

@@ -22,25 +22,20 @@ function CSSTransition({
   name = 'transition',
   ...props
 }: React.PropsWithChildren<CssTransitionProps>) {
-  const [classes, setClasses] = useState<string>('')
+  const statusClassName = visible ? 'enter' : 'leave'
+  const time = visible ? enterTime : leaveTime
+  const [classes, setClasses] = useState<string>(()=> `${name}-${statusClassName}`)
   const [renderable, setRenderable] = useState<boolean>(visible)
-
-  useEffect(() => {
-    const statusClassName = visible ? 'enter' : 'leave'
-    const time = visible ? enterTime : leaveTime
-    if (visible && !renderable) {
-      setRenderable(true)
-    }
-
-    setClasses(`${name}-${statusClassName}`)
-
-    // set class to active
+  
+  if (visible && !renderable) {
+    setRenderable(true)
+  }
+  
+  useEffect(()=> {
     const timer = setTimeout(() => {
       setClasses(`${name}-${statusClassName} ${name}-${statusClassName}-active`)
       clearTimeout(timer)
     }, time)
-
-    // remove classess when animation over
     const clearClassesTimer = setTimeout(() => {
       if (!visible) {
         setClasses('')
@@ -48,12 +43,12 @@ function CSSTransition({
       }
       clearTimeout(clearClassesTimer)
     }, time + clearTime)
-
     return () => {
       clearTimeout(timer)
       clearTimeout(clearClassesTimer)
     }
-  }, [visible, renderable, enterTime, leaveTime, name, clearTime])
+  }, [clearTime, name, statusClassName, time, visible])
+
   if (!React.isValidElement(children) || !renderable) { return null }
 
   return React.cloneElement(children, {

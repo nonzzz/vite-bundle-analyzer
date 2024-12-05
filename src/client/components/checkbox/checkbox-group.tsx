@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useScale, withScale } from '../../composables'
 import { CheckboxProvider } from './context'
 
@@ -15,7 +15,7 @@ const defaultValue: string[] = []
 function CheckboxGroupComponent(props: React.PropsWithChildren<CheckboxGroupProps>) {
   const { children, value = defaultValue, disabled = false, onChange, ...rest } = props
   const { SCALES } = useScale()
-  const [selfValue, setSelfValue] = useState<string[]>([])
+  const [selfValue, setSelfValue] = useState<string[]>(value)
 
   const updateState = useCallback((val: string, checked: boolean) => {
     const removed = selfValue.filter((v) => v !== val)
@@ -24,18 +24,14 @@ function CheckboxGroupComponent(props: React.PropsWithChildren<CheckboxGroupProp
     onChange?.(next)
   }, [selfValue, onChange])
 
-  useEffect(() => {
-    setSelfValue([...value])
-  }, [value])
-
   const contextValue = useMemo(() => {
     return {
       disabledAll: disabled,
-      values: selfValue,
+      values: value,
       inGroup: true,
       updateState
     }
-  }, [disabled, selfValue, updateState])
+  }, [disabled, value, updateState])
 
   return (
     <CheckboxProvider value={contextValue}>

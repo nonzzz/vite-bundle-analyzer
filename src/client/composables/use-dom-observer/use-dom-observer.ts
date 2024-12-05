@@ -1,11 +1,12 @@
 import { useEffect } from 'foxact/use-abortable-effect'
 import type { MutableRefObject } from 'react'
 
+const config = { attributes: false, childList: true, subtree: true }
+
 export function useDOMObserver(
   ref: MutableRefObject<HTMLElement | null> | undefined,
   callback: MutationCallback = () => { }
 ) {
-  const config = { attributes: false, childList: true, subtree: true }
 
   useEffect((signal) => {
     if (!ref || !ref.current) return
@@ -18,5 +19,5 @@ export function useDOMObserver(
     return () => {
       observer.disconnect()
     }
-  }, [ref])
+  }, [callback, ref])
 }
