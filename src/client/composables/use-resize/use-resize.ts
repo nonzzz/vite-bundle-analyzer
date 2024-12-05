@@ -1,17 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 export function useResize(ref: React.RefObject<HTMLElement>, fn: () => void) {
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current) { return }
 
     const observer = new ResizeObserver(() => {
-      fn();
-    });
+      fn()
+    })
 
-    observer.observe(ref.current);
+    observer.observe(ref.current)
 
     return () => {
-      observer.disconnect();
-    };
-  }, [ref, fn]);
+      observer.disconnect()
+    }
+  }, [ref, fn])
 }

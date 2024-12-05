@@ -33,34 +33,34 @@ export const ScalePropKeys = [
 ]
 
 export type ScaleProps = {
-  width?: string | number
-  height?: string | number
-  padding?: string | number
-  margin?: string | number
-  w?: string | number
-  h?: string | number
-  paddingLeft?: string | number
-  paddingRight?: string | number
-  paddingTop?: string | number
-  paddingBottom?: string | number
-  pl?: string | number
-  pr?: string | number
-  pt?: string | number
-  pb?: string | number
-  marginLeft?: string | number
-  marginRight?: string | number
-  marginTop?: string | number
-  marginBottom?: string | number
-  ml?: string | number
-  mr?: string | number
-  mt?: string | number
-  mb?: string | number
-  px?: string | number
-  py?: string | number
-  mx?: string | number
-  my?: string | number
-  font?: string | number
-  unit?: string
+  width?: string | number,
+  height?: string | number,
+  padding?: string | number,
+  margin?: string | number,
+  w?: string | number,
+  h?: string | number,
+  paddingLeft?: string | number,
+  paddingRight?: string | number,
+  paddingTop?: string | number,
+  paddingBottom?: string | number,
+  pl?: string | number,
+  pr?: string | number,
+  pt?: string | number,
+  pb?: string | number,
+  marginLeft?: string | number,
+  marginRight?: string | number,
+  marginTop?: string | number,
+  marginBottom?: string | number,
+  ml?: string | number,
+  mr?: string | number,
+  mt?: string | number,
+  mb?: string | number,
+  px?: string | number,
+  py?: string | number,
+  mx?: string | number,
+  my?: string | number,
+  font?: string | number,
+  unit?: string,
   scale?: number
 }
 
@@ -87,7 +87,6 @@ export type ScaleInputKeys =
   | 'font'
 
 export type DynamicScales = {
-   
   [key in ScaleInputKeys]: DynamicLayoutPipe
 }
 
@@ -106,7 +105,7 @@ export interface ScaleConfig {
 
 export type SCALES = DynamicScales
 
-const defaultDynamicLayoutPipe: DynamicLayoutPipe = scale1x => {
+const defaultDynamicLayoutPipe: DynamicLayoutPipe = (scale1x) => {
   return `${scale1x}`
 }
 

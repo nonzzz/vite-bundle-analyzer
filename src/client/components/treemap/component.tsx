@@ -1,12 +1,12 @@
-import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { inline } from '@stylex-extend/core'
 import { noop } from 'foxact/noop'
+import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { c2m, createTreemap, presetDecorator, sortChildrenByKey } from 'squarified'
 import type { PrimitiveEventCallback } from 'squarified'
+import { useQueryParams } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
-import { useQueryParams } from '../../composables'
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 

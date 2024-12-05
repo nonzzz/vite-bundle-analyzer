@@ -1,7 +1,7 @@
-import React from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
+import React from 'react'
 
 interface Props {
   disabled: boolean

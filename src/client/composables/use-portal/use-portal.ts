@@ -16,7 +16,7 @@ export function usePortal(
 ): HTMLElement {
   const id = `analyzer-plugin-${selectId}`
 
-  const elSnapshot = useMemo(()=> {
+  const elSnapshot = useMemo(() => {
     const customContainer = getContainer ? getContainer() : null
     const parentElement = customContainer || document.body
     const hasElement = parentElement.querySelector<HTMLElement>(`#${id}`)

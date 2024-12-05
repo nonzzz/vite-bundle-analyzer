@@ -1,7 +1,7 @@
-import path from 'path'
-import url from 'url'
 import fs from 'fs'
+import path from 'path'
 import { x } from 'tinyexec'
+import url from 'url'
 import { afterAll, describe, expect, it } from 'vitest'
 
 const cliPath = path.join(process.cwd(), 'dist/cli.js')

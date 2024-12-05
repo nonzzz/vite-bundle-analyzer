@@ -1,7 +1,7 @@
-import React, { useImperativeHandle, useRef, useState } from 'react'
-import * as stylex from '@stylexjs/stylex'
 import { inline } from '@stylex-extend/core'
+import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
+import React, { useImperativeHandle, useRef, useState } from 'react'
 import { useScale, withScale } from '../../composables'
 
 interface Props {
@@ -63,14 +63,14 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
   const classes = clsx('input', className, userClassName)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (disabled || readOnly) return
+    if (disabled || readOnly) { return }
     setSelfValue(e.target.value)
     onChange?.(e)
   }
 
   const handleClear = (event: React.MouseEvent<HTMLDivElement>) => {
     setSelfValue('')
-    if (!inputRef.current) return
+    if (!inputRef.current) { return }
     const changeEvent = simulateChangeEvent(inputRef.current, event)
     changeEvent.target.value = ''
     onChange?.(changeEvent)

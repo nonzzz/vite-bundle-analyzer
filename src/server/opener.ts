@@ -6,8 +6,8 @@
 // But we fixed the wsl/wsl2 (maybe)
 // In past versions. The wsl/wsl2 os release might be `Microsoft` but now it's full lowercase `microsoft`
 
-import os from 'os'
 import child_process from 'child_process'
+import os from 'os'
 
 const MS = 'microsoft'
 

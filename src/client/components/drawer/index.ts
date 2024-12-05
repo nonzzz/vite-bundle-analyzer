@@ -1,5 +1,5 @@
-import { Drawer as _Drawer } from './drawer'
 import { DrawerContent } from './content'
+import { Drawer as _Drawer } from './drawer'
 
 export type DrawerComponentType = typeof _Drawer & {
   Content: typeof DrawerContent

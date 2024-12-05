@@ -1,6 +1,6 @@
 import type { MutableRefObject } from 'react'
 
-export function getElementOffset(el?: HTMLElement | null  ) {
+export function getElementOffset(el?: HTMLElement | null) {
   if (!el) {
     return {
       top: 0,
@@ -32,7 +32,7 @@ function getRectFromDOMWithContainer(
   domRect?: DOMRect,
   getContainer?: () => HTMLElement | null
 ): ReactiveDomReact {
-  if (!domRect) return defaultRect
+  if (!domRect) { return defaultRect }
   const container = getContainer ? getContainer() : null
   const scrollElement = container || document.documentElement
   const { top: offsetTop, left: offsetLeft } = getElementOffset(container)
@@ -51,7 +51,7 @@ export function getRefRect(
   ref?: MutableRefObject<HTMLElement | null>,
   getContainer?: () => HTMLElement | null
 ): ReactiveDomReact {
-  if (!ref || !ref.current) return defaultRect
+  if (!ref || !ref.current) { return defaultRect }
   const rect = ref.current.getBoundingClientRect()
   return getRectFromDOMWithContainer(rect, getContainer)
 }

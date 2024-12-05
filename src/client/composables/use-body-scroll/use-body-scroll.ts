@@ -34,7 +34,6 @@ export function useBodyScroll(
 ): [boolean, Dispatch<SetStateAction<boolean>>] {
   const elRef = useRef<HTMLElement>(document.body)
   const [hidden, setHidden] = useState<boolean>(false)
-  
 
   useEffect(() => {
     const safeOptions = {

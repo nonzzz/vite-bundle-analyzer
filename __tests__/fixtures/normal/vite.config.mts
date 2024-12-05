@@ -1,6 +1,6 @@
+import viteReact from '@vitejs/plugin-react'
 import path from 'path'
 import url from 'url'
-import viteReact from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig({

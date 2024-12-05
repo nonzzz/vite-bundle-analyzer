@@ -1,5 +1,5 @@
-import { withScale } from './with-scale'
 import { useScale } from './scale-context'
+import { withScale } from './with-scale'
 
 export * from './scale-context'
 export * from './utils'

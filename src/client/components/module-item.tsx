@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react'
 import { noop } from 'foxact/noop'
+import { PropsWithChildren } from 'react'
 import { convertBytes } from '../shared'
-import { Text } from './text'
 import { Spacer } from './spacer'
+import { Text } from './text'
 
 export interface ModuleItemProps {
   name: string

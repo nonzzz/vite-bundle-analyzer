@@ -5,13 +5,12 @@ const config = { attributes: false, childList: true, subtree: true }
 
 export function useDOMObserver(
   ref: MutableRefObject<HTMLElement | null> | undefined,
-  callback: MutationCallback = () => { }
+  callback: MutationCallback = () => {}
 ) {
-
   useEffect((signal) => {
-    if (!ref || !ref.current) return
+    if (!ref || !ref.current) { return }
     const done: MutationCallback = (...params) => {
-      if (signal.aborted) return
+      if (signal.aborted) { return }
       callback(...params)
     }
     const observer = new MutationObserver(done)

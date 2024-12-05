@@ -1,4 +1,4 @@
-export function Ellipsis({ children, height }: { children: React.ReactNode; height: string }) {
+export function Ellipsis({ children, height }: { children: React.ReactNode, height: string }) {
   return (
     <span
       stylex={{

@@ -1,10 +1,10 @@
+import commonjs from '@rollup/plugin-commonjs'
+import shim from '@rollup/plugin-esm-shim'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { builtinModules } from 'module'
 import { defineConfig } from 'rollup'
-import { minify, swc } from 'rollup-plugin-swc3'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import shim from '@rollup/plugin-esm-shim'
 import dts from 'rollup-plugin-dts'
-import commonjs from '@rollup/plugin-commonjs'
+import { minify, swc } from 'rollup-plugin-swc3'
 
 const external = [...builtinModules, 'vite']
 

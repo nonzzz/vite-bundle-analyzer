@@ -1,18 +1,18 @@
-import { createElement, useEffect, useMemo, useRef, useState } from 'react'
 import { noop } from 'foxact/noop'
+import { createElement, useEffect, useMemo, useRef, useState } from 'react'
 import { sortChildrenByKey } from 'squarified'
-import { Text } from '../text'
+import Menu from '~icons/ph/list'
 import { useApplicationContext, useToggleSize, useUpdateScence } from '../../context'
 import { tuple } from '../../shared'
+import { IS_CUSTOM_SIDE_BAR } from '../../special'
 import { Button } from '../button'
-import { Select } from '../select'
-import type { SelectInstance } from '../select'
 import { Drawer } from '../drawer'
 import { FileList } from '../file-list'
 import { SearchModules } from '../search-modules'
-import { IS_CUSTOM_SIDE_BAR } from '../../special'
+import { Select } from '../select'
+import type { SelectInstance } from '../select'
+import { Text } from '../text'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
-import Menu from '~icons/ph/list'
 
 const MODES = tuple('Stat', 'Parsed', 'Gzipped')
 
@@ -35,7 +35,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const allChunks = useMemo(() => {
     const points = new Set(entrypoints)
     return sortChildrenByKey(
-      analyzeModule.filter(chunk => !points.size || points.has(chunk.label) || chunk.imports.some(id => points.has(id)))
+      analyzeModule.filter((chunk) => !points.size || points.has(chunk.label) || chunk.imports.some((id) => points.has(id)))
         .map((chunk) => ({ ...chunk, groups: userMode === 'statSize' ? chunk.stats : chunk.source })),
       userMode,
       'label'
@@ -44,13 +44,13 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
 
   const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
 
-  const entrypointChunks = useMemo(() => analyzeModule.filter(chunk => chunk.isEntry), [analyzeModule])
+  const entrypointChunks = useMemo(() => analyzeModule.filter((chunk) => chunk.isEntry), [analyzeModule])
 
   const handleFilterByEntrypoints = (entrypoint: string | string[]) => {
     setEntrypoints(Array.isArray(entrypoint) ? entrypoint : [entrypoint])
   }
 
-  useEffect(() => updateScence(new Set(allChunks.map(c => c.label))), [allChunks, updateScence])
+  useEffect(() => updateScence(new Set(allChunks.map((c) => c.label))), [allChunks, updateScence])
 
   const handleDrawerClose = () => {
     selectRef.current?.destory()
@@ -95,7 +95,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
                 flexWrap: 'nowrap'
               }}
             >
-              {MODES.map(button => (
+              {MODES.map((button) => (
                 <div key={button} stylex={{ padding: '5px', boxSizing: 'border-box' }}>
                   <Button
                     onClick={() => toggleSize(button === 'Gzipped' ? 'gzipSize' : button === 'Stat' ? 'statSize' : 'parsedSize')}
@@ -127,7 +127,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
                     width="95.5%"
                     onChange={handleFilterByEntrypoints}
                   >
-                    {entrypointChunks.map(chunk => <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>)}
+                    {entrypointChunks.map((chunk) => <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>)}
                   </Select>
                 </div>
                 <div>

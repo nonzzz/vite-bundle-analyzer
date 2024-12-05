@@ -1,3 +1,5 @@
+/* eslint-disable @eslint-react/no-clone-element */
+/* eslint-disable @eslint-react/no-children-map */
 import React, { useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useScale, withScale } from '../../composables'

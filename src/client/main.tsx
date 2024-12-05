@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 import DOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import { App } from './application'
 
 // For custom integration.

@@ -24,14 +24,14 @@ function CSSTransition({
 }: React.PropsWithChildren<CssTransitionProps>) {
   const statusClassName = visible ? 'enter' : 'leave'
   const time = visible ? enterTime : leaveTime
-  const [classes, setClasses] = useState<string>(()=> `${name}-${statusClassName}`)
+  const [classes, setClasses] = useState<string>(() => `${name}-${statusClassName}`)
   const [renderable, setRenderable] = useState<boolean>(visible)
-  
+
   if (visible && !renderable) {
     setRenderable(true)
   }
-  
-  useEffect(()=> {
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setClasses(`${name}-${statusClassName} ${name}-${statusClassName}-active`)
       clearTimeout(timer)

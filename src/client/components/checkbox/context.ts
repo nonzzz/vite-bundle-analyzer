@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react'
 import { noop } from 'foxact/noop'
+import { createContext, useContext } from 'react'
 
 export interface CheckboxContext {
   disabledAll: boolean

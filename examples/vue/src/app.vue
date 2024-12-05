@@ -3,20 +3,20 @@
     <p>vite-bundle-analyzer example</p>
     <p>{{ counter }}</p>
     <var-button size="mini" auto @click="clickHandler">Button</var-button>
-    <SyncComponent/>
-    <AsyncComponent/>
+    <SyncComponent />
+    <AsyncComponent />
   </div>
 </template>
 
 <script>
-import {defineComponent, ref, onMounted, defineAsyncComponent} from 'vue'
-import SyncComponent from "./sync-component.vue";
+import { defineAsyncComponent, defineComponent, onMounted, ref } from 'vue'
+import SyncComponent from './sync-component.vue'
 import { send } from './worker'
 
 export default defineComponent({
   components: {
     SyncComponent,
-    AsyncComponent: defineAsyncComponent(() => import('./async-component.vue')),
+    AsyncComponent: defineAsyncComponent(() => import('./async-component.vue'))
   },
   setup() {
     const counter = ref(0)
@@ -33,7 +33,7 @@ export default defineComponent({
 
     return {
       clickHandler,
-      counter,
+      counter
     }
   }
 })

@@ -15,5 +15,5 @@ export { SidebarProvider, useSetSidebarState, useSidebarState }
 
 export function useToggleDrawerVisible() {
   const dispatch = useSetSidebarState()
-  return useCallback(() => dispatch(pre => ({ ...pre, drawerVisibile: !pre.drawerVisibile })), [dispatch])
+  return useCallback(() => dispatch((pre) => ({ ...pre, drawerVisibile: !pre.drawerVisibile })), [dispatch])
 }
