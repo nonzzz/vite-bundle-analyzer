@@ -11,10 +11,5 @@ module.exports = nonzzz(
       '**/components.d.ts',
       '**/analysis'
     ]
-  },
-  {
-    rules: {
-      '@typescript-eslint/no-unsafe-argument': 'off'
-    }
   }
 )
