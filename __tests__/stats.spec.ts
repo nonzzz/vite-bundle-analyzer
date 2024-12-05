@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createAnalyzerModule } from '../src/server/analyzer-module'
-import { pick } from '../src/shared'
 import type { Module, PluginContext } from '../src/server/interface'
+import { pick } from '../src/shared'
 
 import { createMockStats } from './stats/helper'
 import normal from './stats/normal'
@@ -34,6 +34,6 @@ async function runStatTest(data: ReturnType<typeof createMockStats>) {
 
 describe('Stats', () => {
   it('normal', async () => {
-    runStatTest(normal)
+    await runStatTest(normal)
   })
 })

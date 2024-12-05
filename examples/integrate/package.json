@@ -2,7 +2,7 @@
   "name": "analyzer-exmaple-vite3",
   "type": "module",
   "scripts": {
-    "dev": "node --import tsx/esm ./main.ts"
+    "dev": "tsx --tsconfig ./tsconfig.build.json ./main.ts"
   },
   "devDependencies": {
     "vite-bundle-analyzer": "workspace: *",

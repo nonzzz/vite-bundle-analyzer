@@ -1,14 +1,14 @@
-import path from 'path'
-import fs from 'fs'
-import { Readable } from 'stream'
-import zlib from 'zlib'
-import type { Logger, Plugin } from 'vite'
 import ansis from 'ansis'
+import fs from 'fs'
+import path from 'path'
+import { Readable } from 'stream'
+import type { Logger, Plugin } from 'vite'
+import zlib from 'zlib'
+import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
+import type { AnalyzerPluginOptions, AnalyzerStore, Module, OutputAsset, OutputBundle, OutputChunk } from './interface'
 import { opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
-import type { AnalyzerPluginOptions, AnalyzerStore, Module, OutputAsset, OutputBundle, OutputChunk } from './interface'
-import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
 import { analyzerDebug, convertBytes, fsp, stringToByte } from './shared'
 
 const isCI = !!process.env.CI
@@ -29,7 +29,7 @@ function arena() {
   return {
     rs: new Readable(),
     into(b: string | Uint8Array) {
-      if (hasSet) return
+      if (hasSet) { return }
       this.rs.push(b)
       this.rs.push(null)
       if (!binary) {
@@ -72,10 +72,10 @@ function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle
   // https://github.com/rollup/rollup/blob/master/CHANGELOG.md#features-22
   if (/\.(c|m)?js$/.test(chunk.fileName)) {
     if (chunk && 'sourcemapFileName' in chunk) {
-      if (chunk.sourcemapFileName && chunk.sourcemapFileName in allChunks) return [true, chunk.sourcemapFileName]
+      if (chunk.sourcemapFileName && chunk.sourcemapFileName in allChunks) { return [true, chunk.sourcemapFileName] }
     }
     const possiblePath = chunk.fileName + '.map'
-    if (possiblePath in allChunks) return [true, possiblePath]
+    if (possiblePath in allChunks) { return [true, possiblePath] }
     return [true, undefined]
   }
   return [false, undefined]
@@ -147,7 +147,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
       workspaceRoot = searchForWorkspaceRoot(config.root)
       analyzerModule.workspaceRoot = workspaceRoot
       if (opts.summary) {
-        const reporter = config.plugins.find(plugin => plugin.name === 'vite:reporter')
+        const reporter = config.plugins.find((plugin) => plugin.name === 'vite:reporter')
         hasViteReporter = !!reporter?.writeBundle
         if (reporter?.writeBundle) {
           const originalFunction = typeof reporter.writeBundle === 'function'
@@ -169,7 +169,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
       analyzerModule.setupRollupChunks(outputBundle)
-      const cleanup: Array<{ bundle: OutputChunk | OutputAsset; sourcemapFileName: string | undefined }> = []
+      const cleanup: Array<{ bundle: OutputChunk | OutputAsset, sourcemapFileName: string | undefined }> = []
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)
       // A funny thing is that 'Import with Query Suffixes' vite might think the worker is assets
       // So we should wrapper them as a chunk node.
@@ -215,7 +215,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
-        fsp.writeFile(p, html, 'utf8')
+        await fsp.writeFile(p, html, 'utf8')
         b.into(html)
         if (opts.analyzerMode === 'static' && !opts.openAnalyzer) {
           return

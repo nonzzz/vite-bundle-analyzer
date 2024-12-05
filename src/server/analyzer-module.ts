@@ -1,11 +1,11 @@
+import ansis from 'ansis'
 import path from 'path'
 import type { ZlibOptions } from 'zlib'
-import ansis from 'ansis'
+import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 import { analyzerDebug, createGzip, slash, stringToByte } from './shared'
+import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
-import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
-import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
@@ -32,7 +32,7 @@ interface WrappedChunk {
 }
 
 function findSourcemap(filename: string, sourcemapFileName: string, chunks: OutputBundle) {
-  if (sourcemapFileName in chunks) return ((chunks[sourcemapFileName] as OutputAsset).source) as string
+  if (sourcemapFileName in chunks) { return ((chunks[sourcemapFileName] as OutputAsset).source) as string }
   throw new Error(`[analyzer error]: Missing sourcemap for ${filename}.`)
 }
 
@@ -40,7 +40,11 @@ function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle
   const wrapped = <WrappedChunk> {}
   const isChunk = bundle.type === 'chunk'
   wrapped.code = stringToByte(isChunk ? bundle.code : bundle.source)
-  wrapped.map = sourcemapFileName ? findSourcemap(bundle.fileName, sourcemapFileName, chunks) : isChunk ? bundle.map?.toString()! : ''
+  wrapped.map = sourcemapFileName
+    ? findSourcemap(bundle.fileName, sourcemapFileName, chunks)
+    : isChunk
+    ? (bundle.map?.toString() || '')
+    : ''
   wrapped.imports = isChunk ? bundle.imports : []
   wrapped.dynamicImports = isChunk ? bundle.dynamicImports : []
   wrapped.moduleIds = isChunk ? Object.keys(bundle.modules) : []
@@ -120,7 +124,7 @@ export class AnalyzerNode {
 
     // Check map again
 
-    if (!map) return
+    if (!map) { return }
 
     // We use sourcemap to restore the corresponding chunk block
     // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
@@ -136,7 +140,7 @@ export class AnalyzerNode {
     }
 
     for (const id in chunks) {
-      if (!KNOWN_EXT_NAME.includes(path.extname(id))) continue
+      if (!KNOWN_EXT_NAME.includes(path.extname(id))) { continue }
       const code = chunks[id]
       const b = stringToByte(code)
       const { byteLength: gzipSize } = await compress(b)
@@ -180,7 +184,7 @@ export class AnalyzerModule {
   }
 
   installPluginContext(context: PluginContext) {
-    if (this.pluginContext) return
+    if (this.pluginContext) { return }
     this.pluginContext = context
   }
 
@@ -191,7 +195,7 @@ export class AnalyzerModule {
 
   async addModule(bundle: OutputChunk | OutputAsset, sourcemapFileName?: string) {
     const wrapped = wrapBundleChunk(bundle, this.chunks, sourcemapFileName)
-    if (!wrapped.map && !wrapped.moduleIds.length) return
+    if (!wrapped.map && !wrapped.moduleIds.length) { return }
     const node = createAnalyzerNode(wrapped.filename)
     await node.setup(wrapped, this.pluginContext!, this.compress, this.workspaceRoot)
     this.modules.push(node)
@@ -199,6 +203,7 @@ export class AnalyzerModule {
 
   processModule() {
     return this.modules.map((m) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { originalId: _, imports, ...rest } = m
       return { ...rest, imports: [...imports] }
     }) as Module[]

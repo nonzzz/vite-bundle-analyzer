@@ -1,4 +1,5 @@
 import { SSE, createServer, injectHTMLTag, renderView } from 'vite-bundle-analyzer'
+import type { Module } from 'vite-bundle-analyzer'
 import data from '../../src/client/data.json' with { type: 'json' }
 import { CLIENT_CUSTOM_RENDER_SCRIPT } from './ui.jsx'
 
@@ -24,7 +25,7 @@ const CLIENT_EVENT_STREAM = `
 const server = createServer()
 
 server.get('/', async (c) => {
-  let html = await renderView(data as any, { title: 'Vite Bundle Analyzer', mode: 'parsed' })
+  let html = await renderView(data as Module[], { title: 'Vite Bundle Analyzer', mode: 'parsed' })
   html = injectHTMLTag({
     html,
     injectTo: 'body',

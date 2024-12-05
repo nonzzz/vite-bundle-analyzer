@@ -1,14 +1,14 @@
 import { ChangeEvent, useCallback, useMemo, useState } from 'react'
 import { flattenModule } from 'squarified'
-import { convertBytes, uniqBy } from '../shared'
+import File from '~icons/ph/file-duotone'
+import Folder from '~icons/ph/folder'
 import { useTreemapContext } from '../context'
 import type { Module, Sizes } from '../interface'
-import { Text } from './text'
-import { Spacer } from './spacer'
+import { convertBytes, uniqBy } from '../shared'
 import { Input } from './input'
 import { ModuleItem } from './module-item'
-import Folder from '~icons/ph/folder'
-import File from '~icons/ph/file-duotone'
+import { Spacer } from './spacer'
+import { Text } from './text'
 
 export interface SearchModulesProps<F> {
   files: F[]
@@ -31,19 +31,19 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
     if (!regExp) {
       return []
     }
-    return files.map(module => {
+    return files.map((module) => {
       return {
         parent: module,
         children: uniqBy(
           flattenModule(
             module.groups
-          ).filter(m => regExp.test(m.label)).map((m) => {
+          ).filter((m) => regExp.test(m.label)).map((m) => {
             return ({ ...m, isDirectory: !/\.(\w+)$/.test(m.label) })
           }),
           'label'
         ).sort((a, b) => {
-          if (a.isDirectory && !b.isDirectory) return -1
-          if (!a.isDirectory && b.isDirectory) return 1
+          if (a.isDirectory && !b.isDirectory) { return -1 }
+          if (!a.isDirectory && b.isDirectory) { return 1 }
           return b[extra] - a[extra]
         })
       }
@@ -59,7 +59,7 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
     const value = e.target.value.trim()
     try {
       setRegExp(value.length ? new RegExp(value, 'iu') : null)
-    } catch (error) {
+    } catch {
       setRegExp(null)
     }
   }

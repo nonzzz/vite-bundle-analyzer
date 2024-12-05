@@ -1,5 +1,5 @@
-import http from 'http'
 import { EventEmitter } from 'events'
+import http from 'http'
 import net from 'net'
 import type { DefaultSizes, Module } from './interface'
 
@@ -109,7 +109,7 @@ export function createServer() {
     const _middlewares = [...middlewares]
     const c: C = { req, res, query, params: {} }
 
-    const routeHandler = Object.keys(routes).find(route => {
+    const routeHandler = Object.keys(routes).find((route) => {
       const regex = new RegExp(`^${route.replace(/:\w+/g, '\\w+')}$`)
       return regex.test(path)
     })
@@ -119,7 +119,7 @@ export function createServer() {
       const match = path.match(regex)
 
       if (match) {
-        const keys = routeHandler.split('/').filter(part => part.startsWith(':')).map(part => part.substring(1))
+        const keys = routeHandler.split('/').filter((part) => part.startsWith(':')).map((part) => part.substring(1))
         c.params = keys.reduce((acc, key, index) => {
           acc[key] = match[index + 1]
           return acc
@@ -140,7 +140,7 @@ export function createServer() {
   }
 
   const listen = (port: number, callback?: () => void) => {
-    const server = http.createServer((req, res) => handle(req, res))
+    const server = http.createServer(handle)
     server.listen(port, callback)
   }
 
@@ -163,7 +163,7 @@ interface InjectHTMLTagOptions {
 export function injectHTMLTag(options: InjectHTMLTagOptions) {
   const regExp = options.injectTo === 'head' ? /([ \t]*)<\/head>/i : /([ \t]*)<\/body>/i
   options.descriptors = Array.isArray(options.descriptors) ? options.descriptors : [options.descriptors]
-  const descriptors = options.descriptors.map(d => {
+  const descriptors = options.descriptors.map((d) => {
     if (d.attrs && d.attrs.length > 0) {
       return `<${d.kind} ${d.attrs.join(' ')}>${d.text}</${d.kind}>`
     }

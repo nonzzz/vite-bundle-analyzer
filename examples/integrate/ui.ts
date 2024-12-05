@@ -1,8 +1,14 @@
 import { Main, SideBar } from './client.jsx'
 
+declare global {
+  interface Window {
+    CUSTOM_SIDE_BAR: boolean
+  }
+}
+
 function render() {
   window.CUSTOM_SIDE_BAR = true
-  window.addEventListener('client:ready', async () => {
+  window.addEventListener('client:ready', () => {
     setTimeout(() => {
       const evt = new CustomEvent('send:ui', { detail: { Component: SideBar, type: 'SideBar' } })
       window.dispatchEvent(evt)

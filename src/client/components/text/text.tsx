@@ -20,7 +20,7 @@ interface Props {
   className?: string
 }
 
-// eslint-disable-next-line no-unused-vars
+ 
 type ElementMap = { [k in keyof JSX.IntrinsicElements]?: boolean }
 
 type NativeAttrs = Omit<React.HTMLAttributes<any>, keyof Props>

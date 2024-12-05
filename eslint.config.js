@@ -1,19 +1,26 @@
 const { nonzzz } = require('eslint-config-kagura')
 
 module.exports = nonzzz(
-  { ts: true, jsx: true, react: true },
+  { typescript: true },
   {
     ignores: [
-      'dist',
-      'node_modules',
-      'examples/vue/dist/**',
-      'examples/vue/node_modules',
-      '__tests__/dist',
-      '**/*.d.ts'
-    ],
+      '**/node_modules',
+      '**/dist',
+      '**/components.d.ts',
+      '**/analysis'
+    ]
+  },
+  {
     rules: {
-      'stylistic/indent': 'off',
-      'stylistic/space-before-function-paren': 'off'
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/restrict-plus-operands': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/unbound-method': 'off'
     }
   }
 )

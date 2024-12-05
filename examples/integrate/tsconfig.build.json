@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "resolveJsonModule": true,
     "module": "ESNext",
     "moduleResolution": "bundler"

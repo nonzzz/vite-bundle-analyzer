@@ -1,11 +1,11 @@
 /* eslint-disable no-labels */
-import path from 'path'
-import fs from 'fs'
-import url from 'url'
-import { program } from 'commander'
 import ansis from 'ansis'
-import type { AnalyzerMode, DefaultSizes } from './server/interface'
+import { program } from 'commander'
+import fs from 'fs'
+import path from 'path'
+import url from 'url'
 import { analyzer } from './server'
+import type { AnalyzerMode, DefaultSizes } from './server/interface'
 import { searchForWorkspaceRoot } from './server/search-root'
 
 let BREAK_LINE = '\n'
@@ -74,7 +74,7 @@ export function importMetaResolve(name: string) {
   if (packageJSON.exports && !entryPoint) {
     entryPoint = packageJSON.exports['.'] || packageJSON.exports['./index'] || packageJSON.exports['./index.js']
     stop: for (;;) {
-      if (typeof entryPoint === 'string') break stop
+      if (typeof entryPoint === 'string') { break stop }
       if (isESM && entryPoint.import) {
         entryPoint = entryPoint.import
       } else {
@@ -87,7 +87,7 @@ export function importMetaResolve(name: string) {
       }
     }
   }
-  if (!entryPoint) throw new Error(`Cannot find entry point for module '${name}'`)
+  if (!entryPoint) { throw new Error(`Cannot find entry point for module '${name}'`) }
   entryPoint = path.join(packageRoot, entryPoint)
   if (fs.existsSync(entryPoint) && fs.statSync(entryPoint).isFile()) {
     return url.pathToFileURL(entryPoint).href
@@ -96,7 +96,7 @@ export function importMetaResolve(name: string) {
 }
 
 function loadVite(): Promise<typeof import('vite')> {
-  return new Promise((resolve, reject) => import(importMetaResolve('vite')).then(resolve).catch(reject))
+  return import(importMetaResolve('vite'))
 }
 
 async function main(opts: Options) {

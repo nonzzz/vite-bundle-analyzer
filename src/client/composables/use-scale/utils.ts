@@ -4,7 +4,7 @@ export const generateGetScaleProps = <P>(
   props: P & ScaleProps
 ): GetScalePropsFunction => {
   const getScaleProps: GetScalePropsFunction = keyOrKeys => {
-    if (!Array.isArray(keyOrKeys)) return props[keyOrKeys as keyof ScaleProps]
+    if (!Array.isArray(keyOrKeys)) return props[keyOrKeys]
     let value = undefined
     for (const key of keyOrKeys) {
       const currentValue = props[key]

@@ -1,14 +1,14 @@
+import { ComposeContextProvider } from 'foxact/compose-context-provider'
 import { useCallback, useRef, useState } from 'react'
 import type { RefObject } from 'react'
-import { ComposeContextProvider } from 'foxact/compose-context-provider'
 import type { NativeModule, PrimitiveEventMetadata } from 'squarified'
-import { Tooltip } from './components/tooltip'
-import { Text } from './components/text'
-import { Spacer } from './components/spacer'
-import { ApplicationProvider, TreemapProvider } from './context'
 import { Sidebar, SidebarProvider } from './components/side-bar'
+import { Spacer } from './components/spacer'
+import { Text } from './components/text'
+import { Tooltip } from './components/tooltip'
 import { Treemap } from './components/treemap'
 import type { TreemapComponentInstance } from './components/treemap'
+import { ApplicationProvider, TreemapProvider } from './context'
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
@@ -20,7 +20,7 @@ interface ModuleSizeProps {
 
 function ModuleSize(props: ModuleSizeProps) {
   const { module } = props
-  if (!module) return null
+  if (!module) { return null }
 
   return (
     <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
@@ -60,7 +60,7 @@ export function App() {
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
-        <Treemap ref={(instance: any) => treeMapRef.current = instance} onMousemove={handleMousemove} />
+        <Treemap ref={(instance: TreemapComponentInstance) => treeMapRef.current = instance} onMousemove={handleMousemove} />
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
             <>

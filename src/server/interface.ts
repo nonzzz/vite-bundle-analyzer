@@ -1,23 +1,18 @@
 import type { ZlibOptions } from 'zlib'
 import type { HookHandler, Plugin } from 'vite'
-import { noop } from 'foxact/noop'
 import { AnalyzerModule } from './analyzer-module'
 
-type RenderChunkFunction = HookHandler<Plugin['renderChunk']>
+type RenderChunkFunction = NonNullable<HookHandler<Plugin['renderChunk']>>
 
-export type GenerateBundleFunction = HookHandler<Plugin['generateBundle']>
+export type GenerateBundleFunction = NonNullable<HookHandler<Plugin['generateBundle']>>
 
-const renderChunk: RenderChunkFunction = noop
+export type RenderChunk = Parameters<RenderChunkFunction>[1]
 
-const generateBundle: GenerateBundleFunction = noop
-
-export type RenderChunk = Parameters<typeof renderChunk>[1]
-
-export type PluginContext = ThisParameterType<typeof renderChunk>
+export type PluginContext = ThisParameterType<RenderChunkFunction>
 
 export type RenderedModule = RenderChunk['modules'][string]
 
-export type OutputBundle = Parameters<typeof generateBundle>[1]
+export type OutputBundle = Parameters<GenerateBundleFunction>[1]
 
 export type OutputAsset = Extract<OutputBundle[0], { type: 'asset' }>
 

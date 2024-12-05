@@ -1,6 +1,6 @@
 import type { MutableRefObject } from 'react'
 
-export function getElementOffset(el?: HTMLElement | null | undefined) {
+export function getElementOffset(el?: HTMLElement | null  ) {
   if (!el) {
     return {
       top: 0,

@@ -87,7 +87,7 @@ export type ScaleInputKeys =
   | 'font'
 
 export type DynamicScales = {
-  // eslint-disable-next-line no-unused-vars
+   
   [key in ScaleInputKeys]: DynamicLayoutPipe
 }
 

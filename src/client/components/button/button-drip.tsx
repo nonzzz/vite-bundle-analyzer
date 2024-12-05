@@ -41,8 +41,8 @@ const ButtonDrip: React.FC<ButtonDrip> = ({
     if (!dripRef.current) return
     dripRef.current.addEventListener('animationend', onCompleted)
     return () => {
-      if (!dripRef!.current) return
-      dripRef!.current.removeEventListener('animationend', onCompleted)
+      if (!dripRef.current) return
+      dripRef.current.removeEventListener('animationend', onCompleted)
     }
   })
 

@@ -1,11 +1,11 @@
 // This script is work for build-server
 // Pre generate common chunk for output
 
-import path from 'path'
 import fsp from 'fs/promises'
+import path from 'path'
 import { injectHTMLTag } from './src/server/render'
-import { readAll } from './src/server/shared'
 import type { Descriptor } from './src/server/render'
+import { readAll } from './src/server/shared'
 
 const defaultWd = process.cwd()
 
@@ -19,7 +19,7 @@ async function main() {
     const content = await fsp.readFile(p, 'utf8')
     return { fileType, content }
   }))
-  const assets = clientAssets.filter(a => ['js', 'css'].includes(a.fileType))
+  const assets = clientAssets.filter((a) => ['js', 'css'].includes(a.fileType))
   let html = await fsp.readFile(path.join(clientPath, 'index.html'), 'utf8')
   html = injectHTMLTag({
     html,
@@ -47,4 +47,4 @@ async function main() {
     }`)
 }
 
-main()
+main().catch((e) => console.error(e))

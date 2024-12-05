@@ -1,5 +1,3 @@
-/* eslint-disable @eslint-react/no-clone-element */
-/* eslint-disable @eslint-react/naming-convention/filename-extension */
 import React, { useEffect, useState } from 'react'
 
 interface Props {
@@ -55,7 +53,7 @@ function CSSTransition({
       clearTimeout(clearClassesTimer)
     }
   }, [visible, renderable, enterTime, leaveTime, name, clearTime])
-  if (!React.isValidElement(children) || !renderable) return null
+  if (!React.isValidElement(children) || !renderable) { return null }
 
   return React.cloneElement(children, {
     ...props,
