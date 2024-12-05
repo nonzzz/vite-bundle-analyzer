@@ -1,7 +1,7 @@
 import React from 'react'
 import { useScale, withScale } from '../../composables'
 
-interface Props {}
+type Props = React.HTMLAttributes<HTMLDivElement>
 
 function DrawerContentComponent(props: React.PropsWithChildren<Props>) {
   const { SCALES } = useScale()

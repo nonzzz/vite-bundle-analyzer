@@ -18,6 +18,9 @@ overrides:
   es-iterator-helpers: npm:@nolyfill/es-iterator-helpers@^1
 
 patchedDependencies:
+  '@jridgewell/source-map':
+    hash: 3hhspydukdlku7hbsgkhosfcse
+    path: patches/@jridgewell__source-map.patch
   '@rollup/plugin-esm-shim@0.1.7':
     hash: dpfqm63lv6t4kdn4hi77llr2su
     path: patches/@rollup__plugin-esm-shim@0.1.7.patch
@@ -31,10 +34,7 @@ importers:
         version: 1.1.13
       '@jridgewell/source-map':
         specifier: ^0.3.6
-        version: 0.3.6
-      '@jridgewell/trace-mapping':
-        specifier: ^0.3.25
-        version: 0.3.25
+        version: 0.3.6(patch_hash=3hhspydukdlku7hbsgkhosfcse)
       '@rollup/plugin-commonjs':
         specifier: ^26.0.1
         version: 26.0.1(rollup@4.18.0)
@@ -4107,7 +4107,7 @@ snapshots:
 
   '@jridgewell/set-array@1.2.1': {}
 
-  '@jridgewell/source-map@0.3.6':
+  '@jridgewell/source-map@0.3.6(patch_hash=3hhspydukdlku7hbsgkhosfcse)':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25

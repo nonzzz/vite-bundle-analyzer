@@ -57,7 +57,7 @@ function CSSTransition({
 
   return React.cloneElement(children, {
     ...props,
-    // @ts-expect-error
+    // @ts-expect-error safe
     className: `${children.props.className} ${className} ${classes}`
   })
 }

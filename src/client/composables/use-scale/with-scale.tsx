@@ -8,7 +8,7 @@ function isCSSNumberValue(value?: string | number) {
 }
 
 function reduceScaleCoefficient(scale: number) {
-  if (scale === 1) return scale
+  if (scale === 1) { return scale }
   const diff = Math.abs((scale - 1) / 2)
   return scale > 1 ? 1 + diff : 1 - diff
 }
@@ -24,17 +24,17 @@ function makeScaleHandler(attrValue: AttrValue, unit: string, scale: number): Dy
     }
     const factor = reduceScaleCoefficient(scale) * scale1x
     if (typeof attrValue === 'undefined') {
-      if (typeof defaultValue !== 'undefined') return `${defaultValue}`
+      if (typeof defaultValue !== 'undefined') { return `${defaultValue}` }
       return `calc(${factor} * ${unit})`
     }
 
-    if (!isCSSNumberValue(attrValue)) return `${attrValue}`
+    if (!isCSSNumberValue(attrValue)) { return `${attrValue}` }
     const customFactor = factor * Number(attrValue)
     return `calc(${customFactor} * ${unit})`
   }
 }
 
-export const withScale = <T, P = {}>(
+export const withScale = <T, P = Empty>(
   Render: React.ComponentType<P & { ref?: React.Ref<T> }> | React.ForwardRefExoticComponent<P>
 ) => {
   const ScaleFC = forwardRef<T, P & React.PropsWithChildren<ScaleProps>>(({ children, ...props }, ref) => {

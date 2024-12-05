@@ -6,11 +6,7 @@ import { pick } from '../src/shared'
 import { createMockStats } from './stats/helper'
 import normal from './stats/normal'
 
-const mockRollupContext = <PluginContext> {
-  resolve(...args: any) {
-    return { id: args[0] } as any
-  }
-}
+const mockRollupContext = <PluginContext> {}
 
 function assert(act: Module, exp: Module, fields: (keyof Module)[]) {
   const graph = pick(act, fields)

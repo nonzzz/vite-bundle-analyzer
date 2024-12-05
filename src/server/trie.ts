@@ -29,7 +29,7 @@ export interface GroupWithNode {
   [prop: string]: any
 }
 
-export class Node<T = {}> implements NodeDescriptor<T> {
+export class Node<T = Empty> implements NodeDescriptor<T> {
   kind: Kind
   meta: T
   filename: string
@@ -92,11 +92,11 @@ export class FileSystemTrie<T> {
   }
 
   walk<T>(node: Node<T>, handler: (child: GroupWithNode, parent: Node<T>) => void) {
-    if (!node.children.size) return
+    if (!node.children.size) { return }
     for (const [id, childNode] of node.children.entries()) {
       const child: GroupWithNode = { ...childNode.meta, label: id, groups: childNode.groups, filename: childNode.filename }
       if (childNode.isEndOfPath) {
-        // @ts-expect-error
+        // @ts-expect-error safe operation
         delete child.groups
       }
       handler(child, node)
@@ -104,7 +104,7 @@ export class FileSystemTrie<T> {
       if (child.groups && child.groups.length) {
         switch (node.kind) {
           case 'stat':
-            child.statSize = child.groups.reduce((acc, cur) => acc + cur.statSize, 0)
+            child.statSize = child.groups.reduce((acc, cur) => (acc += cur.statSize, acc), 0)
             break
           case 'source': {
             const size = child.groups.reduce((acc, cur) => {

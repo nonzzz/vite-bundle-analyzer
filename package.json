@@ -18,7 +18,6 @@
   "devDependencies": {
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
-    "@jridgewell/trace-mapping": "^0.3.25",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-esm-shim": "^0.1.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -75,7 +74,8 @@
       "es-iterator-helpers": "npm:@nolyfill/es-iterator-helpers@^1"
     },
     "patchedDependencies": {
-      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch"
+      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch",
+      "@jridgewell/source-map": "patches/@jridgewell__source-map.patch"
     }
   },
   "files": [
