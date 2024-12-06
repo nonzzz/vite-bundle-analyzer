@@ -1,9 +1,9 @@
 import { inline } from '@stylex-extend/core'
-import { noop } from 'foxact/noop'
-import { Ref, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import type { Ref } from 'react'
 import { c2m, createTreemap, presetDecorator, sortChildrenByKey } from 'squarified'
 import type { PrimitiveEventCallback } from 'squarified'
-import { useQueryParams } from '../../composables'
+import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
@@ -33,20 +33,9 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     return sortedData
   }, [analyzeModule, scence, sizes])
 
-  useEffect(() => {
-    const el = root.current
-    if (el) {
-      const observer = new ResizeObserver(() => {
-        instanceRef.current?.resize()
-      })
-      observer.observe(el)
-      return () => {
-        observer.unobserve(el)
-        observer.disconnect()
-      }
-    }
-    return noop
-  }, [])
+  const resize = useCallback(() => instanceRef.current?.resize(), [])
+
+  useResize(root, resize)
 
   useEffect(() => {
     const size = queryParams.get('size') as QueryKind

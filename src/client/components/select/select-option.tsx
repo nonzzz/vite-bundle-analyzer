@@ -4,6 +4,7 @@ import { useSelect } from './context'
 import { Ellipsis } from './ellipsis'
 
 interface Props {
+  label?: string
   value?: string
   disabled?: boolean
   preventAllEvents?: boolean
@@ -12,7 +13,7 @@ interface Props {
 export type SelectOptionProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function SelectOptionComponent(props: React.PropsWithChildren<SelectOptionProps>) {
-  const { children, value: initialValue, preventAllEvents = false, disabled = false, ...rest } = props
+  const { children, value: initialValue, disabled = false, preventAllEvents, ...rest } = props
   const { SCALES } = useScale()
   const { disableAll, value, updateValue } = useSelect()
   const isDisabled = useMemo(() => disabled || disableAll, [disabled, disableAll])

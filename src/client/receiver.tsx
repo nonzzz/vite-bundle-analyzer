@@ -7,7 +7,7 @@ export function Receiver() {
   const updateUI = useUpdateUI()
   const updateAnalyzeModule = useUpdateAnalyzeModule()
   useEffect(() => {
-    const evt = createMagicEvent('client:ready', null)
+    const evt = createMagicEvent('client:ready', {})
     window.dispatchEvent(evt)
     const handler = (evt: CustomEvent<SendUIMessage>) => {
       if (evt.detail.Component) {

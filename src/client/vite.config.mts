@@ -7,7 +7,7 @@ import { defineConfig } from 'vite'
 import type { UserConfig } from 'vite'
 import mock from './data.json' with { type: 'json' }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const base = {
     plugins: [
       react(),
@@ -24,20 +24,21 @@ export default defineConfig(({ mode }) => {
     base: './'
   } as UserConfig
   if (mode === 'development') {
-    // const mock = _require('./data.json')
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
       'window.analyzeModule': JSON.stringify(mock)
     }
   }
-
-  base.resolve = {
-    alias: [
-      { find: 'react', replacement: 'preact/compat' },
-      { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
-      { find: 'react-dom', replacement: 'preact/compat' },
-      { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
-    ]
+  // For HMR in development (we won't use it)
+  if (command === 'build') {
+    base.resolve = {
+      alias: [
+        { find: 'react', replacement: 'preact/compat' },
+        { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
+        { find: 'react-dom', replacement: 'preact/compat' },
+        { find: 'react/jsx-runtime', replacement: 'preact/jsx-runtime' }
+      ]
+    }
   }
   return base
 })

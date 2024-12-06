@@ -1,14 +1,15 @@
-/* eslint-disable @eslint-react/no-clone-element */
-/* eslint-disable @eslint-react/no-children-map */
+import { noop } from 'foxact/noop'
 import React, { useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react'
-import type { ReactNode } from 'react'
 import { useScale, withScale } from '../../composables'
 import { Provider } from './context'
 import { SelectDropdown } from './dropdown'
 import { Ellipsis } from './ellipsis'
 import { SelectMultipleValue } from './select-multiple'
+import { SelectOption } from './select-option'
+import type { SelectOptionProps } from './select-option'
 
 interface Props {
+  options: SelectOptionProps[]
   disabled?: boolean
   value?: string | string[]
   placeholder?: string
@@ -32,34 +33,8 @@ function getSelectValue(value: string | string[] | undefined, next: string, mult
   return next
 }
 
-function pickChildByProps(children: ReactNode | undefined, key: string, value: string | string[] | undefined) {
-  const target: ReactNode[] = []
-  const isArray = Array.isArray(value)
-  const withoutPropChildren = React.Children.map(children, (item) => {
-    if (!React.isValidElement(item)) { return null }
-    if (!item.props) { return item }
-    if (isArray) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
-      if (value.includes(item.props[key])) {
-        target.push(item)
-        return null
-      }
-      return item
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (item.props[key] === value) {
-      target.push(item)
-      return null
-    }
-    return item
-  })
-  const targetChildren = target.length >= 0 ? target : undefined
-
-  return [withoutPropChildren, targetChildren]
-}
-
 const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<SelectInstance>) => {
-  const { disabled = false, value: userValue, placeholder, clearable = true, multiple = false, children, onChange, ...rest } = props
+  const { disabled = false, value: userValue, placeholder, clearable = true, options, multiple = false, onChange, ...rest } = props
 
   const elementRef = useRef<HTMLDivElement>(null)
 
@@ -91,23 +66,20 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
   }, [multiple, onChange, value])
 
   const selectChild = useMemo(() => {
-    const [, optionChildren] = pickChildByProps(children, 'value', value)
-    return React.Children.map(optionChildren, (child) => {
-      if (!React.isValidElement(child)) { return null }
-      // @ts-expect-error safe
-      const el = React.cloneElement(child, { preventAllEvents: true })
-      if (!multiple) { return el }
-      return (
-        <SelectMultipleValue
-          disabled={disabled}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
-          onClear={clearable ? () => updateValue(child.props.value) : null}
-        >
-          {el}
-        </SelectMultipleValue>
-      )
-    })
-  }, [children, value, multiple, disabled, clearable, updateValue])
+    const data = (Array.isArray(value) ? value : [value]).filter(Boolean)
+    if (!multiple) { return <SelectOption preventAllEvents>{data[0]}</SelectOption> }
+    return data.map((item) => (
+      <SelectMultipleValue
+        key={item}
+        onClear={clearable
+          ? () => updateValue(item!)
+          : noop}
+        disabled={disabled}
+      >
+        {item}
+      </SelectMultipleValue>
+    ))
+  }, [value, multiple, clearable, disabled, updateValue])
 
   const initialValue = useMemo(() => {
     return {
@@ -172,7 +144,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
           margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`,
           cursor: 'pointer',
           ...(disabled && { cursor: 'not-allowed' }),
-          minHeight: multiple ? 'var(--select-height)' : '11.5em'
+          minHeight: 'var(--select-height)'
         }}
         {...rest}
       >
@@ -224,7 +196,9 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
           </span>
         )}
         {value && <div stylex={{ display: 'flex', flexWrap: 'wrap' }}>{selectChild}</div>}
-        <SelectDropdown visible={visible}>{children}</SelectDropdown>
+        <SelectDropdown visible={visible}>
+          {options.map((item) => <SelectOption key={item.value} {...item}>{item.label}</SelectOption>)}
+        </SelectDropdown>
         <div
           stylex={{
             position: 'absolute',

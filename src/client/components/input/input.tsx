@@ -36,7 +36,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
   const [selfValue, setSelfValue] = useState<string>(value)
   const { SCALES } = useScale()
 
-  if (value !== selfValue) {
+  if (value) {
     setSelfValue(value || '')
   }
 

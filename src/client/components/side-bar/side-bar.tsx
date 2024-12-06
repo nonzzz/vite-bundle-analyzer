@@ -121,14 +121,13 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
                   <Text p b h3>Filter by entrypoints:</Text>
                   <Select
                     ref={selectRef}
+                    multiple
                     scale={0.75}
                     placeholder="Select endpoints"
-                    multiple
                     width="95.5%"
                     onChange={handleFilterByEntrypoints}
-                  >
-                    {entrypointChunks.map((chunk) => <Select.Option key={chunk.label} value={chunk.label}>{chunk.label}</Select.Option>)}
-                  </Select>
+                    options={entrypointChunks.map((chunk) => ({ value: chunk.label, label: chunk.label }))}
+                  />
                 </div>
                 <div>
                   <Text p b h3>Search modules:</Text>

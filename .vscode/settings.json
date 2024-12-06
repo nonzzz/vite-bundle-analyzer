@@ -13,6 +13,6 @@
     "editor.defaultFormatter": "dprint.dprint"
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "dprint.dprint"
   }
 }
