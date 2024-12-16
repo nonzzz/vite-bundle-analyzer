@@ -96,7 +96,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
-  const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
+  const analyzerModule = createAnalyzerModule({ gzip: opts.gzipOptions, brotli: opts.brotliOptions })
   const store: AnalyzerStore = { analyzerModule, lastSourcemapOption: false, hasSetupSourcemapOption: false }
   let defaultWd = process.cwd()
   let hasViteReporter = true

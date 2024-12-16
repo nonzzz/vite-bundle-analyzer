@@ -1,8 +1,8 @@
 import ansis from 'ansis'
 import path from 'path'
-import type { ZlibOptions } from 'zlib'
+import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
-import { analyzerDebug, createGzip, slash, stringToByte } from './shared'
+import { analyzerDebug, createBrotil, createGzip, slash, stringToByte } from './shared'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
@@ -19,6 +19,11 @@ function getAbsPath(p: string, cwd = defaultWd) {
 function generateNodeId(id: string, cwd: string = defaultWd): string {
   const abs = getAbsPath(id, cwd)
   return path.isAbsolute(abs) ? abs.replace('/', '') : abs
+}
+
+export interface AnalyzerModuleOptions {
+  gzip?: ZlibOptions
+  brotli?: BrotliOptions
 }
 
 interface WrappedChunk {
@@ -57,6 +62,14 @@ function printDebugLog(namespace: string, id: string, total: number) {
   analyzerDebug(`[${namespace}]: ${ansis.yellow(id)} find ${ansis.bold(ansis.green(total + ''))} relative modules.`)
 }
 
+function createCompressAlorithm(opt: AnalyzerModuleOptions) {
+  const { gzip, brotli } = opt
+  return {
+    gzip: createGzip(gzip),
+    brotli: createBrotil(brotli)
+  }
+}
+
 export class AnalyzerNode {
   originalId: string
   filename: string
@@ -65,6 +78,7 @@ export class AnalyzerNode {
   mapSize: number
   statSize: number
   gzipSize: number
+  brotliSize: number
   source: Array<GroupWithNode>
   stats: Array<GroupWithNode>
   imports: Set<string>
@@ -77,6 +91,7 @@ export class AnalyzerNode {
     this.parsedSize = 0
     this.statSize = 0
     this.gzipSize = 0
+    this.brotliSize = 0
     this.mapSize = 0
     this.source = []
     this.stats = []
@@ -89,7 +104,12 @@ export class AnalyzerNode {
     imports.forEach((imp) => this.imports.add(imp))
   }
 
-  async setup(bundle: WrappedChunk, pluginContext: PluginContext, compress: ReturnType<typeof createGzip>, workspaceRoot: string) {
+  async setup(
+    bundle: WrappedChunk,
+    pluginContext: PluginContext,
+    compress: ReturnType<typeof createCompressAlorithm>,
+    workspaceRoot: string
+  ) {
     const { imports, dynamicImports, map, moduleIds } = bundle
     this.addImports(...imports, ...dynamicImports)
     this.mapSize = map.length
@@ -109,7 +129,7 @@ export class AnalyzerNode {
       : pickupContentFromSourcemap(map)
 
     const stats = createFileSystemTrie<KindStat>({ meta: { statSize: 0 } })
-    const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, parsedSize: 0 } })
+    const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0 } })
 
     for (const info of infomations) {
       if (info.id[0] === '.') {
@@ -145,9 +165,13 @@ export class AnalyzerNode {
       if (!KNOWN_EXT_NAME.includes(path.extname(id))) { continue }
       const code = chunks[id]
       const b = stringToByte(code)
-      const { byteLength: gzipSize } = await compress(b)
+      const [
+        { byteLength: gzipSize },
+        { byteLength: brotliSize }
+      ] = await Promise.all([compress.gzip, compress.brotli].map((c) => c(b)))
+
       const parsedSize = b.byteLength
-      sources.insert(generateNodeId(id, workspaceRoot), { kind: 'source', meta: { gzipSize, parsedSize } })
+      sources.insert(generateNodeId(id, workspaceRoot), { kind: 'source', meta: { gzipSize, brotliSize, parsedSize } })
     }
 
     printDebugLog('source', this.originalId, files.size)
@@ -162,6 +186,7 @@ export class AnalyzerNode {
     // Fix correect size
     for (const s of this.source) {
       this.gzipSize += s.gzipSize
+      this.brotliSize += s.brotliSize
       this.parsedSize += s.parsedSize
     }
   }
@@ -172,13 +197,13 @@ function createAnalyzerNode(id: string) {
 }
 
 export class AnalyzerModule {
-  compress: ReturnType<typeof createGzip>
+  compressAlorithm: ReturnType<typeof createCompressAlorithm>
   modules: AnalyzerNode[]
   workspaceRoot: string
   pluginContext: PluginContext | null
   private chunks: OutputBundle
-  constructor(opt?: ZlibOptions) {
-    this.compress = createGzip(opt)
+  constructor(opt: AnalyzerModuleOptions = {}) {
+    this.compressAlorithm = createCompressAlorithm(opt)
     this.modules = []
     this.pluginContext = null
     this.chunks = {}
@@ -199,7 +224,7 @@ export class AnalyzerModule {
     const wrapped = wrapBundleChunk(bundle, this.chunks, sourcemapFileName)
     if (!wrapped.map && !wrapped.moduleIds.length) { return }
     const node = createAnalyzerNode(wrapped.filename)
-    await node.setup(wrapped, this.pluginContext!, this.compress, this.workspaceRoot)
+    await node.setup(wrapped, this.pluginContext!, this.compressAlorithm, this.workspaceRoot)
     this.modules.push(node)
   }
 
@@ -212,6 +237,6 @@ export class AnalyzerModule {
   }
 }
 
-export function createAnalyzerModule(opt?: ZlibOptions) {
+export function createAnalyzerModule(opt: AnalyzerModuleOptions = {}) {
   return new AnalyzerModule(opt)
 }
