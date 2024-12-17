@@ -2,7 +2,7 @@ import path from 'path'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 import { createBrotil, createGzip, slash, stringToByte } from './shared'
-import { pickupMappingsFromCodeBinary } from './source-map'
+import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import { createFileSystemTrie } from './trie'
 import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
 
@@ -175,7 +175,7 @@ export class AnalyzerNode {
           }
           return acc
         }, [] as Array<ChunkMetadata>)
-        : []
+        : pickupContentFromSourcemap(map)
 
       for (const info of infomations) {
         if (info.id[0] === '.') {

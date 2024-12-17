@@ -27,7 +27,7 @@ async function runStatTest(data: ReturnType<typeof createMockStats>) {
 
   analyzerModule.setupRollupChunks({ [chunkName]: { ...chunk, fileName: chunkName }, [sourceMapFileName]: assets })
   analyzerModule.installPluginContext(mockRollupContext)
-  await analyzerModule.addModule({ ...chunk, fileName: chunkName }, sourceMapFileName)
+  await analyzerModule.addModule({ ...chunk, fileName: chunkName })
   const module = analyzerModule.processModule()
   if (Array.isArray(expect)) {
     assert(module[0], expect[0], Object.keys(expect[0]) as (keyof Module)[])
