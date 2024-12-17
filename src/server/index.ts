@@ -181,6 +181,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
           await analyzerModule.addModule(bundle, sourcemapFileName)
           cleanup.push({ sourcemapFileName, bundle })
         }
+        // await analyzerModule.addModuleV2(bundle)
       }
       if (!store.lastSourcemapOption) {
         cleanup.forEach((b) => {

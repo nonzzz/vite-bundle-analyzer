@@ -58,6 +58,65 @@ function wrapBundleChunk(bundle: OutputChunk | OutputAsset, chunks: OutputBundle
   return wrapped
 }
 
+function isSoucemap(filename: string) {
+  return filename.slice(-3) === '.map'
+}
+
+interface SerializedModWithAsset {
+  code: Uint8Array
+  filename: string
+  kind: 'asset'
+}
+
+interface SerializedModWithChunk {
+  code: Uint8Array
+  filename: string
+  map: string
+  imports: string[]
+  dynamicImports: string[]
+  moduleIds: string[]
+  isEntry: boolean
+  kind: 'chunk'
+}
+
+type SerializedMod = SerializedModWithAsset | SerializedModWithChunk
+
+const JS_EXTENSIONS = /\.(c|m)?js$/
+
+function serializedMod(mod: OutputChunk | OutputAsset, chunks: OutputBundle): SerializedMod {
+  if (mod.type === 'asset') {
+    return <SerializedModWithAsset> {
+      code: stringToByte(mod.source),
+      filename: mod.fileName,
+      kind: 'asset'
+    }
+  }
+  let sourcemap = ''
+  if (JS_EXTENSIONS.test(mod.fileName)) {
+    if ('sourcemapFileName' in mod) {
+      if (mod.sourcemapFileName && mod.sourcemapFileName in chunks) {
+        sourcemap = findSourcemap(mod.fileName, mod.sourcemapFileName, chunks)
+      }
+    }
+    if (!sourcemap) {
+      const possiblePath = mod.fileName + '.map'
+      if (possiblePath in chunks) {
+        sourcemap = findSourcemap(mod.fileName, possiblePath, chunks)
+      }
+    }
+  }
+  return <SerializedModWithChunk> {
+    code: stringToByte(mod.code),
+    filename: mod.fileName,
+    map: sourcemap,
+    imports: mod.imports,
+    dynamicImports: mod.dynamicImports,
+    moduleIds: Object.keys(mod.modules),
+    isEntry: mod.isEntry,
+    kind: 'chunk'
+  }
+}
+
 function printDebugLog(namespace: string, id: string, total: number) {
   analyzerDebug(`[${namespace}]: ${ansis.yellow(id)} find ${ansis.bold(ansis.green(total + ''))} relative modules.`)
 }
@@ -226,6 +285,13 @@ export class AnalyzerModule {
     const node = createAnalyzerNode(wrapped.filename)
     await node.setup(wrapped, this.pluginContext!, this.compressAlorithm, this.workspaceRoot)
     this.modules.push(node)
+  }
+
+  async addModuleV2(mod: OutputChunk | OutputAsset) {
+    // console.log(this.addModule)
+    // await this.addModule(mod)
+    if (isSoucemap(mod.fileName)) { return }
+    serializedMod(mod, this.chunks)
   }
 
   processModule() {
