@@ -1,5 +1,8 @@
 ROLLUP = ./node_modules/.bin/rollup --config rollup.config.mts --configPlugin swc3
 TSX = ./node_modules/.bin/tsx
+VERSION += ''
+TAG += ''
+FLAGS += --access public
 
 install:
 	@echo "Using berry to install dependencies..."
@@ -36,11 +39,6 @@ build-server: build-client
 	-rm -rf dist/cli.mjs
 	awk '{ print }' bin.txt > dist/bin.js
 
-
-dev-server:
-	@echo "Starting server in development mode..."
-	@export NODE_ENV=development && $(ROLLUP) --watch
-
 dev-client:
 	@echo "Starting client in development mode..."
 	@pnpm exec vite src/client
@@ -70,3 +68,16 @@ clean-html:
         } \
     ' dist/client/index.html > dist/client/index.tmp && \
     mv dist/client/index.tmp dist/client/index.html
+
+
+publish: build-all
+	@echo "Publishing package..."
+	$(eval VERSION = $(shell awk -F'"' '/"version":/ {print $4}' package.json))
+	$(eval TAG = $(shell echo $(VERSION) | awk -F'-' '{if (NF > 1) print $$2; else print ""}' | cut -d'.' -f1))
+	@if [ -z "$(WITH_PROVENANCE)" ]; then \
+		eval '$(eval FLAGS += --provenance)'; \
+	fi
+	@if [ "$(TAG)" != "" ]; then \
+		eval '$(eval FLAGS += --tag $(TAG))'; \
+	fi
+	@npm publish $(FLAGS)
