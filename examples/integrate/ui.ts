@@ -9,12 +9,10 @@ declare global {
 function render() {
   window.CUSTOM_SIDE_BAR = true
   window.addEventListener('client:ready', () => {
-    setTimeout(() => {
-      const evt = new CustomEvent('send:ui', { detail: { Component: SideBar, type: 'SideBar' } })
-      window.dispatchEvent(evt)
-      const evt2 = new CustomEvent('send:ui', { detail: { Component: Main, type: 'Main' } })
-      window.dispatchEvent(evt2)
-    }, 300)
+    const evt = new CustomEvent('send:ui', { detail: { Component: SideBar, type: 'SideBar' } })
+    window.dispatchEvent(evt)
+    const evt2 = new CustomEvent('send:ui', { detail: { Component: Main, type: 'Main' } })
+    window.dispatchEvent(evt2)
   })
 }
 

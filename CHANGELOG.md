@@ -1,3 +1,7 @@
+## 0.16.0-beta.3
+
+Change hook order.
+
 ## 0.16.0-beta.2
 
 - Add Brotli size.

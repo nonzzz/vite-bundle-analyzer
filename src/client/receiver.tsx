@@ -7,8 +7,6 @@ export function Receiver() {
   const updateUI = useUpdateUI()
   const updateAnalyzeModule = useUpdateAnalyzeModule()
   useEffect(() => {
-    const evt = createMagicEvent('client:ready', {})
-    window.dispatchEvent(evt)
     const handler = (evt: CustomEvent<SendUIMessage>) => {
       if (evt.detail.Component) {
         updateUI(evt.detail.type, evt.detail.Component)
@@ -25,6 +23,9 @@ export function Receiver() {
     window.addEventListener('send:ui', handler)
     // @ts-expect-error custom-event
     window.addEventListener('send:filter', filterHandler)
+
+    const evt = createMagicEvent('client:ready', {})
+    window.dispatchEvent(evt)
     return () => {
       // @ts-expect-error custom-event
       window.removeEventListener('send:ui', handler)
