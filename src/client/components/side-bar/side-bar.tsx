@@ -126,7 +126,6 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
                 <div key={button} stylex={{ padding: '5px', boxSizing: 'border-box' }}>
                   <Button
                     onClick={() => handleToggleMode(button)}
-                    // onClick={() => toggleSize(button === 'Gzipped' ? 'gzipSize' : button === 'Stat' ? 'statSize' : 'parsedSize')}
                     auto
                     type={mode === button ? 'secondary' : 'default'}
                     scale={0.7}
@@ -137,41 +136,36 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
               ))}
             </div>
           </div>
-          {IS_CUSTOM_SIDE_BAR
-            ? (
+          <div>
+            {IS_CUSTOM_SIDE_BAR && (
               <div id="customSideBar">
                 {createElement(ui.SideBar ? ui.SideBar : 'div', null)}
               </div>
-            )
-            : (
-              <>
-                <div>
-                  <Text p b h3>Filter by entrypoints:</Text>
-                  <Select
-                    ref={selectRef}
-                    multiple
-                    scale={0.75}
-                    placeholder="Select endpoints"
-                    width="95.5%"
-                    onChange={handleFilterByEntrypoints}
-                    options={entrypointChunks.map((chunk) => ({ value: chunk.label, label: chunk.label }))}
-                  />
-                </div>
-                <div>
-                  <Text p b h3>Search modules:</Text>
-                  <SearchModules extra={userMode} files={allChunks} />
-                </div>
-                <div>
-                  <Text p b h3>Show Chunks:</Text>
-                  <FileList
-                    files={allChunks}
-                    extra={userMode}
-                    scence={scence}
-                    onChange={(v) => updateScence(new Set(v))}
-                  />
-                </div>
-              </>
             )}
+            <Text p b h3>Filter by entrypoints:</Text>
+            <Select
+              ref={selectRef}
+              multiple
+              scale={0.75}
+              placeholder="Select endpoints"
+              width="95.5%"
+              onChange={handleFilterByEntrypoints}
+              options={entrypointChunks.map((chunk) => ({ value: chunk.label, label: chunk.label }))}
+            />
+          </div>
+          <div>
+            <Text p b h3>Search modules:</Text>
+            <SearchModules extra={userMode} files={allChunks} />
+          </div>
+          <div>
+            <Text p b h3>Show Chunks:</Text>
+            <FileList
+              files={allChunks}
+              extra={userMode}
+              scence={scence}
+              onChange={(v) => updateScence(new Set(v))}
+            />
+          </div>
         </Drawer.Content>
       </Drawer>
     </>

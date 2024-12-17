@@ -103,7 +103,9 @@ function CheckboxComponent(props: CheckboxProps) {
       }
     }
   } else {
-    setSelfChecked(checked)
+    if (checked !== selfChecked) {
+      setSelfChecked(checked)
+    }
   }
 
   const handleChange = useCallback((e: React.ChangeEvent) => {
