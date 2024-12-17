@@ -1,3 +1,8 @@
+## 0.16.0-beta.2
+
+- Add Brotli size.
+- Display no-js files.
+
 ## 0.16.0-beta.1
 
 Add more friendly API for integrate.

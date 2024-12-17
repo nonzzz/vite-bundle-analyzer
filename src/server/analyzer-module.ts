@@ -207,13 +207,11 @@ export class AnalyzerNode {
           if (!KNOWN_EXT_NAME.includes(path.extname(id))) { continue }
           const code = chunks[id]
           const b = stringToByte(code)
-          const [
-            { byteLength: gzipSize },
-            { byteLength: brotliSize }
-          ] = await Promise.all([compress.gzip, compress.brotli].map((c) => c(b)))
-
           const parsedSize = b.byteLength
-          sources.insert(generateNodeId(id, workspaceRoot), { kind: 'source', meta: { gzipSize, brotliSize, parsedSize } })
+          sources.insert(generateNodeId(id, workspaceRoot), {
+            kind: 'source',
+            meta: { parsedSize, ...(await calcCompressedSize(b, compress)) }
+          })
         }
       }
     }
