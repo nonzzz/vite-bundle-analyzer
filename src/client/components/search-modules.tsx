@@ -104,7 +104,7 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
                 <ModuleItem name={module.parent.label} stylex={{ fontStyle: 'bold' }} />
                 {module.children.map((child) => (
                   <ModuleItem
-                    key={child.label}
+                    key={child.filename}
                     name={child.label}
                     size={child[extra]}
                     pointer={availableMap[child.label]}

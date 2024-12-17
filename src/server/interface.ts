@@ -1,5 +1,5 @@
 import type { HookHandler, Plugin } from 'vite'
-import type { ZlibOptions } from 'zlib'
+import type { BrotliOptions, ZlibOptions } from 'zlib'
 import { AnalyzerModule } from './analyzer-module'
 
 type RenderChunkFunction = NonNullable<HookHandler<Plugin['renderChunk']>>
@@ -22,7 +22,7 @@ export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 
 export type AnalyzerMode = 'static' | 'json' | 'server'
 
-export type DefaultSizes = 'stat' | 'parsed' | 'gzip'
+export type DefaultSizes = 'stat' | 'parsed' | 'gzip' | 'brotli'
 
 export interface Module {
   label: string
@@ -32,6 +32,7 @@ export interface Module {
   parsedSize: number
   mapSize: number
   gzipSize: number
+  brotliSize: number
   source: Array<Module>
   stats: Array<Module>
   imports: Array<string>
@@ -47,6 +48,7 @@ export interface BasicAnalyzerPluginOptions {
   reportTitle?: string
   defaultSizes?: DefaultSizes
   gzipOptions?: ZlibOptions
+  brotliOptions?: BrotliOptions
 }
 
 export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOptions {

@@ -12,6 +12,7 @@ export interface KindStat {
 
 export interface KindSource {
   parsedSize: number
+  brotliSize: number
   gzipSize: number
 }
 
@@ -110,8 +111,9 @@ export class FileSystemTrie<T> {
             const size = child.groups.reduce((acc, cur) => {
               acc.parsedSize += cur.parsedSize
               acc.gzipSize += cur.gzipSize
+              acc.brotliSize += cur.brotliSize
               return acc
-            }, { parsedSize: 0, gzipSize: 0 })
+            }, { parsedSize: 0, gzipSize: 0, brotliSize: 0 })
             Object.assign(child, size)
           }
         }

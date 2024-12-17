@@ -14,7 +14,7 @@ import type { SelectInstance } from '../select'
 import { Text } from '../text'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
 
-const MODES = tuple('Stat', 'Parsed', 'Gzipped')
+const MODES = tuple('Stat', 'Parsed', 'Gzipped', 'Brotli')
 
 export type ModeType = typeof MODES[number]
 
@@ -42,7 +42,18 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
     )
   }, [analyzeModule, userMode, entrypoints])
 
-  const mode = useMemo<ModeType>(() => userMode === 'gzipSize' ? 'Gzipped' : userMode === 'statSize' ? 'Stat' : 'Parsed', [userMode])
+  const mode = useMemo<ModeType>(() => {
+    switch (userMode) {
+      case 'gzipSize':
+        return 'Gzipped'
+      case 'statSize':
+        return 'Stat'
+      case 'parsedSize':
+        return 'Parsed'
+      default:
+        return 'Brotli'
+    }
+  }, [userMode])
 
   const entrypointChunks = useMemo(() => analyzeModule.filter((chunk) => chunk.isEntry), [analyzeModule])
 
@@ -55,6 +66,22 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
   const handleDrawerClose = () => {
     selectRef.current?.destory()
     toggleDrawerVisible()
+  }
+
+  const handleToggleMode = (mode: ModeType) => {
+    const parsed = (() => {
+      switch (mode) {
+        case 'Gzipped':
+          return 'gzipSize'
+        case 'Stat':
+          return 'statSize'
+        case 'Parsed':
+          return 'parsedSize'
+        default:
+          return 'brotliSize'
+      }
+    })()
+    toggleSize(parsed)
   }
 
   return (
@@ -98,7 +125,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
               {MODES.map((button) => (
                 <div key={button} stylex={{ padding: '5px', boxSizing: 'border-box' }}>
                   <Button
-                    onClick={() => toggleSize(button === 'Gzipped' ? 'gzipSize' : button === 'Stat' ? 'statSize' : 'parsedSize')}
+                    onClick={() => handleToggleMode(button)}
                     auto
                     type={mode === button ? 'secondary' : 'default'}
                     scale={0.7}
@@ -109,41 +136,36 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
               ))}
             </div>
           </div>
-          {IS_CUSTOM_SIDE_BAR
-            ? (
+          <div>
+            {IS_CUSTOM_SIDE_BAR && (
               <div id="customSideBar">
                 {createElement(ui.SideBar ? ui.SideBar : 'div', null)}
               </div>
-            )
-            : (
-              <>
-                <div>
-                  <Text p b h3>Filter by entrypoints:</Text>
-                  <Select
-                    ref={selectRef}
-                    multiple
-                    scale={0.75}
-                    placeholder="Select endpoints"
-                    width="95.5%"
-                    onChange={handleFilterByEntrypoints}
-                    options={entrypointChunks.map((chunk) => ({ value: chunk.label, label: chunk.label }))}
-                  />
-                </div>
-                <div>
-                  <Text p b h3>Search modules:</Text>
-                  <SearchModules extra={userMode} files={allChunks} />
-                </div>
-                <div>
-                  <Text p b h3>Show Chunks:</Text>
-                  <FileList
-                    files={allChunks}
-                    extra={userMode}
-                    scence={scence}
-                    onChange={(v) => updateScence(new Set(v))}
-                  />
-                </div>
-              </>
             )}
+            <Text p b h3>Filter by entrypoints:</Text>
+            <Select
+              ref={selectRef}
+              multiple
+              scale={0.75}
+              placeholder="Select endpoints"
+              width="95.5%"
+              onChange={handleFilterByEntrypoints}
+              options={entrypointChunks.map((chunk) => ({ value: chunk.label, label: chunk.label }))}
+            />
+          </div>
+          <div>
+            <Text p b h3>Search modules:</Text>
+            <SearchModules extra={userMode} files={allChunks} />
+          </div>
+          <div>
+            <Text p b h3>Show Chunks:</Text>
+            <FileList
+              files={allChunks}
+              extra={userMode}
+              scence={scence}
+              onChange={(v) => updateScence(new Set(v))}
+            />
+          </div>
         </Drawer.Content>
       </Drawer>
     </>

@@ -4,8 +4,8 @@ import path from 'path'
 import { Readable } from 'stream'
 import type { Logger, Plugin } from 'vite'
 import zlib from 'zlib'
-import { AnalyzerNode, createAnalyzerModule } from './analyzer-module'
-import type { AnalyzerPluginOptions, AnalyzerStore, Module, OutputAsset, OutputBundle, OutputChunk } from './interface'
+import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
+import type { AnalyzerPluginOptions, AnalyzerStore, Module } from './interface'
 import { opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
@@ -68,19 +68,6 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
   return `${formatNumber(count)} chunks of ${formatSize(meta.parsed)} ${extra ? `(${extra})` : ''}`
 }
 
-function validateChunk(chunk: OutputAsset | OutputChunk, allChunks: OutputBundle): [boolean, string | undefined] {
-  // https://github.com/rollup/rollup/blob/master/CHANGELOG.md#features-22
-  if (/\.(c|m)?js$/.test(chunk.fileName)) {
-    if (chunk && 'sourcemapFileName' in chunk) {
-      if (chunk.sourcemapFileName && chunk.sourcemapFileName in allChunks) { return [true, chunk.sourcemapFileName] }
-    }
-    const possiblePath = chunk.fileName + '.map'
-    if (possiblePath in allChunks) { return [true, possiblePath] }
-    return [true, undefined]
-  }
-  return [false, undefined]
-}
-
 // Design for race condition is called
 let callCount = 0
 
@@ -96,7 +83,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
   opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
-  const analyzerModule = createAnalyzerModule(opts?.gzipOptions)
+  const analyzerModule = createAnalyzerModule({ gzip: opts.gzipOptions, brotli: opts.brotliOptions })
   const store: AnalyzerStore = { analyzerModule, lastSourcemapOption: false, hasSetupSourcemapOption: false }
   let defaultWd = process.cwd()
   let hasViteReporter = true
@@ -169,28 +156,28 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
     async generateBundle(_, outputBundle) {
       analyzerModule.installPluginContext(this)
       analyzerModule.setupRollupChunks(outputBundle)
-      const cleanup: Array<{ bundle: OutputChunk | OutputAsset, sourcemapFileName: string | undefined }> = []
+      // const cleanup: Array<{ bundle: OutputChunk | OutputAsset, sourcemapFileName: string | undefined }> = []
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)
       // A funny thing is that 'Import with Query Suffixes' vite might think the worker is assets
       // So we should wrapper them as a chunk node.
       for (const bundleName in outputBundle) {
         const bundle = outputBundle[bundleName]
-        const [pass, sourcemapFileName] = validateChunk(bundle, outputBundle)
-        if (pass) {
-          // For classical
-          await analyzerModule.addModule(bundle, sourcemapFileName)
-          cleanup.push({ sourcemapFileName, bundle })
-        }
+        await analyzerModule.addModule(bundle)
       }
       if (!store.lastSourcemapOption) {
-        cleanup.forEach((b) => {
-          if (b.sourcemapFileName) {
-            Reflect.deleteProperty(outputBundle, b.sourcemapFileName)
+        // https://262.ecma-international.org/5.1/#sec-12.6.4
+        for (const bundleName in outputBundle) {
+          const bundle = outputBundle[bundleName]
+          if (JS_EXTENSIONS.test(bundle.fileName)) {
+            const possiblePath = bundle.fileName + '.map'
+            if (possiblePath in outputBundle) {
+              Reflect.deleteProperty(outputBundle, possiblePath)
+            }
+            if (bundle.type === 'chunk') {
+              Reflect.deleteProperty(bundle, 'map')
+            }
           }
-          if (b.bundle.type === 'chunk') {
-            Reflect.deleteProperty(b, 'map')
-          }
-        })
+        }
       }
     },
     async closeBundle() {

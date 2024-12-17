@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import utils from 'util'
 import zlib from 'zlib'
-import type { InputType, ZlibOptions } from 'zlib'
+import type { BrotliOptions, InputType, ZlibOptions } from 'zlib'
 
 export * from '../shared'
 
@@ -12,16 +12,26 @@ export const fsp = fs.promises
 const encoder = new TextEncoder()
 const decoder = new TextDecoder()
 const gzip = utils.promisify(zlib.gzip)
+const brotli = utils.promisify(zlib.brotliCompress)
 
 const defaultGzipOptions = <ZlibOptions> {
   level: zlib.constants.Z_DEFAULT_LEVEL
 }
 
+const defaultBrotliOptions = <BrotliOptions> {
+  params: {
+    [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY
+  }
+}
+
 export function createGzip(options: ZlibOptions = {}) {
   options = Object.assign(defaultGzipOptions, options)
-  return (buf: InputType) => {
-    return gzip(buf, options)
-  }
+  return (buf: InputType) => gzip(buf, options)
+}
+
+export function createBrotil(options: BrotliOptions = {}) {
+  options = Object.assign(defaultBrotliOptions, options)
+  return (buf: InputType) => brotli(buf, options)
 }
 
 // MIT License

@@ -24,7 +24,8 @@ export interface TreemapConfig {
 export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
   stat: 'statSize',
   gzip: 'gzipSize',
-  parsed: 'parsedSize'
+  parsed: 'parsedSize',
+  brotli: 'brotliSize'
 }
 
 const defaultApplicationContext = <ApplicationConfig> {
