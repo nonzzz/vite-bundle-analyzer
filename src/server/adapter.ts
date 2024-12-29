@@ -1,11 +1,11 @@
 // adapter for rollup
 import type { Plugin } from 'rollup'
 import type { Plugin as VitePlugin } from 'vite'
-import type { AnalyzerStore } from './interface'
+import type { AnalyzerPluginInternalAPI } from './interface'
 import { searchForWorkspaceRoot } from './search-root'
 import { pick } from './shared'
 
-export function adapter(userPlugin: VitePlugin<{ store: AnalyzerStore }>) {
+export function adapter(userPlugin: VitePlugin<AnalyzerPluginInternalAPI>) {
   const plugin = pick(userPlugin, ['name', 'generateBundle', 'closeBundle', 'api'])
   let root = process.cwd()
   const { store } = plugin.api!

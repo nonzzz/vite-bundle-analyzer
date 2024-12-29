@@ -98,3 +98,8 @@ export interface PackageJSONMetadata {
   exports?: Record<string, ExportFields | string>
   [prop: string]: Any
 }
+
+export interface AnalyzerPluginInternalAPI {
+  store: AnalyzerStore
+  processModule(): Module[]
+}

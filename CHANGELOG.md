@@ -1,3 +1,7 @@
+## 0.16.0-beta.4
+
+- Fix `adapter` type error.
+
 ## 0.16.0-beta.3
 
 Change hook order.

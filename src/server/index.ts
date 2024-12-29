@@ -5,7 +5,7 @@ import { Readable } from 'stream'
 import type { Logger, Plugin } from 'vite'
 import zlib from 'zlib'
 import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
-import type { AnalyzerPluginOptions, AnalyzerStore, Module } from './interface'
+import type { AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore } from './interface'
 import { opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
 import { searchForWorkspaceRoot } from './search-root'
@@ -79,7 +79,7 @@ let callCount = 0
 // callCount is specifically for the Second scenario.
 // If someone has a better idea, PR welcome.
 
-function analyzer(opts?: AnalyzerPluginOptions): Plugin {
+function analyzer(opts?: AnalyzerPluginOptions) {
   opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
@@ -94,7 +94,7 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
 
   const b = arena()
 
-  const plugin = <Plugin> {
+  const plugin: Plugin<AnalyzerPluginInternalAPI> = {
     name: 'vite-bundle-anlyzer',
     apply: 'build',
     enforce: 'post',
@@ -248,10 +248,5 @@ function analyzer(opts?: AnalyzerPluginOptions): Plugin {
 export { analyzer }
 export { adapter } from './adapter'
 export { analyzer as default }
-export type { AnalyzerMode, AnalyzerPluginOptions, DefaultSizes, Module } from './interface'
+export type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, DefaultSizes, Module } from './interface'
 export * from './render'
-
-export interface AnalyzerPluginInternalAPI {
-  store: AnalyzerStore
-  processModule(): Module[]
-}
