@@ -1,3 +1,10 @@
+## 0.16.0
+
+- Better custom integrate.
+- Fix `adapter` type error.
+- Support view `brotli` size.
+- Display `no-js` file.
+
 ## 0.16.0-beta.4
 
 - Fix `adapter` type error.

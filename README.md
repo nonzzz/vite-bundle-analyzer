@@ -89,8 +89,11 @@ request.
   <a href="https://github.com/nonzzz">
     <img src="https://avatars.githubusercontent.com/u/52351095?v=4&s=40" width="40" height="40" alt="Kanno">
   </a>
-  <a href="https://github.com/contributor1">
+  <a href="https://github.com/a3mitskevich">
     <img src="https://avatars.githubusercontent.com/u/77048647?v=4&s=40" width="40" height="40" alt="Aleksandr Mitskevich">
+  </a>
+  <a href="https://github.com/mengdaoshizhongxinyang">
+    <img src="https://avatars.githubusercontent.com/u/37317008?v=4" width="40" height="40" alt="mengdaoshizhongxinyang"  />
   </a>
   <!-- Add more contributors as needed -->
 </p>
