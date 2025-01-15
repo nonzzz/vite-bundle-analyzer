@@ -24,6 +24,4 @@ function SpacerComponent({ inline = false, ...props }: SpacerProps) {
   )
 }
 
-SpacerComponent.displayName = 'Spacer'
-
 export const Spacer = withScale(SpacerComponent)

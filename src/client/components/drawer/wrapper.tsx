@@ -71,6 +71,4 @@ function DrawerWrapper(props: React.PropsWithChildren<DrawerWrapperProps>) {
   )
 }
 
-DrawerWrapper.displayName = 'DrawerWrapper'
-
 export { DrawerWrapper }

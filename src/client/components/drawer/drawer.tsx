@@ -41,6 +41,4 @@ function DrawerComponent(props: DrawerProps) {
   )
 }
 
-DrawerComponent.displayName = 'Drawer'
-
 export const Drawer = withScale(DrawerComponent)

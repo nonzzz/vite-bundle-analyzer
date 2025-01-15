@@ -92,5 +92,4 @@ function SelectMultipleValue({
   )
 }
 
-SelectMultipleValue.displayName = 'SelectMultipleValue'
 export { SelectMultipleValue }

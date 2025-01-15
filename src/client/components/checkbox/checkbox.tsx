@@ -168,6 +168,4 @@ function CheckboxComponent(props: CheckboxProps) {
   )
 }
 
-CheckboxComponent.displayName = 'Checkbox'
-
 export const Checkbox = withScale(CheckboxComponent)

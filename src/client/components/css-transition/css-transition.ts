@@ -1,4 +1,5 @@
 /* eslint-disable @eslint-react/no-clone-element */
+import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 
 interface Props {
@@ -54,11 +55,9 @@ function CSSTransition({
   return React.cloneElement(children, {
     ...props,
     // @ts-expect-error safe
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    className: `${children.props.className} ${className} ${classes}`
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
+    className: clsx(children.props.className, className, classes)
   })
 }
-
-CSSTransition.displayName = 'CSSTransition'
 
 export { CSSTransition }

@@ -1,10 +1,8 @@
-import stylex from '@stylexjs/stylex'
 import { useMemo } from 'react'
 import type { Module, Sizes } from '../interface'
 import { Checkbox } from './checkbox'
 import type { CheckboxEvent } from './checkbox'
 import { ModuleItem } from './module-item'
-import { Spacer } from './spacer'
 
 export interface FileListProps<F> {
   files: F[]
@@ -13,14 +11,6 @@ export interface FileListProps<F> {
 
   onChange: (values: string[]) => void
 }
-
-const styles = stylex.create({
-  baseline: {
-    ':not(#_) > div': {
-      alignItems: 'baseline'
-    }
-  }
-})
 
 export function FileList<F extends Module>(props: FileListProps<F>) {
   const { scence, files: userFiles, extra = 'statSize', onChange } = props
@@ -57,19 +47,20 @@ export function FileList<F extends Module>(props: FileListProps<F>) {
         overflow: 'hidden'
       }}
     >
-      <ModuleItem name={all.name} size={all.extra} {...stylex.props(styles.baseline)}>
-        <Checkbox
-          value={all.name}
-          font="14px"
-          scale={0.85}
-          checked={checkAll}
-          onChange={handleChange}
-        />
-      </ModuleItem>
-      <Spacer h={0.75} />
+      <div>
+        <ModuleItem name={all.name} size={all.extra}>
+          <Checkbox
+            value={all.name}
+            font="14px"
+            scale={0.85}
+            checked={checkAll}
+            onChange={handleChange}
+          />
+        </ModuleItem>
+      </div>
       <Checkbox.Group font="14px" scale={0.85} value={groupValues} onChange={onChange}>
         {files.map((file) => (
-          <ModuleItem name={file.name} size={file.extra} key={file.name} {...stylex.props(styles.baseline)}>
+          <ModuleItem name={file.name} size={file.extra} key={file.name}>
             <Checkbox value={file.name} />
           </ModuleItem>
         ))}

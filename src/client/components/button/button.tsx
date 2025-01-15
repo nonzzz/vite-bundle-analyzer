@@ -145,6 +145,4 @@ const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 )
 
-ButtonComponent.displayName = 'Button'
-
 export const Button = withScale(ButtonComponent)

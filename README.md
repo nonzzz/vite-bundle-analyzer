@@ -59,7 +59,7 @@ export default defineConfig({
 | `gzipOptions`  | `Record<string,any>`             | `{}`          | Compression options. (Details see `zlib module`)                                 |
 | `analyzerPort` | `number\|'auto'`                 | `8888`        | static server port.                                                              |
 | `openAnalyzer` | `boolean`                        | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
-| `defaultSizes` | `stat\|parsed\|gzip`             | `stat`        | The default type selected in the client page                                     |
+| `defaultSizes` | `stat\|parsed\|gzip\brotil`      | `stat`        | The default type selected in the client page                                     |
 | `summary`      | `boolean`                        | `true`        | Show full chunk info to stdout.                                                  |
 
 ## ClI

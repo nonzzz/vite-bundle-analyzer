@@ -173,6 +173,4 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputProps>((props, re
   )
 })
 
-InputComponent.displayName = 'Input'
-
 export const Input = withScale(InputComponent)

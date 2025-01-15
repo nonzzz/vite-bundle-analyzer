@@ -92,5 +92,4 @@ function TextComponent({
   )
 }
 
-TextComponent.displayName = 'Text'
 export const Text = withScale(TextComponent)

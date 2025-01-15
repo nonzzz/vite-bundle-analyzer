@@ -24,6 +24,4 @@ function DrawerContentComponent(props: React.PropsWithChildren<Props>) {
   )
 }
 
-DrawerContentComponent.displayName = 'DrawerContent'
-
 export const DrawerContent = withScale(DrawerContentComponent)

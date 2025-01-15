@@ -57,6 +57,4 @@ function CheckboxGroupComponent(props: React.PropsWithChildren<CheckboxGroupProp
   )
 }
 
-CheckboxGroupComponent.displayName = 'CheckboxGroup'
-
 export const CheckboxGroup = withScale(CheckboxGroupComponent)

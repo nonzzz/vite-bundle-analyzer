@@ -175,21 +175,7 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
               padding: 0,
               marginRight: '1.25em',
               fontSize: 'var(--select-font-size)',
-              color: '#999',
-              ':not(#_) div': {
-                borderRadius: 0,
-                backgroundColor: 'transparent',
-                padding: 0,
-                margin: 0,
-                color: 'inherit'
-              },
-              ':not(#_) div:hover': {
-                borderRadius: 0,
-                backgroundColor: 'transparent',
-                padding: 0,
-                margin: 0,
-                color: 'inherit'
-              }
+              color: '#999'
             }}
           >
             <Ellipsis height="var(--scale-height)">{placeholder}</Ellipsis>
@@ -212,13 +198,6 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
             display: 'flex',
             alignItems: 'center',
             color: '#666',
-            ':not(#_) svg': {
-              color: 'inherit',
-              stroke: 'currentColor',
-              transition: 'all 200ms ease',
-              width: '1.214em',
-              height: '1.214em'
-            },
             ...(visible && { transform: 'translateY(-50%) rotate(180deg)' })
           }}
         >
@@ -229,6 +208,13 @@ const SelectComponent = React.forwardRef((props: SelectProps, ref: React.Ref<Sel
             strokeLinejoin="round"
             fill="none"
             shapeRendering="geometricPrecision"
+            stylex={{
+              color: 'inherit',
+              stroke: 'currentColor',
+              transition: 'all 200ms ease',
+              width: '1.214em',
+              height: '1.214em'
+            }}
           >
             <path d="M6 9l6 6 6-6" />
           </svg>

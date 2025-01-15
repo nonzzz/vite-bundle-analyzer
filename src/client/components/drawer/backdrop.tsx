@@ -133,5 +133,4 @@ const Backdrop: React.FC<React.PropsWithChildren<BackdropProps>> = React.memo(
   }
 )
 
-Backdrop.displayName = 'Backdrop'
 export { Backdrop }

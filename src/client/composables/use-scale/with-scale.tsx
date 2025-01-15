@@ -102,6 +102,5 @@ export const withScale = <T, P = Empty>(
       </ScaleProvider>
     )
   })
-  ScaleFC.displayName = `Scale${Render.displayName || 'Wrapper'}`
   return ScaleFC
 }

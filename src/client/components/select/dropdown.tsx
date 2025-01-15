@@ -115,6 +115,4 @@ const SelectDropdown = React.forwardRef<
   )
 })
 
-SelectDropdown.displayName = 'SelectDropdown'
-
 export { SelectDropdown }

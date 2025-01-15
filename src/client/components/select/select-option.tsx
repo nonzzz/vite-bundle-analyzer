@@ -86,6 +86,4 @@ function SelectOptionComponent(props: React.PropsWithChildren<SelectOptionProps>
   )
 }
 
-SelectOptionComponent.displayName = 'SelectOption'
-
 export const SelectOption = withScale(SelectOptionComponent)

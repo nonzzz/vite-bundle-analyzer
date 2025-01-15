@@ -73,6 +73,4 @@ function TextChild({
   )
 }
 
-TextChild.displayName = 'TextChild'
-
 export { TextChild }
