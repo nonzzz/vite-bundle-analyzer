@@ -5,7 +5,7 @@ TAG += ''
 FLAGS += --access public
 
 install:
-	@echo "Using berry to install dependencies..."
+	@echo "Using pnpm to install dependencies..."
 	corepack enable
 	pnpm install
 

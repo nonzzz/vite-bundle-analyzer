@@ -1,0 +1,28 @@
+name: Deploy Site
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: make
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 21
+      - name: Build site
+        run: |
+          make install
+          export SITE=true && pnpm exec vite build src/client
+
+      - name: Deploy site
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        with:
+          branch: gh-page
+          folder: dist/client
+          single-commit: true
+          clean: true

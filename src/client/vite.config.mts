@@ -23,7 +23,7 @@ export default defineConfig(({ mode, command }) => {
     },
     base: './'
   } as UserConfig
-  if (mode === 'development') {
+  if (mode === 'development' || process.env.SITE) {
     base.define = {
       'window.defaultSizes': JSON.stringify('stat'),
       'window.analyzeModule': JSON.stringify(mock)
