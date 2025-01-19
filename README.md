@@ -11,11 +11,16 @@
   <a href='https://github.com/sindresorhus/awesome'>
     <img src='https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg' alt='Awesome'>
   </a>
+  <a href="https://api.gitsponsors.com/api/badge/link?p=lo0QvLIebuRhb/laMePdfzMM2EGmiJ756Ckg0cQvExKd+0Rg7y3eQFbs5tqpAadeBK8T0CR1ggsyQvgXC4JUmXwPhcLaS5M2FazRHdtSYwckh0ol3c+XOGu7VDNjQxZYoeszRlpjznMV8ibbkHi46g==">
+    <img src="https://api.gitsponsors.com/api/badge/img?id=671854890" height="20">
+  </a>
 </p>
+
 
 <p align="center">
   <img src="https://cdn.jsdelivr.net/gh/nonzzz/vite-bundle-analyzer@latest/imgs/now.gif" width="640" height="320" />
 </p>
+
 
 > [!WARNING]
 > Vite's enable minify by default.There for you will see that the parsed size is larger than actual size.This is because the bundle info
