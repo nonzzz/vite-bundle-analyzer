@@ -1,3 +1,7 @@
+## 0.16.1
+
+- Update Client UI.
+
 ## 0.16.0
 
 - Better custom integrate.

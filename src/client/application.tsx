@@ -43,6 +43,7 @@ export function App() {
   const handleMousemove = useCallback((data: PrimitiveEventMetadata<'mousemove'>) => {
     setTooltipVisible(!!data.module)
     if (data.module) {
+      // @ts-expect-error safe
       setTooltipContent(() => data.module.node)
     }
   }, [])

@@ -2,7 +2,7 @@ import { inline } from '@stylex-extend/core'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { Ref } from 'react'
 import { c2m, createTreemap, presetDecorator, sortChildrenByKey } from 'squarified'
-import type { PrimitiveEventCallback } from 'squarified'
+import type { ExposedEventCallback } from 'squarified'
 import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
@@ -11,7 +11,7 @@ import type { QueryKind } from '../../special'
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
 export interface TreemapProps {
-  onMousemove: PrimitiveEventCallback<'mousemove'>
+  onMousemove: ExposedEventCallback<'mousemove'>
 }
 
 export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
@@ -69,7 +69,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
   useEffect(() => {
     instanceRef.current?.on('click', function(metadata) {
       this.zoom(metadata.module)
-      const evt = createMagicEvent('graph:click', metadata.module)
+      const evt = createMagicEvent('graph:click', metadata.module!)
       window.dispatchEvent(evt)
     })
   }, [])
