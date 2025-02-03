@@ -1,3 +1,7 @@
+## 0.16.2
+
+- Fix Safari render crash.
+
 ## 0.16.1
 
 - Update Client UI.

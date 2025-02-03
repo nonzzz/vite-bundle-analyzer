@@ -6,6 +6,7 @@ FLAGS += --access public
 
 install:
 	@echo "Using pnpm to install dependencies..."
+	npm install -g corepack@latest --force
 	corepack enable
 	pnpm install
 
