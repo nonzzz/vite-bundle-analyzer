@@ -76,11 +76,8 @@ publish: build-all
 	$(eval VERSION = $(shell awk -F'"' '/"version":/ {print $4}' package.json))
 	$(eval TAG = $(shell echo $(VERSION) | awk -F'-' '{if (NF > 1) print $$2; else print ""}' | cut -d'.' -f1))
 	$(eval FLAGS += $(shell \
-		if [ "$$WITH_PROVENANCE" == "true" ]; then \
-			echo "--provenance"; \
-		fi; \
 		if [ "$(TAG)" != "" ]; then \
 			echo "--tag $(TAG)"; \
 		fi \
 	))
-	@npm publish $(FLAGS)
+	@npm publish $(FLAGS) --provenance

@@ -19,6 +19,6 @@ jobs:
         run: make
       - name: Pack and Publish
         run: |
-          export WITH_PROVENANCE=true && make publish
+          make publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

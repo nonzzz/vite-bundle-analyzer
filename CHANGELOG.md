@@ -1,3 +1,8 @@
+## 0.16.3
+
+- Increase color brightness (Client)
+- Improve the smoothness of events (Client)
+
 ## 0.16.2
 
 - Fix Safari render crash.
