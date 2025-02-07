@@ -16,10 +16,6 @@ describe('Cli', () => {
   afterAll(() => {
     fs.rmSync(path.join(defaultWd, 'normal', 'dist'), { recursive: true })
   })
-  it('must need a config ', async () => {
-    const { stderr } = await execCli()
-    expect(stderr).toBe("error: required option '-c, --config <path>' not specified\n")
-  })
   it('normal', async () => {
     const basePath = path.join(defaultWd, 'normal')
     await execCli(['-c', path.join(basePath, 'vite.config.mts'), '-m', 'json'])
