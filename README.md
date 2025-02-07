@@ -72,7 +72,7 @@ export default defineConfig({
 This plugin provides cli util `analyze`. Add --help to check actual options. It can be used like:
 
 ```bash
-$ analyze -c "your vite config path"
+$ analyze
 ```
 
 ### Sponsors
