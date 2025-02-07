@@ -1,3 +1,11 @@
+## 0.17.0
+
+- `Cli` add default config path (`vite.config.ts`)
+
+### credits
+
+@kricsleo
+
 ## 0.16.3
 
 - Increase color brightness (Client)

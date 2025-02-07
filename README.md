@@ -16,11 +16,9 @@
   </a>
 </p>
 
-
 <p align="center">
   <img src="https://cdn.jsdelivr.net/gh/nonzzz/vite-bundle-analyzer@latest/imgs/now.gif" width="640" height="320" />
 </p>
-
 
 > [!WARNING]
 > Vite's enable minify by default.There for you will see that the parsed size is larger than actual size.This is because the bundle info
