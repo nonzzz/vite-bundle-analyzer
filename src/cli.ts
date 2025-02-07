@@ -114,7 +114,7 @@ program
   .option('-o, --open [bool]', OPEN_TEXT, true)
   .option('-d, --defaultSizes <string>', DEFAULT_SIZES_TEXT, 'stat')
   .option('-s, --summary [bool]', SUMMARY_TEXT, true)
-  .requiredOption('-c, --config <path>', 'Path to vite config file')
+  .option('-c, --config <path>', 'Path to vite config file', 'vite.config.ts')
   .action(main)
 
 program.parse(process.argv)
