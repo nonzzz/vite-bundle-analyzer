@@ -29,8 +29,8 @@ export const SIZE_RECORD: Record<typeof window['defaultSizes'], Sizes> = {
 }
 
 const defaultApplicationContext = <ApplicationConfig> {
-  sizes: SIZE_RECORD[window.defaultSizes],
-  analyzeModule: window.analyzeModule,
+  sizes: SIZE_RECORD[window.defaultSizes] || 'statSize',
+  analyzeModule: window.analyzeModule || [],
   scence: new Set(),
   ui: { Main: null, SideBar: null },
   updateScence: noop

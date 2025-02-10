@@ -21,7 +21,8 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: (format) => `browser.${format === 'es' ? 'mjs' : 'js'}`,
       cssFileName: 'browser'
-    }
+    },
+    minify: false
   },
   resolve: {
     alias: [

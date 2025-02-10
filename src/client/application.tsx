@@ -33,7 +33,7 @@ function ModuleSize(props: ModuleSizeProps) {
 export function App() {
   const treeMapRef = useRef<TreemapComponentInstance>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<NativeModule | null>(null)
+  const [tooltipContent, setTooltipContent] = useState<NativeModule & { filename: string, label: string } | null>(null)
 
   const contexts = [
     <ApplicationProvider key="app" />,

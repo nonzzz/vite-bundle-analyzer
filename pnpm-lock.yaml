@@ -153,6 +153,12 @@ importers:
         specifier: 'workspace: *'
         version: link:../..
 
+  examples/sdk:
+    dependencies:
+      vite-bundle-analyzer:
+        specifier: 'workspace: *'
+        version: link:../..
+
   examples/vite3:
     devDependencies:
       '@varlet/ui':
