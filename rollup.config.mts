@@ -14,12 +14,34 @@ export default defineConfig([
   {
     input: {
       cli: 'src/cli.ts',
-      index: 'src/server/index.ts'
+      index: 'src/server/index.ts',
+      server: 'src/sdk/server.ts'
     },
     external,
     output: [
-      { dir: 'dist', format: 'esm', exports: 'named', entryFileNames: '[name].mjs', chunkFileNames: '[name]-[hash].mjs' },
-      { dir: 'dist', format: 'cjs', exports: 'named', entryFileNames: '[name].js' }
+      {
+        dir: 'dist',
+        format: 'esm',
+        exports: 'named',
+        entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === 'server') {
+            return 'sdk/[name].mjs'
+          }
+          return '[name].mjs'
+        },
+        chunkFileNames: '[name]-[hash].mjs'
+      },
+      {
+        dir: 'dist',
+        format: 'cjs',
+        exports: 'named',
+        entryFileNames: (chunkInfo) => {
+          if (chunkInfo.name === 'server') {
+            return 'sdk/[name].js'
+          }
+          return '[name].js'
+        }
+      }
     ],
     plugins: [
       commonjs(),
@@ -42,5 +64,15 @@ export default defineConfig([
     output: { file: 'dist/index.d.ts' },
     plugins: [dts()],
     external
+  },
+  {
+    input: 'src/sdk/server.ts',
+    output: { file: 'dist/sdk/server.d.ts' },
+    plugins: [dts()]
+  },
+  {
+    input: 'src/sdk/browser.tsx',
+    output: { file: 'dist/sdk/browser.d.ts' },
+    plugins: [dts()]
   }
 ])

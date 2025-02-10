@@ -39,6 +39,7 @@ build-server: build-client
 	@$(ROLLUP)
 	-rm -rf dist/cli.mjs
 	awk '{ print }' bin.txt > dist/bin.js
+	@pnpm exec vite build src/sdk
 
 dev-client:
 	@echo "Starting client in development mode..."

@@ -13,7 +13,19 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json",
+    "./sdk/server": {
+      "types": "./dist/sdk/server.d.ts",
+      "import": "./dist/sdk/server.mjs",
+      "require": "./dist/sdk/server.js"
+    },
+    "./sdk/browser": {
+      "types": "./dist/sdk/browser.d.ts",
+      "import": "./dist/sdk/browser.mjs",
+      "require": "./dist/sdk/browser.js"
+    },
+    "./sdk/browser.css": "./dist/sdk/browser.css"
   },
   "devDependencies": {
     "@eslint-sukka/react": "^6.12.0",
