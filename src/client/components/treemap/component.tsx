@@ -1,12 +1,13 @@
 import { inline } from '@stylex-extend/core'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { Ref } from 'react'
-import { c2m, createTreemap, presetDecorator, sortChildrenByKey } from 'squarified'
+import { c2m, createTreemap, sortChildrenByKey } from 'squarified'
 import type { ExposedEventCallback } from 'squarified'
 import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
+import { presetDecorator } from './preset'
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 

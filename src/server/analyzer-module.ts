@@ -151,12 +151,11 @@ export class AnalyzerNode {
     const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0 } })
 
     if (mod.kind === 'asset') {
-      stats.insert(generateNodeId(mod.filename, workspaceRoot), { kind: 'stat', meta: { statSize: mod.code.byteLength } })
-      sources.insert(generateNodeId(mod.filename, workspaceRoot), {
-        kind: 'source',
-        meta: { parsedSize: mod.code.byteLength, ...(await calcCompressedSize(mod.code, compress)) }
-      })
       this.statSize = mod.code.byteLength
+      this.parsedSize = mod.code.byteLength
+      const { brotliSize, gzipSize } = await calcCompressedSize(mod.code, compress)
+      this.brotliSize = brotliSize
+      this.gzipSize = gzipSize
     } else {
       const { code, imports, dynamicImports, map, moduleIds } = mod
 

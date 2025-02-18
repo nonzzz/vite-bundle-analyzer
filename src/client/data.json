@@ -7,63 +7,49 @@
     "statSize": 12975,
     "gzipSize": 3159,
     "brotliSize": 2683,
-    "source": [
-      {
-        "parsedSize": 12975,
-        "gzipSize": 3159,
-        "brotliSize": 2683,
-        "label": "assets/index-T79nKnwS.css",
-        "filename": "assets/index-T79nKnwS.css"
-      }
-    ],
-    "stats": [
-      {
-        "statSize": 12975,
-        "label": "assets/index-T79nKnwS.css",
-        "filename": "assets/index-T79nKnwS.css"
-      }
-    ],
+    "source": [],
+    "stats": [],
     "isAsset": true,
     "isEntry": false,
     "imports": []
   },
   {
-    "filename": "assets/index-bBk9ut-R.js",
-    "label": "assets/index-bBk9ut-R.js",
-    "parsedSize": 96305,
-    "mapSize": 354379,
-    "statSize": 188149,
-    "gzipSize": 41567,
-    "brotliSize": 36759,
+    "filename": "assets/index-BSkjBczS.js",
+    "label": "assets/index-BSkjBczS.js",
+    "parsedSize": 96341,
+    "mapSize": 357532,
+    "statSize": 190637,
+    "gzipSize": 41722,
+    "brotliSize": 37049,
     "source": [
       {
-        "parsedSize": 96305,
-        "gzipSize": 41567,
-        "brotliSize": 36759,
-        "label": "Users",
+        "parsedSize": 96341,
+        "gzipSize": 41722,
+        "brotliSize": 37049,
+        "label": "home",
         "groups": [
           {
-            "parsedSize": 44665,
-            "gzipSize": 21948,
-            "brotliSize": 19085,
+            "parsedSize": 45529,
+            "gzipSize": 22530,
+            "brotliSize": 19736,
             "label": "src",
             "groups": [
               {
-                "parsedSize": 44500,
-                "gzipSize": 21792,
-                "brotliSize": 18964,
+                "parsedSize": 45364,
+                "gzipSize": 22374,
+                "brotliSize": 19615,
                 "label": "client",
                 "groups": [
                   {
-                    "parsedSize": 38455,
-                    "gzipSize": 18180,
-                    "brotliSize": 15949,
+                    "parsedSize": 39231,
+                    "gzipSize": 18706,
+                    "brotliSize": 16530,
                     "label": "components",
                     "groups": [
                       {
-                        "parsedSize": 2186,
-                        "gzipSize": 1141,
-                        "brotliSize": 1030,
+                        "parsedSize": 2185,
+                        "gzipSize": 1140,
+                        "brotliSize": 1029,
                         "label": "side-bar",
                         "groups": [
                           {
@@ -71,293 +57,300 @@
                             "gzipSize": 118,
                             "brotliSize": 117,
                             "label": "provide.ts",
-                            "filename": "Users/src/client/components/side-bar/provide.ts"
+                            "filename": "home/src/client/components/side-bar/provide.ts"
                           },
                           {
-                            "parsedSize": 2055,
-                            "gzipSize": 1023,
-                            "brotliSize": 913,
+                            "parsedSize": 2054,
+                            "gzipSize": 1022,
+                            "brotliSize": 912,
                             "label": "side-bar.tsx",
-                            "filename": "Users/src/client/components/side-bar/side-bar.tsx"
+                            "filename": "home/src/client/components/side-bar/side-bar.tsx"
                           }
                         ],
-                        "filename": "Users/src/client/components/side-bar"
+                        "filename": "home/src/client/components/side-bar"
                       },
                       {
                         "parsedSize": 5128,
-                        "gzipSize": 2447,
-                        "brotliSize": 2126,
+                        "gzipSize": 2449,
+                        "brotliSize": 2146,
                         "label": "drawer",
                         "groups": [
                           {
                             "parsedSize": 738,
-                            "gzipSize": 392,
-                            "brotliSize": 333,
+                            "gzipSize": 391,
+                            "brotliSize": 334,
                             "label": "content.tsx",
-                            "filename": "Users/src/client/components/drawer/content.tsx"
+                            "filename": "home/src/client/components/drawer/content.tsx"
                           },
                           {
                             "parsedSize": 1232,
                             "gzipSize": 685,
-                            "brotliSize": 605,
+                            "brotliSize": 619,
                             "label": "backdrop.tsx",
-                            "filename": "Users/src/client/components/drawer/backdrop.tsx"
+                            "filename": "home/src/client/components/drawer/backdrop.tsx"
                           },
                           {
                             "parsedSize": 2827,
-                            "gzipSize": 1086,
-                            "brotliSize": 951,
+                            "gzipSize": 1087,
+                            "brotliSize": 953,
                             "label": "wrapper.tsx",
-                            "filename": "Users/src/client/components/drawer/wrapper.tsx"
+                            "filename": "home/src/client/components/drawer/wrapper.tsx"
                           },
                           {
                             "parsedSize": 305,
-                            "gzipSize": 238,
-                            "brotliSize": 207,
+                            "gzipSize": 240,
+                            "brotliSize": 210,
                             "label": "drawer.tsx",
-                            "filename": "Users/src/client/components/drawer/drawer.tsx"
+                            "filename": "home/src/client/components/drawer/drawer.tsx"
                           },
                           {
                             "parsedSize": 26,
                             "gzipSize": 46,
                             "brotliSize": 30,
                             "label": "index.ts",
-                            "filename": "Users/src/client/components/drawer/index.ts"
+                            "filename": "home/src/client/components/drawer/index.ts"
                           }
                         ],
-                        "filename": "Users/src/client/components/drawer"
+                        "filename": "home/src/client/components/drawer"
                       },
                       {
                         "parsedSize": 4525,
-                        "gzipSize": 2178,
-                        "brotliSize": 1917,
+                        "gzipSize": 2179,
+                        "brotliSize": 1941,
                         "label": "checkbox",
                         "groups": [
                           {
                             "parsedSize": 81,
                             "gzipSize": 99,
-                            "brotliSize": 74,
+                            "brotliSize": 85,
                             "label": "context.ts",
-                            "filename": "Users/src/client/components/checkbox/context.ts"
+                            "filename": "home/src/client/components/checkbox/context.ts"
                           },
                           {
                             "parsedSize": 2882,
-                            "gzipSize": 1365,
-                            "brotliSize": 1221,
+                            "gzipSize": 1366,
+                            "brotliSize": 1228,
                             "label": "checkbox.tsx",
-                            "filename": "Users/src/client/components/checkbox/checkbox.tsx"
+                            "filename": "home/src/client/components/checkbox/checkbox.tsx"
                           },
                           {
                             "parsedSize": 1535,
                             "gzipSize": 667,
-                            "brotliSize": 591,
+                            "brotliSize": 597,
                             "label": "checkbox-group.tsx",
-                            "filename": "Users/src/client/components/checkbox/checkbox-group.tsx"
+                            "filename": "home/src/client/components/checkbox/checkbox-group.tsx"
                           },
                           {
                             "parsedSize": 27,
                             "gzipSize": 47,
                             "brotliSize": 31,
                             "label": "index.ts",
-                            "filename": "Users/src/client/components/checkbox/index.ts"
+                            "filename": "home/src/client/components/checkbox/index.ts"
                           }
                         ],
-                        "filename": "Users/src/client/components/checkbox"
+                        "filename": "home/src/client/components/checkbox"
                       },
                       {
                         "parsedSize": 2600,
                         "gzipSize": 1132,
-                        "brotliSize": 987,
+                        "brotliSize": 989,
                         "label": "text",
                         "groups": [
                           {
                             "parsedSize": 2058,
                             "gzipSize": 803,
-                            "brotliSize": 702,
+                            "brotliSize": 704,
                             "label": "child.tsx",
-                            "filename": "Users/src/client/components/text/child.tsx"
+                            "filename": "home/src/client/components/text/child.tsx"
                           },
                           {
                             "parsedSize": 542,
                             "gzipSize": 329,
                             "brotliSize": 285,
                             "label": "text.tsx",
-                            "filename": "Users/src/client/components/text/text.tsx"
+                            "filename": "home/src/client/components/text/text.tsx"
                           }
                         ],
-                        "filename": "Users/src/client/components/text"
+                        "filename": "home/src/client/components/text"
                       },
                       {
                         "parsedSize": 400,
                         "gzipSize": 266,
                         "brotliSize": 227,
                         "label": "module-item.tsx",
-                        "filename": "Users/src/client/components/module-item.tsx"
+                        "filename": "home/src/client/components/module-item.tsx"
                       },
                       {
                         "parsedSize": 1369,
-                        "gzipSize": 713,
-                        "brotliSize": 638,
+                        "gzipSize": 709,
+                        "brotliSize": 634,
                         "label": "file-list.tsx",
-                        "filename": "Users/src/client/components/file-list.tsx"
+                        "filename": "home/src/client/components/file-list.tsx"
                       },
                       {
                         "parsedSize": 4554,
                         "gzipSize": 1615,
-                        "brotliSize": 1457,
+                        "brotliSize": 1452,
                         "label": "input",
                         "groups": [
                           {
                             "parsedSize": 4554,
                             "gzipSize": 1615,
-                            "brotliSize": 1457,
+                            "brotliSize": 1452,
                             "label": "input.tsx",
-                            "filename": "Users/src/client/components/input/input.tsx"
+                            "filename": "home/src/client/components/input/input.tsx"
                           }
                         ],
-                        "filename": "Users/src/client/components/input"
+                        "filename": "home/src/client/components/input"
                       },
                       {
-                        "parsedSize": 1283,
-                        "gzipSize": 667,
-                        "brotliSize": 582,
+                        "parsedSize": 1284,
+                        "gzipSize": 668,
+                        "brotliSize": 598,
                         "label": "search-modules.tsx",
-                        "filename": "Users/src/client/components/search-modules.tsx"
+                        "filename": "home/src/client/components/search-modules.tsx"
                       },
                       {
                         "parsedSize": 9325,
-                        "gzipSize": 4848,
-                        "brotliSize": 4204,
+                        "gzipSize": 4852,
+                        "brotliSize": 4203,
                         "label": "select",
                         "groups": [
                           {
                             "parsedSize": 115,
-                            "gzipSize": 124,
+                            "gzipSize": 126,
                             "brotliSize": 97,
                             "label": "context.ts",
-                            "filename": "Users/src/client/components/select/context.ts"
+                            "filename": "home/src/client/components/select/context.ts"
                           },
                           {
                             "parsedSize": 367,
                             "gzipSize": 231,
                             "brotliSize": 190,
                             "label": "layouts.ts",
-                            "filename": "Users/src/client/components/select/layouts.ts"
+                            "filename": "home/src/client/components/select/layouts.ts"
                           },
                           {
                             "parsedSize": 1389,
                             "gzipSize": 775,
-                            "brotliSize": 672,
+                            "brotliSize": 671,
                             "label": "dropdown.tsx",
-                            "filename": "Users/src/client/components/select/dropdown.tsx"
+                            "filename": "home/src/client/components/select/dropdown.tsx"
                           },
                           {
                             "parsedSize": 79,
                             "gzipSize": 91,
-                            "brotliSize": 71,
+                            "brotliSize": 70,
                             "label": "ellipsis.tsx",
-                            "filename": "Users/src/client/components/select/ellipsis.tsx"
+                            "filename": "home/src/client/components/select/ellipsis.tsx"
                           },
                           {
                             "parsedSize": 1245,
                             "gzipSize": 708,
-                            "brotliSize": 608,
+                            "brotliSize": 610,
                             "label": "select-multiple.tsx",
-                            "filename": "Users/src/client/components/select/select-multiple.tsx"
+                            "filename": "home/src/client/components/select/select-multiple.tsx"
                           },
                           {
                             "parsedSize": 2654,
-                            "gzipSize": 1136,
-                            "brotliSize": 981,
+                            "gzipSize": 1137,
+                            "brotliSize": 982,
                             "label": "select-option.tsx",
-                            "filename": "Users/src/client/components/select/select-option.tsx"
+                            "filename": "home/src/client/components/select/select-option.tsx"
                           },
                           {
                             "parsedSize": 3453,
-                            "gzipSize": 1740,
-                            "brotliSize": 1558,
+                            "gzipSize": 1741,
+                            "brotliSize": 1556,
                             "label": "select.tsx",
-                            "filename": "Users/src/client/components/select/select.tsx"
+                            "filename": "home/src/client/components/select/select.tsx"
                           },
                           {
                             "parsedSize": 23,
                             "gzipSize": 43,
                             "brotliSize": 27,
                             "label": "index.ts",
-                            "filename": "Users/src/client/components/select/index.ts"
+                            "filename": "home/src/client/components/select/index.ts"
                           }
                         ],
-                        "filename": "Users/src/client/components/select"
+                        "filename": "home/src/client/components/select"
                       },
                       {
                         "parsedSize": 867,
-                        "gzipSize": 545,
-                        "brotliSize": 468,
+                        "gzipSize": 547,
+                        "brotliSize": 472,
                         "label": "tooltip.tsx",
-                        "filename": "Users/src/client/components/tooltip.tsx"
+                        "filename": "home/src/client/components/tooltip.tsx"
                       },
                       {
-                        "parsedSize": 888,
-                        "gzipSize": 519,
-                        "brotliSize": 470,
+                        "parsedSize": 1664,
+                        "gzipSize": 1038,
+                        "brotliSize": 962,
                         "label": "treemap",
                         "groups": [
                           {
+                            "parsedSize": 776,
+                            "gzipSize": 520,
+                            "brotliSize": 492,
+                            "label": "preset.ts",
+                            "filename": "home/src/client/components/treemap/preset.ts"
+                          },
+                          {
                             "parsedSize": 888,
-                            "gzipSize": 519,
+                            "gzipSize": 518,
                             "brotliSize": 470,
                             "label": "component.tsx",
-                            "filename": "Users/src/client/components/treemap/component.tsx"
+                            "filename": "home/src/client/components/treemap/component.tsx"
                           }
                         ],
-                        "filename": "Users/src/client/components/treemap"
+                        "filename": "home/src/client/components/treemap"
                       },
                       {
                         "parsedSize": 3918,
                         "gzipSize": 1374,
-                        "brotliSize": 1208,
+                        "brotliSize": 1210,
                         "label": "button/button.tsx",
-                        "filename": "Users/src/client/components/button/button.tsx"
+                        "filename": "home/src/client/components/button/button.tsx"
                       },
                       {
                         "parsedSize": 497,
                         "gzipSize": 308,
-                        "brotliSize": 265,
+                        "brotliSize": 270,
                         "label": "css-transition/css-transition.ts",
-                        "filename": "Users/src/client/components/css-transition/css-transition.ts"
+                        "filename": "home/src/client/components/css-transition/css-transition.ts"
                       },
                       {
                         "parsedSize": 915,
-                        "gzipSize": 427,
-                        "brotliSize": 370,
+                        "gzipSize": 429,
+                        "brotliSize": 397,
                         "label": "spacer/spacer.tsx",
-                        "filename": "Users/src/client/components/spacer/spacer.tsx"
+                        "filename": "home/src/client/components/spacer/spacer.tsx"
                       }
                     ],
-                    "filename": "Users/src/client/components"
+                    "filename": "home/src/client/components"
                   },
                   {
                     "parsedSize": 563,
-                    "gzipSize": 296,
-                    "brotliSize": 269,
+                    "gzipSize": 297,
+                    "brotliSize": 286,
                     "label": "context.ts",
-                    "filename": "Users/src/client/context.ts"
+                    "filename": "home/src/client/context.ts"
                   },
                   {
                     "parsedSize": 91,
                     "gzipSize": 111,
-                    "brotliSize": 93,
+                    "brotliSize": 94,
                     "label": "special",
                     "groups": [
                       {
                         "parsedSize": 91,
                         "gzipSize": 111,
-                        "brotliSize": 93,
+                        "brotliSize": 94,
                         "label": "index.ts",
-                        "filename": "Users/src/client/special/index.ts"
+                        "filename": "home/src/client/special/index.ts"
                       }
                     ],
-                    "filename": "Users/src/client/special"
+                    "filename": "home/src/client/special"
                   },
                   {
                     "parsedSize": 3762,
@@ -368,96 +361,96 @@
                       {
                         "parsedSize": 895,
                         "gzipSize": 453,
-                        "brotliSize": 381,
+                        "brotliSize": 386,
                         "label": "use-body-scroll",
                         "groups": [
                           {
                             "parsedSize": 895,
                             "gzipSize": 453,
-                            "brotliSize": 381,
+                            "brotliSize": 386,
                             "label": "use-body-scroll.ts",
-                            "filename": "Users/src/client/composables/use-body-scroll/use-body-scroll.ts"
+                            "filename": "home/src/client/composables/use-body-scroll/use-body-scroll.ts"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-body-scroll"
+                        "filename": "home/src/client/composables/use-body-scroll"
                       },
                       {
                         "parsedSize": 213,
-                        "gzipSize": 178,
+                        "gzipSize": 179,
                         "brotliSize": 154,
                         "label": "use-dom-observer",
                         "groups": [
                           {
                             "parsedSize": 213,
-                            "gzipSize": 178,
+                            "gzipSize": 179,
                             "brotliSize": 154,
                             "label": "use-dom-observer.ts",
-                            "filename": "Users/src/client/composables/use-dom-observer/use-dom-observer.ts"
+                            "filename": "home/src/client/composables/use-dom-observer/use-dom-observer.ts"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-dom-observer"
+                        "filename": "home/src/client/composables/use-dom-observer"
                       },
                       {
                         "parsedSize": 273,
                         "gzipSize": 220,
-                        "brotliSize": 156,
+                        "brotliSize": 155,
                         "label": "use-portal",
                         "groups": [
                           {
                             "parsedSize": 273,
                             "gzipSize": 220,
-                            "brotliSize": 156,
+                            "brotliSize": 155,
                             "label": "use-portal.ts",
-                            "filename": "Users/src/client/composables/use-portal/use-portal.ts"
+                            "filename": "home/src/client/composables/use-portal/use-portal.ts"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-portal"
+                        "filename": "home/src/client/composables/use-portal"
                       },
                       {
                         "parsedSize": 157,
                         "gzipSize": 132,
-                        "brotliSize": 104,
+                        "brotliSize": 103,
                         "label": "use-resize",
                         "groups": [
                           {
                             "parsedSize": 157,
                             "gzipSize": 132,
-                            "brotliSize": 104,
+                            "brotliSize": 103,
                             "label": "use-resize.ts",
-                            "filename": "Users/src/client/composables/use-resize/use-resize.ts"
+                            "filename": "home/src/client/composables/use-resize/use-resize.ts"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-resize"
+                        "filename": "home/src/client/composables/use-resize"
                       },
                       {
                         "parsedSize": 1713,
-                        "gzipSize": 1034,
-                        "brotliSize": 889,
+                        "gzipSize": 1033,
+                        "brotliSize": 886,
                         "label": "use-scale",
                         "groups": [
                           {
-                            "parsedSize": 491,
-                            "gzipSize": 291,
-                            "brotliSize": 245,
+                            "parsedSize": 492,
+                            "gzipSize": 293,
+                            "brotliSize": 247,
                             "label": "scale-context.ts",
-                            "filename": "Users/src/client/composables/use-scale/scale-context.ts"
+                            "filename": "home/src/client/composables/use-scale/scale-context.ts"
                           },
                           {
-                            "parsedSize": 188,
-                            "gzipSize": 148,
-                            "brotliSize": 124,
+                            "parsedSize": 187,
+                            "gzipSize": 146,
+                            "brotliSize": 122,
                             "label": "utils.ts",
-                            "filename": "Users/src/client/composables/use-scale/utils.ts"
+                            "filename": "home/src/client/composables/use-scale/utils.ts"
                           },
                           {
                             "parsedSize": 1034,
-                            "gzipSize": 595,
-                            "brotliSize": 520,
+                            "gzipSize": 594,
+                            "brotliSize": 517,
                             "label": "with-scale.tsx",
-                            "filename": "Users/src/client/composables/use-scale/with-scale.tsx"
+                            "filename": "home/src/client/composables/use-scale/with-scale.tsx"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-scale"
+                        "filename": "home/src/client/composables/use-scale"
                       },
                       {
                         "parsedSize": 97,
@@ -470,10 +463,10 @@
                             "gzipSize": 86,
                             "brotliSize": 64,
                             "label": "use-click-anywhere.ts",
-                            "filename": "Users/src/client/composables/use-click-anywhere/use-click-anywhere.ts"
+                            "filename": "home/src/client/composables/use-click-anywhere/use-click-anywhere.ts"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-click-anywhere"
+                        "filename": "home/src/client/composables/use-click-anywhere"
                       },
                       {
                         "parsedSize": 414,
@@ -486,78 +479,78 @@
                             "gzipSize": 182,
                             "brotliSize": 133,
                             "label": "use-query.ts",
-                            "filename": "Users/src/client/composables/use-query/use-query.ts"
+                            "filename": "home/src/client/composables/use-query/use-query.ts"
                           }
                         ],
-                        "filename": "Users/src/client/composables/use-query"
+                        "filename": "home/src/client/composables/use-query"
                       }
                     ],
-                    "filename": "Users/src/client/composables"
+                    "filename": "home/src/client/composables"
                   },
                   {
-                    "parsedSize": 139,
-                    "gzipSize": 125,
-                    "brotliSize": 96,
+                    "parsedSize": 227,
+                    "gzipSize": 180,
+                    "brotliSize": 148,
                     "label": "shared.ts",
-                    "filename": "Users/src/client/shared.ts"
+                    "filename": "home/src/client/shared.ts"
                   },
                   {
                     "parsedSize": 411,
                     "gzipSize": 228,
-                    "brotliSize": 183,
+                    "brotliSize": 184,
                     "label": "receiver.tsx",
-                    "filename": "Users/src/client/receiver.tsx"
+                    "filename": "home/src/client/receiver.tsx"
                   },
                   {
                     "parsedSize": 955,
-                    "gzipSize": 440,
-                    "brotliSize": 388,
+                    "gzipSize": 441,
+                    "brotliSize": 387,
                     "label": "application.tsx",
-                    "filename": "Users/src/client/application.tsx"
+                    "filename": "home/src/client/application.tsx"
                   },
                   {
                     "parsedSize": 124,
-                    "gzipSize": 127,
+                    "gzipSize": 126,
                     "brotliSize": 105,
                     "label": "main.tsx",
-                    "filename": "Users/src/client/main.tsx"
+                    "filename": "home/src/client/main.tsx"
                   }
                 ],
-                "filename": "Users/src/client"
+                "filename": "home/src/client"
               },
               {
                 "parsedSize": 165,
                 "gzipSize": 156,
                 "brotliSize": 121,
                 "label": "shared/index.ts",
-                "filename": "Users/src/shared/index.ts"
+                "filename": "home/src/shared/index.ts"
               }
             ],
-            "filename": "Users/src"
+            "filename": "home/src"
           },
           {
-            "parsedSize": 51640,
-            "gzipSize": 19619,
-            "brotliSize": 17674,
+            "parsedSize": 50812,
+            "gzipSize": 19192,
+            "brotliSize": 17313,
             "label": "node_modules/.pnpm",
             "groups": [
               {
-                "parsedSize": 25601,
-                "gzipSize": 8310,
-                "brotliSize": 7466,
-                "label": "squarified@0.3.2/node_modules/squarified/dist/index.mjs",
-                "filename": "Users/node_modules/.pnpm/squarified@0.3.2/node_modules/squarified/dist/index.mjs"
+                "parsedSize": 24773,
+                "gzipSize": 7884,
+                "brotliSize": 7091,
+                "label": "squarified@0.3.5/node_modules/squarified/dist/index.mjs",
+                "filename": "home/node_modules/.pnpm/squarified@0.3.5/node_modules/squarified/dist/index.mjs"
               },
               {
                 "parsedSize": 23886,
                 "gzipSize": 9912,
-                "brotliSize": 9034,
+                "brotliSize": 9048,
                 "label": "preact@10.22.0/node_modules/preact",
                 "groups": [
                   {
                     "parsedSize": 9100,
-                    "gzipSize": 3723,
-                    "brotliSize": 3410,
+                    "gzipSize": 3724,
+                    "brotliSize": 3415,
                     "label": "compat",
                     "groups": [
                       {
@@ -565,40 +558,40 @@
                         "gzipSize": 116,
                         "brotliSize": 99,
                         "label": "client.mjs",
-                        "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/compat/client.mjs"
+                        "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/compat/client.mjs"
                       },
                       {
                         "parsedSize": 8958,
-                        "gzipSize": 3607,
-                        "brotliSize": 3311,
+                        "gzipSize": 3608,
+                        "brotliSize": 3316,
                         "label": "dist/compat.module.js",
-                        "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/compat/dist/compat.module.js"
+                        "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/compat/dist/compat.module.js"
                       }
                     ],
-                    "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/compat"
+                    "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/compat"
                   },
                   {
                     "parsedSize": 11053,
-                    "gzipSize": 4562,
-                    "brotliSize": 4149,
+                    "gzipSize": 4561,
+                    "brotliSize": 4154,
                     "label": "dist/preact.module.js",
-                    "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/dist/preact.module.js"
+                    "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/dist/preact.module.js"
                   },
                   {
                     "parsedSize": 3367,
                     "gzipSize": 1370,
-                    "brotliSize": 1253,
+                    "brotliSize": 1257,
                     "label": "hooks/dist",
                     "groups": [
                       {
                         "parsedSize": 3367,
                         "gzipSize": 1370,
-                        "brotliSize": 1253,
+                        "brotliSize": 1257,
                         "label": "hooks.module.js",
-                        "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/hooks/dist/hooks.module.js"
+                        "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/hooks/dist/hooks.module.js"
                       }
                     ],
-                    "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/hooks/dist"
+                    "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/hooks/dist"
                   },
                   {
                     "parsedSize": 366,
@@ -611,20 +604,20 @@
                         "gzipSize": 257,
                         "brotliSize": 222,
                         "label": "jsxRuntime.module.js",
-                        "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
+                        "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
                       }
                     ],
-                    "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact/jsx-runtime/dist"
+                    "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact/jsx-runtime/dist"
                   }
                 ],
-                "filename": "Users/node_modules/.pnpm/preact@10.22.0/node_modules/preact"
+                "filename": "home/node_modules/.pnpm/preact@10.22.0/node_modules/preact"
               },
               {
                 "parsedSize": 1413,
                 "gzipSize": 786,
                 "brotliSize": 700,
                 "label": "@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-                "filename": "Users/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
+                "filename": "home/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
               },
               {
                 "parsedSize": 381,
@@ -637,57 +630,57 @@
                     "gzipSize": 102,
                     "brotliSize": 78,
                     "label": "compose-context-provider/index.mjs",
-                    "filename": "Users/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
+                    "filename": "home/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
                   },
                   {
                     "parsedSize": 10,
                     "gzipSize": 30,
                     "brotliSize": 14,
                     "label": "noop/index.mjs",
-                    "filename": "Users/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/noop/index.mjs"
+                    "filename": "home/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/noop/index.mjs"
                   },
                   {
                     "parsedSize": 175,
                     "gzipSize": 138,
                     "brotliSize": 110,
                     "label": "context-state/index.mjs",
-                    "filename": "Users/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/context-state/index.mjs"
+                    "filename": "home/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/context-state/index.mjs"
                   },
                   {
                     "parsedSize": 99,
                     "gzipSize": 106,
                     "brotliSize": 84,
                     "label": "use-abortable-effect/index.mjs",
-                    "filename": "Users/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
+                    "filename": "home/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
                   }
                 ],
-                "filename": "Users/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact"
+                "filename": "home/node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact"
               },
               {
                 "parsedSize": 359,
-                "gzipSize": 235,
+                "gzipSize": 234,
                 "brotliSize": 188,
                 "label": "clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
-                "filename": "Users/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
+                "filename": "home/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
               }
             ],
-            "filename": "Users/node_modules/.pnpm"
+            "filename": "home/node_modules/.pnpm"
           }
         ],
-        "filename": "Users"
+        "filename": "home"
       }
     ],
     "stats": [
       {
-        "statSize": 98731,
+        "statSize": 101043,
         "label": "src",
         "groups": [
           {
-            "statSize": 98329,
+            "statSize": 100641,
             "label": "client",
             "groups": [
               {
-                "statSize": 80807,
+                "statSize": 83119,
                 "label": "components",
                 "groups": [
                   {
@@ -863,11 +856,16 @@
                     "filename": "src/client/components/tooltip.tsx"
                   },
                   {
-                    "statSize": 2454,
+                    "statSize": 4766,
                     "label": "treemap",
                     "groups": [
                       {
-                        "statSize": 2454,
+                        "statSize": 2285,
+                        "label": "preset.ts",
+                        "filename": "src/client/components/treemap/preset.ts"
+                      },
+                      {
+                        "statSize": 2481,
                         "label": "component.tsx",
                         "filename": "src/client/components/treemap/component.tsx"
                       }
@@ -1042,7 +1040,7 @@
         "filename": "src"
       },
       {
-        "statSize": 89418,
+        "statSize": 89594,
         "label": "node_modules/.pnpm",
         "groups": [
           {
@@ -1131,9 +1129,9 @@
             "filename": "node_modules/.pnpm/foxact@0.2.35_react@18.3.1/node_modules/foxact"
           },
           {
-            "statSize": 52123,
-            "label": "squarified@0.3.2/node_modules/squarified/dist/index.mjs",
-            "filename": "node_modules/.pnpm/squarified@0.3.2/node_modules/squarified/dist/index.mjs"
+            "statSize": 52299,
+            "label": "squarified@0.3.5/node_modules/squarified/dist/index.mjs",
+            "filename": "node_modules/.pnpm/squarified@0.3.5/node_modules/squarified/dist/index.mjs"
           },
           {
             "statSize": 388,
@@ -1155,23 +1153,9 @@
     "mapSize": 0,
     "statSize": 1776,
     "gzipSize": 1133,
-    "brotliSize": 960,
-    "source": [
-      {
-        "parsedSize": 1776,
-        "gzipSize": 1133,
-        "brotliSize": 960,
-        "label": "index.html",
-        "filename": "index.html"
-      }
-    ],
-    "stats": [
-      {
-        "statSize": 1776,
-        "label": "index.html",
-        "filename": "index.html"
-      }
-    ],
+    "brotliSize": 957,
+    "source": [],
+    "stats": [],
     "isAsset": true,
     "isEntry": false,
     "imports": []

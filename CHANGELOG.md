@@ -1,3 +1,12 @@
+## 0.17.1
+
+- Fixed warning not showing as expected. #58
+- Non-js files no need to record child nodes.
+
+### credits
+
+@urbnjamesmi1
+
 ## 0.17.0
 
 - `Cli` add default config path (`vite.config.ts`)
