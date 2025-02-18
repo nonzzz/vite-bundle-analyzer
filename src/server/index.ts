@@ -114,7 +114,7 @@ function analyzer(opts?: AnalyzerPluginOptions) {
           : config.build.sourcemap === 'hidden'
         if (config.build.sourcemap === 'inline') {
           // verbose the warning
-          logger.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
+          console.warn('vite-bundle-analyzer: sourcemap option is set to `inline`, it might cause the result inaccurate.')
         }
       }
       if (config.build) {
