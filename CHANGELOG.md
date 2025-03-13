@@ -1,3 +1,7 @@
+## 0.17.2
+
+- Fix cli wrong option passing.
+
 ## 0.17.1
 
 - Fixed warning not showing as expected. #58

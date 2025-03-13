@@ -101,9 +101,9 @@ function loadVite(): Promise<typeof import('vite')> {
 }
 
 async function main(opts: Options) {
-  const { config, mode: analyzerMode, filename: fileName, port, ...rest } = opts
+  const { config, mode: analyzerMode, filename: fileName, port, open: openAnalyzer, ...rest } = opts
   const vite = await loadVite()
-  await vite.build({ configFile: config, plugins: [analyzer({ analyzerMode, fileName, analyzerPort: +port, ...rest })] })
+  await vite.build({ configFile: config, plugins: [analyzer({ analyzerMode, fileName, openAnalyzer, analyzerPort: +port, ...rest })] })
 }
 
 program
