@@ -38,9 +38,9 @@ interface Options {
   filename: string
   port: string
   reportTitle: string
-  open: boolean
+  open: boolean | string
   defaultSizes: DefaultSizes
-  summary: boolean
+  summary: boolean | string
   config: string
 }
 
@@ -100,11 +100,24 @@ function loadVite(): Promise<typeof import('vite')> {
   return import(importMetaResolve('vite'))
 }
 
-async function main(opts: Options) {
-  const { config, mode: analyzerMode, filename: fileName, port, open: openAnalyzer, ...rest } = opts
-  const vite = await loadVite()
-  await vite.build({ configFile: config, plugins: [analyzer({ analyzerMode, fileName, openAnalyzer, analyzerPort: +port, ...rest })] })
+function parseBool(s: string | boolean) {
+  if (typeof s === 'boolean') { return s }
+  if (s === 'false') { return false }
+  return true
 }
+
+async function main(opts: Options) {
+  const { config, mode: analyzerMode, filename: fileName, port, open, summary, ...rest } = opts
+  const vite = await loadVite()
+  await vite.build({
+    configFile: config,
+    plugins: [
+      analyzer({ analyzerMode, fileName, openAnalyzer: parseBool(open), summary: parseBool(summary), analyzerPort: +port, ...rest })
+    ]
+  })
+}
+
+// Based on my test, I found that commander.js can't handle type of boolean. So we should create a parse for it.
 
 program
   .option('-m, --mode <mode>', MODE_TEXT, 'server')
