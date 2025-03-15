@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:debug": "vite build --debug",
+    "analyze": "pnpm exec analyze -o false",
     "preview": "vite preview"
   },
   "devDependencies": {

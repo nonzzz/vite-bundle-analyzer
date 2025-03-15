@@ -1,12 +1,12 @@
 /* eslint-disable no-labels */
 import ansis from 'ansis'
-import { program } from 'commander'
 import fs from 'fs'
+import mri from 'mri'
 import path from 'path'
 import url from 'url'
 import { analyzer } from './server'
 import type { AnalyzerMode, DefaultSizes, ExportFields, PackageJSONMetadata } from './server/interface'
-import { searchForWorkspaceRoot } from './server/search-root'
+import { searchForPackageRoot, searchForWorkspaceRoot } from './server/search-root'
 
 let BREAK_LINE = '\n'
 
@@ -38,9 +38,9 @@ interface Options {
   filename: string
   port: string
   reportTitle: string
-  open: boolean | string
+  open: boolean
   defaultSizes: DefaultSizes
-  summary: boolean | string
+  summary: boolean
   config: string
 }
 
@@ -100,34 +100,148 @@ function loadVite(): Promise<typeof import('vite')> {
   return import(importMetaResolve('vite'))
 }
 
-function parseBool(s: string | boolean) {
-  if (typeof s === 'boolean') { return s }
-  if (s === 'false') { return false }
-  return true
+const FILE_EXTENSIONS = ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts']
+
+function findCurrentViteConfgFile(inputPath: string) {
+  if (inputPath) { return inputPath }
+  const root = searchForPackageRoot(process.cwd())
+  for (const ext of FILE_EXTENSIONS) {
+    const p = path.join(root, 'vite.config' + ext)
+    if (fs.existsSync(p)) {
+      return p
+    }
+  }
+  throw new Error('Missing Vite configuration file. Use --config <path> to specify location')
 }
 
 async function main(opts: Options) {
   const { config, mode: analyzerMode, filename: fileName, port, open, summary, ...rest } = opts
+  const configFile = findCurrentViteConfgFile(config)
   const vite = await loadVite()
   await vite.build({
-    configFile: config,
+    configFile,
     plugins: [
-      analyzer({ analyzerMode, fileName, openAnalyzer: parseBool(open), summary: parseBool(summary), analyzerPort: +port, ...rest })
+      analyzer({ analyzerMode, fileName, openAnalyzer: open, summary, analyzerPort: +port, ...rest })
     ]
   })
 }
 
-// Based on my test, I found that commander.js can't handle type of boolean. So we should create a parse for it.
+interface CommanderOption {
+  alias: string
+  desc: string
+  default: unknown
+  flag?: string
+}
 
-program
-  .option('-m, --mode <mode>', MODE_TEXT, 'server')
-  .option('-f, --filename <filename>', FILENAME_TEXT, 'stats')
-  .option('-p, --port <port>', PORT_TEXT, '8888')
-  .option('-t, --reportTitle [title]', REPORT_TITLE_TEXT, 'vite-bundle-analyzer')
-  .option('-o, --open [bool]', OPEN_TEXT, true)
-  .option('-d, --defaultSizes <string>', DEFAULT_SIZES_TEXT, 'stat')
-  .option('-s, --summary [bool]', SUMMARY_TEXT, true)
-  .option('-c, --config <path>', 'Path to vite config file', 'vite.config.ts')
-  .action(main)
+const OPTIONS: Record<string, CommanderOption> = {
+  mode: {
+    alias: 'm',
+    desc: MODE_TEXT,
+    default: 'server',
+    flag: '<mode>'
+  },
+  filename: {
+    alias: 'f',
+    desc: FILENAME_TEXT,
+    default: 'stats'
+  },
+  port: {
+    alias: 'p',
+    desc: PORT_TEXT,
+    default: '8888',
+    flag: '<port>'
+  },
+  reportTitle: {
+    alias: 't',
+    desc: REPORT_TITLE_TEXT,
+    default: 'vite-bundle-analyzer',
+    flag: '[title]'
+  },
+  open: {
+    alias: 'o',
+    desc: OPEN_TEXT,
+    default: true,
+    flag: '[bool]'
+  },
+  defaultSizes: {
+    alias: 'd',
+    desc: DEFAULT_SIZES_TEXT,
+    default: 'stat',
+    flag: '<string>'
+  },
+  summary: {
+    alias: 's',
+    desc: SUMMARY_TEXT,
+    default: true,
+    flag: '[bool]'
+  },
+  config: {
+    alias: 'c',
+    desc: 'Path to vite config file. Automic search for vite configuration in your current workspace.',
+    default: '',
+    flag: '<path>'
+  }
+}
 
-program.parse(process.argv)
+const argv = mri<Options & { help?: string, h?: string }>(process.argv.slice(2), {
+  alias: Object.fromEntries(Object.entries(OPTIONS).map(([key, { alias }]) => [alias, key])),
+  default: Object.fromEntries(Object.entries(OPTIONS).map(([key, { default: value }]) => [key, value])),
+  boolean: ['open', 'summary']
+})
+
+function preferText<T>(value: T) {
+  if (value === undefined || value === null) {
+    return ''
+  }
+  switch (typeof value) {
+    case 'boolean':
+      return value.toString()
+    case 'number':
+      return value.toString()
+    case 'string':
+      return value
+    case 'object':
+      return '[object]'
+    case 'function':
+      return '[function]'
+    default:
+      return ''
+  }
+}
+
+function printHelp() {
+  console.log('Usage: vite-bundle-analyzer [options]' + BREAK_LINE)
+  console.log('Options:')
+  const maxLen = Object.entries(OPTIONS)
+    .map(([key, opt]) => `-${opt.alias}, --${key} ${opt.flag || ''}`)
+    .reduce((max, str) => Math.max(max, str.length), 0)
+  const textPadding = ' '.repeat(maxLen + 6)
+  for (const [key, opt] of Object.entries(OPTIONS)) {
+    const option = `-${opt.alias}, --${key} ${opt.flag || ''}`.padEnd(maxLen + 4)
+    const defaultCast = opt.default ? ` (default: ${preferText(opt.default)})` : ''
+    const lines = opt.desc.split(BREAK_LINE)
+    const [firstLine, ...restLines] = lines
+    if (!restLines.length) {
+      console.log(`  ${option}${firstLine}${defaultCast}`)
+      continue
+    }
+    console.log(`  ${option}${firstLine}`)
+    const last = restLines.length - 1
+    for (let i = 0; i < restLines.length; i++) {
+      const line = restLines[i]
+      if (i === last) {
+        console.log(`${textPadding}${line}${defaultCast}`)
+        break
+      }
+      console.log(`${textPadding}${line}`)
+    }
+    console.log('')
+  }
+}
+
+if (argv.h || argv.help) {
+  printHelp()
+  process.exit(0)
+}
+
+main(argv).catch(console.error)
