@@ -1,3 +1,7 @@
+## 0.18.0
+
+- Use mri to replace commander.js
+
 ## 0.17.3
 
 - Respect Cli parse.
