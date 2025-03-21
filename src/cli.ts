@@ -100,13 +100,13 @@ function loadVite(): Promise<typeof import('vite')> {
   return import(importMetaResolve('vite'))
 }
 
-const FILE_EXTENSIONS = ['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts']
+const FILE_EXTENSIONS = ['js', 'mjs', 'cjs', 'ts', 'mts', 'cts']
 
 function findCurrentViteConfgFile(inputPath: string) {
   if (inputPath) { return inputPath }
   const root = searchForPackageRoot(process.cwd())
   for (const ext of FILE_EXTENSIONS) {
-    const p = path.join(root, 'vite.config' + ext)
+    const p = path.join(root, 'vite.config' + '.' + ext)
     if (fs.existsSync(p)) {
       return p
     }

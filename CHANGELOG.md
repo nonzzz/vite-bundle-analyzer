@@ -1,3 +1,7 @@
+## 0.18.1
+
+- Reduce installer size.
+
 ## 0.18.0
 
 - Use mri to replace commander.js
