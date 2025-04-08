@@ -4,9 +4,9 @@ import fs from 'fs'
 import mri from 'mri'
 import path from 'path'
 import url from 'url'
+import { searchForPackageRoot, searchForWorkspaceRoot } from 'workspace-sieve'
 import { analyzer } from './server'
 import type { AnalyzerMode, DefaultSizes, ExportFields, PackageJSONMetadata } from './server/interface'
-import { searchForPackageRoot, searchForWorkspaceRoot } from './server/search-root'
 
 let BREAK_LINE = '\n'
 

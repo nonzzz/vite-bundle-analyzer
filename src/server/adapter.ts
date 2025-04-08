@@ -1,8 +1,8 @@
 // adapter for rollup
 import type { Plugin } from 'rollup'
 import type { Plugin as VitePlugin } from 'vite'
+import { searchForWorkspaceRoot } from 'workspace-sieve'
 import type { AnalyzerPluginInternalAPI } from './interface'
-import { searchForWorkspaceRoot } from './search-root'
 import { pick } from './shared'
 
 export function adapter(userPlugin: VitePlugin<AnalyzerPluginInternalAPI>) {

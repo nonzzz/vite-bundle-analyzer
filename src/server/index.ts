@@ -3,12 +3,12 @@ import fs from 'fs'
 import path from 'path'
 import { Readable } from 'stream'
 import type { Logger, Plugin } from 'vite'
+import { searchForWorkspaceRoot } from 'workspace-sieve'
 import zlib from 'zlib'
 import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
 import type { AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore } from './interface'
 import { opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
-import { searchForWorkspaceRoot } from './search-root'
 import { analyzerDebug, convertBytes, fsp, stringToByte } from './shared'
 
 const isCI = !!process.env.CI
