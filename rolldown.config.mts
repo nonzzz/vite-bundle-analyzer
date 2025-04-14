@@ -2,7 +2,7 @@ import shim from '@rollup/plugin-esm-shim'
 import { builtinModules } from 'module'
 import { defineConfig } from 'rolldown'
 import type { RolldownPlugin } from 'rolldown'
-import { minify, swc } from 'rollup-plugin-swc3'
+import { swc } from 'rollup-plugin-swc3'
 const external = [...builtinModules, 'vite']
 
 const env = process.env.NODE_ENV
@@ -29,8 +29,8 @@ export default defineConfig([
         }
       },
       shim() as RolldownPlugin,
-      swc() as RolldownPlugin,
-      env !== 'development' && minify({ mangle: true, module: true, compress: true, sourceMap: true }) as RolldownPlugin
+      swc() as RolldownPlugin
+      // env !== 'development' && minify({ mangle: true, module: true, compress: true, sourceMap: true }) as RolldownPlugin
     ]
   }
 ])

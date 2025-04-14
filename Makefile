@@ -19,7 +19,7 @@ client-analyze:
 server-analyze:
 	@echo "Analyzing server code..."
 	-rm -rf analysis
-	./node_modules/.bin/rollup --config analyze.server.mjs
+	./node_modules/.bin/rolldown --config analyze.server.mjs
 
 build-all:cleanup build-server cleaup-client
 

@@ -1,8 +1,6 @@
-import commonjs from '@rollup/plugin-commonjs'
 import shim from '@rollup/plugin-esm-shim'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { builtinModules } from 'module'
-import { defineConfig } from 'rollup'
+import { defineConfig } from 'rolldown'
 import { minify, swc } from 'rollup-plugin-swc3'
 import { adapter, analyzer } from './dist/index.mjs'
 
@@ -15,13 +13,12 @@ export default defineConfig([
       index: 'src/server/index.ts'
     },
     external,
+    platform: 'node',
     output: [
       { dir: 'analysis', format: 'esm', exports: 'named', entryFileNames: '[name].mjs', chunkFileNames: '[name]-[hash].mjs' },
       { dir: 'analysis', format: 'cjs', exports: 'named', entryFileNames: '[name].js' }
     ],
     plugins: [
-      commonjs(),
-      nodeResolve(),
       {
         name: 'resolve-template',
         resolveId(id) {
@@ -33,7 +30,7 @@ export default defineConfig([
       shim(),
       swc({ sourceMaps: true }),
       minify({ mangle: true, module: true, compress: true, sourceMap: true }),
-      adapter(analyzer())
+      adapter(analyzer(), 'rolldown')
     ]
   }
 ])

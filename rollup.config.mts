@@ -7,7 +7,11 @@ const external = [...builtinModules, 'vite']
 export default defineConfig([
   {
     input: 'src/server/index.ts',
-    output: { file: 'dist/index.d.ts' },
+    // output: { file: 'dist/index.d.ts' },
+    output: [
+      { dir: 'dist', format: 'esm', exports: 'named', entryFileNames: '[name].d.mts' },
+      { dir: 'dist', format: 'cjs', exports: 'named', entryFileNames: '[name].d.ts' }
+    ],
     plugins: [dts()],
     external
   }
