@@ -20,7 +20,6 @@
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.6",
     "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-esm-shim": "^0.1.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@stylex-extend/core": "^0.6.0",
     "@stylex-extend/react": "^0.6.0",
@@ -47,15 +46,16 @@
     "preact": "^10.19.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "^4.13.0",
-    "rollup-plugin-dts": "^6.1.0",
-    "rollup-plugin-swc3": "^0.11.2",
+    "rolldown": "1.0.0-beta.7",
+    "rollup": "^4.40.0",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-swc3": "^0.12.1",
     "squarified": "^0.3.5",
     "tinyexec": "^0.3.1",
     "tsx": "^4.19.2",
     "typescript": "^5.2.2",
     "unplugin-icons": "^0.18.5",
-    "vite": "^6",
+    "vite": "npm:rolldown-vite@6.3.0-beta.5",
     "vitest": "^2.1.5",
     "workspace-sieve": "0.3.0"
   },
@@ -67,7 +67,6 @@
       "is-core-module": "npm:@nolyfill/is-core-module@^1"
     },
     "patchedDependencies": {
-      "@rollup/plugin-esm-shim@0.1.7": "patches/@rollup__plugin-esm-shim@0.1.7.patch",
       "@jridgewell/source-map@0.3.6": "patches/@jridgewell__source-map@0.3.6.patch"
     }
   },
@@ -85,6 +84,8 @@
     "rollup",
     "rollup-plugin",
     "vite-plugin",
+    "visualizer",
+    "treemap",
     "bundle-analyzer",
     "rollup-bundle-analyzer"
   ],

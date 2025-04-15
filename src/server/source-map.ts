@@ -6,6 +6,7 @@ import type { ChunkMetadata } from './trie'
 // Only have sourceContentFor and originalPositionFor methods
 
 export function pickupContentFromSourcemap(rawSourcemap: string) {
+  if (!rawSourcemap) { return [] }
   const consumer = new SourceMapConsumer(rawSourcemap)
 
   const result = consumer.sources.reduce((acc, cur) => {

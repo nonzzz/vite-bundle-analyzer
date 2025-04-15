@@ -20,6 +20,7 @@
 > [!WARNING]
 > Vite's enable minify by default.There for you will see that the parsed size is larger than actual size.This is because the bundle info
 > provide by rollup isn't compressed.(If you care about this problem you can choose anothr plugins.)
+> rolldown-vite is an experimental tool, and now is supported :D
 
 ## Install
 
@@ -120,7 +121,7 @@ something (I don't know why? Maybe it's run with race?)
 
 ### Integrated
 
-Integrate this plugin into your rollup/vite tool. The following is a list of exposed APIs.
+Integrate this plugin into your rollup/vite/rolldown tool. The following is a list of exposed APIs.
 
 ```ts
 // For integrate it as custom analyzer
@@ -172,6 +173,11 @@ const myAnalyzerPlugin = {
 
 // .... your logic
 ```
+
+### Others
+
+- [ROLLDOWN](./ROLLDOWN.md)
+- [CHANGLOG](./CHANGELOG.md)
 
 ### LICENSE
 

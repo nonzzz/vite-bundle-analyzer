@@ -1,5 +1,4 @@
 import commonjs from '@rollup/plugin-commonjs'
-import shim from '@rollup/plugin-esm-shim'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { builtinModules } from 'module'
 import { defineConfig } from 'rollup'
@@ -30,7 +29,6 @@ export default defineConfig([
           }
         }
       },
-      shim(),
       swc({ sourceMaps: true }),
       minify({ mangle: true, module: true, compress: true, sourceMap: true }),
       adapter(analyzer())
