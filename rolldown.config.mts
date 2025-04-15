@@ -137,8 +137,17 @@ function generateDTS() {
   if (extractorResult.succeeded) {
     const dtsPath = path.join(process.cwd(), 'dist/index.d.ts')
     const dmtsPath = path.join(process.cwd(), 'dist/index.d.mts')
+    const globalDTS = fs.readFileSync('./global.d.ts', 'utf8').replace(
+      /declare module ['"]html\.mjs['"] \{[\s\S]*?export function html.*?\n\}/g,
+      ''
+    )
     if (fs.existsSync(dtsPath)) {
       fs.copyFileSync(dtsPath, dmtsPath)
+      // then copy global.d.ts into
+      for (const file of [dtsPath, dmtsPath]) {
+        const c = fs.readFileSync(file, 'utf-8')
+        fs.writeFileSync(file, globalDTS + '\n\n' + c)
+      }
       console.log('Generated bundled declaration files successfully')
     }
   } else {
