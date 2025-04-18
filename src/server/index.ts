@@ -6,7 +6,7 @@ import type { Logger, Plugin } from 'vite'
 import { searchForWorkspaceRoot } from 'workspace-sieve'
 import zlib from 'zlib'
 import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
-import type { AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore } from './interface'
+import type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore } from './interface'
 import { opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
 import { analyzerDebug, convertBytes, fsp, stringToByte } from './shared'
@@ -70,6 +70,35 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
 
 // Design for race condition is called
 let callCount = 0
+
+function writeStaticResource(root: string, fileName = 'stats', mode: AnalyzerMode | undefined) {
+  const isAbs = path.isAbsolute(fileName)
+  let absPath = isAbs ? fileName : path.join(root, fileName)
+  // Also check the extension if not matched
+  const ext = path.extname(absPath)
+
+  if (!ext) {
+    absPath += mode === 'json' ? '.json' : '.html'
+  }
+
+  if (fs.existsSync(absPath) && callCount > 0) {
+    absPath = path.join(root, `${path.basename(absPath, ext)}-${callCount}${ext}`)
+  }
+
+  const isJSON = path.extname(absPath) === '.json'
+
+  return { isJSON, absPath }
+}
+
+function getOutputPath(opts: AnalyzerPluginOptions, outputDir: string) {
+  if (opts.analyzerMode === 'json' || opts.analyzerMode === 'static') {
+    if (typeof opts.fileName === 'function') {
+      return opts.fileName(outputDir) || 'stats'
+    }
+    return opts.fileName || 'stats'
+  }
+  throw new Error('[analyzer error]: unreachable')
+}
 
 // There is a possibility that multiple called.
 // Thre're two scenarios:
@@ -190,19 +219,14 @@ function analyzer(opts?: AnalyzerPluginOptions) {
         logger.info(generateSummaryMessage(analyzerModule.modules))
       }
       const analyzeModule = analyzerModule.processModule()
-      callCount++
 
       if (preferSilent) {
-        const output = 'fileName' in opts ? opts.fileName : 'stats'
-        let p = path.join(defaultWd, `${output}.${opts.analyzerMode === 'json' ? 'json' : 'html'}`)
-        if (fs.existsSync(p)) {
-          p = path.join(defaultWd, `${output}-${callCount}.${opts.analyzerMode === 'json' ? 'json' : 'html'}`)
-        }
-        if (opts.analyzerMode === 'json') {
-          return fsp.writeFile(p, JSON.stringify(analyzeModule, null, 2), 'utf8')
+        const { isJSON, absPath } = writeStaticResource(defaultWd, getOutputPath(opts, defaultWd), opts.analyzerMode)
+        if (isJSON) {
+          return fsp.writeFile(absPath, JSON.stringify(analyzeModule, null, 2), 'utf8')
         }
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
-        await fsp.writeFile(p, html, 'utf8')
+        await fsp.writeFile(absPath, html, 'utf8')
         b.into(html)
         if (opts.analyzerMode === 'static' && !opts.openAnalyzer) {
           return
@@ -210,7 +234,6 @@ function analyzer(opts?: AnalyzerPluginOptions) {
       }
 
       if (preferLivingServer) {
-        callCount--
         const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
         b.into(html)
         const port = await ensureEmptyPort(
@@ -237,8 +260,8 @@ function analyzer(opts?: AnalyzerPluginOptions) {
           const address = `http://localhost:${port}`
           openBrowser(address)
         }
-        callCount++
       }
+      callCount++
     }
   }
 

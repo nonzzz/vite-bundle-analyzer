@@ -57,16 +57,18 @@ export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOpti
   openAnalyzer?: boolean
 }
 
+export type FileNameDesc = (outputDir: string) => string
+
 export interface AnalyzerPluginOptionsWithJson extends BasicAnalyzerPluginOptions {
   analyzerMode?: 'json'
-  fileName?: string
+  fileName?: string | FileNameDesc
 }
 
 export interface AnalyzerPluginOptionsWithStatic extends BasicAnalyzerPluginOptions {
   analyzerMode?: 'static'
   analyzerPort?: number | 'auto'
   openAnalyzer?: boolean
-  fileName?: string
+  fileName?: string | FileNameDesc
 }
 
 export interface AnalyzerPluginOptionsWithCustom extends BasicAnalyzerPluginOptions {

@@ -1,3 +1,16 @@
+## 0.18.2
+
+- Static resources output.
+- The `fileName` option now supports passing a function to dynamically generate output filenames. This function receives the build metadata and should return a string.
+- Support Rolldown. (And Rolldown Vite)
+
+```ts
+import path from 'path'
+analyzer({
+  fileName: (outputDir) => path.join(outputDir, 'report.html')
+})
+```
+
 ## 0.18.1
 
 - Reduce installer size.

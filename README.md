@@ -55,7 +55,7 @@ export default defineConfig({
 | params         | type                             | default       | description                                                                      |
 | -------------- | -------------------------------- | ------------- | -------------------------------------------------------------------------------- |
 | `analyzerMode` | `server\|static\|json\|function` | `server`      | In `server` will create a static server to preview.                              |
-| `fileName`     | `string`                         | `stats`       | The name of the static product.（No suffix name）                                |
+| `fileName`     | `string\| function`              | `stats`       | The name of the static product.（No suffix name）                                |
 | `reportTitle`  | `string`                         | `plugin name` | Report website title.                                                            |
 | `gzipOptions`  | `Record<string,any>`             | `{}`          | Compression options. (Details see `zlib module`)                                 |
 | `analyzerPort` | `number\|'auto'`                 | `8888`        | static server port.                                                              |
@@ -115,9 +115,9 @@ I don't want to add new option to control living server.
 
 ### For vite based framework or library!!!
 
-If you're using `vitepress` or `remix` or `qwik` and etc who based on the `vite` framework. Normally it will run two vite instance during build phase. So you
-should ensure that `analyzerMode` as `server`.(If you pass `static` or `json` for the `analyzerMode` i can't promise the final result.) Like `vitpress` will remove
-something (I don't know why? Maybe it's run with race?)
+When using frameworks built on top of Vite (such as VitePress, Remix, or Qwik), these tools typically run multiple Vite instances during the build phase. For accurate analysis results, we recommend setting `analyzerMode` to `server`.
+
+If you set `analyzerMode` to `static` or `json`, the analysis results may be incomplete or inaccurate. For example, with VitePress, some build artifacts might be removed during the build process due to concurrent build operations.
 
 ### Integrated
 
