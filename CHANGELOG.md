@@ -1,4 +1,4 @@
-## 0.18.2
+## 0.19.0
 
 - Static resources output.
 - The `fileName` option now supports passing a function to dynamically generate output filenames. This function receives the build metadata and should return a string.
