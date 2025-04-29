@@ -1,3 +1,7 @@
+## 0.20.1
+
+- Remove unnecessary logic.
+
 ## 0.20.0
 
 - Add rolldown adapter
