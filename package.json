@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

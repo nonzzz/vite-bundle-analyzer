@@ -1,3 +1,14 @@
+## 0.20.0
+
+- Add rolldown adapter
+
+```ts
+// rolldown.config.mts
+import { analyzer, unstableRolldownAdapter } from 'vite-bundle-analyzer'
+
+unstableRolldownAdapter(analyzer())
+```
+
 ## 0.19.0
 
 - Static resources output.
