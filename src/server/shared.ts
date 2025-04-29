@@ -2,6 +2,7 @@ import ansis from 'ansis'
 import { noop } from 'foxact/noop'
 import fs from 'fs'
 import path from 'path'
+import { Readable } from 'stream'
 import utils from 'util'
 import zlib from 'zlib'
 import type { BrotliOptions, InputType, ZlibOptions } from 'zlib'
@@ -108,3 +109,28 @@ export function createDebug(namespace: string) {
 }
 // https://github.com/vitejs/vite/blob/main/packages/vite/bin/vite.js#L14-L33
 export const analyzerDebug = createDebug('vite:bundle-analyzer')
+
+export function arena() {
+  let hasSet = false
+  let binary: Uint8Array
+  return {
+    rs: new Readable(),
+    into(b: string | Uint8Array) {
+      if (hasSet) { return }
+      this.rs.push(b)
+      this.rs.push(null)
+      if (!binary) {
+        binary = stringToByte(b)
+      }
+      hasSet = true
+    },
+    refresh(data?: string | Uint8Array) {
+      if (data) {
+        binary = stringToByte(data)
+      }
+      hasSet = false
+      this.rs = new Readable()
+      this.into(binary)
+    }
+  }
+}

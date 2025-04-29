@@ -1,19 +1,6 @@
-export type Kind = 'stat' | 'source'
-
 interface NodeDescriptor<T = Record<string, Empty>> {
-  kind: Kind
   meta: T
   filename: string
-}
-
-export interface KindStat {
-  statSize: number
-}
-
-export interface KindSource {
-  parsedSize: number
-  brotliSize: number
-  gzipSize: number
 }
 
 export interface ChunkMetadata {
@@ -31,7 +18,6 @@ export interface GroupWithNode {
 }
 
 export class Node<T = Empty> implements NodeDescriptor<T> {
-  kind: Kind
   meta: T
   filename: string
   // eslint-disable-next-line no-use-before-define
@@ -39,7 +25,6 @@ export class Node<T = Empty> implements NodeDescriptor<T> {
   groups: Array<GroupWithNode>
   isEndOfPath: boolean
   constructor(options?: Partial<NodeDescriptor<T>>) {
-    this.kind = options?.kind || 'stat'
     this.meta = options?.meta || {} as T
     this.filename = options?.filename || ''
     this.children = new Map()
@@ -48,7 +33,12 @@ export class Node<T = Empty> implements NodeDescriptor<T> {
   }
 }
 
-export class FileSystemTrie<T> {
+export interface NodeVisitor<T> {
+  enter?: (node: GroupWithNode & T, parent: Node<T> | null) => void
+  leave?: (node: GroupWithNode & T, parent: Node<T> | null) => void
+}
+
+export class Trie<T> {
   root: Node<T>
   constructor(options?: Partial<NodeDescriptor<T>>) {
     this.root = new Node<T>(options)
@@ -62,7 +52,7 @@ export class FileSystemTrie<T> {
     for (const dir of dirs) {
       path = path ? `${path}/${dir}` : dir
       if (!current.children.has(dir)) {
-        current.children.set(dir, createNode({ ...desc }))
+        current.children.set(dir, new Node({ ...desc }))
       }
       current = current.children.get(dir)!
       current.filename = path
@@ -92,42 +82,33 @@ export class FileSystemTrie<T> {
     }
   }
 
-  walk<T>(node: Node<T>, handler: (child: GroupWithNode, parent: Node<T>) => void) {
+  walk(node: Node<T>, visitor: NodeVisitor<T>) {
     if (!node.children.size) { return }
     for (const [id, childNode] of node.children.entries()) {
-      const child: GroupWithNode = { ...childNode.meta, label: id, groups: childNode.groups, filename: childNode.filename }
+      const child: GroupWithNode & T = {
+        ...childNode.meta,
+        label: id,
+        groups: childNode.groups,
+        filename: childNode.filename
+      }
+
       if (childNode.isEndOfPath) {
         // @ts-expect-error safe operation
         delete child.groups
       }
-      handler(child, node)
-      this.walk(childNode, handler)
-      if (child.groups && child.groups.length) {
-        switch (node.kind) {
-          case 'stat':
-            child.statSize = child.groups.reduce((acc, cur) => (acc += cur.statSize, acc), 0)
-            break
-          case 'source': {
-            const size = child.groups.reduce((acc, cur) => {
-              acc.parsedSize += cur.parsedSize
-              acc.gzipSize += cur.gzipSize
-              acc.brotliSize += cur.brotliSize
-              return acc
-            }, { parsedSize: 0, gzipSize: 0, brotliSize: 0 })
-            Object.assign(child, size)
-          }
-        }
+
+      if (visitor.enter) {
+        visitor.enter(child, node)
+      }
+
+      this.walk(childNode, visitor)
+
+      if (visitor.leave) {
+        visitor.leave(child, node)
       }
     }
-    // memory free
+
+    // Memory cleanup
     node.children.clear()
   }
-}
-
-export function createNode<T>(options?: Partial<NodeDescriptor<T>>) {
-  return new Node(options)
-}
-
-export function createFileSystemTrie<T>(options?: Partial<NodeDescriptor<T>>) {
-  return new FileSystemTrie(options)
 }

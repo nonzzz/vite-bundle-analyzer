@@ -85,6 +85,9 @@ export interface AnalyzerStore {
   analyzerModule: AnalyzerModule
   lastSourcemapOption: boolean
   hasSetupSourcemapOption: boolean
+  pluginOptions: AnalyzerPluginOptions
+  preferLivingServer: boolean
+  preferSilent: boolean
 }
 
 export interface ExportFields {

@@ -3,8 +3,8 @@ import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 import { createBrotil, createGzip, slash, stringToByte } from './shared'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
-import { createFileSystemTrie } from './trie'
-import type { ChunkMetadata, GroupWithNode, KindSource, KindStat } from './trie'
+import { Trie } from './trie'
+import type { ChunkMetadata, GroupWithNode } from './trie'
 
 const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
@@ -17,6 +17,7 @@ function getAbsPath(p: string, cwd = defaultWd) {
 
 function generateNodeId(id: string, cwd: string = defaultWd): string {
   const abs = getAbsPath(id, cwd)
+
   return path.isAbsolute(abs) ? abs.replace('/', '') : abs
 }
 
@@ -147,8 +148,14 @@ export class AnalyzerNode {
     compress: ReturnType<typeof createCompressAlorithm>,
     workspaceRoot: string
   ) {
-    const stats = createFileSystemTrie<KindStat>({ meta: { statSize: 0 } })
-    const sources = createFileSystemTrie<KindSource>({ kind: 'source', meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0 } })
+    const stats = new Trie<{
+      statSize: number
+    }>({ meta: { statSize: 0 } })
+    const sources = new Trie<{
+      parsedSize: number,
+      brotliSize: number,
+      gzipSize: number
+    }>({ meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0 } })
 
     if (mod.kind === 'asset') {
       this.statSize = mod.code.byteLength
@@ -182,7 +189,7 @@ export class AnalyzerNode {
         }
         const statSize = stringToByte(info.code).byteLength
         this.statSize += statSize
-        stats.insert(generateNodeId(info.id, workspaceRoot), { kind: 'stat', meta: { statSize } })
+        stats.insert(generateNodeId(info.id, workspaceRoot), { meta: { statSize } })
       }
 
       // Check map again
@@ -202,26 +209,55 @@ export class AnalyzerNode {
           files.add(this.originalId)
         }
 
-        for (const id in chunks) {
-          if (!KNOWN_EXT_NAME.includes(path.extname(id))) { continue }
-          const code = chunks[id]
+        const validChunks = Object.entries(chunks)
+          .filter(([id]) => KNOWN_EXT_NAME.includes(path.extname(id)))
+
+        await Promise.all(validChunks.map(async ([id, code]) => {
           const b = stringToByte(code)
           const parsedSize = b.byteLength
+          const compressedSizes = await calcCompressedSize(b, compress)
           sources.insert(generateNodeId(id, workspaceRoot), {
-            kind: 'source',
-            meta: { parsedSize, ...(await calcCompressedSize(b, compress)) }
+            meta: { parsedSize, ...compressedSizes }
           })
-        }
+        }))
       }
     }
 
     stats.mergePrefixSingleDirectory()
-    stats.walk(stats.root, (c, p) => p.groups.push(c))
+    stats.walk(stats.root, {
+      enter: (child, parent) => {
+        if (parent) { parent.groups.push(child) }
+      },
+      leave: (child) => {
+        if (child.groups && child.groups.length) {
+          child.statSize = child.groups.reduce((acc, cur) => (acc += cur.statSize, acc), 0)
+        }
+      }
+    })
     sources.mergePrefixSingleDirectory()
-    sources.walk(sources.root, (c, p) => p.groups.push(c))
+
+    sources.walk(sources.root, {
+      enter: (child, parent) => {
+        if (parent) { parent.groups.push(child) }
+      },
+      leave: (child) => {
+        if (child.groups && child.groups.length) {
+          Object.assign(
+            child,
+            child.groups.reduce((acc, cur) => {
+              acc.gzipSize += cur.gzipSize
+              acc.brotliSize += cur.brotliSize
+              acc.parsedSize += cur.parsedSize
+              return acc
+            }, { gzipSize: 0, brotliSize: 0, parsedSize: 0 })
+          )
+        }
+      }
+    })
 
     this.stats = stats.root.groups
     this.source = sources.root.groups
+
     // Fix correect size
     for (const s of this.source) {
       this.gzipSize += s.gzipSize
@@ -229,10 +265,6 @@ export class AnalyzerNode {
       this.parsedSize += s.parsedSize
     }
   }
-}
-
-function createAnalyzerNode(id: string) {
-  return new AnalyzerNode(id)
 }
 
 export class AnalyzerModule {
@@ -250,7 +282,6 @@ export class AnalyzerModule {
   }
 
   installPluginContext(context: PluginContext) {
-    if (this.pluginContext) { return }
     this.pluginContext = context
   }
 
@@ -262,7 +293,7 @@ export class AnalyzerModule {
   async addModule(mod: OutputChunk | OutputAsset) {
     if (isSoucemap(mod.fileName)) { return }
     const serialized = serializedMod(mod, this.chunks)
-    const node = createAnalyzerNode(serialized.filename)
+    const node = new AnalyzerNode(serialized.filename)
     await node.setup(serialized, this.pluginContext!, this.compressAlorithm, this.workspaceRoot)
     this.modules.push(node)
   }

@@ -1,4 +1,4 @@
-// TODO: I won't consider rolldown dts plugin, isolation declaration isn't match for me.
+//  I won't consider rolldown dts plugin, isolation declaration isn't match for me.
 // I have no time to change my code to fit with isolation declaration.
 // I'll create a simple dts gen to my current need.
 import { Extractor, ExtractorConfig, ExtractorLogLevel } from '@microsoft/api-extractor'
@@ -91,7 +91,6 @@ function generateDTS() {
     fs.mkdirSync(outputDirname, { recursive: true })
 
     fs.writeFileSync(outputPath, files[filePath])
-    console.log(`Generated: ${outputPath}`)
   }
 
   const config = ExtractorConfig.prepare({
@@ -131,7 +130,7 @@ function generateDTS() {
 
   const extractorResult = Extractor.invoke(config, {
     localBuild: true,
-    showVerboseMessages: true
+    showVerboseMessages: false
   })
 
   if (extractorResult.succeeded) {

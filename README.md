@@ -48,6 +48,7 @@ export default defineConfig({
 
 // If you are using it in rollup or others support rollup plugin system you can import 'adapter' from package.
 // Then use it with adapter(analyzer())
+// If you're using rolldown you can import 'unstableRolldownAdapter' from package.
 ```
 
 ## Options

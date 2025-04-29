@@ -1,17 +1,17 @@
 import ansis from 'ansis'
 import fs from 'fs'
 import path from 'path'
-import { Readable } from 'stream'
 import type { Logger, Plugin } from 'vite'
 import { searchForWorkspaceRoot } from 'workspace-sieve'
 import zlib from 'zlib'
 import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
-import type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore } from './interface'
+import type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore, Module } from './interface'
 import { opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
-import { analyzerDebug, convertBytes, fsp, stringToByte } from './shared'
+import type { Middleware } from './render'
+import { analyzerDebug, arena, convertBytes, fsp } from './shared'
 
-const isCI = !!process.env.CI
+export const isCI = !!process.env.CI
 
 const defaultOptions: AnalyzerPluginOptions = {
   analyzerMode: 'server',
@@ -21,28 +21,6 @@ const defaultOptions: AnalyzerPluginOptions = {
 
 export function openBrowser(address: string) {
   opener([address])
-}
-
-function arena() {
-  let hasSet = false
-  let binary: Uint8Array
-  return {
-    rs: new Readable(),
-    into(b: string | Uint8Array) {
-      if (hasSet) { return }
-      this.rs.push(b)
-      this.rs.push(null)
-      if (!binary) {
-        binary = stringToByte(b)
-      }
-      hasSet = true
-    },
-    refresh() {
-      hasSet = false
-      this.rs = new Readable()
-      this.into(binary)
-    }
-  }
 }
 
 const formatNumber = (number: number | string) => ansis.dim(ansis.bold(number + ''))
@@ -71,7 +49,7 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
 // Design for race condition is called
 let callCount = 0
 
-function writeStaticResource(root: string, fileName = 'stats', mode: AnalyzerMode | undefined) {
+export function writeStaticResource(root: string, fileName = 'stats', mode: AnalyzerMode | undefined) {
   const isAbs = path.isAbsolute(fileName)
   let absPath = isAbs ? fileName : path.join(root, fileName)
   // Also check the extension if not matched
@@ -90,7 +68,7 @@ function writeStaticResource(root: string, fileName = 'stats', mode: AnalyzerMod
   return { isJSON, absPath }
 }
 
-function getOutputPath(opts: AnalyzerPluginOptions, outputDir: string) {
+export function getOutputPath(opts: AnalyzerPluginOptions, outputDir: string) {
   if (opts.analyzerMode === 'json' || opts.analyzerMode === 'static') {
     if (typeof opts.fileName === 'function') {
       return opts.fileName(outputDir) || 'stats'
@@ -98,6 +76,82 @@ function getOutputPath(opts: AnalyzerPluginOptions, outputDir: string) {
     return opts.fileName || 'stats'
   }
   throw new Error('[analyzer error]: unreachable')
+}
+
+export async function handleStaticOutput(
+  analyzeModule: Module[],
+  opts: AnalyzerPluginOptions,
+  defaultWd: string,
+  b: ReturnType<typeof arena>
+) {
+  const { isJSON, absPath } = writeStaticResource(
+    defaultWd,
+    getOutputPath(opts, defaultWd),
+    opts.analyzerMode as AnalyzerMode
+  )
+
+  if (isJSON) {
+    await fsp.writeFile(absPath, JSON.stringify(analyzeModule, null, 2), 'utf8')
+    return { filePath: absPath, isJSON: true }
+  }
+
+  const html = await renderView(analyzeModule, {
+    title: opts.reportTitle || 'vite-bundle-analyzer',
+    mode: opts.defaultSizes || 'stat'
+  })
+  await fsp.writeFile(absPath, html, 'utf8')
+  b.into(html)
+
+  return { filePath: absPath, isJSON: false, html }
+}
+
+export async function createAnalyzerServer(
+  analyzeModule: Module[],
+  opts: AnalyzerPluginOptions,
+  b: ReturnType<typeof arena>,
+  callCount: number,
+  sseHandler?: { path: string, handler: Middleware },
+  render = renderView
+) {
+  const html = await render(analyzeModule, {
+    title: opts.reportTitle || 'vite-bundle-analyzer',
+    mode: opts.defaultSizes || 'stat'
+  })
+  b.into(html)
+
+  const port = await ensureEmptyPort(
+    'analyzerPort' in opts
+      ? opts.analyzerPort === 'auto'
+        ? 0
+        : (opts.analyzerPort || 0)
+      : 8888 + callCount
+  )
+
+  const server = createServer()
+
+  server.get('/', (c) => {
+    c.res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf8;',
+      'content-Encoding': 'gzip'
+    })
+    b.refresh()
+    b.rs.pipe(zlib.createGzip()).pipe(c.res)
+  })
+
+  if (sseHandler) {
+    server.get(sseHandler.path, sseHandler.handler)
+  }
+
+  server.listen(port, () => {
+    console.log('server run on ', ansis.hex('#5B45DE')(`http://localhost:${port}`))
+  })
+
+  if (('openAnalyzer' in opts ? opts.openAnalyzer : true) && !isCI) {
+    const address = `http://localhost:${port}`
+    openBrowser(address)
+  }
+
+  return { server, port }
 }
 
 // There is a possibility that multiple called.
@@ -113,13 +167,22 @@ function analyzer(opts?: AnalyzerPluginOptions) {
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule({ gzip: opts.gzipOptions, brotli: opts.brotliOptions })
-  const store: AnalyzerStore = { analyzerModule, lastSourcemapOption: false, hasSetupSourcemapOption: false }
+
   let defaultWd = process.cwd()
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
   const preferLivingServer = opts.analyzerMode === 'server' || opts.analyzerMode === 'static'
   const preferSilent = opts.analyzerMode === 'json' || opts.analyzerMode === 'static'
+
+  const store: AnalyzerStore = {
+    analyzerModule,
+    lastSourcemapOption: false,
+    hasSetupSourcemapOption: false,
+    pluginOptions: { ...opts, reportTitle },
+    preferLivingServer,
+    preferSilent
+  }
 
   const b = arena()
 
@@ -221,45 +284,14 @@ function analyzer(opts?: AnalyzerPluginOptions) {
       const analyzeModule = analyzerModule.processModule()
 
       if (preferSilent) {
-        const { isJSON, absPath } = writeStaticResource(defaultWd, getOutputPath(opts, defaultWd), opts.analyzerMode)
-        if (isJSON) {
-          return fsp.writeFile(absPath, JSON.stringify(analyzeModule, null, 2), 'utf8')
-        }
-        const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
-        await fsp.writeFile(absPath, html, 'utf8')
-        b.into(html)
+        await handleStaticOutput(analyzeModule, opts, defaultWd, b)
         if (opts.analyzerMode === 'static' && !opts.openAnalyzer) {
           return
         }
       }
 
       if (preferLivingServer) {
-        const html = await renderView(analyzeModule, { title: reportTitle, mode: opts.defaultSizes || 'stat' })
-        b.into(html)
-        const port = await ensureEmptyPort(
-          'analyzerPort' in opts
-            ? opts.analyzerPort === 'auto'
-              ? 0
-              : (opts.analyzerPort || 0)
-            : 8888 + callCount
-        )
-        const server = createServer()
-        server.get('/', (c) => {
-          c.res.writeHead(200, {
-            'Content-Type': 'text/html; charset=utf8;',
-            'content-Encoding': 'gzip'
-          })
-          b.rs.pipe(zlib.createGzip()).pipe(c.res)
-          b.refresh()
-        })
-
-        server.listen(port, () => {
-          console.log('server run on ', ansis.hex('#5B45DE')(`http://localhost:${port}`))
-        })
-        if (('openAnalyzer' in opts ? opts.openAnalyzer : true) && !isCI) {
-          const address = `http://localhost:${port}`
-          openBrowser(address)
-        }
+        await createAnalyzerServer(analyzeModule, opts, b, callCount)
       }
       callCount++
     }
@@ -270,6 +302,7 @@ function analyzer(opts?: AnalyzerPluginOptions) {
 
 export { analyzer }
 export { adapter } from './adapter'
+export { unstableRolldownAdapter } from './rolldown'
 export { analyzer as default }
 export type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, DefaultSizes, Module } from './interface'
 export * from './render'
