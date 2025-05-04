@@ -49,7 +49,7 @@ const generateSummaryMessage = (modules: AnalyzerNode[]) => {
 // Design for race condition is called
 let callCount = 0
 
-export function writeStaticResource(root: string, fileName = 'stats', mode: AnalyzerMode | undefined) {
+function writeStaticResource(root: string, fileName = 'stats', mode: AnalyzerMode | undefined) {
   const isAbs = path.isAbsolute(fileName)
   let absPath = isAbs ? fileName : path.join(root, fileName)
   // Also check the extension if not matched
@@ -68,7 +68,7 @@ export function writeStaticResource(root: string, fileName = 'stats', mode: Anal
   return { isJSON, absPath }
 }
 
-export function getOutputPath(opts: AnalyzerPluginOptions, outputDir: string) {
+function getOutputPath(opts: AnalyzerPluginOptions, outputDir: string) {
   if (opts.analyzerMode === 'json' || opts.analyzerMode === 'static') {
     if (typeof opts.fileName === 'function') {
       return opts.fileName(outputDir) || 'stats'

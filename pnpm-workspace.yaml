@@ -1,2 +1,7 @@
 packages:
   - examples/**/*
+
+onlyBuiltDependencies:
+  - \@swc/core
+  - dprint
+  - esbuild
