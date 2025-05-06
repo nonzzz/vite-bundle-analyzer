@@ -45,7 +45,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^4.40.1",
-    "rolldown": "1.0.0-beta.7",
+    "rolldown": "1.0.0-beta.8",
     "rollup-plugin-swc3": "^0.12.1",
     "squarified": "^0.3.7",
     "tinyexec": "^0.3.1",

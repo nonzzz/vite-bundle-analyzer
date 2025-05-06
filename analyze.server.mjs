@@ -22,7 +22,7 @@ export default defineConfig({
     {
       name: 'resolve-template',
       resolveId: {
-        filter: { id: { include: ['html.mjs'] } },
+        filter: { id: /html\.mjs$/ },
         handler() {
           return { id: './html.mjs', external: true }
         }

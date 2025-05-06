@@ -2,6 +2,7 @@ packages:
   - examples/**/*
 
 onlyBuiltDependencies:
-  - \@swc/core
-  - dprint
-  - esbuild
+  - "@swc/core"
+  - "rolldown"
+  - "dprint"
+  - "esbuild"
