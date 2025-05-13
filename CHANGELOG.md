@@ -1,3 +1,11 @@
+## 0.20.2
+
+Prevent server from running in CI environment.
+
+### credits
+
+@kricsleo
+
 ## 0.20.1
 
 - Remove unnecessary logic.
