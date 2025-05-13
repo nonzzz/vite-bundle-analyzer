@@ -172,7 +172,7 @@ function analyzer(opts?: AnalyzerPluginOptions) {
   let hasViteReporter = true
   let logger: Logger
   let workspaceRoot = process.cwd()
-  const preferLivingServer = opts.analyzerMode === 'server' || opts.analyzerMode === 'static'
+  const preferLivingServer = !isCI && (opts.analyzerMode === 'server' || opts.analyzerMode === 'static')
   const preferSilent = opts.analyzerMode === 'json' || opts.analyzerMode === 'static'
 
   const store: AnalyzerStore = {
