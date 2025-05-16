@@ -9,6 +9,11 @@ import { pick } from './shared'
 export function adapter(userPlugin: VitePlugin<AnalyzerPluginInternalAPI>) {
   const plugin = pick(userPlugin, ['name', 'generateBundle', 'closeBundle', 'api'])
   const { store } = plugin.api!
+
+  if (!store.pluginOptions.enabled) {
+    return plugin
+  }
+
   return <Plugin> {
     ...plugin,
     outputOptions(outputOptions) {

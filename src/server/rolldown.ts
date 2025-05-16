@@ -33,6 +33,11 @@ async function renderView(...args: Parameters<typeof _renderView>) {
 export function unstableRolldownAdapter(userPlugin: VitePlugin<AnalyzerPluginInternalAPI>) {
   const plugin = pick(userPlugin, ['name', 'generateBundle', 'api'])
   const { store } = plugin.api!
+
+  if (!store.pluginOptions.enabled) {
+    return plugin
+  }
+
   const b = arena()
   let callCount = 0
   const sse = new SSE()
