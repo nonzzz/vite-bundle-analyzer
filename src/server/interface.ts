@@ -43,6 +43,7 @@ export interface Module {
 export type CustomAnalyzerModule = (analyzeModule: Module[]) => void
 
 export interface BasicAnalyzerPluginOptions {
+  enabled?: boolean
   summary?: boolean
   analyzerMode?: AnalyzerMode | CustomAnalyzerModule
   reportTitle?: string

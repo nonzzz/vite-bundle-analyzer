@@ -14,6 +14,7 @@ import { analyzerDebug, arena, convertBytes, fsp } from './shared'
 export const isCI = !!process.env.CI
 
 const defaultOptions: AnalyzerPluginOptions = {
+  enabled: true,
   analyzerMode: 'server',
   defaultSizes: 'stat',
   summary: true
@@ -164,6 +165,10 @@ export async function createAnalyzerServer(
 
 function analyzer(opts?: AnalyzerPluginOptions) {
   opts = { ...defaultOptions, ...opts }
+
+  if(!opts.enabled) {
+    return
+  }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule({ gzip: opts.gzipOptions, brotli: opts.brotliOptions })
