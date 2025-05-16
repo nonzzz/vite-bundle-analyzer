@@ -166,10 +166,6 @@ export async function createAnalyzerServer(
 function analyzer(opts?: AnalyzerPluginOptions) {
   opts = { ...defaultOptions, ...opts }
 
-  if(!opts.enabled) {
-    return
-  }
-
   const { reportTitle = 'vite-bundle-analyzer' } = opts
   const analyzerModule = createAnalyzerModule({ gzip: opts.gzipOptions, brotli: opts.brotliOptions })
 
@@ -187,6 +183,18 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     pluginOptions: { ...opts, reportTitle },
     preferLivingServer,
     preferSilent
+  }
+
+  if(!opts.enabled) {
+    return {
+      name: 'vite-bundle-anlyzer',
+      apply: 'build',
+      enforce: 'post',
+      api: {
+        store,
+        processModule: () => analyzerModule.processModule()
+      },
+    } as Plugin<AnalyzerPluginInternalAPI>
   }
 
   const b = arena()
