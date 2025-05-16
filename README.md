@@ -63,6 +63,7 @@ export default defineConfig({
 | `openAnalyzer` | `boolean`                        | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
 | `defaultSizes` | `stat\|parsed\|gzip\brotil`      | `stat`        | The default type selected in the client page                                     |
 | `summary`      | `boolean`                        | `true`        | Show full chunk info to stdout.                                                  |
+| `enabled`      | `boolean`                        | `true`        | Whether to enable this plugin.                                                 |
 
 ## ClI
 

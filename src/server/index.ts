@@ -14,6 +14,7 @@ import { analyzerDebug, arena, convertBytes, fsp } from './shared'
 export const isCI = !!process.env.CI
 
 const defaultOptions: AnalyzerPluginOptions = {
+  enabled: true,
   analyzerMode: 'server',
   defaultSizes: 'stat',
   summary: true
@@ -182,6 +183,18 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     pluginOptions: { ...opts, reportTitle },
     preferLivingServer,
     preferSilent
+  }
+
+  if(!opts.enabled) {
+    return {
+      name: 'vite-bundle-anlyzer',
+      apply: 'build',
+      enforce: 'post',
+      api: {
+        store,
+        processModule: () => analyzerModule.processModule()
+      },
+    } as Plugin<AnalyzerPluginInternalAPI>
   }
 
   const b = arena()
