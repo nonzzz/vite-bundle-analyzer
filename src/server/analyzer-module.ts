@@ -1,3 +1,5 @@
+import { createFilter } from '@rollup/pluginutils'
+import type { FilterPattern } from '@rollup/pluginutils'
 import path from 'path'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
@@ -5,8 +7,6 @@ import { createBrotil, createGzip, slash, stringToByte } from './shared'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import { Trie } from './trie'
 import type { ChunkMetadata, GroupWithNode } from './trie'
-
-const KNOWN_EXT_NAME = ['.mjs', '.js', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.md', '.mdx']
 
 const defaultWd = process.cwd()
 
@@ -24,6 +24,8 @@ function generateNodeId(id: string, cwd: string = defaultWd): string {
 export interface AnalyzerModuleOptions {
   gzip?: ZlibOptions
   brotli?: BrotliOptions
+  include?: FilterPattern
+  exclude?: FilterPattern
 }
 
 function findSourcemap(filename: string, sourcemapFileName: string, chunks: OutputBundle) {
@@ -146,7 +148,8 @@ export class AnalyzerNode {
     mod: SerializedMod,
     pluginContext: PluginContext,
     compress: ReturnType<typeof createCompressAlorithm>,
-    workspaceRoot: string
+    workspaceRoot: string,
+    matcher: ReturnType<typeof createFilter>
   ) {
     const stats = new Trie<{
       statSize: number
@@ -171,17 +174,17 @@ export class AnalyzerNode {
       this.mapSize = map.length
       this.isEntry = mod.isEntry
 
-      const infomations = moduleIds.length
+      let infomations = moduleIds.length
         ? moduleIds.reduce((acc, cur) => {
           const info = pluginContext.getModuleInfo(cur)
           if (info && info.code) {
-            if (KNOWN_EXT_NAME.includes(path.extname(info.id)) || info.id.startsWith('\0')) {
-              acc.push({ id: info.id, code: info.code })
-            }
+            acc.push({ id: info.id, code: info.code })
           }
           return acc
         }, [] as Array<ChunkMetadata>)
         : pickupContentFromSourcemap(map)
+
+      infomations = infomations.filter((info) => matcher(info.id))
 
       for (const info of infomations) {
         if (info.id[0] === '.') {
@@ -210,7 +213,7 @@ export class AnalyzerNode {
         }
 
         const validChunks = Object.entries(chunks)
-          .filter(([id]) => KNOWN_EXT_NAME.includes(path.extname(id)))
+          .filter(([id]) => matcher(id))
 
         await Promise.all(validChunks.map(async ([id, code]) => {
           const b = stringToByte(code)
@@ -273,12 +276,14 @@ export class AnalyzerModule {
   workspaceRoot: string
   pluginContext: PluginContext | null
   private chunks: OutputBundle
+  private matcher: ReturnType<typeof createFilter>
   constructor(opt: AnalyzerModuleOptions = {}) {
     this.compressAlorithm = createCompressAlorithm(opt)
     this.modules = []
     this.pluginContext = null
     this.chunks = {}
     this.workspaceRoot = process.cwd()
+    this.matcher = createFilter(opt.include, opt.exclude)
   }
 
   installPluginContext(context: PluginContext) {
@@ -291,10 +296,10 @@ export class AnalyzerModule {
   }
 
   async addModule(mod: OutputChunk | OutputAsset) {
-    if (isSoucemap(mod.fileName)) { return }
+    if (isSoucemap(mod.fileName) || !this.matcher(mod.fileName)) { return }
     const serialized = serializedMod(mod, this.chunks)
     const node = new AnalyzerNode(serialized.filename)
-    await node.setup(serialized, this.pluginContext!, this.compressAlorithm, this.workspaceRoot)
+    await node.setup(serialized, this.pluginContext!, this.compressAlorithm, this.workspaceRoot, this.matcher)
     this.modules.push(node)
   }
 

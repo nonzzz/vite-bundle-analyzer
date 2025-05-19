@@ -26,12 +26,12 @@ const defaultBrotliOptions = <BrotliOptions> {
 }
 
 export function createGzip(options: ZlibOptions = {}) {
-  options = Object.assign(defaultGzipOptions, options)
+  options = { ...defaultGzipOptions, ...options }
   return (buf: InputType) => gzip(buf, options)
 }
 
 export function createBrotil(options: BrotliOptions = {}) {
-  options = Object.assign(defaultBrotliOptions, options)
+  options = { ...defaultBrotliOptions, ...options }
   return (buf: InputType) => brotli(buf, options)
 }
 

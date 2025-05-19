@@ -53,17 +53,19 @@ export default defineConfig({
 
 ## Options
 
-| params         | type                             | default       | description                                                                      |
-| -------------- | -------------------------------- | ------------- | -------------------------------------------------------------------------------- |
-| `analyzerMode` | `server\|static\|json\|function` | `server`      | In `server` will create a static server to preview.                              |
-| `fileName`     | `string\| function`              | `stats`       | The name of the static product.（No suffix name）                                |
-| `reportTitle`  | `string`                         | `plugin name` | Report website title.                                                            |
-| `gzipOptions`  | `Record<string,any>`             | `{}`          | Compression options. (Details see `zlib module`)                                 |
-| `analyzerPort` | `number\|'auto'`                 | `8888`        | static server port.                                                              |
-| `openAnalyzer` | `boolean`                        | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
-| `defaultSizes` | `stat\|parsed\|gzip\brotil`      | `stat`        | The default type selected in the client page                                     |
-| `summary`      | `boolean`                        | `true`        | Show full chunk info to stdout.                                                  |
-| `enabled`      | `boolean`                        | `true`        | Whether to enable this plugin.                                                 |
+| params         | type                                          | default       | description                                                                      |
+| -------------- | --------------------------------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `analyzerMode` | `server\|static\|json\|function`              | `server`      | In `server` will create a static server to preview.                              |
+| `fileName`     | `string\| function`                           | `stats`       | The name of the static product.（No suffix name）                                |
+| `reportTitle`  | `string`                                      | `plugin name` | Report website title.                                                            |
+| `gzipOptions`  | `Record<string,any>`                          | `{}`          | Compression options. (Details see `zlib module`)                                 |
+| `analyzerPort` | `number\|'auto'`                              | `8888`        | static server port.                                                              |
+| `openAnalyzer` | `boolean`                                     | `true`        | Open the static website. (Only works on `analyzerMode` is `server` or `static` ) |
+| `defaultSizes` | `stat\|parsed\|gzip\brotil`                   | `stat`        | The default type selected in the client page                                     |
+| `summary`      | `boolean`                                     | `true`        | Show full chunk info to stdout.                                                  |
+| `enabled`      | `boolean`                                     | `true`        | Whether to enable this plugin.                                                   |
+| `include`      | `string \| RegExp \| Array<string \| RegExp>` | `[]`          | Include all assets matching any of these conditions.                             |
+| `exclude`      | `string \| RegExp \| Array<string \| RegExp>` | `[]`          | Exclude all assets matching any of these conditions.                             |
 
 ## ClI
 

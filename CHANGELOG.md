@@ -1,3 +1,16 @@
+## 0.21.0
+
+- Added new `enable` option to control plugin workflow.
+- Add new option `include` and `exclude` to filter generated content from the analysis server.
+
+### Note
+
+This is one of the final minor releases before the v1.0 launch. We're focusing on polishing core functionality and enhancing stability in preparation for the upcoming major release.
+
+### credits
+
+@kricsleo
+
 ## 0.20.2
 
 Prevent server from running in CI environment.

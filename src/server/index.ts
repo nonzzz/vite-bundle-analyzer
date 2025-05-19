@@ -17,7 +17,9 @@ const defaultOptions: AnalyzerPluginOptions = {
   enabled: true,
   analyzerMode: 'server',
   defaultSizes: 'stat',
-  summary: true
+  summary: true,
+  include: [],
+  exclude: []
 }
 
 export function openBrowser(address: string) {
@@ -167,7 +169,12 @@ function analyzer(opts?: AnalyzerPluginOptions) {
   opts = { ...defaultOptions, ...opts }
 
   const { reportTitle = 'vite-bundle-analyzer' } = opts
-  const analyzerModule = createAnalyzerModule({ gzip: opts.gzipOptions, brotli: opts.brotliOptions })
+  const analyzerModule = createAnalyzerModule({
+    gzip: opts.gzipOptions,
+    brotli: opts.brotliOptions,
+    include: opts.include,
+    exclude: opts.exclude
+  })
 
   let defaultWd = process.cwd()
   let hasViteReporter = true
@@ -185,28 +192,24 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     preferSilent
   }
 
-  if(!opts.enabled) {
-    return {
-      name: 'vite-bundle-anlyzer',
-      apply: 'build',
-      enforce: 'post',
-      api: {
-        store,
-        processModule: () => analyzerModule.processModule()
-      },
-    } as Plugin<AnalyzerPluginInternalAPI>
-  }
-
-  const b = arena()
-
-  const plugin: Plugin<AnalyzerPluginInternalAPI> = {
+  const base = {
     name: 'vite-bundle-anlyzer',
     apply: 'build',
     enforce: 'post',
     api: {
       store,
       processModule: () => analyzerModule.processModule()
-    },
+    }
+  } as Plugin<AnalyzerPluginInternalAPI>
+
+  if (!opts.enabled) {
+    return base
+  }
+
+  const b = arena()
+
+  const plugin: Plugin<AnalyzerPluginInternalAPI> = {
+    ...base,
     config(config) {
       // For some reason, like `vitepress`,`vuepress` and other static site generator etc. They might use the same config object
       // for multiple build process. So we should ensure the sourcemap option is set correctly.

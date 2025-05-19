@@ -1,3 +1,4 @@
+import type { FilterPattern } from '@rollup/pluginutils'
 import type { HookHandler, Plugin } from 'vite'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import { AnalyzerModule } from './analyzer-module'
@@ -45,6 +46,8 @@ export type CustomAnalyzerModule = (analyzeModule: Module[]) => void
 export interface BasicAnalyzerPluginOptions {
   enabled?: boolean
   summary?: boolean
+  include?: FilterPattern
+  exclude?: FilterPattern
   analyzerMode?: AnalyzerMode | CustomAnalyzerModule
   reportTitle?: string
   defaultSizes?: DefaultSizes

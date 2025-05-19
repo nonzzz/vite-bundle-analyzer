@@ -33,6 +33,10 @@ const DEFAULT_SIZES_TEXT = 'Default size type. Should be `stat` , `parsed` , `gz
 
 const SUMMARY_TEXT = 'Show full chunk info to stdout.'
 
+const PATTERN_INCLUDE_TEXT = 'Include all assets matching any of these conditions'
+
+const PATTERN_EXCLUDE_TEXT = 'Exclude all assets matching any of these conditions.'
+
 interface Options {
   mode: AnalyzerMode
   filename: string
@@ -180,7 +184,14 @@ const OPTIONS: Record<string, CommanderOption> = {
     desc: 'Path to vite config file. Automic search for vite configuration in your current workspace.',
     default: '',
     flag: '<path>'
-  }
+  },
+  include: {
+    alias: 'include',
+    desc: PATTERN_INCLUDE_TEXT,
+    default: '',
+    flag: '<string>'
+  },
+  exclude: { alias: 'exclude', desc: PATTERN_EXCLUDE_TEXT, default: '', flag: '<string>' }
 }
 
 const argv = mri<Options & { help?: string, h?: string }>(process.argv.slice(2), {
