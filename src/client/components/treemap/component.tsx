@@ -1,13 +1,34 @@
 import { inline } from '@stylex-extend/core'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { Ref } from 'react'
-import { c2m, createTreemap, sortChildrenByKey } from 'squarified'
+import { c2m, createTreemap as _createTreemap, sortChildrenByKey } from 'squarified'
 import type { ExposedEventCallback } from 'squarified'
+import {
+  presetColorPlugin,
+  presetDragElementPlugin,
+  presetHighlightPlugin,
+  presetScalePlugin,
+  presetZoomablePlugin
+} from 'squarified/plugin'
 import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
-import { presetDecorator } from './preset'
+import { filterLayoutDataPlugin, menuPlugin } from './plugin'
+
+function createTreemap() {
+  return _createTreemap({
+    plugins: [
+      presetColorPlugin,
+      presetHighlightPlugin,
+      presetDragElementPlugin,
+      presetZoomablePlugin,
+      filterLayoutDataPlugin,
+      presetScalePlugin(),
+      menuPlugin()
+    ]
+  })
+}
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
@@ -51,7 +72,6 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     if (el) {
       // element is mounted
       instanceRef.current = createTreemap()
-      instanceRef.current.use('decorator', presetDecorator)
       instanceRef.current.init(el)
     } else {
       // element is unmounted
@@ -69,8 +89,10 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
 
   useEffect(() => {
     instanceRef.current?.on('click', function(metadata) {
-      this.zoom(metadata.module)
-      const evt = createMagicEvent('graph:click', metadata.module!)
+      if (!metadata.module) {
+        return
+      }
+      const evt = createMagicEvent('graph:click', metadata.module)
       window.dispatchEvent(evt)
     })
   }, [])
