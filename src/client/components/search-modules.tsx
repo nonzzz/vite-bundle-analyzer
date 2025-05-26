@@ -110,7 +110,7 @@ export function SearchModules<F extends Module>(props: SearchModulesProps<F>) {
                     pointer={availableMap[child.label]}
                     stylex={{ fontStyle: 'italic' }}
                     onMouseEnter={() => handleMouseEnter(child)}
-                    onClick={() => handleFocusModule(child.label)}
+                    onClick={() => handleFocusModule(child.filename)}
                   >
                     {child.isDirectory ? <Folder /> : <File />}
                     <Spacer inline />
