@@ -39,6 +39,7 @@ export function menuPlugin() {
   let reactRoot: ReturnType<typeof createRoot> | null = null
   let currentModule: LayoutModule | null = null
   let treemap: TreemapComponentInstance | null = null
+  let domEvent: DOMEvent | null = null
 
   const onAction: MenuActionHandler = (action, module) => {
     if (!treemap) {
@@ -50,12 +51,15 @@ export function menuPlugin() {
       case 'zoom':
         treemap.zoom(module.node.id)
         break
+      case 'close':
+        break
       case 'reset':
         treemap.resize()
         break
     }
-
     reactRoot?.render(null)
+    // @ts-expect-error safe operation
+    domEvent?.emit('__exposed__', 'close:tooltip', { state: false })
   }
 
   return definePlugin({
@@ -72,13 +76,17 @@ export function menuPlugin() {
       if (isContextMenuEvent(event)) {
         event.native.stopPropagation()
         event.native.preventDefault()
-
+        if (!domEvent) {
+          domEvent = DOMEvent
+        }
         currentModule = DOMEvent.findRelativeNode({
           native: event.native,
           kind: undefined
         })
 
         if (reactRoot && menu && currentModule) {
+          // @ts-expect-error safe operation
+          DOMEvent.emit('__exposed__', 'close:tooltip', { state: true })
           reactRoot.render(
             <Menu
               x={event.native.clientX}
@@ -98,6 +106,7 @@ export function menuPlugin() {
         reactRoot = null
       }
       menu = null
+      domEvent = null
       treemap = null
     }
   })

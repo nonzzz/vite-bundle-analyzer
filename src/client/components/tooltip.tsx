@@ -46,11 +46,11 @@ export function Tooltip(props: TooltipProps) {
         fontSize: '11px',
         padding: '5px 10px',
         borderRadius: '4px',
-        backgroundColor: '#fff',
-        border: '1px solid #aaa',
-        opacity: 0.9,
+        backgroundColor: '#333',
         whiteSpace: 'nowrap',
+        zIndex: 200,
         visibility: 'visible',
+        color: '#fff',
         ...(visible && { transition: 'opacity .2s ease, visibility .2s ease' }),
         ...(!visible && { opacity: 0, visibility: 'hidden' })
       }}

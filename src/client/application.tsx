@@ -1,9 +1,8 @@
 import { ComposeContextProvider } from 'foxact/compose-context-provider'
-import { useCallback, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import type { NativeModule, PrimitiveEventMetadata } from 'squarified'
 import { Sidebar, SidebarProvider } from './components/side-bar'
-import { Spacer } from './components/spacer'
 import { Text } from './components/text'
 import { Tooltip } from './components/tooltip'
 import { Treemap } from './components/treemap'
@@ -12,41 +11,31 @@ import { ApplicationProvider, TreemapProvider } from './context'
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
+import { Spacer } from './components/spacer'
 import { Receiver } from './receiver'
-
-interface ModuleSizeProps {
-  module: NativeModule
-}
-
-function ModuleSize(props: ModuleSizeProps) {
-  const { module } = props
-  if (!module) { return null }
-
-  return (
-    <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
-      <Text b p font="14px" mr={0.3}>Size:</Text>
-      <Text font="14px">{convertBytes(module.weight)}</Text>
-    </div>
-  )
-}
 
 export function App() {
   const treeMapRef = useRef<TreemapComponentInstance>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
   const [tooltipContent, setTooltipContent] = useState<NativeModule | null>(null)
+  const [onTriggerMenu, setOnTriggerMenu] = useState<boolean>(false)
 
   const contexts = [
     <ApplicationProvider key="app" />,
     <TreemapProvider key="treemap" value={{ treemap: treeMapRef as RefObject<TreemapComponentInstance> }} />
   ]
 
-  const handleMousemove = useCallback((data: PrimitiveEventMetadata<'mousemove'>) => {
+  const handleMousemove = (data: PrimitiveEventMetadata<'mousemove'>) => {
+    if (onTriggerMenu) {
+      setTooltipVisible(false)
+      return
+    }
     setTooltipVisible(!!data.module)
     if (data.module) {
       // @ts-expect-error safe
       setTooltipContent(() => data.module.node)
     }
-  }, [])
+  }
 
   return (
     <ComposeContextProvider contexts={contexts}>
@@ -61,26 +50,21 @@ export function App() {
         <SidebarProvider>
           <Sidebar onVisibleChange={(s) => setTooltipVisible(!s)} />
         </SidebarProvider>
-        <Treemap ref={(instance: TreemapComponentInstance) => treeMapRef.current = instance} onMousemove={handleMousemove} />
+        <Treemap
+          ref={(instance: TreemapComponentInstance) => treeMapRef.current = instance}
+          onMousemove={handleMousemove}
+          onCloseTooltip={({ state }) => {
+            setTooltipVisible(false)
+            setOnTriggerMenu(state)
+          }}
+        />
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
-            <>
-              <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
-                <Text b font="14px" mr={0.3}>Id:</Text>
-                <Text font="14px">
-                  {tooltipContent.label}
-                </Text>
-              </div>
-              <Spacer h={0.5} />
-              <ModuleSize module={tooltipContent} />
-              <Spacer h={0.5} />
-              <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
-                <Text b font="14px" mr={0.3}>Path:</Text>
-                <Text font="14px">
-                  {tooltipContent.filename}
-                </Text>
-              </div>
-            </>
+            <Text font="14px" div>
+              {tooltipContent.filename}
+              <Spacer inline w={.3} />
+              {convertBytes(tooltipContent.weight)}
+            </Text>
           )}
         </Tooltip>
       </div>

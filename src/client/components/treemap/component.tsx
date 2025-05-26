@@ -34,6 +34,7 @@ export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
 export interface TreemapProps {
   onMousemove: ExposedEventCallback<'mousemove'>
+  onCloseTooltip?: ({ state }: { state: boolean }) => void
 }
 
 export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
@@ -99,6 +100,8 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
 
   useEffect(() => {
     instanceRef.current?.on('mousemove', props.onMousemove)
+    // @ts-expect-error safe operation wait be resolved by squarified
+    instanceRef.current?.on('close:tooltip', props.onCloseTooltip)
   }, [props])
 
   return <div ref={callbackRef} {...inline({ height: '100%', width: '100%', position: 'relative' })} />

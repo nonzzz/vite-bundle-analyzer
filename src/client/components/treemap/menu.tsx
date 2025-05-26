@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import type { LayoutModule } from 'squarified'
 import { withScale } from '../../composables'
 
-export type MenuAction = 'zoom' | 'reset' | 'details'
+export type MenuAction = 'zoom' | 'reset' | 'details' | 'close'
 export type MenuActionHandler = (action: MenuAction, module: LayoutModule) => void
 
 export interface MenuProps {
@@ -46,25 +46,28 @@ function MenuComponent({ x, y, currentModule, container, onAction }: MenuProps) 
       }}
     >
       <div
-        className="menu-item"
         onClick={() => handleAction('zoom', currentModule)}
         stylex={{ padding: '8px 16px', cursor: 'pointer' }}
       >
         Zoom
       </div>
       <div
-        className="menu-item"
         onClick={() => handleAction('reset', currentModule)}
         stylex={{ padding: '8px 16px', cursor: 'pointer' }}
       >
         Reset
       </div>
       <div
-        className="menu-item"
         onClick={() => handleAction('details', currentModule)}
         stylex={{ padding: '8px 16px', cursor: 'pointer' }}
       >
         Show Details
+      </div>
+      <div
+        onClick={() => handleAction('close', currentModule)}
+        stylex={{ padding: '8px 16px', cursor: 'pointer' }}
+      >
+        Close
       </div>
     </div>,
     portalContainer
