@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react'
 import { createPortal } from 'react-dom'
-import { useBodyScroll, usePortal, useScale, withScale } from '../../composables'
+import { KEY_CODE, useBodyScroll, useKeyboard, usePortal, useScale, withScale } from '../../composables'
 import { Backdrop } from '../drawer/backdrop'
 import { ModalWrapper } from './wrapper'
 
@@ -35,7 +35,7 @@ function modalReducer(state: ModalState, action: ModalComponentAction): ModalSta
 
 function ModalComponent(props: React.PropsWithChildren<ModalProps>) {
   const portal = usePortal('modal')
-  const { disableBackdropClick, children, visible: userVisible = false, onClose } = props
+  const { disableBackdropClick, children, visible: userVisible = false, keyboard = true, onClose } = props
 
   const [, setBodyHidden] = useBodyScroll({ delayReset: 300 })
 
@@ -58,6 +58,18 @@ function ModalComponent(props: React.PropsWithChildren<ModalProps>) {
     setBodyHidden(false)
   }
 
+  const { bindings } = useKeyboard(
+    () => {
+      if (keyboard) {
+        closeModal()
+      }
+    },
+    KEY_CODE.Escape,
+    {
+      disableGlobalEvent: true
+    }
+  )
+
   const closeFromBackdrop = () => {
     if (disableBackdropClick) {
       return
@@ -70,7 +82,7 @@ function ModalComponent(props: React.PropsWithChildren<ModalProps>) {
   }
 
   return createPortal(
-    <Backdrop width={SCALES.width(26)} visible={state.visible} onClick={closeFromBackdrop}>
+    <Backdrop width={SCALES.width(26)} visible={state.visible} onClick={closeFromBackdrop} {...bindings}>
       <ModalWrapper visible={state.visible}>
         {children}
       </ModalWrapper>

@@ -183,6 +183,12 @@ const myAnalyzerPlugin = {
 - [ROLLDOWN](./ROLLDOWN.md)
 - [CHANGLOG](./CHANGELOG.md)
 
+### Credits
+
+- [Geist UI](https://github.com/geist-org/geist-ui)
+- The friend who proposed this idea.
+- Every contributor & Sponsors.
+
 ### LICENSE
 
 [MIT](./LICENSE)

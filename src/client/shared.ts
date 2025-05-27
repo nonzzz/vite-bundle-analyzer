@@ -38,3 +38,16 @@ export function uniqBy<T, K extends keyof T = keyof T>(array: T[], predicate: K 
   }, {} as Record<K, T>)
   return Object.values(uniq)
 }
+
+export function isChildElement(
+  parent: Element | null | undefined,
+  child: Element | null | undefined
+) {
+  if (!parent || !child) { return false }
+  let node: (Node & ParentNode) | null = child
+  while (node) {
+    if (node === parent) { return true }
+    node = node.parentNode
+  }
+  return false
+}

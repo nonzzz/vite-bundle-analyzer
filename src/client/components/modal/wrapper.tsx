@@ -1,8 +1,9 @@
 import { inline } from '@stylex-extend/core'
 import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useScale } from '../../composables'
+import { isChildElement } from '../../shared'
 import { CSSTransition } from '../css-transition'
 
 interface Props {
@@ -12,8 +13,11 @@ interface Props {
 export type ModalWrapperProps = Omit<React.HTMLAttributes<unknown>, keyof Props> & Props
 
 function ModalWrapper(props: React.PropsWithChildren<ModalWrapperProps>) {
-  const { visible, children } = props
+  const { visible, children, ...rest } = props
   const { SCALES } = useScale()
+  const modalContent = useRef<HTMLDivElement>(null)
+  const tabStart = useRef<HTMLDivElement>(null)
+  const tabEnd = useRef<HTMLDivElement>(null)
   const { className, style } = stylex.props(inline({
     position: 'relative',
     bottom: 0,
@@ -57,10 +61,41 @@ function ModalWrapper(props: React.PropsWithChildren<ModalWrapperProps>) {
   }))
   const classes = clsx(className, 'wrapper')
 
+  useEffect(() => {
+    if (!visible) { return }
+    const activeElement = document.activeElement
+    const isChild = isChildElement(modalContent.current, activeElement)
+    if (isChild) { return }
+    if (tabStart.current) {
+      tabStart.current.focus()
+    }
+  }, [visible])
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const isTabDown = event.keyCode === 9
+    if (!visible || !isTabDown) { return }
+    const activeElement = document.activeElement
+    if (event.shiftKey) {
+      if (activeElement === tabStart.current) {
+        if (tabEnd.current) {
+          tabEnd.current.focus()
+        }
+      }
+    } else {
+      if (activeElement === tabEnd.current) {
+        if (tabStart.current) {
+          tabStart.current.focus()
+        }
+      }
+    }
+  }
+
   return (
     <CSSTransition name="wrapper" visible={visible} clearTime={300}>
-      <div role="dialog" tabIndex={-1} className={classes} style={style}>
+      <div role="dialog" tabIndex={-1} className={classes} style={style} onKeyDown={onKeyDown} ref={modalContent} {...rest}>
+        <div tabIndex={0} className="hide-tab" aria-hidden="true" ref={tabStart} />
         {children}
+        <div tabIndex={0} className="hide-tab" aria-hidden="true" ref={tabEnd} />
       </div>
     </CSSTransition>
   )
