@@ -6,7 +6,7 @@ import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } fr
 import { createBrotil, createGzip, slash, stringToByte } from './shared'
 import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
 import { Trie } from './trie'
-import type { ChunkMetadata, GroupWithNode } from './trie'
+import type { ChunkMetadata, GroupWithNode, ImportedBy } from './trie'
 
 const defaultWd = process.cwd()
 
@@ -112,6 +112,13 @@ async function calcCompressedSize(b: Uint8Array, compress: ReturnType<typeof cre
   return { gzipSize, brotliSize }
 }
 
+export function generateImportedBy(imports: string[], dynamicImports: string[]): ImportedBy[] {
+  return [
+    ...imports.map((id) => ({ id, kind: 'static' as const })),
+    ...dynamicImports.map((id) => ({ id, kind: 'dynamic' as const }))
+  ]
+}
+
 export class AnalyzerNode {
   originalId: string
   filename: string
@@ -154,13 +161,15 @@ export class AnalyzerNode {
     matcher: ReturnType<typeof createFilter>
   ) {
     const stats = new Trie<{
-      statSize: number
-    }>({ meta: { statSize: 0 } })
+      statSize: number,
+      importedBy: ImportedBy[]
+    }>({ meta: { statSize: 0, importedBy: [] } })
     const sources = new Trie<{
       parsedSize: number,
       brotliSize: number,
-      gzipSize: number
-    }>({ meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0 } })
+      gzipSize: number,
+      importedBy: ImportedBy[]
+    }>({ meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0, importedBy: [] } })
 
     if (mod.kind === 'asset') {
       this.statSize = mod.code.byteLength
@@ -180,21 +189,24 @@ export class AnalyzerNode {
         ? moduleIds.reduce((acc, cur) => {
           const info = pluginContext.getModuleInfo(cur)
           if (info && info.code) {
-            acc.push({ id: info.id, code: info.code })
+            acc.push({
+              id: info.id,
+              code: info.code,
+              importedBy: generateImportedBy(info.importedIds, info.dynamicallyImportedIds)
+            })
           }
           return acc
         }, [] as Array<ChunkMetadata>)
-        : pickupContentFromSourcemap(map)
+        : pickupContentFromSourcemap(map, workspaceRoot)
 
       infomations = infomations.filter((info) => matcher(info.id))
-
       for (const info of infomations) {
         if (info.id[0] === '.') {
           info.id = path.resolve(workspaceRoot, info.id)
         }
         const statSize = stringToByte(info.code).byteLength
         this.statSize += statSize
-        stats.insert(generateNodeId(info.id, workspaceRoot), { meta: { statSize } })
+        stats.insert(generateNodeId(info.id, workspaceRoot), { meta: { statSize, importedBy: info.importedBy } })
       }
 
       // Check map again
@@ -202,27 +214,25 @@ export class AnalyzerNode {
         // We use sourcemap to restore the corresponding chunk block
         // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
         // It's will cause dead lock.(Altough this is a race case.)
-        const { grouped, files } = pickupMappingsFromCodeBinary(code, map, (id: string) => {
+        const { grouped, files } = pickupMappingsFromCodeBinary(code, map, workspaceRoot, (id: string) => {
           const relatived = path.relative(workspaceRoot, id)
           return path.join(workspaceRoot, relatived)
         })
 
-        const chunks: Record<string, Uint8Array | string> = grouped
+        const chunks: typeof grouped = grouped
 
         if (!files.size) {
-          chunks[this.originalId] = code
+          chunks[this.originalId].code = code as unknown as string
           files.add(this.originalId)
         }
-
         const validChunks = Object.entries(chunks)
           .filter(([id]) => matcher(id))
-
-        await Promise.all(validChunks.map(async ([id, code]) => {
+        await Promise.all(validChunks.map(async ([id, { code, importedBy }]) => {
           const b = stringToByte(code)
           const parsedSize = b.byteLength
           const compressedSizes = await calcCompressedSize(b, compress)
           sources.insert(generateNodeId(id, workspaceRoot), {
-            meta: { parsedSize, ...compressedSizes }
+            meta: { parsedSize, ...compressedSizes, importedBy }
           })
         }))
       }
@@ -233,9 +243,13 @@ export class AnalyzerNode {
       enter: (child, parent) => {
         if (parent) { parent.groups.push(child) }
       },
-      leave: (child) => {
+      leave: (child, _, end) => {
         if (child.groups && child.groups.length) {
           child.statSize = child.groups.reduce((acc, cur) => (acc += cur.statSize, acc), 0)
+        }
+        if (!end) {
+          // @ts-expect-error no need this property
+          delete child.importedBy
         }
       }
     })
@@ -245,7 +259,7 @@ export class AnalyzerNode {
       enter: (child, parent) => {
         if (parent) { parent.groups.push(child) }
       },
-      leave: (child) => {
+      leave: (child, _, end) => {
         if (child.groups && child.groups.length) {
           Object.assign(
             child,
@@ -256,6 +270,10 @@ export class AnalyzerNode {
               return acc
             }, { gzipSize: 0, brotliSize: 0, parsedSize: 0 })
           )
+        }
+        if (!end) {
+          // @ts-expect-error no need this property
+          delete child.importedBy
         }
       }
     })

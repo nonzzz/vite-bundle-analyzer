@@ -1,63 +1,93 @@
 [
   {
-    "filename": "assets/index-Zm3DMdtf.js",
-    "label": "assets/index-Zm3DMdtf.js",
-    "parsedSize": 109313,
-    "mapSize": 383917,
-    "statSize": 230588,
-    "gzipSize": 48011,
-    "brotliSize": 42425,
+    "filename": "assets/index-D_HN7X1o.js",
+    "label": "assets/index-D_HN7X1o.js",
+    "parsedSize": 109222,
+    "mapSize": 386495,
+    "statSize": 232639,
+    "gzipSize": 47943,
+    "brotliSize": 42364,
     "source": [
       {
-        "parsedSize": 109313,
-        "gzipSize": 48011,
-        "brotliSize": 42425,
+        "parsedSize": 109222,
+        "gzipSize": 47943,
+        "brotliSize": 42364,
         "label": "home",
         "groups": [
           {
-            "parsedSize": 54788,
-            "gzipSize": 26696,
-            "brotliSize": 23159,
+            "parsedSize": 55456,
+            "gzipSize": 27000,
+            "brotliSize": 23446,
             "label": "src",
             "groups": [
               {
-                "parsedSize": 54625,
-                "gzipSize": 26542,
-                "brotliSize": 23032,
+                "parsedSize": 55293,
+                "gzipSize": 26846,
+                "brotliSize": 23319,
                 "label": "client",
                 "groups": [
                   {
                     "parsedSize": 7169,
-                    "gzipSize": 3897,
-                    "brotliSize": 3252,
+                    "gzipSize": 3898,
+                    "brotliSize": 3262,
                     "label": "composables",
                     "groups": [
                       {
                         "parsedSize": 1454,
-                        "gzipSize": 935,
-                        "brotliSize": 818,
+                        "gzipSize": 936,
+                        "brotliSize": 843,
                         "label": "use-scale",
                         "groups": [
                           {
                             "parsedSize": 177,
-                            "gzipSize": 140,
-                            "brotliSize": 126,
+                            "gzipSize": 141,
+                            "brotliSize": 127,
+                            "importedBy": [
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/scale-context",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "utils.ts",
                             "filename": "home/src/client/composables/use-scale/utils.ts"
                           },
                           {
-                            "parsedSize": 235,
-                            "gzipSize": 193,
-                            "brotliSize": 165,
-                            "label": "scale-context.ts",
-                            "filename": "home/src/client/composables/use-scale/scale-context.ts"
-                          },
-                          {
                             "parsedSize": 1042,
                             "gzipSize": 602,
-                            "brotliSize": 527,
+                            "brotliSize": 553,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/scale-context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/scale-context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/utils",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "with-scale.tsx",
                             "filename": "home/src/client/composables/use-scale/with-scale.tsx"
+                          },
+                          {
+                            "parsedSize": 235,
+                            "gzipSize": 193,
+                            "brotliSize": 163,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              }
+                            ],
+                            "label": "scale-context.ts",
+                            "filename": "home/src/client/composables/use-scale/scale-context.ts"
                           }
                         ],
                         "filename": "home/src/client/composables/use-scale"
@@ -65,21 +95,51 @@
                       {
                         "parsedSize": 218,
                         "gzipSize": 180,
-                        "brotliSize": 156,
+                        "brotliSize": 157,
+                        "importedBy": [
+                          {
+                            "id": "foxact/use-abortable-effect",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-dom-observer/use-dom-observer.ts",
                         "filename": "home/src/client/composables/use-dom-observer/use-dom-observer.ts"
                       },
                       {
                         "parsedSize": 3487,
-                        "gzipSize": 1606,
-                        "brotliSize": 1330,
+                        "gzipSize": 1605,
+                        "brotliSize": 1331,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-keyboard/use-keyboard.ts",
                         "filename": "home/src/client/composables/use-keyboard/use-keyboard.ts"
                       },
                       {
                         "parsedSize": 857,
                         "gzipSize": 439,
-                        "brotliSize": 369,
+                        "brotliSize": 365,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-body-scroll/use-body-scroll.ts",
                         "filename": "home/src/client/composables/use-body-scroll/use-body-scroll.ts"
                       },
@@ -87,27 +147,55 @@
                         "parsedSize": 107,
                         "gzipSize": 96,
                         "brotliSize": 72,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-click-anywhere/use-click-anywhere.ts",
                         "filename": "home/src/client/composables/use-click-anywhere/use-click-anywhere.ts"
                       },
                       {
                         "parsedSize": 287,
-                        "gzipSize": 230,
-                        "brotliSize": 168,
+                        "gzipSize": 231,
+                        "brotliSize": 167,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-portal/use-portal.ts",
                         "filename": "home/src/client/composables/use-portal/use-portal.ts"
                       },
                       {
                         "parsedSize": 420,
                         "gzipSize": 186,
-                        "brotliSize": 143,
+                        "brotliSize": 136,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-query/use-query.ts",
                         "filename": "home/src/client/composables/use-query/use-query.ts"
                       },
                       {
                         "parsedSize": 339,
                         "gzipSize": 225,
-                        "brotliSize": 196,
+                        "brotliSize": 191,
+                        "importedBy": [
+                          {
+                            "id": "foxact/noop",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-resize/use-resize.ts",
                         "filename": "home/src/client/composables/use-resize/use-resize.ts"
                       }
@@ -115,28 +203,100 @@
                     "filename": "home/src/client/composables"
                   },
                   {
-                    "parsedSize": 44899,
-                    "gzipSize": 21181,
-                    "brotliSize": 18531,
+                    "parsedSize": 45414,
+                    "gzipSize": 21436,
+                    "brotliSize": 18756,
                     "label": "components",
                     "groups": [
                       {
                         "parsedSize": 2137,
                         "gzipSize": 1146,
-                        "brotliSize": 1013,
+                        "brotliSize": 1012,
                         "label": "side-bar",
                         "groups": [
                           {
                             "parsedSize": 110,
                             "gzipSize": 118,
                             "brotliSize": 97,
+                            "importedBy": [
+                              {
+                                "id": "foxact/create-context-state",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "provide.ts",
                             "filename": "home/src/client/components/side-bar/provide.ts"
                           },
                           {
                             "parsedSize": 2027,
                             "gzipSize": 1028,
-                            "brotliSize": 916,
+                            "brotliSize": 915,
+                            "importedBy": [
+                              {
+                                "id": "foxact/noop",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "~icons/ph/list",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/shared",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/special",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/button",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/drawer",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/file-list",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/search-modules",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/select",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/select",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/text",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/provide",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "side-bar.tsx",
                             "filename": "home/src/client/components/side-bar/side-bar.tsx"
                           }
@@ -146,27 +306,81 @@
                       {
                         "parsedSize": 5188,
                         "gzipSize": 2471,
-                        "brotliSize": 2118,
+                        "brotliSize": 2126,
                         "label": "drawer",
                         "groups": [
                           {
                             "parsedSize": 843,
-                            "gzipSize": 447,
-                            "brotliSize": 372,
+                            "gzipSize": 448,
+                            "brotliSize": 373,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "content.tsx",
                             "filename": "home/src/client/components/drawer/content.tsx"
                           },
                           {
                             "parsedSize": 1227,
                             "gzipSize": 689,
-                            "brotliSize": 595,
+                            "brotliSize": 604,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/css-transition",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "backdrop.tsx",
                             "filename": "home/src/client/components/drawer/backdrop.tsx"
                           },
                           {
                             "parsedSize": 298,
-                            "gzipSize": 237,
-                            "brotliSize": 204,
+                            "gzipSize": 236,
+                            "brotliSize": 202,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react-dom",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/backdrop",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/wrapper",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "drawer.tsx",
                             "filename": "home/src/client/components/drawer/drawer.tsx"
                           },
@@ -174,6 +388,16 @@
                             "parsedSize": 4,
                             "gzipSize": 24,
                             "brotliSize": 8,
+                            "importedBy": [
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/content",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/drawer",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "index.ts",
                             "filename": "home/src/client/components/drawer/index.ts"
                           },
@@ -181,6 +405,28 @@
                             "parsedSize": 2816,
                             "gzipSize": 1074,
                             "brotliSize": 939,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/css-transition",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "wrapper.tsx",
                             "filename": "home/src/client/components/drawer/wrapper.tsx"
                           }
@@ -190,13 +436,23 @@
                       {
                         "parsedSize": 4483,
                         "gzipSize": 2175,
-                        "brotliSize": 1928,
+                        "brotliSize": 1915,
                         "label": "checkbox",
                         "groups": [
                           {
                             "parsedSize": 90,
-                            "gzipSize": 107,
-                            "brotliSize": 87,
+                            "gzipSize": 108,
+                            "brotliSize": 83,
+                            "importedBy": [
+                              {
+                                "id": "foxact/noop",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "context.ts",
                             "filename": "home/src/client/components/checkbox/context.ts"
                           },
@@ -204,20 +460,66 @@
                             "parsedSize": 25,
                             "gzipSize": 45,
                             "brotliSize": 29,
+                            "importedBy": [
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/checkbox",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/checkbox-group",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "index.ts",
                             "filename": "home/src/client/components/checkbox/index.ts"
                           },
                           {
                             "parsedSize": 1505,
-                            "gzipSize": 650,
-                            "brotliSize": 585,
+                            "gzipSize": 649,
+                            "brotliSize": 578,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "checkbox-group.tsx",
                             "filename": "home/src/client/components/checkbox/checkbox-group.tsx"
                           },
                           {
                             "parsedSize": 2863,
                             "gzipSize": 1373,
-                            "brotliSize": 1227,
+                            "brotliSize": 1225,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "checkbox.tsx",
                             "filename": "home/src/client/components/checkbox/checkbox.tsx"
                           }
@@ -227,20 +529,52 @@
                       {
                         "parsedSize": 2604,
                         "gzipSize": 1140,
-                        "brotliSize": 1008,
+                        "brotliSize": 987,
                         "label": "text",
                         "groups": [
                           {
                             "parsedSize": 546,
                             "gzipSize": 334,
-                            "brotliSize": 304,
+                            "brotliSize": 289,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/child",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "text.tsx",
                             "filename": "home/src/client/components/text/text.tsx"
                           },
                           {
                             "parsedSize": 2058,
                             "gzipSize": 806,
-                            "brotliSize": 704,
+                            "brotliSize": 698,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "child.tsx",
                             "filename": "home/src/client/components/text/child.tsx"
                           }
@@ -248,9 +582,31 @@
                         "filename": "home/src/client/components/text"
                       },
                       {
-                        "parsedSize": 396,
-                        "gzipSize": 269,
-                        "brotliSize": 229,
+                        "parsedSize": 395,
+                        "gzipSize": 270,
+                        "brotliSize": 236,
+                        "importedBy": [
+                          {
+                            "id": "foxact/noop",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/shared",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/spacer",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/text",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "module-item.tsx",
                         "filename": "home/src/client/components/module-item.tsx"
                       },
@@ -258,33 +614,146 @@
                         "parsedSize": 1325,
                         "gzipSize": 695,
                         "brotliSize": 626,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/interface",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/checkbox",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/checkbox",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/module-item",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "file-list.tsx",
                         "filename": "home/src/client/components/file-list.tsx"
                       },
                       {
+                        "parsedSize": 1266,
+                        "gzipSize": 668,
+                        "brotliSize": 595,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "~icons/ph/file-duotone",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "~icons/ph/folder",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/interface",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/shared",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/input",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/module-item",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/spacer",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/text",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "search-modules.tsx",
+                        "filename": "home/src/client/components/search-modules.tsx"
+                      },
+                      {
                         "parsedSize": 9475,
-                        "gzipSize": 4943,
-                        "brotliSize": 4277,
+                        "gzipSize": 4941,
+                        "brotliSize": 4287,
                         "label": "select",
                         "groups": [
                           {
-                            "parsedSize": 115,
-                            "gzipSize": 123,
-                            "brotliSize": 92,
-                            "label": "context.ts",
-                            "filename": "home/src/client/components/select/context.ts"
-                          },
-                          {
                             "parsedSize": 498,
-                            "gzipSize": 281,
+                            "gzipSize": 280,
                             "brotliSize": 239,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "layouts.ts",
                             "filename": "home/src/client/components/select/layouts.ts"
+                          },
+                          {
+                            "parsedSize": 115,
+                            "gzipSize": 123,
+                            "brotliSize": 93,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              }
+                            ],
+                            "label": "context.ts",
+                            "filename": "home/src/client/components/select/context.ts"
                           },
                           {
                             "parsedSize": 1420,
                             "gzipSize": 790,
                             "brotliSize": 681,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react-dom",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/css-transition",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/layouts",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "dropdown.tsx",
                             "filename": "home/src/client/components/select/dropdown.tsx"
                           },
@@ -292,13 +761,28 @@
                             "parsedSize": 52,
                             "gzipSize": 72,
                             "brotliSize": 56,
+                            "importedBy": [],
                             "label": "ellipsis.tsx",
                             "filename": "home/src/client/components/select/ellipsis.tsx"
                           },
                           {
                             "parsedSize": 1236,
                             "gzipSize": 709,
-                            "brotliSize": 605,
+                            "brotliSize": 606,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "select-multiple.tsx",
                             "filename": "home/src/client/components/select/select-multiple.tsx"
                           },
@@ -306,20 +790,86 @@
                             "parsedSize": 51,
                             "gzipSize": 67,
                             "brotliSize": 55,
+                            "importedBy": [
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/select",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/select-option",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "index.ts",
                             "filename": "home/src/client/components/select/index.ts"
                           },
                           {
                             "parsedSize": 2643,
-                            "gzipSize": 1134,
-                            "brotliSize": 981,
+                            "gzipSize": 1133,
+                            "brotliSize": 976,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/ellipsis",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "select-option.tsx",
                             "filename": "home/src/client/components/select/select-option.tsx"
                           },
                           {
                             "parsedSize": 3460,
                             "gzipSize": 1767,
-                            "brotliSize": 1568,
+                            "brotliSize": 1581,
+                            "importedBy": [
+                              {
+                                "id": "foxact/noop",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/dropdown",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/ellipsis",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/select-multiple",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/select-option",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/select-option",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "select.tsx",
                             "filename": "home/src/client/components/select/select.tsx"
                           }
@@ -327,22 +877,33 @@
                         "filename": "home/src/client/components/select"
                       },
                       {
-                        "parsedSize": 1270,
-                        "gzipSize": 669,
-                        "brotliSize": 592,
-                        "label": "search-modules.tsx",
-                        "filename": "home/src/client/components/search-modules.tsx"
-                      },
-                      {
                         "parsedSize": 4557,
-                        "gzipSize": 1628,
-                        "brotliSize": 1460,
+                        "gzipSize": 1629,
+                        "brotliSize": 1465,
                         "label": "input",
                         "groups": [
                           {
                             "parsedSize": 4557,
-                            "gzipSize": 1628,
-                            "brotliSize": 1460,
+                            "gzipSize": 1629,
+                            "brotliSize": 1465,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "input.tsx",
                             "filename": "home/src/client/components/input/input.tsx"
                           }
@@ -351,35 +912,135 @@
                       },
                       {
                         "parsedSize": 859,
-                        "gzipSize": 555,
-                        "brotliSize": 479,
+                        "gzipSize": 554,
+                        "brotliSize": 480,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "tooltip.tsx",
                         "filename": "home/src/client/components/tooltip.tsx"
                       },
                       {
-                        "parsedSize": 3501,
-                        "gzipSize": 1778,
-                        "brotliSize": 1528,
+                        "parsedSize": 4022,
+                        "gzipSize": 2036,
+                        "brotliSize": 1770,
                         "label": "treemap",
                         "groups": [
                           {
                             "parsedSize": 1242,
-                            "gzipSize": 570,
-                            "brotliSize": 491,
+                            "gzipSize": 568,
+                            "brotliSize": 490,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react-dom",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "menu.tsx",
                             "filename": "home/src/client/components/treemap/menu.tsx"
                           },
                           {
-                            "parsedSize": 1013,
-                            "gzipSize": 588,
-                            "brotliSize": 478,
+                            "parsedSize": 1537,
+                            "gzipSize": 851,
+                            "brotliSize": 724,
+                            "importedBy": [
+                              {
+                                "id": "react-dom/client",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/component",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/menu",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/menu",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "plugin.tsx",
                             "filename": "home/src/client/components/treemap/plugin.tsx"
                           },
                           {
-                            "parsedSize": 1246,
-                            "gzipSize": 620,
-                            "brotliSize": 559,
+                            "parsedSize": 1243,
+                            "gzipSize": 617,
+                            "brotliSize": 556,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "@stylexjs/stylex",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "squarified/plugin",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/context",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/special",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/special",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/plugin",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "component.tsx",
                             "filename": "home/src/client/components/treemap/component.tsx"
                           }
@@ -388,21 +1049,69 @@
                       },
                       {
                         "parsedSize": 3866,
-                        "gzipSize": 1638,
-                        "brotliSize": 1420,
+                        "gzipSize": 1639,
+                        "brotliSize": 1424,
                         "label": "modal",
                         "groups": [
                           {
                             "parsedSize": 665,
-                            "gzipSize": 426,
-                            "brotliSize": 367,
+                            "gzipSize": 425,
+                            "brotliSize": 366,
+                            "importedBy": [
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react-dom",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/drawer/backdrop",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/wrapper",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "modal.tsx",
                             "filename": "home/src/client/components/modal/modal.tsx"
                           },
                           {
                             "parsedSize": 3201,
-                            "gzipSize": 1212,
-                            "brotliSize": 1053,
+                            "gzipSize": 1214,
+                            "brotliSize": 1058,
+                            "importedBy": [
+                              {
+                                "id": "@stylex-extend/core",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "clsx",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "react",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/composables",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/shared",
+                                "kind": "static"
+                              },
+                              {
+                                "id": "/home/nonzzz/workspace/css-transition",
+                                "kind": "static"
+                              }
+                            ],
                             "label": "wrapper.tsx",
                             "filename": "home/src/client/components/modal/wrapper.tsx"
                           }
@@ -410,23 +1119,61 @@
                         "filename": "home/src/client/components/modal"
                       },
                       {
-                        "parsedSize": 386,
-                        "gzipSize": 252,
-                        "brotliSize": 222,
-                        "label": "css-transition/css-transition.ts",
-                        "filename": "home/src/client/components/css-transition/css-transition.ts"
-                      },
-                      {
                         "parsedSize": 3919,
                         "gzipSize": 1380,
                         "brotliSize": 1223,
+                        "importedBy": [
+                          {
+                            "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/composables",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "button/button.tsx",
                         "filename": "home/src/client/components/button/button.tsx"
                       },
                       {
-                        "parsedSize": 933,
-                        "gzipSize": 442,
-                        "brotliSize": 408,
+                        "parsedSize": 386,
+                        "gzipSize": 251,
+                        "brotliSize": 222,
+                        "importedBy": [
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "css-transition/css-transition.ts",
+                        "filename": "home/src/client/components/css-transition/css-transition.ts"
+                      },
+                      {
+                        "parsedSize": 932,
+                        "gzipSize": 441,
+                        "brotliSize": 388,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/composables",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "spacer/spacer.tsx",
                         "filename": "home/src/client/components/spacer/spacer.tsx"
                       }
@@ -435,15 +1182,46 @@
                   },
                   {
                     "parsedSize": 552,
-                    "gzipSize": 301,
+                    "gzipSize": 302,
                     "brotliSize": 266,
+                    "importedBy": [
+                      {
+                        "id": "foxact/context-state",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "foxact/noop",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/treemap",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/interface",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/special",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "context.ts",
                     "filename": "home/src/client/context.ts"
                   },
                   {
                     "parsedSize": 248,
-                    "gzipSize": 181,
+                    "gzipSize": 180,
                     "brotliSize": 149,
+                    "importedBy": [],
                     "label": "shared.ts",
                     "filename": "home/src/client/shared.ts"
                   },
@@ -457,6 +1235,12 @@
                         "parsedSize": 79,
                         "gzipSize": 99,
                         "brotliSize": 83,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/interface",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "home/src/client/special/index.ts"
                       }
@@ -467,22 +1251,116 @@
                     "parsedSize": 424,
                     "gzipSize": 230,
                     "brotliSize": 185,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/special",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/special",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "receiver.tsx",
                     "filename": "home/src/client/receiver.tsx"
                   },
                   {
-                    "parsedSize": 103,
-                    "gzipSize": 117,
-                    "brotliSize": 92,
-                    "label": "main.tsx",
-                    "filename": "home/src/client/main.tsx"
-                  },
-                  {
-                    "parsedSize": 1151,
-                    "gzipSize": 536,
-                    "brotliSize": 474,
+                    "parsedSize": 1304,
+                    "gzipSize": 584,
+                    "brotliSize": 521,
+                    "importedBy": [
+                      {
+                        "id": "foxact/compose-context-provider",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "squarified",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/side-bar",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/text",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/tooltip",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/treemap",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/treemap",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/context",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/shared",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/modal",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/components/spacer",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/receiver",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "application.tsx",
                     "filename": "home/src/client/application.tsx"
+                  },
+                  {
+                    "parsedSize": 103,
+                    "gzipSize": 117,
+                    "brotliSize": 97,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react-dom",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react-dom/client",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/application",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "main.tsx",
+                    "filename": "home/src/client/main.tsx"
                   }
                 ],
                 "filename": "home/src/client"
@@ -491,6 +1369,7 @@
                 "parsedSize": 163,
                 "gzipSize": 154,
                 "brotliSize": 127,
+                "importedBy": [],
                 "label": "shared/index.ts",
                 "filename": "home/src/shared/index.ts"
               }
@@ -498,40 +1377,47 @@
             "filename": "home/src"
           },
           {
-            "parsedSize": 54525,
-            "gzipSize": 21315,
-            "brotliSize": 19266,
+            "parsedSize": 53766,
+            "gzipSize": 20943,
+            "brotliSize": 18918,
             "label": "node_modules/.pnpm",
             "groups": [
               {
-                "parsedSize": 23929,
-                "gzipSize": 9905,
-                "brotliSize": 9073,
+                "parsedSize": 23938,
+                "gzipSize": 9906,
+                "brotliSize": 9060,
                 "label": "preact@10.26.5/node_modules/preact",
                 "groups": [
                   {
                     "parsedSize": 9133,
                     "gzipSize": 3758,
-                    "brotliSize": 3457,
+                    "brotliSize": 3441,
                     "label": "compat",
                     "groups": [
                       {
                         "parsedSize": 135,
-                        "gzipSize": 117,
-                        "brotliSize": 102,
+                        "gzipSize": 116,
+                        "brotliSize": 94,
+                        "importedBy": [
+                          {
+                            "id": "preact/compat",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "client.mjs",
                         "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/client.mjs"
                       },
                       {
                         "parsedSize": 8998,
-                        "gzipSize": 3641,
-                        "brotliSize": 3355,
+                        "gzipSize": 3642,
+                        "brotliSize": 3347,
                         "label": "dist",
                         "groups": [
                           {
                             "parsedSize": 8998,
-                            "gzipSize": 3641,
-                            "brotliSize": 3355,
+                            "gzipSize": 3642,
+                            "brotliSize": 3347,
+                            "importedBy": [],
                             "label": "compat.module.js",
                             "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js"
                           }
@@ -542,34 +1428,28 @@
                     "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat"
                   },
                   {
-                    "parsedSize": 11158,
-                    "gzipSize": 4571,
-                    "brotliSize": 4179,
+                    "parsedSize": 11159,
+                    "gzipSize": 4572,
+                    "brotliSize": 4180,
+                    "importedBy": [],
                     "label": "dist/preact.module.js",
                     "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/dist/preact.module.js"
                   },
                   {
-                    "parsedSize": 361,
-                    "gzipSize": 258,
-                    "brotliSize": 226,
-                    "label": "jsx-runtime/dist",
-                    "groups": [
-                      {
-                        "parsedSize": 361,
-                        "gzipSize": 258,
-                        "brotliSize": 226,
-                        "label": "jsxRuntime.module.js",
-                        "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
-                      }
-                    ],
-                    "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/jsx-runtime/dist"
-                  },
-                  {
-                    "parsedSize": 3277,
+                    "parsedSize": 3285,
                     "gzipSize": 1318,
                     "brotliSize": 1211,
+                    "importedBy": [],
                     "label": "hooks/dist/hooks.module.js",
                     "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist/hooks.module.js"
+                  },
+                  {
+                    "parsedSize": 361,
+                    "gzipSize": 258,
+                    "brotliSize": 228,
+                    "importedBy": [],
+                    "label": "jsx-runtime/dist/jsxRuntime.module.js",
+                    "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
                   }
                 ],
                 "filename": "home/node_modules/.pnpm/preact@10.26.5/node_modules/preact"
@@ -577,20 +1457,22 @@
               {
                 "parsedSize": 2551,
                 "gzipSize": 1154,
-                "brotliSize": 1021,
+                "brotliSize": 1022,
+                "importedBy": [],
                 "label": "@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
                 "filename": "home/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
               },
               {
                 "parsedSize": 384,
                 "gzipSize": 393,
-                "brotliSize": 301,
+                "brotliSize": 302,
                 "label": "foxact@0.2.45_react@18.3.1/node_modules/foxact",
                 "groups": [
                   {
                     "parsedSize": 90,
                     "gzipSize": 100,
                     "brotliSize": 69,
+                    "importedBy": [],
                     "label": "compose-context-provider/index.mjs",
                     "filename": "home/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
                   },
@@ -598,20 +1480,23 @@
                     "parsedSize": 15,
                     "gzipSize": 35,
                     "brotliSize": 19,
+                    "importedBy": [],
                     "label": "noop/index.mjs",
                     "filename": "home/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs"
                   },
                   {
                     "parsedSize": 185,
-                    "gzipSize": 151,
-                    "brotliSize": 126,
+                    "gzipSize": 152,
+                    "brotliSize": 127,
+                    "importedBy": [],
                     "label": "context-state/index.mjs",
                     "filename": "home/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/context-state/index.mjs"
                   },
                   {
                     "parsedSize": 94,
-                    "gzipSize": 107,
+                    "gzipSize": 106,
                     "brotliSize": 87,
+                    "importedBy": [],
                     "label": "use-abortable-effect/index.mjs",
                     "filename": "home/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
                   }
@@ -619,29 +1504,42 @@
                 "filename": "home/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact"
               },
               {
-                "parsedSize": 27299,
-                "gzipSize": 9627,
-                "brotliSize": 8670,
+                "parsedSize": 26531,
+                "gzipSize": 9256,
+                "brotliSize": 8342,
                 "label": "squarified@0.4.2/node_modules/squarified/dist",
                 "groups": [
                   {
                     "parsedSize": 1274,
-                    "gzipSize": 729,
-                    "brotliSize": 644,
+                    "gzipSize": 727,
+                    "brotliSize": 641,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/dom-event-BLJt9knO.mjs",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "index.mjs",
                     "filename": "home/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs"
                   },
                   {
-                    "parsedSize": 19779,
-                    "gzipSize": 6580,
-                    "brotliSize": 5973,
+                    "parsedSize": 19761,
+                    "gzipSize": 6564,
+                    "brotliSize": 5963,
+                    "importedBy": [],
                     "label": "dom-event-BLJt9knO.mjs",
                     "filename": "home/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/dom-event-BLJt9knO.mjs"
                   },
                   {
-                    "parsedSize": 6246,
-                    "gzipSize": 2318,
-                    "brotliSize": 2053,
+                    "parsedSize": 5496,
+                    "gzipSize": 1965,
+                    "brotliSize": 1738,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/dom-event-BLJt9knO.mjs",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "plugin.mjs",
                     "filename": "home/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/plugin.mjs"
                   }
@@ -650,8 +1548,9 @@
               },
               {
                 "parsedSize": 362,
-                "gzipSize": 236,
-                "brotliSize": 201,
+                "gzipSize": 234,
+                "brotliSize": 192,
+                "importedBy": [],
                 "label": "clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
                 "filename": "home/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
               }
@@ -664,15 +1563,15 @@
     ],
     "stats": [
       {
-        "statSize": 120907,
+        "statSize": 122958,
         "label": "src",
         "groups": [
           {
-            "statSize": 120502,
+            "statSize": 122553,
             "label": "client",
             "groups": [
               {
-                "statSize": 95129,
+                "statSize": 96614,
                 "label": "components",
                 "groups": [
                   {
@@ -681,16 +1580,102 @@
                     "groups": [
                       {
                         "statSize": 525,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/create-context-state/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "provide.ts",
                         "filename": "src/client/components/side-bar/provide.ts"
                       },
                       {
                         "statSize": 6058,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "~icons/ph/list.jsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/shared.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/special/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/button/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/drawer/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/file-list.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/search-modules.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/text/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/side-bar/provide.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "side-bar.tsx",
                         "filename": "src/client/components/side-bar/side-bar.tsx"
                       },
                       {
                         "statSize": 119,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/side-bar/provide.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/side-bar/side-bar.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/side-bar/index.ts"
                       }
@@ -703,11 +1688,39 @@
                     "groups": [
                       {
                         "statSize": 6451,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "button.tsx",
                         "filename": "src/client/components/button/button.tsx"
                       },
                       {
                         "statSize": 25,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/button/button.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/button/index.ts"
                       }
@@ -720,26 +1733,124 @@
                     "groups": [
                       {
                         "statSize": 1642,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "content.tsx",
                         "filename": "src/client/components/drawer/content.tsx"
                       },
                       {
                         "statSize": 2498,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/css-transition/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "backdrop.tsx",
                         "filename": "src/client/components/drawer/backdrop.tsx"
                       },
                       {
                         "statSize": 4505,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/css-transition/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "wrapper.tsx",
                         "filename": "src/client/components/drawer/wrapper.tsx"
                       },
                       {
                         "statSize": 1202,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/drawer/backdrop.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/drawer/wrapper.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "drawer.tsx",
                         "filename": "src/client/components/drawer/drawer.tsx"
                       },
                       {
                         "statSize": 152,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/drawer/content.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/drawer/drawer.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/drawer/index.ts"
                       }
@@ -752,11 +1863,27 @@
                     "groups": [
                       {
                         "statSize": 1295,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "css-transition.ts",
                         "filename": "src/client/components/css-transition/css-transition.ts"
                       },
                       {
                         "statSize": 33,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/css-transition/css-transition.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/css-transition/index.ts"
                       }
@@ -769,21 +1896,89 @@
                     "groups": [
                       {
                         "statSize": 376,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "context.ts",
                         "filename": "src/client/components/checkbox/context.ts"
                       },
                       {
                         "statSize": 5709,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/checkbox/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "checkbox.tsx",
                         "filename": "src/client/components/checkbox/checkbox.tsx"
                       },
                       {
                         "statSize": 3067,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/checkbox/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "checkbox-group.tsx",
                         "filename": "src/client/components/checkbox/checkbox-group.tsx"
                       },
                       {
                         "statSize": 169,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/checkbox/checkbox.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/checkbox/checkbox-group.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/checkbox/index.ts"
                       }
@@ -796,11 +1991,35 @@
                     "groups": [
                       {
                         "statSize": 1839,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "spacer.tsx",
                         "filename": "src/client/components/spacer/spacer.tsx"
                       },
                       {
                         "statSize": 25,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/spacer/spacer.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/spacer/index.ts"
                       }
@@ -813,16 +2032,62 @@
                     "groups": [
                       {
                         "statSize": 4173,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "child.tsx",
                         "filename": "src/client/components/text/child.tsx"
                       },
                       {
                         "statSize": 1824,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/text/child.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "text.tsx",
                         "filename": "src/client/components/text/text.tsx"
                       },
                       {
                         "statSize": 23,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/text/text.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/text/index.ts"
                       }
@@ -831,11 +2096,59 @@
                   },
                   {
                     "statSize": 1080,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/shared.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/spacer/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/text/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "module-item.tsx",
                     "filename": "src/client/components/module-item.tsx"
                   },
                   {
                     "statSize": 1861,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/checkbox/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/module-item.tsx",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "file-list.tsx",
                     "filename": "src/client/components/file-list.tsx"
                   },
@@ -845,11 +2158,39 @@
                     "groups": [
                       {
                         "statSize": 8153,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "input.tsx",
                         "filename": "src/client/components/input/input.tsx"
                       },
                       {
                         "statSize": 24,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/input/input.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/input/index.ts"
                       }
@@ -858,6 +2199,56 @@
                   },
                   {
                     "statSize": 3886,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "~icons/ph/file-duotone.jsx",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "~icons/ph/folder.jsx",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/context.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/shared.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/input/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/module-item.tsx",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/spacer/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/text/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "search-modules.tsx",
                     "filename": "src/client/components/search-modules.tsx"
                   },
@@ -867,41 +2258,184 @@
                     "groups": [
                       {
                         "statSize": 270,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "context.ts",
                         "filename": "src/client/components/select/context.ts"
                       },
                       {
                         "statSize": 1190,
+                        "importedBy": [],
                         "label": "layouts.ts",
                         "filename": "src/client/components/select/layouts.ts"
                       },
                       {
                         "statSize": 3081,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/css-transition/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/layouts.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "dropdown.tsx",
                         "filename": "src/client/components/select/dropdown.tsx"
                       },
                       {
                         "statSize": 596,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "ellipsis.tsx",
                         "filename": "src/client/components/select/ellipsis.tsx"
                       },
                       {
                         "statSize": 2164,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "select-multiple.tsx",
                         "filename": "src/client/components/select/select-multiple.tsx"
                       },
                       {
                         "statSize": 5148,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/ellipsis.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "select-option.tsx",
                         "filename": "src/client/components/select/select-option.tsx"
                       },
                       {
                         "statSize": 7630,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/dropdown.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/ellipsis.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/select-multiple.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/select-option.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "select.tsx",
                         "filename": "src/client/components/select/select.tsx"
                       },
                       {
                         "statSize": 155,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/select.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/select/select-option.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/select/index.ts"
                       }
@@ -910,30 +2444,124 @@
                   },
                   {
                     "statSize": 1881,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "tooltip.tsx",
                     "filename": "src/client/components/tooltip.tsx"
                   },
                   {
-                    "statSize": 8502,
+                    "statSize": 9987,
                     "label": "treemap",
                     "groups": [
                       {
                         "statSize": 2583,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "menu.tsx",
                         "filename": "src/client/components/treemap/menu.tsx"
                       },
                       {
-                        "statSize": 2673,
+                        "statSize": 4125,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/client.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/treemap/menu.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "plugin.tsx",
                         "filename": "src/client/components/treemap/plugin.tsx"
                       },
                       {
-                        "statSize": 3208,
+                        "statSize": 3241,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/plugin.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/special/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/treemap/plugin.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "component.tsx",
                         "filename": "src/client/components/treemap/component.tsx"
                       },
                       {
                         "statSize": 38,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/treemap/component.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/treemap/index.ts"
                       }
@@ -946,16 +2574,74 @@
                     "groups": [
                       {
                         "statSize": 5723,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/shared.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/css-transition/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "wrapper.tsx",
                         "filename": "src/client/components/modal/wrapper.tsx"
                       },
                       {
                         "statSize": 2051,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/index.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/drawer/backdrop.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/modal/wrapper.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "modal.tsx",
                         "filename": "src/client/components/modal/modal.tsx"
                       },
                       {
                         "statSize": 24,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/modal/modal.tsx",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/components/modal/index.ts"
                       }
@@ -967,11 +2653,31 @@
               },
               {
                 "statSize": 1703,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/context-state/index.mjs",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  }
+                ],
                 "label": "context.ts",
                 "filename": "src/client/context.ts"
               },
               {
                 "statSize": 1114,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/shared/index.ts",
+                    "kind": "static"
+                  }
+                ],
                 "label": "shared.ts",
                 "filename": "src/client/shared.ts"
               },
@@ -981,6 +2687,7 @@
                 "groups": [
                   {
                     "statSize": 264,
+                    "importedBy": [],
                     "label": "index.ts",
                     "filename": "src/client/special/index.ts"
                   }
@@ -997,11 +2704,23 @@
                     "groups": [
                       {
                         "statSize": 1884,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-body-scroll.ts",
                         "filename": "src/client/composables/use-body-scroll/use-body-scroll.ts"
                       },
                       {
                         "statSize": 34,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-body-scroll/use-body-scroll.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-body-scroll/index.ts"
                       }
@@ -1014,11 +2733,23 @@
                     "groups": [
                       {
                         "statSize": 231,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-click-anywhere.ts",
                         "filename": "src/client/composables/use-click-anywhere/use-click-anywhere.ts"
                       },
                       {
                         "statSize": 37,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-click-anywhere/use-click-anywhere.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-click-anywhere/index.ts"
                       }
@@ -1031,6 +2762,12 @@
                     "groups": [
                       {
                         "statSize": 559,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-dom-observer.ts",
                         "filename": "src/client/composables/use-dom-observer/use-dom-observer.ts"
                       }
@@ -1043,11 +2780,27 @@
                     "groups": [
                       {
                         "statSize": 6243,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-keyboard.ts",
                         "filename": "src/client/composables/use-keyboard/use-keyboard.ts"
                       },
                       {
                         "statSize": 31,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-keyboard/use-keyboard.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-keyboard/index.ts"
                       }
@@ -1060,11 +2813,23 @@
                     "groups": [
                       {
                         "statSize": 729,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-portal.ts",
                         "filename": "src/client/composables/use-portal/use-portal.ts"
                       },
                       {
                         "statSize": 29,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-portal/use-portal.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-portal/index.ts"
                       }
@@ -1077,11 +2842,23 @@
                     "groups": [
                       {
                         "statSize": 743,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-query.ts",
                         "filename": "src/client/composables/use-query/use-query.ts"
                       },
                       {
                         "statSize": 45,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-query/use-query.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-query/index.ts"
                       }
@@ -1094,11 +2871,27 @@
                     "groups": [
                       {
                         "statSize": 406,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "use-resize.ts",
                         "filename": "src/client/composables/use-resize/use-resize.ts"
                       },
                       {
                         "statSize": 29,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-resize/use-resize.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-resize/index.ts"
                       }
@@ -1111,21 +2904,65 @@
                     "groups": [
                       {
                         "statSize": 1212,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "scale-context.ts",
                         "filename": "src/client/composables/use-scale/scale-context.ts"
                       },
                       {
                         "statSize": 784,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/scale-context.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "utils.ts",
                         "filename": "src/client/composables/use-scale/utils.ts"
                       },
                       {
                         "statSize": 3231,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/scale-context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/utils.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "with-scale.tsx",
                         "filename": "src/client/composables/use-scale/with-scale.tsx"
                       },
                       {
                         "statSize": 175,
+                        "importedBy": [
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/scale-context.ts",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/with-scale.tsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/utils.ts",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "index.ts",
                         "filename": "src/client/composables/use-scale/index.ts"
                       }
@@ -1134,6 +2971,40 @@
                   },
                   {
                     "statSize": 258,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-body-scroll/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-click-anywhere/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-dom-observer/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-keyboard/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-portal/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-query/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-resize/index.ts",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/composables/use-scale/index.ts",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "index.ts",
                     "filename": "src/client/composables/index.ts"
                   }
@@ -1142,21 +3013,125 @@
               },
               {
                 "statSize": 1030,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/context.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/special/index.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "receiver.tsx",
                 "filename": "src/client/receiver.tsx"
               },
               {
-                "statSize": 4185,
+                "statSize": 4751,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/side-bar/index.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/text/index.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/tooltip.tsx",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/treemap/index.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/context.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/shared.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/css-baseline.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "virtual:stylex.css",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/modal/index.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/components/spacer/index.ts",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/receiver.tsx",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "application.tsx",
                 "filename": "src/client/application.tsx"
               },
               {
                 "statSize": 397,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/client.mjs",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/application.tsx",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "main.tsx",
                 "filename": "src/client/main.tsx"
               },
               {
                 "statSize": 20,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/src/client/main.tsx",
+                    "kind": "static"
+                  }
+                ],
                 "label": "index.html",
                 "filename": "src/client/index.html"
               }
@@ -1165,6 +3140,7 @@
           },
           {
             "statSize": 405,
+            "importedBy": [],
             "label": "shared/index.ts",
             "filename": "src/shared/index.ts"
           }
@@ -1185,16 +3161,42 @@
                 "groups": [
                   {
                     "statSize": 489,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "client.mjs",
                     "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/client.mjs"
                   },
                   {
                     "statSize": 61,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "jsx-runtime.mjs",
                     "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs"
                   },
                   {
                     "statSize": 10184,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/dist/preact.module.js",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist/hooks.module.js",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "dist/compat.module.js",
                     "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js"
                   }
@@ -1203,6 +3205,7 @@
               },
               {
                 "statSize": 11532,
+                "importedBy": [],
                 "label": "dist/preact.module.js",
                 "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/dist/preact.module.js"
               },
@@ -1212,6 +3215,12 @@
                 "groups": [
                   {
                     "statSize": 3754,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/dist/preact.module.js",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "hooks.module.js",
                     "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist/hooks.module.js"
                   }
@@ -1224,6 +3233,12 @@
                 "groups": [
                   {
                     "statSize": 1722,
+                    "importedBy": [
+                      {
+                        "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/dist/preact.module.js",
+                        "kind": "static"
+                      }
+                    ],
                     "label": "jsxRuntime.module.js",
                     "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
                   }
@@ -1235,6 +3250,7 @@
           },
           {
             "statSize": 8618,
+            "importedBy": [],
             "label": "@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
             "filename": "node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
           },
@@ -1244,21 +3260,56 @@
             "groups": [
               {
                 "statSize": 177,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  }
+                ],
                 "label": "compose-context-provider/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
               },
               {
                 "statSize": 33,
+                "importedBy": [],
                 "label": "noop/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs"
               },
               {
                 "statSize": 377,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/client-only@0.0.1/node_modules/client-only/index.js",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "context-state/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/context-state/index.mjs"
               },
               {
                 "statSize": 215,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/client-only@0.0.1/node_modules/client-only/index.js",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                    "kind": "static"
+                  }
+                ],
                 "label": "use-abortable-effect/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
               }
@@ -1271,16 +3322,29 @@
             "groups": [
               {
                 "statSize": 48497,
+                "importedBy": [],
                 "label": "dom-event-BLJt9knO.mjs",
                 "filename": "node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/dom-event-BLJt9knO.mjs"
               },
               {
                 "statSize": 3276,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/dom-event-BLJt9knO.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "index.mjs",
                 "filename": "node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/index.mjs"
               },
               {
                 "statSize": 18697,
+                "importedBy": [
+                  {
+                    "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/dom-event-BLJt9knO.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "plugin.mjs",
                 "filename": "node_modules/.pnpm/squarified@0.4.2/node_modules/squarified/dist/plugin.mjs"
               }
@@ -1289,6 +3353,7 @@
           },
           {
             "statSize": 388,
+            "importedBy": [],
             "label": "clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
             "filename": "node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
           }
@@ -1301,16 +3366,46 @@
         "groups": [
           {
             "statSize": 464,
+            "importedBy": [
+              {
+                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                "kind": "static"
+              },
+              {
+                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                "kind": "static"
+              }
+            ],
             "label": "list.jsx",
             "filename": "~icons/ph/list.jsx"
           },
           {
             "statSize": 672,
+            "importedBy": [
+              {
+                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                "kind": "static"
+              },
+              {
+                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                "kind": "static"
+              }
+            ],
             "label": "file-duotone.jsx",
             "filename": "~icons/ph/file-duotone.jsx"
           },
           {
             "statSize": 525,
+            "importedBy": [
+              {
+                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js",
+                "kind": "static"
+              },
+              {
+                "id": "/home/nonzzz/workspace/vite-bundle-analyzer/node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/jsx-runtime.mjs",
+                "kind": "static"
+              }
+            ],
             "label": "folder.jsx",
             "filename": "~icons/ph/folder.jsx"
           }
@@ -1323,13 +3418,13 @@
     "imports": []
   },
   {
-    "filename": "assets/index-M07y627X.css",
-    "label": "assets/index-M07y627X.css",
-    "parsedSize": 13819,
+    "filename": "assets/index-Dbd_UNa6.css",
+    "label": "assets/index-Dbd_UNa6.css",
+    "parsedSize": 13933,
     "mapSize": 0,
-    "statSize": 13819,
-    "gzipSize": 3304,
-    "brotliSize": 2809,
+    "statSize": 13933,
+    "gzipSize": 3337,
+    "brotliSize": 2839,
     "source": [],
     "stats": [],
     "isAsset": true,
@@ -1342,8 +3437,8 @@
     "parsedSize": 1776,
     "mapSize": 0,
     "statSize": 1776,
-    "gzipSize": 1133,
-    "brotliSize": 959,
+    "gzipSize": 1134,
+    "brotliSize": 962,
     "source": [],
     "stats": [],
     "isAsset": true,

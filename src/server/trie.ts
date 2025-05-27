@@ -3,9 +3,15 @@ interface NodeDescriptor<T = Record<string, Empty>> {
   filename: string
 }
 
+export interface ImportedBy {
+  id: string
+  kind: 'dynamic' | 'static'
+}
+
 export interface ChunkMetadata {
   code: string
   id: string
+  importedBy: ImportedBy[]
 }
 
 export interface GroupWithNode {
@@ -34,8 +40,8 @@ export class Node<T = Empty> implements NodeDescriptor<T> {
 }
 
 export interface NodeVisitor<T> {
-  enter?: (node: GroupWithNode & T, parent: Node<T> | null) => void
-  leave?: (node: GroupWithNode & T, parent: Node<T> | null) => void
+  enter?: (node: GroupWithNode & T, parent: Node<T> | null, isEndOfPath: boolean) => void
+  leave?: (node: GroupWithNode & T, parent: Node<T> | null, isEndOfPath: boolean) => void
 }
 
 export class Trie<T> {
@@ -98,13 +104,13 @@ export class Trie<T> {
       }
 
       if (visitor.enter) {
-        visitor.enter(child, node)
+        visitor.enter(child, node, childNode.isEndOfPath)
       }
 
       this.walk(childNode, visitor)
 
       if (visitor.leave) {
-        visitor.leave(child, node)
+        visitor.leave(child, node, childNode.isEndOfPath)
       }
     }
 
