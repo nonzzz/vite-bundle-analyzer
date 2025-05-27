@@ -11,14 +11,16 @@ import { ApplicationProvider, TreemapProvider } from './context'
 import { convertBytes } from './shared'
 import './css-baseline'
 import 'virtual:stylex.css'
+import { Modal } from './components/modal'
 import { Spacer } from './components/spacer'
 import { Receiver } from './receiver'
 
 export function App() {
   const treeMapRef = useRef<TreemapComponentInstance>()
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false)
-  const [tooltipContent, setTooltipContent] = useState<NativeModule | null>(null)
+  const [tooltipContent, setTooltipContent] = useState<NativeModule>({} as NativeModule)
   const [onTriggerMenu, setOnTriggerMenu] = useState<boolean>(false)
+  const [detailModalVisible, setDetailModalVisible] = useState<boolean>(false)
 
   const contexts = [
     <ApplicationProvider key="app" />,
@@ -57,6 +59,10 @@ export function App() {
             setTooltipVisible(false)
             setOnTriggerMenu(state)
           }}
+          onShowDetails={({ module }) => {
+            setDetailModalVisible(true)
+            setTooltipContent(module.node)
+          }}
         />
         <Tooltip visible={tooltipVisible}>
           {tooltipContent && (
@@ -67,6 +73,26 @@ export function App() {
             </Text>
           )}
         </Tooltip>
+        <Modal visible={detailModalVisible} onClose={() => setDetailModalVisible(false)} width="600px" height="700px">
+          <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+            <Text b font="14px" mr={0.3}>Id:</Text>
+            <Text font="14px">
+              {tooltipContent.label}
+            </Text>
+          </div>
+          <Spacer h={0.5} />
+          <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+            <Text b p font="14px" mr={0.3}>Size:</Text>
+            <Text font="14px">{convertBytes(tooltipContent.weight)}</Text>
+          </div>
+          <Spacer h={0.5} />
+          <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+            <Text b font="14px" mr={0.3}>Path:</Text>
+            <Text font="14px">
+              {tooltipContent.filename}
+            </Text>
+          </div>
+        </Modal>
       </div>
     </ComposeContextProvider>
   )

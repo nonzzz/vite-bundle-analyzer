@@ -2,7 +2,7 @@ import { inline } from '@stylex-extend/core'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { Ref } from 'react'
 import { c2m, createTreemap as _createTreemap, sortChildrenByKey } from 'squarified'
-import type { ExposedEventCallback } from 'squarified'
+import type { ExposedEventCallback, LayoutModule } from 'squarified'
 import {
   presetColorPlugin,
   presetDragElementPlugin,
@@ -35,6 +35,7 @@ export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 export interface TreemapProps {
   onMousemove: ExposedEventCallback<'mousemove'>
   onCloseTooltip?: ({ state }: { state: boolean }) => void
+  onShowDetails?: ({ module }: { module: LayoutModule }) => void
 }
 
 export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
@@ -102,6 +103,16 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     instanceRef.current?.on('mousemove', props.onMousemove)
     // @ts-expect-error safe operation wait be resolved by squarified
     instanceRef.current?.on('close:tooltip', props.onCloseTooltip)
+    // @ts-expect-error safe operation wait be resolved by squarified
+    instanceRef.current?.on('show:details', props.onShowDetails)
+
+    return () => {
+      instanceRef.current?.off('mousemove', props.onMousemove)
+      // @ts-expect-error safe operation wait be resolved by squarified
+      instanceRef.current?.off('close:tooltip', props.onCloseTooltip)
+      // @ts-expect-error safe operation wait be resolved by squarified
+      instanceRef.current?.off('show:details', props.onShowDetails)
+    }
   }, [props])
 
   return <div ref={callbackRef} {...inline({ height: '100%', width: '100%', position: 'relative' })} />

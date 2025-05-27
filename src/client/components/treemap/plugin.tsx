@@ -51,10 +51,12 @@ export function menuPlugin() {
       case 'zoom':
         treemap.zoom(module.node.id)
         break
-      case 'close':
-        break
       case 'reset':
         treemap.resize()
+        break
+      case 'details':
+        // @ts-expect-error safe operation
+        domEvent?.emit('__exposed__', 'show:details', { module })
         break
     }
     reactRoot?.render(null)
