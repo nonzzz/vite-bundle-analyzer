@@ -1,25 +1,21 @@
 import { inline } from '@stylex-extend/core'
+import stylex from '@stylexjs/stylex'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { Ref } from 'react'
 import { c2m, createTreemap as _createTreemap, sortChildrenByKey } from 'squarified'
 import type { ExposedEventCallback, LayoutModule } from 'squarified'
-import {
-  presetColorPlugin,
-  presetDragElementPlugin,
-  presetHighlightPlugin,
-  presetScalePlugin,
-  presetZoomablePlugin
-} from 'squarified/plugin'
+import { presetDragElementPlugin, presetHighlightPlugin, presetScalePlugin, presetZoomablePlugin } from 'squarified/plugin'
 import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
-import { filterLayoutDataPlugin, menuPlugin } from './plugin'
+import { colorPlugin, filterLayoutDataPlugin, menuPlugin } from './plugin'
 
 function createTreemap() {
   return _createTreemap({
     plugins: [
-      presetColorPlugin,
+      colorPlugin(),
+      // presetColorPlugin,
       presetHighlightPlugin,
       presetDragElementPlugin,
       presetZoomablePlugin,
@@ -115,5 +111,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     }
   }, [props])
 
-  return <div ref={callbackRef} {...inline({ height: '100%', width: '100%', position: 'relative' })} />
+  const styles = stylex.props(inline({ height: '100%', width: '100%', position: 'relative' }))
+
+  return <div ref={callbackRef} {...styles} />
 })
