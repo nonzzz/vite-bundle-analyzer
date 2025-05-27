@@ -113,3 +113,18 @@ export function menuPlugin() {
     }
   })
 }
+
+export type OnModuleInitResult = Exclude<ReturnType<Exclude<Plugin['onModuleInit'], undefined>>, void>
+
+export type ColorMappings = Exclude<OnModuleInitResult['colorMappings'], undefined>
+
+export function colorPlugin() {
+  return definePlugin({
+    name: 'treemap:module-color',
+    onModuleInit(modules) {
+      const colorMappings: ColorMappings = {}
+
+      return { colorMappings }
+    }
+  })
+}

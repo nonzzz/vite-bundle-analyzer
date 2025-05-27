@@ -74,23 +74,29 @@ export function App() {
           )}
         </Tooltip>
         <Modal visible={detailModalVisible} onClose={() => setDetailModalVisible(false)} width="600px" height="700px">
-          <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
-            <Text b font="14px" mr={0.3}>Id:</Text>
-            <Text font="14px">
-              {tooltipContent.label}
-            </Text>
-          </div>
-          <Spacer h={0.5} />
-          <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
-            <Text b p font="14px" mr={0.3}>Size:</Text>
-            <Text font="14px">{convertBytes(tooltipContent.weight)}</Text>
-          </div>
-          <Spacer h={0.5} />
-          <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
-            <Text b font="14px" mr={0.3}>Path:</Text>
-            <Text font="14px">
-              {tooltipContent.filename}
-            </Text>
+          <div stylex={{ textAlign: 'initial' }}>
+            <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+              <Text b font="14px" mr={0.3}>Id:</Text>
+              <Text font="14px">
+                {tooltipContent.label}
+              </Text>
+            </div>
+            <Spacer h={0.5} />
+            <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
+              <Text b p font="14px" mr={0.3}>Size:</Text>
+              <Text font="14px">{convertBytes(tooltipContent.weight)}</Text>
+            </div>
+            <Spacer h={0.5} />
+            <div stylex={{ display: 'inline-flex', width: '100%' }}>
+              <Text b font="14px" mr={0.3}>Path:</Text>
+              <Text font="14px" stylex={{ wordBreak: 'break-all' }}>
+                {tooltipContent.filename}
+              </Text>
+            </div>
+            <Spacer h={2} />
+            <div>
+              <Text p b font="14px">Dependencies Graphic</Text>
+            </div>
           </div>
         </Modal>
       </div>
