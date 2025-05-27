@@ -59,7 +59,7 @@ type SerializedMod = SerializedModWithAsset | SerializedModWithChunk
 export const JS_EXTENSIONS = /\.(c|m)?js$/
 
 function serializedMod(mod: OutputChunk | OutputAsset, chunks: OutputBundle): SerializedMod {
-  if (mod.type === 'asset') {
+  if (mod.type === 'asset' && !JS_EXTENSIONS.test(mod.fileName)) {
     return <SerializedModWithAsset> {
       code: stringToByte(mod.source),
       filename: mod.fileName,
@@ -82,14 +82,16 @@ function serializedMod(mod: OutputChunk | OutputAsset, chunks: OutputBundle): Se
     }
   }
 
+  const code = mod.type === 'asset' ? mod.source : mod.code
+
   return <SerializedModWithChunk> {
-    code: stringToByte(mod.code),
+    code: stringToByte(code),
     filename: mod.fileName,
     map: sourcemap,
-    imports: mod.imports,
-    dynamicImports: mod.dynamicImports,
-    moduleIds: Object.keys(mod.modules),
-    isEntry: mod.isEntry,
+    imports: mod.type === 'chunk' ? mod.imports : [],
+    dynamicImports: mod.type === 'chunk' ? mod.dynamicImports : [],
+    moduleIds: mod.type === 'chunk' ? Object.keys(mod.modules) : [],
+    isEntry: mod.type === 'chunk' && mod.isEntry,
     kind: 'chunk'
   }
 }
