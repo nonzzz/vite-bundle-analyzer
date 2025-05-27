@@ -1,18 +1,37 @@
 import { inline } from '@stylex-extend/core'
+import stylex from '@stylexjs/stylex'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import type { Ref } from 'react'
-import { c2m, createTreemap, sortChildrenByKey } from 'squarified'
-import type { ExposedEventCallback } from 'squarified'
+import { c2m, createTreemap as _createTreemap, sortChildrenByKey } from 'squarified'
+import type { ExposedEventCallback, LayoutModule } from 'squarified'
+import { presetDragElementPlugin, presetHighlightPlugin, presetScalePlugin, presetZoomablePlugin } from 'squarified/plugin'
 import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
-import { presetDecorator } from './preset'
+import { colorPlugin, filterLayoutDataPlugin, menuPlugin } from './plugin'
+
+function createTreemap() {
+  return _createTreemap({
+    plugins: [
+      colorPlugin(),
+      // presetColorPlugin,
+      presetHighlightPlugin,
+      presetDragElementPlugin,
+      presetZoomablePlugin,
+      filterLayoutDataPlugin,
+      presetScalePlugin(),
+      menuPlugin()
+    ]
+  })
+}
 
 export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
 export interface TreemapProps {
   onMousemove: ExposedEventCallback<'mousemove'>
+  onCloseTooltip?: ({ state }: { state: boolean }) => void
+  onShowDetails?: ({ module }: { module: LayoutModule }) => void
 }
 
 export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
@@ -27,7 +46,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     const filtered = analyzeModule.filter((m) => scence.has(m.label))
     const sortedData = sortChildrenByKey(
       filtered.map(
-        (item) => c2m({ ...item, groups: sizes === 'statSize' ? item.stats : item.source }, sizes, (d) => ({ ...d, id: d.label }))
+        (item) => c2m({ ...item, groups: sizes === 'statSize' ? item.stats : item.source }, sizes, (d) => ({ ...d, id: d.filename }))
       ),
       'weight'
     )
@@ -51,7 +70,6 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     if (el) {
       // element is mounted
       instanceRef.current = createTreemap()
-      instanceRef.current.use('decorator', presetDecorator)
       instanceRef.current.init(el)
     } else {
       // element is unmounted
@@ -69,15 +87,31 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
 
   useEffect(() => {
     instanceRef.current?.on('click', function(metadata) {
-      this.zoom(metadata.module)
-      const evt = createMagicEvent('graph:click', metadata.module!)
+      if (!metadata.module) {
+        return
+      }
+      const evt = createMagicEvent('graph:click', metadata.module)
       window.dispatchEvent(evt)
     })
   }, [])
 
   useEffect(() => {
     instanceRef.current?.on('mousemove', props.onMousemove)
+    // @ts-expect-error safe operation wait be resolved by squarified
+    instanceRef.current?.on('close:tooltip', props.onCloseTooltip)
+    // @ts-expect-error safe operation wait be resolved by squarified
+    instanceRef.current?.on('show:details', props.onShowDetails)
+
+    return () => {
+      instanceRef.current?.off('mousemove', props.onMousemove)
+      // @ts-expect-error safe operation wait be resolved by squarified
+      instanceRef.current?.off('close:tooltip', props.onCloseTooltip)
+      // @ts-expect-error safe operation wait be resolved by squarified
+      instanceRef.current?.off('show:details', props.onShowDetails)
+    }
   }, [props])
 
-  return <div ref={callbackRef} {...inline({ height: '100%', width: '100%', position: 'relative' })} />
+  const styles = stylex.props(inline({ height: '100%', width: '100%', position: 'relative' }))
+
+  return <div ref={callbackRef} {...styles} />
 })

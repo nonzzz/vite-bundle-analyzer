@@ -188,10 +188,10 @@ const OPTIONS: Record<string, CommanderOption> = {
   include: {
     alias: 'include',
     desc: PATTERN_INCLUDE_TEXT,
-    default: '',
+    default: [],
     flag: '<string>'
   },
-  exclude: { alias: 'exclude', desc: PATTERN_EXCLUDE_TEXT, default: '', flag: '<string>' }
+  exclude: { alias: 'exclude', desc: PATTERN_EXCLUDE_TEXT, default: [], flag: '<string>' }
 }
 
 const argv = mri<Options & { help?: string, h?: string }>(process.argv.slice(2), {

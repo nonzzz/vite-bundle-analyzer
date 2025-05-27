@@ -11,6 +11,7 @@ interface Props {
   h6?: boolean
   p?: boolean
   b?: boolean
+  div?: boolean
   small?: boolean
   i?: boolean
   span?: boolean
@@ -46,13 +47,14 @@ function TextComponent({
   i,
   span,
   del,
+  div,
   em,
   blockquote,
   children,
   className,
   ...props
 }: React.PropsWithChildren<TextProps>) {
-  const elements: ElementMap = { h1, h2, h3, h4, h5, h6, p, blockquote }
+  const elements: ElementMap = { h1, h2, h3, h4, h5, h6, p, blockquote, div }
   const inlineElements: ElementMap = { span, small, b, em, i, del }
   const names = Object.keys(elements).filter(
     (name: string) => elements[name as keyof JSX.IntrinsicElements]

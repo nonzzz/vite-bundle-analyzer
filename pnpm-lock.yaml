@@ -114,8 +114,8 @@ importers:
         specifier: ^0.12.1
         version: 0.12.1(@swc/core@1.11.24)(rollup@4.40.1)
       squarified:
-        specifier: ^0.3.7
-        version: 0.3.7
+        specifier: ^0.4.2
+        version: 0.4.2
       tinyexec:
         specifier: ^0.3.1
         version: 0.3.2
@@ -154,10 +154,13 @@ importers:
         version: 2.22.8(vue@3.5.13(typescript@5.8.3))
       '@vitejs/plugin-vue':
         specifier: ^4.4.0
-        version: 4.6.2(vite@5.4.19(@types/node@20.17.32)(lightningcss@1.29.3))(vue@3.5.13(typescript@5.8.3))
+        version: 4.6.2(rolldown-vite@6.3.0-beta.5(@types/node@20.17.32)(esbuild@0.25.3)(tsx@4.19.4)(typescript@5.8.3))(vue@3.5.13(typescript@5.8.3))
       unplugin-vue-components:
         specifier: ^0.24.1
         version: 0.24.1(@babel/parser@7.27.1)(rollup@4.40.1)(vue@3.5.13(typescript@5.8.3))
+      vite:
+        specifier: npm:rolldown-vite@6.3.0-beta.5
+        version: rolldown-vite@6.3.0-beta.5(@types/node@20.17.32)(esbuild@0.25.3)(tsx@4.19.4)(typescript@5.8.3)
       vite-bundle-analyzer:
         specifier: 'workspace: *'
         version: link:../..
@@ -3244,8 +3247,8 @@ packages:
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
-  squarified@0.3.7:
-    resolution: {integrity: sha512-i+XUbx/5GlNcaCJsHZbSoW7fLnSZSO3z2cVMMWVXWKgfvJH2FalZ8qm/6+ikV18lYN63JtSJ6l7O2y1Np1234A==}
+  squarified@0.4.2:
+    resolution: {integrity: sha512-bP2qoP5O6IjYSWonjNMr/EXv+KP9P4bCHZ1S2BM9EcWuoHXuXCyMImFgR5uXBzR5uNdoQO9CGpj/9Fr+a5BneQ==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -5021,14 +5024,14 @@ snapshots:
       vite: 3.1.0
       vue: 3.5.13(typescript@5.8.3)
 
+  '@vitejs/plugin-vue@4.6.2(rolldown-vite@6.3.0-beta.5(@types/node@20.17.32)(esbuild@0.25.3)(tsx@4.19.4)(typescript@5.8.3))(vue@3.5.13(typescript@5.8.3))':
+    dependencies:
+      vite: rolldown-vite@6.3.0-beta.5(@types/node@20.17.32)(esbuild@0.25.3)(tsx@4.19.4)(typescript@5.8.3)
+      vue: 3.5.13(typescript@5.8.3)
+
   '@vitejs/plugin-vue@4.6.2(vite@4.5.14(@types/node@20.17.32)(lightningcss@1.29.3))(vue@3.5.13(typescript@5.8.3))':
     dependencies:
       vite: 4.5.14(@types/node@20.17.32)(lightningcss@1.29.3)
-      vue: 3.5.13(typescript@5.8.3)
-
-  '@vitejs/plugin-vue@4.6.2(vite@5.4.19(@types/node@20.17.32)(lightningcss@1.29.3))(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      vite: 5.4.19(@types/node@20.17.32)(lightningcss@1.29.3)
       vue: 3.5.13(typescript@5.8.3)
 
   '@vitest/coverage-v8@2.1.9(vitest@2.1.9(@types/node@20.17.32)(lightningcss@1.29.3))':
@@ -6758,7 +6761,7 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  squarified@0.3.7: {}
+  squarified@0.4.2: {}
 
   stackback@0.0.2: {}
 
