@@ -1,3 +1,15 @@
+## 0.22.0
+
+### Break Changes
+
+- Removed the click on a module to scale the viewport. (use context menu instead)
+
+### Note
+
+- Upgrade `squarified` versions
+- Improve client to generate module dependency graph
+- Added context menu
+
 ## 0.21.0
 
 - Added new `enable` option to control plugin workflow.
