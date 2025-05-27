@@ -3,8 +3,8 @@ import type { FilterPattern } from '@rollup/pluginutils'
 import path from 'path'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
-import { createBrotil, createGzip, slash, stringToByte } from './shared'
-import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary } from './source-map'
+import { byteToString, createBrotil, createGzip, slash, stringToByte } from './shared'
+import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary, resolveRelativePath, scanImportStatments } from './source-map'
 import { Trie } from './trie'
 import type { ChunkMetadata, GroupWithNode, ImportedBy } from './trie'
 
@@ -112,7 +112,13 @@ async function calcCompressedSize(b: Uint8Array, compress: ReturnType<typeof cre
   return { gzipSize, brotliSize }
 }
 
+function uniq<T>(data: T[]) {
+  return Array.from(new Set(data))
+}
+
 export function generateImportedBy(imports: string[], dynamicImports: string[]): ImportedBy[] {
+  imports = [...uniq(imports)]
+  dynamicImports = [...uniq(dynamicImports)]
   return [
     ...imports.map((id) => ({ id, kind: 'static' as const })),
     ...dynamicImports.map((id) => ({ id, kind: 'dynamic' as const }))
@@ -222,7 +228,15 @@ export class AnalyzerNode {
         const chunks: typeof grouped = grouped
 
         if (!files.size) {
-          chunks[this.originalId].code = code as unknown as string
+          const s = byteToString(code)
+          const { staticImports, dynamicImports } = scanImportStatments(byteToString(code))
+          chunks[this.originalId] = {
+            code: s,
+            importedBy: generateImportedBy(
+              staticImports.map((i) => resolveRelativePath(i, workspaceRoot)),
+              dynamicImports.map((i) => resolveRelativePath(i, workspaceRoot))
+            )
+          }
           files.add(this.originalId)
         }
         const validChunks = Object.entries(chunks)

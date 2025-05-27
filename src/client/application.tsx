@@ -18,7 +18,7 @@ import { Spacer } from './components/spacer'
 import { Receiver } from './receiver'
 import { TextWithTooltip } from './text-tips'
 
-type TooltipContent = NativeModule & { importedBy: ImportedBy[], filename: string }
+type TooltipContent = NativeModule & { importedBy: ImportedBy[], filename: string, label: string }
 
 export function App() {
   const treeMapRef = useRef<TreemapComponentInstance>()
@@ -84,9 +84,7 @@ export function App() {
               <>
                 <div stylex={{ display: 'inline-flex', whiteSpace: 'nowrap', width: '100%' }}>
                   <Text b font="14px" mr={0.3}>Id:</Text>
-                  <Text font="14px">
-                    {tooltipContent.label}
-                  </Text>
+                  <TextWithTooltip text={tooltipContent.label} />
                 </div>
                 <Spacer h={0.5} />
               </>
@@ -102,7 +100,6 @@ export function App() {
                   stylex={{
                     display: 'flex',
                     alignItems: 'center',
-                    padding: '6px 8px',
                     cursor: 'pointer'
                   }}
                 >

@@ -7,7 +7,7 @@ import type { ChunkMetadata, ImportedBy } from './trie'
 // @jridgewell/source-map cut to reduce the size of the bundle
 // Only have sourceContentFor and originalPositionFor methods
 
-function resolveRelativePath(source: string, workspaceRoot: string) {
+export function resolveRelativePath(source: string, workspaceRoot: string) {
   if (source[0] === '.') {
     return path.resolve(workspaceRoot, source)
   }
