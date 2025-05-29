@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface SelectContext {
+export interface SelectContextConfig {
   value?: string | string[]
   updateValue?: (next: string) => unknown
   visible?: boolean
@@ -9,15 +9,15 @@ export interface SelectContext {
   ref: React.RefObject<HTMLDivElement>
 }
 
-const defaultContext = <SelectContext> {
+const defaultContext = <SelectContextConfig> {
   visible: false,
   disableAll: false
 }
 
-const selectContext = React.createContext<SelectContext>(defaultContext)
+const SelectContext = React.createContext<SelectContextConfig>(defaultContext)
 
 export function useSelect() {
-  return React.useContext(selectContext)
+  return React.useContext(SelectContext)
 }
 
-export const { Provider } = selectContext
+export const { Provider } = SelectContext

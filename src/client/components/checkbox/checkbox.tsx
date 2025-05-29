@@ -1,7 +1,7 @@
 import { inline } from '@stylex-extend/core'
 import * as stylex from '@stylexjs/stylex'
 import { clsx } from 'clsx'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useReducer } from 'react'
 import { useScale, withScale } from '../../composables'
 import { useCheckbox } from './context'
 
@@ -29,6 +29,31 @@ interface Props {
 }
 
 export type CheckboxProps = Props & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof Props>
+
+interface CheckboxState {
+  checked: boolean
+}
+
+type CheckboxAction =
+  | { type: 'SET_CHECKED', payload: boolean }
+  | { type: 'TOGGLE' }
+  | { type: 'SYNC_GROUP', payload: boolean }
+  | { type: 'SYNC_PROP', payload: boolean }
+
+function checkboxReducer(state: CheckboxState, action: CheckboxAction): CheckboxState {
+  switch (action.type) {
+    case 'SET_CHECKED':
+      return { checked: action.payload }
+    case 'TOGGLE':
+      return { checked: !state.checked }
+    case 'SYNC_GROUP':
+      return { checked: action.payload }
+    case 'SYNC_PROP':
+      return { checked: action.payload }
+    default:
+      return state
+  }
+}
 
 function CheckboxIcon(props: CheckboxIconProps) {
   const { checked, disabled } = props
@@ -77,6 +102,30 @@ function CheckboxComponent(props: CheckboxProps) {
   } = props
   const { disabledAll, inGroup, values, updateState } = useCheckbox()
   const { SCALES } = useScale()
+
+  const [state, dispatch] = useReducer(checkboxReducer, {
+    checked: inGroup ? values.includes(value) : checked
+  })
+
+  useEffect(() => {
+    if (!inGroup && checked !== state.checked) {
+      dispatch({ type: 'SYNC_PROP', payload: checked })
+    }
+  }, [checked, inGroup, state.checked])
+
+  useEffect(() => {
+    if (inGroup) {
+      if (!value.length) {
+        dispatch({ type: 'SET_CHECKED', payload: false })
+      } else {
+        const isCheckedInGroup = values.includes(value)
+        if (isCheckedInGroup !== state.checked) {
+          dispatch({ type: 'SYNC_GROUP', payload: isCheckedInGroup })
+        }
+      }
+    }
+  }, [inGroup, value, values, state.checked])
+
   const { className, style } = stylex.props(inline({
     opacity: 0,
     outline: 'none',
@@ -90,40 +139,26 @@ function CheckboxComponent(props: CheckboxProps) {
     backgroundColor: 'transparent'
   }))
   const classes = clsx(className, userClassName)
-  const [selfChecked, setSelfChecked] = useState<boolean>(checked)
   const isDisabled = inGroup ? disabledAll || disabled : disabled
-
-  if (inGroup) {
-    if (!value.length) {
-      setSelfChecked(false)
-    } else {
-      const next = values.includes(value)
-      if (next !== selfChecked) {
-        setSelfChecked(next)
-      }
-    }
-  } else {
-    if (checked !== selfChecked) {
-      setSelfChecked(checked)
-    }
-  }
 
   const handleChange = useCallback((e: React.ChangeEvent) => {
     if (disabled) { return }
+
+    const nextChecked = !state.checked
     const evt: CheckboxEvent = {
-      target: {
-        checked: !selfChecked
-      },
+      target: { checked: nextChecked },
       stopPropagation: () => e.stopPropagation(),
       preventDefault: () => e.preventDefault(),
       nativeEvent: e
     }
+
     if (inGroup) {
-      updateState(value || '', !selfChecked)
+      updateState(value, nextChecked)
     }
-    setSelfChecked((pre) => !pre)
+
+    dispatch({ type: 'TOGGLE' })
     onChange?.(evt)
-  }, [onChange, disabled, selfChecked, value, inGroup, updateState])
+  }, [disabled, state.checked, inGroup, updateState, value, onChange])
 
   return (
     <label
@@ -142,11 +177,11 @@ function CheckboxComponent(props: CheckboxProps) {
         margin: `${SCALES.mt(0)} ${SCALES.mr(0)} ${SCALES.mb(0)} ${SCALES.ml(0)}`
       }}
     >
-      <CheckboxIcon checked={selfChecked} disabled={disabled} />
+      <CheckboxIcon checked={state.checked} disabled={disabled} />
       <input
         disabled={isDisabled}
         onChange={handleChange}
-        checked={selfChecked}
+        checked={state.checked}
         className={classes}
         style={{ ...style, ...userStyle }}
         type="checkbox"

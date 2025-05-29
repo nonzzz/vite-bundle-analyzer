@@ -137,7 +137,7 @@ interface CommanderOption {
   flag?: string
 }
 
-const OPTIONS: Record<string, CommanderOption> = {
+export const OPTIONS: Record<string, CommanderOption> = {
   mode: {
     alias: 'm',
     desc: MODE_TEXT,
@@ -255,4 +255,6 @@ if (argv.h || argv.help) {
   process.exit(0)
 }
 
-main(argv).catch(console.error)
+if (require.main === module) {
+  main(argv).catch(console.error)
+}

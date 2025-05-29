@@ -1,8 +1,10 @@
 import fs from 'fs'
+import mri from 'mri'
 import path from 'path'
 import { x } from 'tinyexec'
 import url from 'url'
 import { afterAll, describe, expect, it } from 'vitest'
+import { OPTIONS } from '../src/cli'
 
 const cliPath = path.join(process.cwd(), 'dist/cli.js')
 
@@ -20,5 +22,19 @@ describe('Cli', () => {
     const basePath = path.join(defaultWd, 'normal')
     await execCli(['-c', path.join(basePath, 'vite.config.mts'), '-m', 'json'])
     expect(fs.existsSync(path.join(basePath, 'dist', 'stats.json'))).toBe(true)
+  })
+  it('parse cli args', () => {
+    const args: string[] = []
+    const argv = mri(args, {
+      alias: Object.fromEntries(Object.entries(OPTIONS).map(([key, { alias }]) => [alias, key])),
+      default: Object.fromEntries(Object.entries(OPTIONS).map(([key, { default: value }]) => [key, value])),
+      boolean: ['open', 'summary']
+    })
+    for (const key in argv) {
+      if (key.length === 1) { continue }
+      const opt = OPTIONS[key]
+      expect(argv[key]).toBeDefined()
+      expect(argv[key]).toEqual(opt.default)
+    }
   })
 })
