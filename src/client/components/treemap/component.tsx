@@ -15,13 +15,12 @@ function createTreemap() {
   return _createTreemap({
     plugins: [
       colorPlugin(),
-      // presetColorPlugin,
+      menuPlugin(),
       presetHighlightPlugin,
       presetDragElementPlugin,
       presetZoomablePlugin,
       filterLayoutDataPlugin,
-      presetScalePlugin(),
-      menuPlugin()
+      presetScalePlugin()
     ]
   })
 }

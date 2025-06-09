@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import { definePlugin, isContextMenuEvent } from 'squarified'
+import { definePlugin, flattenModule, isContextMenuEvent } from 'squarified'
 import type { LayoutModule, Plugin } from 'squarified'
 import type { TreemapComponentInstance } from './component'
 import { Menu } from './menu'
@@ -8,6 +8,15 @@ import type { MenuActionHandler } from './menu'
 export const filterLayoutDataPlugin = definePlugin({
   name: 'filter:data',
   onModuleInit(modules) {
+    if (this.instance.caches.size > 0) {
+      flattenModule(this.instance.data).forEach((m) => {
+        if (!m.id) { return }
+        const id = m.id as string
+        if (this.instance.caches.has(id)) {
+          this.instance.caches.delete(id)
+        }
+      })
+    }
     // TODO: should be resolved in squarified
     const handler = (modules: LayoutModule[]) => {
       return modules.filter((m) => {
@@ -47,17 +56,19 @@ export function menuPlugin() {
       return
     }
 
-    switch (action) {
-      case 'zoom':
-        treemap.zoom(module.node.id)
-        break
-      case 'reset':
-        treemap.resize()
-        break
-      case 'details':
-        // @ts-expect-error safe operation
-        domEvent?.emit('__exposed__', 'show:details', { module })
-        break
+    if (module) {
+      switch (action) {
+        case 'zoom':
+          treemap.zoom(module.node.id)
+          break
+        case 'reset':
+          treemap.resize()
+          break
+        case 'details':
+          // @ts-expect-error safe operation
+          domEvent?.emit('__exposed__', 'show:details', { module })
+          break
+      }
     }
     reactRoot?.render(null)
     // @ts-expect-error safe operation
@@ -75,6 +86,12 @@ export function menuPlugin() {
       }
     },
     onDOMEventTriggered(_, event, __, DOMEvent) {
+      if (DOMEvent.stateManager.isInState('DRAGGING')) {
+        // If dragging, do not show context menu
+        onAction('close', null)
+        return
+      }
+
       if (isContextMenuEvent(event)) {
         event.native.stopPropagation()
         event.native.preventDefault()
@@ -85,10 +102,14 @@ export function menuPlugin() {
           native: event.native,
           kind: undefined
         })
+        // this.instance.render.ctx
 
         if (reactRoot && menu && currentModule) {
           // @ts-expect-error safe operation
           DOMEvent.emit('__exposed__', 'close:tooltip', { state: true })
+
+          const canvasContext = this.instance.render.ctx
+
           reactRoot.render(
             <Menu
               x={event.native.clientX}
@@ -96,6 +117,7 @@ export function menuPlugin() {
               currentModule={currentModule}
               onAction={onAction}
               container={menu}
+              canvasContext={canvasContext}
             />
           )
         }
