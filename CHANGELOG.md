@@ -1,3 +1,8 @@
+## 0.22.1
+
+- Update dependencies.
+- Optimize context menu rendering position.
+
 ## 0.22.0
 
 ### Break Changes
