@@ -1,3 +1,7 @@
+## 0.22.2
+
+- Update `squarified` dependency and add support for Magic Trackpad two fingers action.
+
 ## 0.22.1
 
 - Update dependencies.
