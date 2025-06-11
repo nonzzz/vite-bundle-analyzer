@@ -193,7 +193,7 @@ function analyzer(opts?: AnalyzerPluginOptions) {
   }
 
   const base = {
-    name: 'vite-bundle-anlyzer',
+    name: 'vite-bundle-analyzer',
     apply: 'build',
     enforce: 'post',
     api: {
