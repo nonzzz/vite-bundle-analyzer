@@ -66,7 +66,7 @@ type EntryModule = string | ExportFields | undefined
 
 // Desgin for type: module
 // I know @dual-bundle/import-meta-resolve but i won't use it. We only need to import package not relative path.
-export function importMetaResolve(name: string) {
+function importMetaResolve(name: string) {
   const workspaceRoot = searchForWorkspaceRoot(defaultWd)
   const packageRoot = searchForPackageInNodeModules(name, workspaceRoot)
   if (!packageRoot) {
@@ -250,11 +250,13 @@ function printHelp() {
   }
 }
 
-if (argv.h || argv.help) {
-  printHelp()
-  process.exit(0)
-}
-
-if (require.main === module) {
-  main(argv).catch(console.error)
+export function exec() {
+  if (argv.h || argv.help) {
+    printHelp()
+    process.exit(0)
+  }
+  main(argv).catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
 }

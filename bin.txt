@@ -1,2 +1,4 @@
 #! /usr/bin/env node
-require('./cli.js')
+const mod = require('./cli.js');
+
+mod.exec();

@@ -6,7 +6,7 @@ import url from 'url'
 import { afterAll, describe, expect, it } from 'vitest'
 import { OPTIONS } from '../src/cli'
 
-const cliPath = path.join(process.cwd(), 'dist/cli.js')
+const cliPath = path.join(process.cwd(), 'dist/bin.js')
 
 function execCli(args: string[] = []) {
   return x('node', [cliPath, ...args])
