@@ -4,9 +4,9 @@ import path from 'path'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
 import { byteToString, createBrotil, createGzip, slash, stringToByte } from './shared'
-import { pickupContentFromSourcemap, pickupMappingsFromCodeBinary, resolveRelativePath, scanImportStatments } from './source-map'
+import { pickupMappingsFromCodeBinary, resolveRelativePath, scanImportStatments } from './source-map'
 import { Trie } from './trie'
-import type { ChunkMetadata, GroupWithNode, ImportedBy } from './trie'
+import type { GroupWithNode, ImportedBy } from './trie'
 
 const defaultWd = process.cwd()
 
@@ -131,11 +131,9 @@ export class AnalyzerNode {
   label: string
   parsedSize: number
   mapSize: number
-  statSize: number
   gzipSize: number
   brotliSize: number
   source: Array<GroupWithNode>
-  stats: Array<GroupWithNode>
   imports: Set<string>
   isAsset: boolean
   isEntry: boolean
@@ -144,12 +142,10 @@ export class AnalyzerNode {
     this.filename = originalId
     this.label = originalId
     this.parsedSize = 0
-    this.statSize = 0
     this.gzipSize = 0
     this.brotliSize = 0
     this.mapSize = 0
     this.source = []
-    this.stats = []
     this.imports = new Set()
     this.isAsset = true
     this.isEntry = false
@@ -161,15 +157,10 @@ export class AnalyzerNode {
 
   async setup(
     mod: SerializedMod,
-    pluginContext: PluginContext,
     compress: ReturnType<typeof createCompressAlorithm>,
     workspaceRoot: string,
     matcher: ReturnType<typeof createFilter>
   ) {
-    const stats = new Trie<{
-      statSize: number,
-      importedBy: ImportedBy[]
-    }>({ meta: { statSize: 0, importedBy: [] } })
     const sources = new Trie<{
       parsedSize: number,
       brotliSize: number,
@@ -178,42 +169,17 @@ export class AnalyzerNode {
     }>({ meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0, importedBy: [] } })
 
     if (mod.kind === 'asset') {
-      this.statSize = mod.code.byteLength
       this.parsedSize = mod.code.byteLength
       const { brotliSize, gzipSize } = await calcCompressedSize(mod.code, compress)
       this.brotliSize = brotliSize
       this.gzipSize = gzipSize
     } else {
-      const { code, imports, dynamicImports, map, moduleIds } = mod
+      const { code, imports, dynamicImports, map } = mod
 
       this.addImports(...imports, ...dynamicImports)
 
       this.mapSize = map.length
       this.isEntry = mod.isEntry
-
-      let infomations = moduleIds.length
-        ? moduleIds.reduce((acc, cur) => {
-          const info = pluginContext.getModuleInfo(cur)
-          if (info && info.code) {
-            acc.push({
-              id: info.id,
-              code: info.code,
-              importedBy: generateImportedBy(info.importedIds, info.dynamicallyImportedIds)
-            })
-          }
-          return acc
-        }, [] as Array<ChunkMetadata>)
-        : pickupContentFromSourcemap(map, workspaceRoot)
-
-      infomations = infomations.filter((info) => matcher(info.id))
-      for (const info of infomations) {
-        if (info.id[0] === '.') {
-          info.id = path.resolve(workspaceRoot, info.id)
-        }
-        const statSize = stringToByte(info.code).byteLength
-        this.statSize += statSize
-        stats.insert(generateNodeId(info.id, workspaceRoot), { meta: { statSize, importedBy: info.importedBy } })
-      }
 
       // Check map again
       if (map) {
@@ -252,21 +218,6 @@ export class AnalyzerNode {
       }
     }
 
-    stats.mergePrefixSingleDirectory()
-    stats.walk(stats.root, {
-      enter: (child, parent) => {
-        if (parent) { parent.groups.push(child) }
-      },
-      leave: (child, _, end) => {
-        if (child.groups && child.groups.length) {
-          child.statSize = child.groups.reduce((acc, cur) => (acc += cur.statSize, acc), 0)
-        }
-        if (!end) {
-          // @ts-expect-error no need this property
-          delete child.importedBy
-        }
-      }
-    })
     sources.mergePrefixSingleDirectory()
 
     sources.walk(sources.root, {
@@ -292,7 +243,6 @@ export class AnalyzerNode {
       }
     })
 
-    this.stats = stats.root.groups
     this.source = sources.root.groups
 
     // Fix correect size
@@ -333,7 +283,7 @@ export class AnalyzerModule {
     if (isSoucemap(mod.fileName) || !this.matcher(mod.fileName)) { return }
     const serialized = serializedMod(mod, this.chunks)
     const node = new AnalyzerNode(serialized.filename)
-    await node.setup(serialized, this.pluginContext!, this.compressAlorithm, this.workspaceRoot, this.matcher)
+    await node.setup(serialized, this.compressAlorithm, this.workspaceRoot, this.matcher)
     this.modules.push(node)
   }
 

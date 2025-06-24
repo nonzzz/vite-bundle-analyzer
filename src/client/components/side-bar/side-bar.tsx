@@ -14,7 +14,7 @@ import type { SelectInstance } from '../select'
 import { Text } from '../text'
 import { useSidebarState, useToggleDrawerVisible } from './provide'
 
-const MODES = tuple('Stat', 'Parsed', 'Gzipped', 'Brotli')
+const MODES = tuple('Stat', 'Gzipped', 'Brotli')
 
 export type ModeType = typeof MODES[number]
 
@@ -36,7 +36,7 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
     const points = new Set(entrypoints)
     return sortChildrenByKey(
       analyzeModule.filter((chunk) => !points.size || points.has(chunk.label) || chunk.imports.some((id) => points.has(id)))
-        .map((chunk) => ({ ...chunk, groups: userMode === 'statSize' ? chunk.stats : chunk.source })),
+        .map((chunk) => ({ ...chunk, groups: chunk.source })),
       userMode,
       'label'
     )
@@ -46,10 +46,8 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
     switch (userMode) {
       case 'gzipSize':
         return 'Gzipped'
-      case 'statSize':
-        return 'Stat'
       case 'parsedSize':
-        return 'Parsed'
+        return 'Stat'
       default:
         return 'Brotli'
     }
@@ -74,8 +72,6 @@ export function Sidebar({ onVisibleChange = noop }: SidebarProps) {
         case 'Gzipped':
           return 'gzipSize'
         case 'Stat':
-          return 'statSize'
-        case 'Parsed':
           return 'parsedSize'
         default:
           return 'brotliSize'

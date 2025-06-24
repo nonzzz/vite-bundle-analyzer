@@ -29,7 +29,7 @@ const REPORT_TITLE_TEXT = 'Title for bundle report.'
 
 const OPEN_TEXT = 'Open report in default browser.'
 
-const DEFAULT_SIZES_TEXT = 'Default size type. Should be `stat` , `parsed` , `gzip` or `brotli`.'
+const DEFAULT_SIZES_TEXT = 'Default size type. Should be `stat`, `gzip` or `brotli`.'
 
 const SUMMARY_TEXT = 'Show full chunk info to stdout.'
 

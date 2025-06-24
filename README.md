@@ -63,7 +63,7 @@ export default {
 }
 ```
 
-### Rolldown
+### Rolldown Plugin (Experimental)
 
 ```js
 import { unstableRolldownAdapter } from 'vite-bundle-analyzer'
@@ -87,7 +87,7 @@ export default {
 | `brotliOptions` | `Record<string, any>`                         | `{}`                     | Brotli compression options                  |
 | `analyzerPort`  | `number \| 'auto'`                            | `8888`                   | Server port                                 |
 | `openAnalyzer`  | `boolean`                                     | `true`                   | Auto-open browser (server/static mode only) |
-| `defaultSizes`  | `'stat' \| 'parsed' \| 'gzip' \| 'brotli'`    | `'stat'`                 | Default size metric                         |
+| `defaultSizes`  | `'stat' \| 'gzip' \| 'brotli'`                | `'stat'`                 | Default size metric                         |
 | `summary`       | `boolean`                                     | `true`                   | Show summary in console                     |
 | `enabled`       | `boolean`                                     | `true`                   | Enable/disable plugin                       |
 | `include`       | `string \| RegExp \| Array<string \| RegExp>` | `[]`                     | Include patterns                            |
@@ -124,7 +124,7 @@ import { SSE, createServer, injectHTMLTag, openBrowser, renderView } from 'vite-
 // Create custom server
 const server = createServer()
 server.get('/', async (c) => {
-  const html = await renderView(data, { title: 'Custom Analyzer', mode: 'parsed' })
+  const html = await renderView(data, { title: 'Custom Analyzer', mode: 'stat' })
   c.res.writeHead(200, { 'Content-Type': 'text/html' })
   c.res.write(html)
   c.res.end()
@@ -145,6 +145,7 @@ ANALYZE_DEBUG=true npm run build
 ## Related
 
 - [ROLLDOWN](./ROLLDOWN.md)
+- [Q&A](./Q&A.md)
 - [CHANGELOG](./CHANGELOG.md)
 
 ## Contributors

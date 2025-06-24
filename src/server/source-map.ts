@@ -34,13 +34,6 @@ function findCodeFromSourcemap(consumer: SourceMapConsumer, workspaceRoot: strin
   }, [] as Array<ChunkMetadata>)
 }
 
-export function pickupContentFromSourcemap(rawSourcemap: string, workspaceRoot: string) {
-  if (!rawSourcemap) { return [] }
-  const consumer = new SourceMapConsumer(rawSourcemap)
-  const result = findCodeFromSourcemap(consumer, workspaceRoot)
-  return result
-}
-
 export function scanImportStatments(code: string) {
   const staticImports = []
   const dynamicImports = []

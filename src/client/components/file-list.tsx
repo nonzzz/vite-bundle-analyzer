@@ -13,7 +13,7 @@ export interface FileListProps<F> {
 }
 
 export function FileList<F extends Module>(props: FileListProps<F>) {
-  const { scence, files: userFiles, extra = 'statSize', onChange } = props
+  const { scence, files: userFiles, extra = 'parsedSize', onChange } = props
 
   const [all, ...files] = useMemo(
     () =>

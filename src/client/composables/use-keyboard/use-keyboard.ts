@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react'
-import { isMacOS } from 'squarified'
+
+export function isMacOS() {
+  return /Mac OS X/.test(navigator.userAgent)
+}
 
 export enum KEY_CODE {
   Unknown = 0,
