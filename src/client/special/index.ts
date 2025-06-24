@@ -8,7 +8,7 @@ export function createMagicEvent(type: AllowedMagicType, data: Empty) {
   return new CustomEvent(type, { detail: data })
 }
 
-export type QueryKind = 'gzip' | 'stat' | 'parsed'
+export type QueryKind = 'gzip' | 'stat' | 'brotli'
 
 export const IS_CUSTOM_SIDE_BAR = window.CUSTOM_SIDE_BAR === true
 

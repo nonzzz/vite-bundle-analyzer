@@ -29,8 +29,8 @@ export type TreemapComponentInstance = ReturnType<typeof createTreemap>
 
 export interface TreemapProps {
   onMousemove: ExposedEventCallback<'mousemove'>
-  onCloseTooltip?: ({ state }: { state: boolean }) => void
-  onShowDetails?: ({ module }: { module: LayoutModule }) => void
+  onCloseTooltip: ({ state }: { state: boolean }) => void
+  onShowDetails: ({ module }: { module: LayoutModule }) => void
 }
 
 export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponentInstance>) => {
@@ -45,7 +45,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
     const filtered = analyzeModule.filter((m) => scence.has(m.label))
     const sortedData = sortChildrenByKey(
       filtered.map(
-        (item) => c2m({ ...item, groups: sizes === 'statSize' ? item.stats : item.source }, sizes, (d) => ({ ...d, id: d.filename }))
+        (item) => c2m({ ...item, groups: item.source }, sizes, (d) => ({ ...d, id: d.filename }))
       ),
       'weight'
     )
@@ -59,7 +59,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
   useEffect(() => {
     const size = queryParams.get('size') as QueryKind
     if (size) {
-      toggleSize(size === 'gzip' ? 'gzipSize' : size === 'stat' ? 'statSize' : 'parsedSize')
+      toggleSize(size === 'gzip' ? 'gzipSize' : size === 'stat' ? 'parsedSize' : 'brotliSize')
     }
   }, [queryParams, toggleSize])
 
@@ -85,7 +85,7 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
   }, [visibleChunks])
 
   useEffect(() => {
-    instanceRef.current?.on('click', function(metadata) {
+    instanceRef.current?.on<'click'>('click', function(metadata) {
       if (!metadata.module) {
         return
       }
@@ -96,16 +96,12 @@ export const Treemap = forwardRef((props: TreemapProps, ref: Ref<TreemapComponen
 
   useEffect(() => {
     instanceRef.current?.on('mousemove', props.onMousemove)
-    // @ts-expect-error safe operation wait be resolved by squarified
     instanceRef.current?.on('close:tooltip', props.onCloseTooltip)
-    // @ts-expect-error safe operation wait be resolved by squarified
     instanceRef.current?.on('show:details', props.onShowDetails)
 
     return () => {
       instanceRef.current?.off('mousemove', props.onMousemove)
-      // @ts-expect-error safe operation wait be resolved by squarified
       instanceRef.current?.off('close:tooltip', props.onCloseTooltip)
-      // @ts-expect-error safe operation wait be resolved by squarified
       instanceRef.current?.off('show:details', props.onShowDetails)
     }
   }, [props])

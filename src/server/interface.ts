@@ -23,13 +23,12 @@ export type ModuleInfo = NonNullable<ReturnType<PluginContext['getModuleInfo']>>
 
 export type AnalyzerMode = 'static' | 'json' | 'server'
 
-export type DefaultSizes = 'stat' | 'parsed' | 'gzip' | 'brotli'
+export type DefaultSizes = 'stat' | 'gzip' | 'brotli'
 
 export interface Module {
   label: string
   filename: string
   isEntry: boolean
-  statSize: number
   parsedSize: number
   mapSize: number
   gzipSize: number

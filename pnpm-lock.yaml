@@ -114,8 +114,8 @@ importers:
         specifier: ^0.12.1
         version: 0.12.1(@swc/core@1.11.24)(rollup@4.40.1)
       squarified:
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.6.1
+        version: 0.6.1
       tinyexec:
         specifier: ^0.3.1
         version: 0.3.2
@@ -3426,8 +3426,8 @@ packages:
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
-  squarified@0.5.0:
-    resolution: {integrity: sha512-DnspcPo72q8YHX0Zwu7IxX4kCiGpmba+Pxc9n5gftuinv+o5Mt2UisnvVaPUZHtgtR1DaQ0JE7z1WPrvkwAwsA==}
+  squarified@0.6.1:
+    resolution: {integrity: sha512-rILnrpJyas9WZSpO46JfTNKp0nG4RMc7avtEgdG62xpk/gb8xMvqSMrqtZm8wQGBP51rQNllXYsT46A+rjYDUg==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -7070,7 +7070,7 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  squarified@0.5.0: {}
+  squarified@0.6.1: {}
 
   stackback@0.0.2: {}
 
