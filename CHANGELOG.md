@@ -1,3 +1,36 @@
+## 1.0.0
+
+🎉 **Stable Release** - We're excited to announce the first stable release of vite-bundle-analyzer!
+
+
+### Highlights
+
+- **Production Ready**: Stable API with full backward compatibility guarantees
+- **Enhanced Module Dependencies**: Complete dependency graph visualization with static/dynamic import differentiation
+- **Improved Performance**: Optimized client rendering and reduced bundle size
+- **Better Developer Experience**: Intuitive UI with context menus, search functionality, and responsive design
+- **Comprehensive Platform Support**: Works seamlessly with Vite, Rollup, and Rolldown
+
+
+### Acknowledgments
+
+Special thanks to all contributors and community members who helped shape this release:
+@kricsleo, @a3mitskevich, @urbnjamesmi1, @paulcarroll, @TSmota, @a145789
+
+### What's New in 1.0
+
+- **Dependency Graph Visualization**: View complete module dependency relationships
+- **Smart Tooltips**: Hover to see full file paths and detailed module information
+- **Enhanced Context Menus**: Right-click for quick actions and navigation
+- **Improved Color Coding**: Better visual distinction between different module types
+- **Optimized Treemap Rendering**: Smoother interactions and better performance
+
+
+### What's Next
+
+- Additional bundler support
+- Advanced filtering and analysis features
+
 ## 0.23.0
 
 - Better client UX.

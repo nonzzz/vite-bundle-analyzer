@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "0.23.0",
+  "version": "1.0.0",
   "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -47,7 +47,7 @@
     "rollup": "^4.40.1",
     "rolldown": "1.0.0-beta.13",
     "rollup-plugin-swc3": "^0.12.1",
-    "squarified": "^0.6.2",
+    "squarified": "^1.0.0",
     "tinyexec": "^0.3.1",
     "tsx": "^4.19.2",
     "typescript": "^5.8.3",
