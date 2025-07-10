@@ -5,6 +5,8 @@ import { analyzer } from './src/server'
 
 const c = conf({ command: 'build', mode: 'production' })
 
-c.plugins?.push(analyzer({ analyzerMode: 'json' }))
+c.plugins?.push(analyzer({
+  analyzerMode: 'json'
+}))
 
 export default c

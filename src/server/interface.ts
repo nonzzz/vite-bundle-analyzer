@@ -42,6 +42,8 @@ export interface Module {
 
 export type CustomAnalyzerModule = (analyzeModule: Module[]) => void
 
+export type PathFormatter = (path: string, defaultWD: string) => string
+
 export interface BasicAnalyzerPluginOptions {
   enabled?: boolean
   summary?: boolean
@@ -52,6 +54,7 @@ export interface BasicAnalyzerPluginOptions {
   defaultSizes?: DefaultSizes
   gzipOptions?: ZlibOptions
   brotliOptions?: BrotliOptions
+  pathFormatter?: PathFormatter
 }
 
 export interface AnalyzerPluginOptionsWithServer extends BasicAnalyzerPluginOptions {

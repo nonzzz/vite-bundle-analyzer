@@ -173,7 +173,8 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     gzip: opts.gzipOptions,
     brotli: opts.brotliOptions,
     include: opts.include,
-    exclude: opts.exclude
+    exclude: opts.exclude,
+    pathFormatter: opts.pathFormatter
   })
 
   let defaultWd = process.cwd()

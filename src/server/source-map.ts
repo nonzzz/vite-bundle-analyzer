@@ -1,31 +1,39 @@
 import { SourceMapConsumer } from '@jridgewell/source-map'
 import path from 'path'
 import { generateImportedBy } from './analyzer-module'
-import { byteToString } from './shared'
+import { byteToString, slash } from './shared'
 import type { ChunkMetadata, ImportedBy } from './trie'
 
 // @jridgewell/source-map cut to reduce the size of the bundle
 // Only have sourceContentFor and originalPositionFor methods
 
-export function resolveRelativePath(source: string, workspaceRoot: string) {
-  if (source[0] === '.') {
-    return path.resolve(workspaceRoot, source)
-  }
-  return source
+export function removeAllParentDirectory(id: string) {
+  return id.replace(/^((\.\.\/)+|(\.\.\\)+)/, '')
 }
 
-function findCodeFromSourcemap(consumer: SourceMapConsumer, workspaceRoot: string) {
+export function calculateImportPath(sourcePath: string, identifierPath: string) {
+  if (identifierPath[0] === '.') {
+    const base = removeAllParentDirectory(sourcePath)
+    const baseDir = path.dirname(base)
+    return slash(path.join(baseDir, identifierPath))
+  }
+
+  return identifierPath
+}
+
+function findCodeFromSourcemap(consumer: SourceMapConsumer) {
   return consumer.sources.reduce((acc, cur) => {
     if (cur) {
       const code = consumer.sourceContentFor(cur, true)
       if (code) {
         const { staticImports, dynamicImports } = scanImportStatments(code)
+
         acc.push({
-          id: cur,
+          id: removeAllParentDirectory(cur),
           code,
           importedBy: generateImportedBy(
-            staticImports.map((i) => resolveRelativePath(i, workspaceRoot)),
-            dynamicImports.map((i) => resolveRelativePath(i, workspaceRoot))
+            staticImports.map((i) => calculateImportPath(cur, i)),
+            dynamicImports.map((i) => calculateImportPath(cur, i))
           )
         })
       }
@@ -51,12 +59,9 @@ export function scanImportStatments(code: string) {
 
 export function pickupMappingsFromCodeBinary(
   bytes: Uint8Array,
-  rawSourcemap: string,
-  workspaceRoot: string,
-  formatter: (id: string) => string
+  rawSourcemap: string
 ) {
   const consumer = new SourceMapConsumer(rawSourcemap)
-  //  { code: string, importedBy: ImportedBy[] }
   const grouped: Record<string, { code: string, importedBy: ImportedBy[] }> = {}
   const files = new Set<string>()
   let line = 1
@@ -65,7 +70,7 @@ export function pickupMappingsFromCodeBinary(
   for (let i = 0; i < code.length; i++, column++) {
     const { source } = consumer.originalPositionFor({ line, column })
     if (source != null) {
-      const id = formatter(source)
+      const id = removeAllParentDirectory(source)
 
       const char = code[i]
 
@@ -82,7 +87,7 @@ export function pickupMappingsFromCodeBinary(
       column = -1
     }
   }
-  const originalInfomations = findCodeFromSourcemap(consumer, workspaceRoot).map((info) => ({ ...info, id: formatter(info.id) }))
+  const originalInfomations = findCodeFromSourcemap(consumer)
 
   for (const info of originalInfomations) {
     if (info.id in grouped) {

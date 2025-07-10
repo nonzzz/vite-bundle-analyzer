@@ -2,9 +2,9 @@ import { createFilter } from '@rollup/pluginutils'
 import type { FilterPattern } from '@rollup/pluginutils'
 import path from 'path'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
-import type { Module, OutputAsset, OutputBundle, OutputChunk, PluginContext } from './interface'
+import type { Module, OutputAsset, OutputBundle, OutputChunk, PathFormatter, PluginContext } from './interface'
 import { byteToString, createBrotil, createGzip, slash, stringToByte } from './shared'
-import { pickupMappingsFromCodeBinary, resolveRelativePath, scanImportStatments } from './source-map'
+import { calculateImportPath, pickupMappingsFromCodeBinary, scanImportStatments } from './source-map'
 import { Trie } from './trie'
 import type { GroupWithNode, ImportedBy } from './trie'
 
@@ -17,7 +17,6 @@ function getAbsPath(p: string, cwd = defaultWd) {
 
 function generateNodeId(id: string, cwd: string = defaultWd): string {
   const abs = getAbsPath(id, cwd)
-
   return path.isAbsolute(abs) ? abs.replace('/', '') : abs
 }
 
@@ -26,6 +25,7 @@ export interface AnalyzerModuleOptions {
   brotli?: BrotliOptions
   include?: FilterPattern
   exclude?: FilterPattern
+  pathFormatter?: (path: string, defaultWD: string) => string
 }
 
 function findSourcemap(filename: string, sourcemapFileName: string, chunks: OutputBundle) {
@@ -159,7 +159,8 @@ export class AnalyzerNode {
     mod: SerializedMod,
     compress: ReturnType<typeof createCompressAlorithm>,
     workspaceRoot: string,
-    matcher: ReturnType<typeof createFilter>
+    matcher: ReturnType<typeof createFilter>,
+    pathFormatter: PathFormatter
   ) {
     const sources = new Trie<{
       parsedSize: number,
@@ -183,13 +184,11 @@ export class AnalyzerNode {
 
       // Check map again
       if (map) {
+        // const chunkDir = path.dirname(path.resolve(workspaceRoot, mod.filename))
         // We use sourcemap to restore the corresponding chunk block
         // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
         // It's will cause dead lock.(Altough this is a race case.)
-        const { grouped, files } = pickupMappingsFromCodeBinary(code, map, workspaceRoot, (id: string) => {
-          const relatived = path.relative(workspaceRoot, id)
-          return path.join(workspaceRoot, relatived)
-        })
+        const { grouped, files } = pickupMappingsFromCodeBinary(code, map)
 
         const chunks: typeof grouped = grouped
 
@@ -199,19 +198,21 @@ export class AnalyzerNode {
           chunks[this.originalId] = {
             code: s,
             importedBy: generateImportedBy(
-              staticImports.map((i) => resolveRelativePath(i, workspaceRoot)),
-              dynamicImports.map((i) => resolveRelativePath(i, workspaceRoot))
+              staticImports.map((i) => calculateImportPath(this.originalId, i)),
+              dynamicImports.map((i) => calculateImportPath(this.originalId, i))
             )
           }
           files.add(this.originalId)
         }
         const validChunks = Object.entries(chunks)
           .filter(([id]) => matcher(id))
+
         await Promise.all(validChunks.map(async ([id, { code, importedBy }]) => {
           const b = stringToByte(code)
           const parsedSize = b.byteLength
           const compressedSizes = await calcCompressedSize(b, compress)
-          sources.insert(generateNodeId(id, workspaceRoot), {
+
+          sources.insert(pathFormatter(generateNodeId(id, workspaceRoot), workspaceRoot), {
             meta: { parsedSize, ...compressedSizes, importedBy }
           })
         }))
@@ -261,6 +262,7 @@ export class AnalyzerModule {
   pluginContext: PluginContext | null
   private chunks: OutputBundle
   private matcher: ReturnType<typeof createFilter>
+  private pathFormatter: (path: string, defaultWD: string) => string
   constructor(opt: AnalyzerModuleOptions = {}) {
     this.compressAlorithm = createCompressAlorithm(opt)
     this.modules = []
@@ -268,6 +270,7 @@ export class AnalyzerModule {
     this.chunks = {}
     this.workspaceRoot = process.cwd()
     this.matcher = createFilter(opt.include, opt.exclude)
+    this.pathFormatter = opt.pathFormatter || ((path: string) => path)
   }
 
   installPluginContext(context: PluginContext) {
@@ -283,7 +286,7 @@ export class AnalyzerModule {
     if (isSoucemap(mod.fileName) || !this.matcher(mod.fileName)) { return }
     const serialized = serializedMod(mod, this.chunks)
     const node = new AnalyzerNode(serialized.filename)
-    await node.setup(serialized, this.compressAlorithm, this.workspaceRoot, this.matcher)
+    await node.setup(serialized, this.compressAlorithm, this.workspaceRoot, this.matcher, this.pathFormatter)
     this.modules.push(node)
   }
 

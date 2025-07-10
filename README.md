@@ -92,6 +92,7 @@ export default {
 | `enabled`       | `boolean`                                     | `true`                   | Enable/disable plugin                       |
 | `include`       | `string \| RegExp \| Array<string \| RegExp>` | `[]`                     | Include patterns                            |
 | `exclude`       | `string \| RegExp \| Array<string \| RegExp>` | `[]`                     | Exclude patterns                            |
+| `pathFormatter` | `(path: string, defaultWd: string) => string` | `undefined`              | Formatting Paths                            |
 
 ## CLI
 
