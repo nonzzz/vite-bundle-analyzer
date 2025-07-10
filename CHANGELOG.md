@@ -1,7 +1,11 @@
+## 1.1.0
+
+Added `pathFormatter` option for advanced path customization.\
+You can now provide a custom function to format or normalize module paths in the analysis report, making it easier to adapt the output to your project's structure or display preferences.
+
 ## 1.0.0
 
 🎉 **Stable Release** - We're excited to announce the first stable release of vite-bundle-analyzer!
-
 
 ### Highlights
 
@@ -10,7 +14,6 @@
 - **Improved Performance**: Optimized client rendering and reduced bundle size
 - **Better Developer Experience**: Intuitive UI with context menus, search functionality, and responsive design
 - **Comprehensive Platform Support**: Works seamlessly with Vite, Rollup, and Rolldown
-
 
 ### Acknowledgments
 
@@ -24,7 +27,6 @@ Special thanks to all contributors and community members who helped shape this r
 - **Enhanced Context Menus**: Right-click for quick actions and navigation
 - **Improved Color Coding**: Better visual distinction between different module types
 - **Optimized Treemap Rendering**: Smoother interactions and better performance
-
 
 ### What's Next
 
