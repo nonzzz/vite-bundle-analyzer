@@ -1,3 +1,7 @@
+## 1.1.2
+
+Using `@ts-ignore` replace `@ts-nocheck`
+
 ## 1.1.1
 
 Fix type export error.

@@ -8,7 +8,7 @@ import { minify, swc } from 'rollup-plugin-swc3'
 const external = [...builtinModules, 'vite', 'rolldown', 'rollup', '@rollup/pluginutils']
 
 const TS_ROLLDOWN_DEP_IGNORE_MSG =
-  '// @ts-nocheck If rolldown is not used, this import may cause a tsc error. We use `@ts-nocheck` to suppress type checking.'
+  '// @ts-ignore If rolldown is not used, this import may cause a tsc error. We use `@ts-ignore` to suppress type checking.'
 
 export default defineConfig([
   {
