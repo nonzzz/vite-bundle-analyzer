@@ -1,4 +1,6 @@
+import type { Empty } from '../../../global'
 import type { Module } from '../interface'
+import '../global.d.ts'
 
 export const ALLOWED_MAGIC_TYPE = ['graph:click', 'client:ready', 'send:ui', 'send:filter'] as const
 

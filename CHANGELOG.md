@@ -1,3 +1,7 @@
+## 1.1.1
+
+Fix type export error.
+
 ## 1.1.0
 
 Added `pathFormatter` option for advanced path customization.\

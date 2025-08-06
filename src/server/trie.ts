@@ -1,3 +1,5 @@
+import type { Any, Empty } from '../../global'
+
 interface NodeDescriptor<T = Record<string, Empty>> {
   meta: T
   filename: string

@@ -1,5 +1,5 @@
-import { Module } from 'src/server/interface'
-import { DefaultSizes } from '../server/interface'
+import type { Module } from '../server/interface'
+import type { DefaultSizes } from '../server/interface'
 
 declare global {
   interface Window {

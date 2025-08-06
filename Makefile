@@ -1,4 +1,4 @@
-ROLLDOWN = ./node_modules/.bin/rolldown --config rolldown.config.mts
+ROLLUP = ./node_modules/.bin/rollup --config rollup.config.mts --configPlugin swc3
 TSX = ./node_modules/.bin/tsx
 VERSION += ''
 TAG += ''
@@ -36,7 +36,7 @@ build-client:
 build-server: build-client
 	@echo "Building server code..."
 	@$(TSX) ./pre-compile.mts > dist/html.mjs
-	@$(ROLLDOWN)
+	@$(ROLLUP)
 	-rm -rf dist/cli.mjs
 	awk '{ print }' bin.txt > dist/bin.js
 

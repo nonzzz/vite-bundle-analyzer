@@ -173,8 +173,6 @@ export function injectHTMLTag(options: InjectHTMLTagOptions) {
   return options.html.replace(regExp, (match) => `${descriptors.join('\n')}${match}`)
 }
 
-export type { AllowedMagicType, QueryKind, SendFilterMessage, SendUIMessage } from '../client/special'
-
 export interface SSEMessageBody {
   event: string
   data: string
