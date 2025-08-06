@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -64,7 +64,10 @@
     "vite": "npm:rolldown-vite@6.3.18",
     "vitest": "^2.1.5",
     "workspace-sieve": "^0.3.2",
-    "@rollup/pluginutils": "^5.1.4"
+    "@rollup/pluginutils": "^5.1.4",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-esm-shim": "^0.1.8"
   },
   "license": "MIT",
   "author": "kanno",

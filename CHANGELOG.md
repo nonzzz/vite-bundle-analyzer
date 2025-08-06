@@ -1,3 +1,7 @@
+## 1.2.0
+
+Export client type.
+
 ## 1.1.2
 
 Using `@ts-ignore` replace `@ts-nocheck`
