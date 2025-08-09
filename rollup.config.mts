@@ -57,7 +57,7 @@ export default defineConfig([
       index: 'src/server/index.ts',
       client: 'src/client/special/index.ts'
     },
-    external: [...external, '@rollup/pluginutils'],
+    external,
     output: [
       { dir: 'dist', format: 'esm', entryFileNames: '[name].d.mts' },
       { dir: 'dist', format: 'cjs', entryFileNames: '[name].d.ts' }
@@ -81,6 +81,12 @@ export default defineConfig([
                 mod.code = mod.code.replace(reg, (match) => {
                   return TS_ROLLDOWN_DEP_IGNORE_MSG + '\n' + match
                 })
+                if (file.includes('client')) {
+                  mod.code = mod.code.replace(
+                    /import\s+['"]zlib['"];/g,
+                    ''
+                  )
+                }
               }
             }
           }

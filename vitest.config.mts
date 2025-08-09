@@ -13,6 +13,10 @@ export default defineConfig({
         '**/examples/**',
         '**/dist/**'
       ]
+    },
+    typecheck: {
+      enabled: true,
+      tsconfig: './tsconfig.test.json'
     }
   }
 })

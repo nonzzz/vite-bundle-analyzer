@@ -219,6 +219,15 @@ importers:
         specifier: ^3.3.6
         version: 3.5.13(typescript@5.8.3)
 
+  type-check:
+    dependencies:
+      vite:
+        specifier: npm:rolldown-vite@6.3.18
+        version: rolldown-vite@6.3.18(@types/node@20.17.32)(esbuild@0.25.3)(tsx@4.19.4)
+      vite-bundle-analyzer:
+        specifier: workspace:*
+        version: link:..
+
 packages:
 
   '@ampproject/remapping@2.3.0':

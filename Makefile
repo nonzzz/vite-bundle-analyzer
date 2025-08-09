@@ -44,9 +44,13 @@ dev-client:
 	@echo "Starting client in development mode..."
 	@pnpm exec vite src/client
 
-test:
+test: test-types
 	@echo "Running tests..."
 	@pnpm exec vitest --coverage
+
+test-types:
+	@echo "Running type tests..."
+	@pnpm --dir type-check exec tsc && echo "✅ Type check passed" || (echo "❌ Type check failed" && exit 1)
 
 lint:
 	@echo "Linting code..."

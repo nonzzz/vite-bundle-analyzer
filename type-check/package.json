@@ -1,0 +1,7 @@
+{
+  "name": "type-check",
+  "dependencies": {
+    "vite-bundle-analyzer": "workspace:*",
+    "vite": "npm:rolldown-vite@6.3.18"
+  }
+}
