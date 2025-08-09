@@ -1,3 +1,7 @@
+## 1.2.1
+
+Make type happy.
+
 ## 1.2.0
 
 Export client type.
