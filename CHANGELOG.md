@@ -1,3 +1,12 @@
+## 1.2.2
+
+Fix ensure parent directory creation for absolute output paths.
+
+### credits
+
+@imink
+
+
 ## 1.2.1
 
 Make type happy.
