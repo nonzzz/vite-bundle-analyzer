@@ -92,9 +92,8 @@ export async function handleStaticOutput(
     getOutputPath(opts, defaultWd),
     opts.analyzerMode as AnalyzerMode
   )
-
-  // write path first
-  await fsp.mkdir(absPath, { recursive: true });
+  // ensure that the parent directory exists, if not create it.
+  await fsp.mkdir(path.dirname(absPath), { recursive: true })
 
   if (isJSON) {
     await fsp.writeFile(absPath, JSON.stringify(analyzeModule, null, 2), 'utf8')
