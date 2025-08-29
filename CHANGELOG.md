@@ -1,3 +1,7 @@
+## 1.2.3
+
+- **Static Mode**: `openAnalyzer` now opens HTML reports via file protocol instead of starting a server.
+
 ## 1.2.2
 
 Fix ensure parent directory creation for absolute output paths.
@@ -5,7 +9,6 @@ Fix ensure parent directory creation for absolute output paths.
 ### credits
 
 @imink
-
 
 ## 1.2.1
 

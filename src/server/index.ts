@@ -302,14 +302,22 @@ function analyzer(opts?: AnalyzerPluginOptions) {
       }
       const analyzeModule = analyzerModule.processModule()
 
+      let staticFilePath = ''
+
       if (preferSilent) {
-        await handleStaticOutput(analyzeModule, opts, defaultWd, b)
+        const { filePath } = await handleStaticOutput(analyzeModule, opts, defaultWd, b)
         if (opts.analyzerMode === 'static' && !opts.openAnalyzer) {
           return
         }
+        staticFilePath = filePath
       }
 
       if (preferLivingServer) {
+        if (opts.analyzerMode === 'static' && staticFilePath) {
+          openBrowser(`file://${staticFilePath}`)
+          return
+        }
+
         await createAnalyzerServer(analyzeModule, opts, b, callCount)
       }
       callCount++

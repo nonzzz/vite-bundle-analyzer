@@ -6,7 +6,7 @@ import path from 'path'
 import type { Plugin as RolldownPlugin } from 'rolldown'
 import { type Plugin as VitePlugin } from 'vite'
 import { searchForWorkspaceRoot } from 'workspace-sieve'
-import { createAnalyzerServer, handleStaticOutput, isCI } from '.'
+import { createAnalyzerServer, handleStaticOutput } from '.'
 import type { AnalyzerPluginInternalAPI } from './interface'
 import type { CreateServerContext } from './render'
 import { SSE, injectHTMLTag, renderView as _renderView } from './render'
@@ -100,7 +100,7 @@ export function unstableRolldownAdapter(userPlugin: VitePlugin<AnalyzerPluginInt
       }
       if (opts.analyzerMode === 'json' || opts.analyzerMode === 'static') {
         await handleStaticOutput(latest, opts, defaultWd, b)
-        if (opts.analyzerMode === 'static' && opts.openAnalyzer && !isCI) {
+        if (opts.analyzerMode === 'static' && opts.openAnalyzer) {
           console.error('vite-bundle-analyzer: openAnalyzer is not supported in rolldown adapter')
         }
         return
