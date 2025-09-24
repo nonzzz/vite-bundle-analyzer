@@ -1,4 +1,3 @@
-import type { Empty } from '../../../global'
 import type { Module } from '../interface'
 import '../global.d.ts'
 
@@ -6,7 +5,7 @@ export const ALLOWED_MAGIC_TYPE = ['graph:click', 'client:ready', 'send:ui', 'se
 
 export type AllowedMagicType = typeof ALLOWED_MAGIC_TYPE[number]
 
-export function createMagicEvent(type: AllowedMagicType, data: Empty) {
+export function createMagicEvent(type: AllowedMagicType, data: NonNullable<unknown>) {
   return new CustomEvent(type, { detail: data })
 }
 

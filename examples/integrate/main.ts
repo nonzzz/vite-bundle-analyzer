@@ -33,7 +33,7 @@ function asyncMiddleware(fn: (c: C, next: () => void) => Promise<void>) {
 server.get(
   '/',
   asyncMiddleware(async (c) => {
-    let html = await renderView(data as Module[], { title: 'Vite Bundle Analyzer', mode: 'parsed' })
+    let html = await renderView(data as unknown as Module[], { title: 'Vite Bundle Analyzer', mode: 'stat' })
     html = injectHTMLTag({
       html,
       injectTo: 'body',

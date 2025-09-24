@@ -34,7 +34,7 @@ function makeScaleHandler(attrValue: AttrValue, unit: string, scale: number): Dy
   }
 }
 
-export const withScale = <T, P = Empty>(
+export const withScale = <T, P = NonNullable<unknown>>(
   Render: React.ComponentType<P & { ref?: React.Ref<T> }> | React.ForwardRefExoticComponent<P>
 ) => {
   const ScaleFC = forwardRef<T, P & React.PropsWithChildren<ScaleProps>>(({ children, ...props }, ref) => {

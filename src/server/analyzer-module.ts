@@ -4,7 +4,7 @@ import path from 'path'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PathFormatter, PluginContext } from './interface'
 import { byteToString, createBrotil, createGzip, slash, stringToByte } from './shared'
-import { calculateImportPath, pickupMappingsFromCodeBinary, scanImportStatments } from './source-map'
+import { calculateImportPath, pickupMappingsFromCodeStr, scanImportStatments } from './source-map'
 import { Trie } from './trie'
 import type { GroupWithNode, ImportedBy } from './trie'
 
@@ -38,13 +38,13 @@ function isSoucemap(filename: string) {
 }
 
 interface SerializedModWithAsset {
-  code: Uint8Array
+  code: string
   filename: string
   kind: 'asset'
 }
 
 interface SerializedModWithChunk {
-  code: Uint8Array
+  code: string
   filename: string
   map: string
   imports: string[]
@@ -61,7 +61,7 @@ export const JS_EXTENSIONS = /\.(c|m)?js$/
 function serializedMod(mod: OutputChunk | OutputAsset, chunks: OutputBundle): SerializedMod {
   if (mod.type === 'asset' && !JS_EXTENSIONS.test(mod.fileName)) {
     return <SerializedModWithAsset> {
-      code: stringToByte(mod.source),
+      code: mod.source,
       filename: mod.fileName,
       kind: 'asset'
     }
@@ -85,7 +85,7 @@ function serializedMod(mod: OutputChunk | OutputAsset, chunks: OutputBundle): Se
   const code = mod.type === 'asset' ? mod.source : mod.code
 
   return <SerializedModWithChunk> {
-    code: stringToByte(code),
+    code,
     filename: mod.fileName,
     map: sourcemap,
     imports: mod.type === 'chunk' ? mod.imports : [],
@@ -170,8 +170,9 @@ export class AnalyzerNode {
     }>({ meta: { gzipSize: 0, brotliSize: 0, parsedSize: 0, importedBy: [] } })
 
     if (mod.kind === 'asset') {
-      this.parsedSize = mod.code.byteLength
-      const { brotliSize, gzipSize } = await calcCompressedSize(mod.code, compress)
+      const code = stringToByte(mod.code)
+      this.parsedSize = code.byteLength
+      const { brotliSize, gzipSize } = await calcCompressedSize(code, compress)
       this.brotliSize = brotliSize
       this.gzipSize = gzipSize
     } else {
@@ -182,19 +183,20 @@ export class AnalyzerNode {
       this.mapSize = map.length
       this.isEntry = mod.isEntry
 
+      // maybe binay...
+      const s = byteToString(code)
+
       // Check map again
       if (map) {
         // const chunkDir = path.dirname(path.resolve(workspaceRoot, mod.filename))
         // We use sourcemap to restore the corresponding chunk block
         // Don't using rollup context `resolve` function. If the relatived id is not live in rollup graph
         // It's will cause dead lock.(Altough this is a race case.)
-        const { grouped, files } = pickupMappingsFromCodeBinary(code, map)
-
-        const chunks: typeof grouped = grouped
+        const { grouped: chunks, files } = pickupMappingsFromCodeStr(s, map)
 
         if (!files.size) {
-          const s = byteToString(code)
-          const { staticImports, dynamicImports } = scanImportStatments(byteToString(code))
+          // maybe binary
+          const { staticImports, dynamicImports } = scanImportStatments(s)
           chunks[this.originalId] = {
             code: s,
             importedBy: generateImportedBy(

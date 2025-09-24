@@ -2,6 +2,11 @@ import { SourceMapGenerator } from '@jridgewell/source-map'
 import type { Module, OutputAsset, OutputChunk } from '../../src/server/interface'
 import { stringToByte } from '../../src/server/shared'
 
+export type DeepPartial<T> = T extends object ? {
+    [P in keyof T]?: DeepPartial<T[P]>
+  }
+  : T
+
 export function createMockStats(
   chunkName: string,
   chunk: DeepPartial<OutputChunk | OutputAsset>,

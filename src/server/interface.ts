@@ -107,7 +107,7 @@ export interface PackageJSONMetadata {
   main?: string
   module?: string
   exports?: Record<string, ExportFields | string>
-  [prop: string]: Any
+  [prop: string]: unknown
 }
 
 export interface AnalyzerPluginInternalAPI {

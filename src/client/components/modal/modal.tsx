@@ -11,7 +11,7 @@ interface Props {
   onClose?: () => void
 }
 
-type NativeAttrs = Omit<React.HTMLAttributes<Any>, keyof Props>
+type NativeAttrs = Omit<React.HTMLAttributes<unknown>, keyof Props>
 export type ModalProps = Props & NativeAttrs
 
 interface ModalState {

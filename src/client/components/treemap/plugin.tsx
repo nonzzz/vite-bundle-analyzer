@@ -65,13 +65,11 @@ export function menuPlugin() {
           treemap.resize()
           break
         case 'details':
-          // @ts-expect-error safe operation
           domEvent?.emit('__exposed__', 'show:details', { module })
           break
       }
     }
     reactRoot?.render(null)
-    // @ts-expect-error safe operation
     domEvent?.emit('__exposed__', 'close:tooltip', { state: false })
   }
 
@@ -105,7 +103,6 @@ export function menuPlugin() {
         // this.instance.render.ctx
 
         if (reactRoot && menu && currentModule) {
-          // @ts-expect-error safe operation
           DOMEvent.emit('__exposed__', 'close:tooltip', { state: true })
 
           const canvasContext = this.instance.render.ctx

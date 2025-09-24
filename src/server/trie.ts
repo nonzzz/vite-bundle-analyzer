@@ -1,6 +1,4 @@
-import type { Any, Empty } from '../../global'
-
-interface NodeDescriptor<T = Record<string, Empty>> {
+interface NodeDescriptor<T = Record<string, NonNullable<unknown>>> {
   meta: T
   filename: string
 }
@@ -22,10 +20,11 @@ export interface GroupWithNode {
   children?: Map<string, Node>
   filename: string
   label: string
-  [prop: string]: Any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any
 }
 
-export class Node<T = Empty> implements NodeDescriptor<T> {
+export class Node<T = NonNullable<unknown>> implements NodeDescriptor<T> {
   meta: T
   filename: string
   // eslint-disable-next-line no-use-before-define

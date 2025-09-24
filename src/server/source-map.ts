@@ -1,7 +1,7 @@
 import { SourceMapConsumer } from '@jridgewell/source-map'
 import path from 'path'
 import { generateImportedBy } from './analyzer-module'
-import { byteToString, slash } from './shared'
+import { slash } from './shared'
 import type { ChunkMetadata, ImportedBy } from './trie'
 
 // @jridgewell/source-map cut to reduce the size of the bundle
@@ -57,8 +57,8 @@ export function scanImportStatments(code: string) {
   return { staticImports, dynamicImports }
 }
 
-export function pickupMappingsFromCodeBinary(
-  bytes: Uint8Array,
+export function pickupMappingsFromCodeStr(
+  code: string,
   rawSourcemap: string
 ) {
   const consumer = new SourceMapConsumer(rawSourcemap)
@@ -66,7 +66,6 @@ export function pickupMappingsFromCodeBinary(
   const files = new Set<string>()
   let line = 1
   let column = 0
-  const code = byteToString(bytes)
   for (let i = 0; i < code.length; i++, column++) {
     const { source } = consumer.originalPositionFor({ line, column })
     if (source != null) {
