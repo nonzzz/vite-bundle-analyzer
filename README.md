@@ -37,6 +37,8 @@ pnpm add vite-bundle-analyzer -D
 
 ## Usage
 
+Plugins only work during the build phase.
+
 ### Vite
 
 ```js
