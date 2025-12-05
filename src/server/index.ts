@@ -6,7 +6,7 @@ import { searchForWorkspaceRoot } from 'workspace-sieve'
 import zlib from 'zlib'
 import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
 import type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore, Module } from './interface'
-import { opener } from './opener'
+import { getFileURL, opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
 import type { Middleware } from './render'
 import { analyzerDebug, arena, convertBytes, fsp } from './shared'
@@ -314,7 +314,7 @@ function analyzer(opts?: AnalyzerPluginOptions) {
 
       if (preferLivingServer) {
         if (opts.analyzerMode === 'static' && staticFilePath) {
-          openBrowser(`file://${staticFilePath}`)
+          openBrowser(getFileURL(staticFilePath))
           return
         }
 

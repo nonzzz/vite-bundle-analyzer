@@ -9,6 +9,10 @@ export default defineConfig({
   plugins: [
     vue(),
     Components({ resolvers: [VarletUIResolver()] }) as Plugin,
-    analyzer({ analyzerMode: 'static', openAnalyzer: true }) as Plugin
+    analyzer({
+      analyzerMode: 'static',
+      openAnalyzer: true,
+      fileName: () => 'bundle-analysis-' + Date.now() + '.html'
+    }) as Plugin
   ]
 })
