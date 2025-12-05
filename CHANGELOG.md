@@ -1,3 +1,7 @@
+## 1.2.4
+
+- Fix where URLs could not be opened when WSL disabled inheritance of Windows paths.
+
 ## 1.2.3
 
 - **Static Mode**: `openAnalyzer` now opens HTML reports via file protocol instead of starting a server.
