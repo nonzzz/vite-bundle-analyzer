@@ -35,7 +35,7 @@ build-client:
 
 build-server: build-client
 	@echo "Building server code..."
-	@$(TSX) ./pre-compile.mts > dist/html.mjs
+	@$(TSX) ./pre-compile.ts > dist/html.mjs
 	@$(ROLLUP)
 	-rm -rf dist/cli.mjs
 	awk '{ print }' bin.txt > dist/bin.js

@@ -29,6 +29,6 @@ export default defineConfig({
       }
     },
     minify({ mangle: true, module: true, compress: true, sourceMap: true }),
-    unstableRolldownAdapter(analyzer({ exclude: [/\.mjs$/] }))
+    unstableRolldownAdapter(analyzer({ exclude: [/\.mjs$/], openAnalyzer: true, analyzerMode: 'static' }))
   ]
 })

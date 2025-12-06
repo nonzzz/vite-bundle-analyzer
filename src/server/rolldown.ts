@@ -4,10 +4,12 @@
 // same with rollup
 import path from 'path'
 import type { Plugin as RolldownPlugin } from 'rolldown'
+import compare from 'semver/functions/compare'
 import { type Plugin as VitePlugin } from 'vite'
 import { searchForWorkspaceRoot } from 'workspace-sieve'
-import { createAnalyzerServer, handleStaticOutput } from '.'
+import { createAnalyzerServer, handleStaticOutput, openBrowser } from '.'
 import type { AnalyzerPluginInternalAPI } from './interface'
+import { getFileURL } from './opener'
 import type { CreateServerContext } from './render'
 import { SSE, injectHTMLTag, renderView as _renderView } from './render'
 import { arena, pick } from './shared'
@@ -98,14 +100,31 @@ export function unstableRolldownAdapter(userPlugin: VitePlugin<AnalyzerPluginInt
         opts.analyzerMode(latest)
         return
       }
+
+      let staticFilePath = ''
       if (opts.analyzerMode === 'json' || opts.analyzerMode === 'static') {
-        await handleStaticOutput(latest, opts, defaultWd, b)
-        if (opts.analyzerMode === 'static' && opts.openAnalyzer) {
-          console.error('vite-bundle-analyzer: openAnalyzer is not supported in rolldown adapter')
+        const { filePath } = await handleStaticOutput(latest, opts, defaultWd, b)
+        if (opts.analyzerMode === 'static' && !opts.openAnalyzer) {
+          return
         }
-        return
+        // https://github.com/rolldown/rolldown/commit/f66ae54b2a0f40301272e75493a0844b0dbcedcb
+        if (this.meta.rolldownVersion) {
+          const version = this.meta.rolldownVersion
+          if (compare(version, '1.0.0-beta.48') < 0) {
+            console.error(
+              'vite-bundle-analyzer: The minimum supported version for `openAnalyzer` is 1.0.0-beta.48. Please upgrade your rolldown version.'
+            )
+            return
+          }
+        }
+        staticFilePath = filePath
       }
       if (store.preferLivingServer) {
+        if (opts.analyzerMode === 'static' && staticFilePath) {
+          openBrowser(getFileURL(staticFilePath))
+          return
+        }
+
         const { server: newServer } = await createAnalyzerServer(
           latest,
           opts,

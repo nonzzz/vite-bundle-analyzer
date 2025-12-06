@@ -8,6 +8,7 @@
 
 import child_process from 'child_process'
 import os from 'os'
+import { slash } from './shared'
 
 const MS = 'microsoft'
 // WSL path to Windows explorer.exe
@@ -50,7 +51,7 @@ export function getFileURL(filePath: string) {
   const platform = os.platform()
   if (platform === 'linux' && isWSL()) {
     const winPath = child_process.execSync(`wslpath -w "${filePath}"`, { encoding: 'utf-8' }).trim()
-    return `file:///${winPath.replace(/\\/g, '/')}`
+    return `file:///${slash(winPath)}`
   }
 
   return `file://${filePath}`
