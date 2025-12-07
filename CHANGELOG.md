@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Lift the restrictions for static mode in rolldown
+
 ## 1.2.4
 
 - Fix where URLs could not be opened when WSL disabled inheritance of Windows paths.
