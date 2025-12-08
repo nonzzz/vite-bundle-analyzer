@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Fix watch mode.
+
 ## 1.3.0
 
 - Lift the restrictions for static mode in rolldown

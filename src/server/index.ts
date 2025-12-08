@@ -265,8 +265,9 @@ function analyzer(opts?: AnalyzerPluginOptions) {
       }
     },
     async generateBundle(_, outputBundle) {
+      // this.meta.watchMode
       analyzerModule.installPluginContext(this)
-      analyzerModule.setupRollupChunks(outputBundle)
+      analyzerModule.setupRollupChunks(outputBundle, this.meta.watchMode)
       // const cleanup: Array<{ bundle: OutputChunk | OutputAsset, sourcemapFileName: string | undefined }> = []
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)
       // A funny thing is that 'Import with Query Suffixes' vite might think the worker is assets

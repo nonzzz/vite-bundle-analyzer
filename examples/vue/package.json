@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:debug": "vite build --debug",
+    "build:watch": "vite build --watch",
     "preview": "vite preview"
   },
   "devDependencies": {

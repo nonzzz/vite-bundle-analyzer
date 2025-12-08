@@ -279,7 +279,11 @@ export class AnalyzerModule {
     this.pluginContext = context
   }
 
-  setupRollupChunks(chunks: OutputBundle) {
+  setupRollupChunks(chunks: OutputBundle, watchMode = false) {
+    if (watchMode) {
+      this.chunks = {}
+      this.modules = []
+    }
     // For multiple formats.
     Object.assign(this.chunks, chunks)
   }
