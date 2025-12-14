@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable no-labels */
 import fs from 'fs'
 import module from 'module'
@@ -85,34 +83,4 @@ const _require = module.createRequire(import.meta.url)
 export function resolveWithNodeResolution(name: string, fromPath: string) {
   const resolved = _require.resolve(name, { paths: [fromPath] })
   return url.pathToFileURL(resolved).href
-}
-
-export function resolveWithBuiltinResolver(name: string, fromPath: string) {
-  const resolvers: Array<() => string> = [
-    () => {
-      const require = module.createRequire(path.join(fromPath, 'package.json'))
-      return require.resolve(name)
-    },
-    () => {
-      // @ts-expect-error safe
-      if (typeof Bun !== 'undefined') {
-        // @ts-expect-error safe
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return Bun.resolveSync(name, fromPath)
-      }
-      throw new Error('Bun not available')
-    }
-  ]
-
-  for (const resolver of resolvers) {
-    try {
-      const resolved = resolver()
-      if (fs.existsSync(resolved)) {
-        return url.pathToFileURL(resolved).href
-      }
-    } catch {
-    }
-  }
-
-  throw new Error(`All built-in resolvers failed for '${name}'`)
 }
