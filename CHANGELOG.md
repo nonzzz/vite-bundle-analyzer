@@ -1,3 +1,8 @@
+## 1.3.2
+
+- Cli mode should resolve the correct module.
+- Add new option for cli.
+
 ## 1.3.1
 
 - Fix watch mode.
