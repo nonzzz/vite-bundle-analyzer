@@ -103,6 +103,10 @@ npx vite-bundle-analyzer
 
 # With options
 npx vite-bundle-analyzer --help
+
+# If you're using rolldown-vite pls using the following command
+
+npx vite-bundle-analyzer -e=rolldown-vite
 ```
 
 ## Common Issues

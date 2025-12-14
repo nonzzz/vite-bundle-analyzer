@@ -1,12 +1,12 @@
-/* eslint-disable no-labels */
 import ansis from 'ansis'
 import fs from 'fs'
 import mri from 'mri'
 import path from 'path'
-import url from 'url'
 import { searchForPackageRoot, searchForWorkspaceRoot } from 'workspace-sieve'
+import { detectPackageManager, getSearchPaths, resolveEntryPoint, resolveWithNodeResolution } from './scan'
 import { analyzer } from './server'
-import type { AnalyzerMode, DefaultSizes, ExportFields, PackageJSONMetadata } from './server/interface'
+import type { AnalyzerMode, DefaultSizes } from './server/interface'
+import { analyzerDebug } from './server/shared'
 
 let BREAK_LINE = '\n'
 
@@ -46,62 +46,72 @@ interface Options {
   defaultSizes: DefaultSizes
   summary: boolean
   config: string
+  engine: 'vite' | 'rolldown-vite'
 }
 
 const defaultWd = process.cwd()
 
-function searchForPackageInNodeModules(name: string, currentDir: string) {
-  let dir = currentDir
-  while (dir !== path.parse(dir).root) {
-    const potentialPackagePath = path.join(dir, 'node_modules', name)
-    if (fs.statSync(potentialPackagePath).isDirectory()) {
-      return potentialPackagePath
+function searchForPackageInNodeModules(name: string, searchRoot: string) {
+  const nodeModulesPath = path.join(searchRoot, 'node_modules', name)
+
+  if (fs.existsSync(nodeModulesPath)) {
+    const packageJsonPath = path.join(nodeModulesPath, 'package.json')
+    if (fs.existsSync(packageJsonPath)) {
+      return nodeModulesPath
     }
-    dir = path.dirname(dir)
   }
+
   return null
 }
-
-type EntryModule = string | ExportFields | undefined
 
 // Desgin for type: module
 // I know @dual-bundle/import-meta-resolve but i won't use it. We only need to import package not relative path.
 function importMetaResolve(name: string) {
   const workspaceRoot = searchForWorkspaceRoot(defaultWd)
-  const packageRoot = searchForPackageInNodeModules(name, workspaceRoot)
-  if (!packageRoot) {
-    throw new Error(`Cannot find module '${name}' in '${workspaceRoot}'`)
-  }
-  const packageJSONPath = path.join(packageRoot, 'package.json')
-  const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, 'utf-8')) as unknown as PackageJSONMetadata
+  const packageManager = detectPackageManager(workspaceRoot)
 
-  let entryPoint: EntryModule = packageJSON.module || packageJSON.main
-  const isESM = packageJSON.type === 'module'
-  if (packageJSON.exports && !entryPoint) {
-    entryPoint = packageJSON.exports['.'] || packageJSON.exports['./index'] || packageJSON.exports['./index.js']
-    stop: for (;;) {
-      if (typeof entryPoint === 'string') { break stop }
-      if (entryPoint) {
-        if (isESM) {
-          entryPoint = entryPoint.import || entryPoint.default
-        } else {
-          entryPoint = entryPoint.require || entryPoint.default
+  analyzerDebug(`Resolving '${name}' in ${packageManager} workspace at '${workspaceRoot}'`)
+
+  let packageRoot: string | null = null
+
+  const searchPaths = getSearchPaths(workspaceRoot, packageManager)
+
+  for (const searchPath of searchPaths) {
+    packageRoot = searchForPackageInNodeModules(name, searchPath)
+    if (packageRoot) {
+      analyzerDebug(`Found package '${name}' at '${packageRoot}' via standard search`)
+      break
+    }
+  }
+
+  if (!packageRoot) {
+    analyzerDebug(`Falling back to Node.js resolution for '${name}'`)
+
+    try {
+      return resolveWithNodeResolution(name, workspaceRoot)
+    } catch (error) {
+      try {
+        return resolveWithNodeResolution(name, process.cwd())
+      } catch {
+        if (error instanceof Error) {
+          throw new Error(
+            `Can not find module '${name}' in ${packageManager} workspace at '${workspaceRoot}'. ` +
+              `Searched paths: ${searchPaths.join(', ')}. ` +
+              `Resolution error: ${error.message}`
+          )
         }
-      } else {
-        break stop
       }
     }
   }
-  if (!entryPoint) { throw new Error(`Cannot find entry point for module '${name}'`) }
-  entryPoint = path.join(packageRoot, entryPoint)
-  if (fs.existsSync(entryPoint) && fs.statSync(entryPoint).isFile()) {
-    return url.pathToFileURL(entryPoint).href
+
+  if (!packageRoot) {
+    throw new Error(`Can not find module '${name}' in '${workspaceRoot}'`)
   }
-  throw new Error(`Cannot resolve entry point for package '${name}'`)
+  return resolveEntryPoint(packageRoot, name)
 }
 
-function loadVite(): Promise<typeof import('vite')> {
-  return import(importMetaResolve('vite'))
+function loadVite(engine: 'vite' | 'rolldown-vite' = 'vite'): Promise<typeof import('vite')> {
+  return import(importMetaResolve(engine))
 }
 
 const FILE_EXTENSIONS = ['js', 'mjs', 'cjs', 'ts', 'mts', 'cts']
@@ -119,9 +129,9 @@ function findCurrentViteConfgFile(inputPath: string) {
 }
 
 async function main(opts: Options) {
-  const { config, mode: analyzerMode, filename: fileName, port, open, summary, ...rest } = opts
+  const { engine, config, mode: analyzerMode, filename: fileName, port, open, summary, ...rest } = opts
   const configFile = findCurrentViteConfgFile(config)
-  const vite = await loadVite()
+  const vite = await loadVite(engine)
   await vite.build({
     configFile,
     plugins: [
@@ -191,7 +201,13 @@ export const OPTIONS: Record<string, CommanderOption> = {
     default: [],
     flag: '<string>'
   },
-  exclude: { alias: 'exclude', desc: PATTERN_EXCLUDE_TEXT, default: [], flag: '<string>' }
+  exclude: { alias: 'exclude', desc: PATTERN_EXCLUDE_TEXT, default: [], flag: '<string>' },
+  engine: {
+    alias: 'e',
+    desc: 'Specify the bundle engine for cli. Can be `vite`, `rolldown-vite`.',
+    default: 'vite',
+    flag: '<string>'
+  }
 }
 
 const argv = mri<Options & { help?: string, h?: string }>(process.argv.slice(2), {
