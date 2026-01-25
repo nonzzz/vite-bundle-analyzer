@@ -48,11 +48,16 @@ test "sourcemap decoder" {
 
     defer allocator.free(default_Wd);
 
-    std.debug.print("Default WD: {s}\n", .{default_Wd});
-
     const source_map_file = try fs.read_file(allocator, &.{
         default_Wd,
-        "/zig/__fixtures__/index.js.map",
+        "/__tests__/fixtures/source-map/index.json",
     });
     defer allocator.free(source_map_file);
+
+    const value = try fs.encode_source_map_as_pascal_string(allocator, source_map_file);
+
+    defer allocator.free(value);
+
+    // std.debug.print("{any}\n", .{value});
+    // std.debug.print("source map size: {d}\n", .{value});
 }
