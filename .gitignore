@@ -23,3 +23,5 @@ coverage
 components.d.ts
 
 analysis
+
+.zig-cache
