@@ -1,5 +1,5 @@
 const std = @import("std");
-const pascal_string = @import("./pascal.zig");
+const pascal_string = @import("./pascal_string.zig");
 
 pub fn read_file(allocator: std.mem.Allocator, file_path: []const []const u8) ![]const u8 {
     const full_path = try std.fs.path.join(allocator, file_path);

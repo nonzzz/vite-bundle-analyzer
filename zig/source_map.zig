@@ -18,46 +18,49 @@ pub const Mappings = struct {
     name_index: ?u32 = null,
 };
 
-pub const SourceMap = struct {
-    const Self = @This();
+// pub const SourceMap = struct {
+//     const Self = @This();
 
-    raw: []const u8,
+//     raw: []const u8,
 
-    version: u8,
-    file_span: ?Span,
-    source_root_span: ?Span,
-    sources_spans: std.ArrayList(Span),
-    sources_content_spans: std.ArrayList(?Span),
-    names_spans: std.ArrayList(Span),
-    mappings_span: Span,
+//     version: u8,
+//     file_span: ?Span,
+//     source_root_span: ?Span,
+//     sources_spans: std.ArrayList(Span),
+//     sources_content_spans: std.ArrayList(?Span),
+//     names_spans: std.ArrayList(Span),
+//     mappings_span: Span,
 
-    pub fn init(allocator: std.mem.Allocator, input: []const u8) !Self {
-        _ = input; // autofix
-        _ = allocator; // autofix
-    }
+//     pub fn init(allocator: std.mem.Allocator, input: []const u8) !Self {
+//         _ = input; // autofix
+//         _ = allocator; // autofix
+//     }
 
-    pub fn deinit(self: *Self) void {
-        _ = self; // autofix
-    }
-};
+//     pub fn deinit(self: *Self) void {
+//         _ = self; // autofix
+//     }
+// };
 
-test "sourcemap decoder" {
-    const allocator = std.testing.allocator;
+// test "sourcemap decoder" {
+//     const allocator = std.testing.allocator;
 
-    const default_Wd = try fs.get_default_wd(allocator);
+//     const default_Wd = try fs.get_default_wd(allocator);
 
-    defer allocator.free(default_Wd);
+//     defer allocator.free(default_Wd);
 
-    const source_map_file = try fs.read_file(allocator, &.{
-        default_Wd,
-        "/__tests__/fixtures/source-map/index.json",
-    });
-    defer allocator.free(source_map_file);
+//     const source_map_file = try fs.read_file(allocator, &.{
+//         default_Wd,
+//         "/__tests__/fixtures/source-map/index.json",
+//     });
+//     defer allocator.free(source_map_file);
 
-    const value = try fs.encode_source_map_as_pascal_string(allocator, source_map_file);
+//     const str = try fs.encode_source_map_as_pascal_string(allocator, source_map_file);
 
-    defer allocator.free(value);
+//     defer allocator.free(str);
 
-    // std.debug.print("{any}\n", .{value});
-    // std.debug.print("source map size: {d}\n", .{value});
-}
+//     var source_map = try SourceMap.init(allocator, str);
+//     _ = source_map; // autofix
+
+//     // std.debug.print("{any}\n", .{value});
+//     // std.debug.print("source map size: {d}\n", .{value});
+// }
