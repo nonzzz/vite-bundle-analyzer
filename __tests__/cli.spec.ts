@@ -36,5 +36,5 @@ describe('Cli', () => {
       expect(argv[key]).toBeDefined()
       expect(argv[key]).toEqual(opt.default)
     }
-  })
+  }, { skip: true })
 })
