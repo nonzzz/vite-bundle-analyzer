@@ -6,6 +6,13 @@ interface WASMInstance {
   memory: WebAssembly.Memory
   scan_source_map_imports_binary: (sourcemap_pascal_ptr: number, sourcemap_pascal_len: number, result_len_ptr: number) => number
   scan_source_map_imports: (sourcemap_pascal_ptr: number, sourcemap_pascal_len: number, result_len_ptr: number) => number
+  pickup_mappings_from_code: (
+    code_ptr: number,
+    code_len: number,
+    sourcemap_pascal_ptr: number,
+    sourcemap_pascal_len: number,
+    result_len_ptr: number
+  ) => number
   alloc(size: number): number
   free(ptr: number, size: number): void
 }
@@ -13,6 +20,9 @@ interface WASMInstance {
 declare const b64: string
 
 let WASM_CTX: WASMInstance | null = null
+
+let SHARED_SOURCEMAP_PTR: number = 0
+let SHARED_SOURCEMAP_LEN: number = 0
 
 const encoder = new TextEncoder()
 
@@ -163,43 +173,126 @@ export interface ScanSourceMapImportEntry {
   dynamic: string[]
 }
 
-export function scanSourceMapImportsForSourceContent(rawSourceMap: string) {
-  const pascal = encodeSourceMapV3AsPascalString(rawSourceMap)
-
+export function parse(rawSourceMap: string): void {
   if (!WASM_CTX) {
-    throw new Error('WASM not initialized')
+    throw new Error('WASM not initialized. Call init() first.')
+  }
+
+  if (SHARED_SOURCEMAP_PTR !== 0) {
+    WASM_CTX.free(SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN)
+    SHARED_SOURCEMAP_PTR = 0
+    SHARED_SOURCEMAP_LEN = 0
+  }
+
+  const pascalData = encodeSourceMapV3AsPascalString(rawSourceMap)
+
+  SHARED_SOURCEMAP_PTR = WASM_CTX.alloc(pascalData.byteLength)
+
+  if (SHARED_SOURCEMAP_PTR === 0) {
+    throw new Error('WASM alloc failed for sourcemap')
+  }
+
+  SHARED_SOURCEMAP_LEN = pascalData.byteLength
+
+  new Uint8Array(WASM_CTX.memory.buffer, SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN).set(pascalData)
+}
+
+export function scanSourceMapImportsForSourceContent(): ScanSourceMapImportEntry[] {
+  if (!WASM_CTX) {
+    throw new Error('WASM not initialized. Call init() first.')
+  }
+
+  if (SHARED_SOURCEMAP_PTR === 0) {
+    throw new Error('No sourcemap parsed. Call parse() first.')
   }
 
   const lenPtr = WASM_CTX.alloc(4)
 
   if (lenPtr === 0) {
-    throw new Error('WASM alloc failed')
+    throw new Error('WASM alloc failed for length pointer')
   }
-  const ptr = WASM_CTX.alloc(pascal.byteLength)
 
-  if (ptr === 0) {
-    throw new Error('WASM alloc failed')
-  }
-  new Uint8Array(WASM_CTX.memory.buffer, ptr, pascal.byteLength).set(pascal)
   try {
-    const outPtr = WASM_CTX.scan_source_map_imports(ptr, pascal.byteLength, lenPtr)
+    const outPtr = WASM_CTX.scan_source_map_imports(SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN, lenPtr)
 
     if (outPtr === 0) {
       return []
     }
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
-
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-
     const copy = new Uint8Array(outBytes)
 
     WASM_CTX.free(outPtr, outLen)
 
     const str = decoder.decode(copy)
-
     return JSON.parse(str) as ScanSourceMapImportEntry[]
   } finally {
-    WASM_CTX.free(ptr, pascal.byteLength)
+    WASM_CTX.free(lenPtr, 4)
+  }
+}
+
+export interface PickupMappingsResult {
+  grouped: Record<string, { code: string }>
+  files: string[]
+}
+
+export function pickupMappingsFromCode(generatedCode: string): PickupMappingsResult {
+  if (!WASM_CTX) {
+    throw new Error('WASM not initialized. Call init() first.')
+  }
+
+  if (SHARED_SOURCEMAP_PTR === 0) {
+    throw new Error('No sourcemap parsed. Call parse() first.')
+  }
+
+  const codeBytes = encoder.encode(generatedCode)
+  const codePtr = WASM_CTX.alloc(codeBytes.byteLength)
+
+  if (codePtr === 0) {
+    throw new Error('WASM alloc failed for code')
+  }
+
+  new Uint8Array(WASM_CTX.memory.buffer, codePtr, codeBytes.byteLength).set(codeBytes)
+
+  const lenPtr = WASM_CTX.alloc(4)
+
+  if (lenPtr === 0) {
+    WASM_CTX.free(codePtr, codeBytes.byteLength)
+    throw new Error('WASM alloc failed for length pointer')
+  }
+
+  try {
+    const outPtr = WASM_CTX.pickup_mappings_from_code(
+      codePtr,
+      codeBytes.byteLength,
+      SHARED_SOURCEMAP_PTR,
+      SHARED_SOURCEMAP_LEN,
+      lenPtr
+    )
+
+    if (outPtr === 0) {
+      return { grouped: {}, files: [] }
+    }
+
+    const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
+    const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
+    const copy = new Uint8Array(outBytes)
+
+    WASM_CTX.free(outPtr, outLen)
+
+    const str = decoder.decode(copy)
+    return JSON.parse(str) as PickupMappingsResult
+  } finally {
+    WASM_CTX.free(codePtr, codeBytes.byteLength)
+    WASM_CTX.free(lenPtr, 4)
+  }
+}
+
+export function dispose() {
+  if (WASM_CTX && SHARED_SOURCEMAP_PTR !== 0) {
+    WASM_CTX.free(SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN)
+    SHARED_SOURCEMAP_PTR = 0
+    SHARED_SOURCEMAP_LEN = 0
   }
 }

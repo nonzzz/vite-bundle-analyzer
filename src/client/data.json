@@ -3,20 +3,20 @@
     "filename": "assets/index-BixsrqKx.js",
     "label": "assets/index-BixsrqKx.js",
     "parsedSize": 117886,
-    "mapSize": 419733,
-    "gzipSize": 51128,
+    "mapSize": 419666,
+    "gzipSize": 51122,
     "brotliSize": 45258,
     "source": [
       {
-        "parsedSize": 60961,
-        "gzipSize": 29171,
-        "brotliSize": 25412,
+        "parsedSize": 60959,
+        "gzipSize": 29167,
+        "brotliSize": 25413,
         "label": "src",
         "groups": [
           {
-            "parsedSize": 60786,
-            "gzipSize": 29009,
-            "brotliSize": 25281,
+            "parsedSize": 60784,
+            "gzipSize": 29005,
+            "brotliSize": 25282,
             "label": "client",
             "groups": [
               {
@@ -184,9 +184,9 @@
                 "filename": "src/client/composables"
               },
               {
-                "parsedSize": 48467,
-                "gzipSize": 22568,
-                "brotliSize": 19816,
+                "parsedSize": 48465,
+                "gzipSize": 22565,
+                "brotliSize": 19819,
                 "label": "components",
                 "groups": [
                   {
@@ -313,6 +313,10 @@
                             "kind": "static"
                           },
                           {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
                             "id": "clsx",
                             "kind": "static"
                           },
@@ -364,6 +368,10 @@
                         "importedBy": [
                           {
                             "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
                             "kind": "static"
                           },
                           {
@@ -451,29 +459,16 @@
                         "filename": "src/client/components/checkbox/checkbox-group.tsx"
                       },
                       {
-                        "parsedSize": 21,
-                        "gzipSize": 41,
-                        "brotliSize": 25,
-                        "importedBy": [
-                          {
-                            "id": "src/client/components/checkbox/checkbox",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/checkbox/checkbox-group",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "index.ts",
-                        "filename": "src/client/components/checkbox/index.ts"
-                      },
-                      {
                         "parsedSize": 3254,
                         "gzipSize": 1517,
                         "brotliSize": 1355,
                         "importedBy": [
                           {
                             "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
                             "kind": "static"
                           },
                           {
@@ -495,6 +490,23 @@
                         ],
                         "label": "checkbox.tsx",
                         "filename": "src/client/components/checkbox/checkbox.tsx"
+                      },
+                      {
+                        "parsedSize": 21,
+                        "gzipSize": 41,
+                        "brotliSize": 25,
+                        "importedBy": [
+                          {
+                            "id": "src/client/components/checkbox/checkbox",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/checkbox/checkbox-group",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "index.ts",
+                        "filename": "src/client/components/checkbox/index.ts"
                       }
                     ],
                     "filename": "src/client/components/checkbox"
@@ -533,6 +545,10 @@
                         "importedBy": [
                           {
                             "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
                             "kind": "static"
                           },
                           {
@@ -609,15 +625,15 @@
                     "filename": "src/client/components/file-list.tsx"
                   },
                   {
-                    "parsedSize": 9434,
+                    "parsedSize": 9435,
                     "gzipSize": 4906,
-                    "brotliSize": 4262,
+                    "brotliSize": 4246,
                     "label": "select",
                     "groups": [
                       {
-                        "parsedSize": 113,
+                        "parsedSize": 114,
                         "gzipSize": 122,
-                        "brotliSize": 105,
+                        "brotliSize": 89,
                         "importedBy": [
                           {
                             "id": "react",
@@ -688,6 +704,10 @@
                         "importedBy": [
                           {
                             "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
                             "kind": "static"
                           },
                           {
@@ -789,9 +809,9 @@
                     "filename": "src/client/components/select"
                   },
                   {
-                    "parsedSize": 1252,
-                    "gzipSize": 665,
-                    "brotliSize": 588,
+                    "parsedSize": 1250,
+                    "gzipSize": 663,
+                    "brotliSize": 585,
                     "importedBy": [
                       {
                         "id": "react",
@@ -857,6 +877,10 @@
                             "kind": "static"
                           },
                           {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
                             "id": "clsx",
                             "kind": "static"
                           },
@@ -889,40 +913,15 @@
                     "filename": "src/client/components/tooltip.tsx"
                   },
                   {
-                    "parsedSize": 6929,
-                    "gzipSize": 3102,
-                    "brotliSize": 2756,
+                    "parsedSize": 6928,
+                    "gzipSize": 3101,
+                    "brotliSize": 2778,
                     "label": "treemap",
                     "groups": [
                       {
-                        "parsedSize": 1817,
-                        "gzipSize": 974,
-                        "brotliSize": 844,
-                        "importedBy": [
-                          {
-                            "id": "react-dom/client",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "squarified",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/treemap/component",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/treemap/menu",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "plugin.tsx",
-                        "filename": "src/client/components/treemap/plugin.tsx"
-                      },
-                      {
-                        "parsedSize": 1227,
-                        "gzipSize": 613,
-                        "brotliSize": 552,
+                        "parsedSize": 1226,
+                        "gzipSize": 612,
+                        "brotliSize": 574,
                         "importedBy": [
                           {
                             "id": "@stylex-extend/core",
@@ -963,6 +962,31 @@
                         ],
                         "label": "component.tsx",
                         "filename": "src/client/components/treemap/component.tsx"
+                      },
+                      {
+                        "parsedSize": 1817,
+                        "gzipSize": 974,
+                        "brotliSize": 844,
+                        "importedBy": [
+                          {
+                            "id": "react-dom/client",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/treemap/component",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/treemap/menu",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "plugin.tsx",
+                        "filename": "src/client/components/treemap/plugin.tsx"
                       },
                       {
                         "parsedSize": 3885,
@@ -1049,6 +1073,10 @@
                             "kind": "static"
                           },
                           {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
                             "id": "clsx",
                             "kind": "static"
                           },
@@ -1099,6 +1127,10 @@
                     "importedBy": [
                       {
                         "id": "@stylex-extend/core",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "@stylexjs/stylex",
                         "kind": "static"
                       },
                       {
@@ -1193,9 +1225,9 @@
                 "filename": "src/client/special"
               },
               {
-                "parsedSize": 257,
+                "parsedSize": 258,
                 "gzipSize": 199,
-                "brotliSize": 175,
+                "brotliSize": 173,
                 "importedBy": [],
                 "label": "shared.ts",
                 "filename": "src/client/shared.ts"
@@ -1222,8 +1254,8 @@
                 "filename": "src/client/receiver.tsx"
               },
               {
-                "parsedSize": 114,
-                "gzipSize": 124,
+                "parsedSize": 113,
+                "gzipSize": 123,
                 "brotliSize": 92,
                 "importedBy": [
                   {
@@ -1347,27 +1379,27 @@
         "filename": "src"
       },
       {
-        "parsedSize": 56925,
-        "gzipSize": 21957,
-        "brotliSize": 19846,
+        "parsedSize": 56927,
+        "gzipSize": 21955,
+        "brotliSize": 19845,
         "label": "node_modules/.pnpm",
         "groups": [
           {
-            "parsedSize": 24319,
+            "parsedSize": 24320,
             "gzipSize": 10153,
-            "brotliSize": 9301,
+            "brotliSize": 9302,
             "label": "preact@10.26.5/node_modules/preact",
             "groups": [
               {
-                "parsedSize": 9133,
+                "parsedSize": 9134,
                 "gzipSize": 3758,
-                "brotliSize": 3457,
+                "brotliSize": 3458,
                 "label": "compat",
                 "groups": [
                   {
-                    "parsedSize": 135,
+                    "parsedSize": 136,
                     "gzipSize": 117,
-                    "brotliSize": 102,
+                    "brotliSize": 103,
                     "importedBy": [
                       {
                         "id": "preact/compat",
@@ -1387,7 +1419,16 @@
                         "parsedSize": 8998,
                         "gzipSize": 3641,
                         "brotliSize": 3355,
-                        "importedBy": [],
+                        "importedBy": [
+                          {
+                            "id": "preact",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "preact/hooks",
+                            "kind": "static"
+                          }
+                        ],
                         "label": "compat.module.js",
                         "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/compat/dist/compat.module.js"
                       }
@@ -1409,7 +1450,12 @@
                 "parsedSize": 3277,
                 "gzipSize": 1318,
                 "brotliSize": 1211,
-                "importedBy": [],
+                "importedBy": [
+                  {
+                    "id": "preact",
+                    "kind": "static"
+                  }
+                ],
                 "label": "hooks/dist/hooks.module.js",
                 "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist/hooks.module.js"
               },
@@ -1417,7 +1463,12 @@
                 "parsedSize": 751,
                 "gzipSize": 506,
                 "brotliSize": 454,
-                "importedBy": [],
+                "importedBy": [
+                  {
+                    "id": "preact",
+                    "kind": "static"
+                  }
+                ],
                 "label": "jsx-runtime/dist/jsxRuntime.module.js",
                 "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
               }
@@ -1442,7 +1493,12 @@
                 "parsedSize": 90,
                 "gzipSize": 100,
                 "brotliSize": 69,
-                "importedBy": [],
+                "importedBy": [
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  }
+                ],
                 "label": "compose-context-provider/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
               },
@@ -1450,7 +1506,20 @@
                 "parsedSize": 159,
                 "gzipSize": 132,
                 "brotliSize": 104,
-                "importedBy": [],
+                "importedBy": [
+                  {
+                    "id": "react/jsx-runtime",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                    "kind": "static"
+                  }
+                ],
                 "label": "context-state/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/context-state/index.mjs"
               },
@@ -1458,7 +1527,12 @@
                 "parsedSize": 108,
                 "gzipSize": 116,
                 "brotliSize": 92,
-                "importedBy": [],
+                "importedBy": [
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  }
+                ],
                 "label": "use-abortable-effect/index.mjs",
                 "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
               }
@@ -1474,23 +1548,23 @@
             "filename": "node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
           },
           {
-            "parsedSize": 29331,
-            "gzipSize": 10066,
-            "brotliSize": 9064,
+            "parsedSize": 29332,
+            "gzipSize": 10064,
+            "brotliSize": 9062,
             "label": "squarified@1.0.0/node_modules/squarified/dist",
             "groups": [
               {
-                "parsedSize": 21156,
-                "gzipSize": 7011,
-                "brotliSize": 6353,
+                "parsedSize": 21157,
+                "gzipSize": 7010,
+                "brotliSize": 6351,
                 "importedBy": [],
                 "label": "dom-event-DrYYfglv.mjs",
                 "filename": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs"
               },
               {
-                "parsedSize": 993,
+                "parsedSize": 994,
                 "gzipSize": 576,
-                "brotliSize": 497,
+                "brotliSize": 496,
                 "importedBy": [
                   {
                     "id": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs",
@@ -1501,9 +1575,9 @@
                 "filename": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/index.mjs"
               },
               {
-                "parsedSize": 7182,
-                "gzipSize": 2479,
-                "brotliSize": 2214,
+                "parsedSize": 7181,
+                "gzipSize": 2478,
+                "brotliSize": 2215,
                 "importedBy": [
                   {
                     "id": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs",
