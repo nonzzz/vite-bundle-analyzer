@@ -28,7 +28,7 @@ fn build_unit_test(
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
 ) void {
-    const mod = b.addModule("css_unit_test", .{
+    const mod = b.addModule("unit_test", .{
         .root_source_file = b.path("zig/unit_test.zig"),
         .target = target,
         .optimize = optimize,

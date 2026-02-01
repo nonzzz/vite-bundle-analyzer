@@ -10,6 +10,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24.2
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.15.2
+      - name: Zig Testing
+        run: zig build unit_test
+      - name: Build zig library
+        run: zig build wasm
       - name: Install Dependices
         run: make
 

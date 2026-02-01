@@ -16,33 +16,6 @@ pub export fn free(ptr: [*]u8, size: usize) void {
     allocator.free(ptr[0..size]);
 }
 
-const BinaryWriter = struct {
-    buf: std.ArrayList(u8),
-
-    fn init() !BinaryWriter {
-        return .{ .buf = try std.ArrayList(u8).initCapacity(allocator, 1024) };
-    }
-
-    fn deinit(self: *BinaryWriter) void {
-        self.buf.deinit(allocator);
-    }
-
-    fn writeU32(self: *BinaryWriter, value: u32) !void {
-        var bytes: [4]u8 = undefined;
-        std.mem.writeInt(u32, &bytes, value, .little);
-        try self.buf.appendSlice(allocator, &bytes);
-    }
-
-    fn writeString(self: *BinaryWriter, str: []const u8) !void {
-        try self.writeU32(@intCast(str.len));
-        try self.buf.appendSlice(allocator, str);
-    }
-
-    fn toOwnedSlice(self: *BinaryWriter) ![]u8 {
-        return self.buf.toOwnedSlice(allocator);
-    }
-};
-
 fn write_json_string(writer: anytype, str: []const u8) !void {
     try writer.writeByte('"');
     for (str) |ch| {
