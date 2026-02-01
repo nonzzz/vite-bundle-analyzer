@@ -1,8 +1,11 @@
 import { SourceMapConsumer } from '@jridgewell/source-map'
 import path from 'path'
+import { init, scanSourceMapImportsForSourceContent } from '../../zig'
 import { generateImportedBy } from './analyzer-module'
 import { slash } from './shared'
 import type { ChunkMetadata, ImportedBy } from './trie'
+
+init()
 
 // @jridgewell/source-map cut to reduce the size of the bundle
 // Only have sourceContentFor and originalPositionFor methods
@@ -21,25 +24,18 @@ export function calculateImportPath(sourcePath: string, identifierPath: string) 
   return identifierPath
 }
 
-function findCodeFromSourcemap(consumer: SourceMapConsumer) {
-  return consumer.sources.reduce((acc, cur) => {
-    if (cur) {
-      const code = consumer.sourceContentFor(cur, true)
-      if (code) {
-        const { staticImports, dynamicImports } = scanImportStatments(code)
+function findCodeFromSourcemap(rawSourcemap: string) {
+  const result = scanSourceMapImportsForSourceContent(rawSourcemap)
 
-        acc.push({
-          id: removeAllParentDirectory(cur),
-          code,
-          importedBy: generateImportedBy(
-            staticImports.map((i) => calculateImportPath(cur, i)),
-            dynamicImports.map((i) => calculateImportPath(cur, i))
-          )
-        })
-      }
+  return result.map<ChunkMetadata>((entry) => {
+    return {
+      importedBy: generateImportedBy(
+        entry.static.map((i) => calculateImportPath(entry.source, i)),
+        entry.dynamic.map((i) => calculateImportPath(entry.source, i))
+      ),
+      id: removeAllParentDirectory(entry.source)
     }
-    return acc
-  }, [] as Array<ChunkMetadata>)
+  })
 }
 
 export function scanImportStatments(code: string) {
@@ -86,7 +82,7 @@ export function pickupMappingsFromCodeStr(
       column = -1
     }
   }
-  const originalInfomations = findCodeFromSourcemap(consumer)
+  const originalInfomations = findCodeFromSourcemap(rawSourcemap)
 
   for (const info of originalInfomations) {
     if (info.id in grouped) {

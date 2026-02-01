@@ -4,14 +4,39 @@
 import commonjs from '@rollup/plugin-commonjs'
 import shim from '@rollup/plugin-esm-shim'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import fs from 'fs'
 import { builtinModules } from 'module'
+import path from 'path'
+import type { Plugin } from 'rollup'
 import { defineConfig } from 'rollup'
 import { dts } from 'rollup-plugin-dts'
 import { minify, swc } from 'rollup-plugin-swc3'
+
 const external = [...builtinModules, 'vite', 'rolldown', 'rollup']
+
+const defaultWD = process.cwd()
+
+const WASM_BINARY_PATH = path.join(defaultWD, 'zig-out', 'scan.wasm')
+
+const WASM_BINARY_B64 = fs.readFileSync(WASM_BINARY_PATH, 'base64')
 
 const TS_ROLLDOWN_DEP_IGNORE_MSG =
   '// @ts-ignore If rolldown is not used, this import may cause a tsc error. We use `@ts-ignore` to suppress type checking.'
+
+function virtualWASM(): Plugin {
+  return {
+    name: 'wasm',
+    transform(code) {
+      if (code.includes('declare const b64: string')) {
+        code = code.replace('declare const b64: string', `const b64 = \`${WASM_BINARY_B64}\``)
+        return {
+          code,
+          map: { mappings: '' }
+        }
+      }
+    }
+  }
+}
 
 export default defineConfig([
   {
@@ -36,6 +61,7 @@ export default defineConfig([
       }
     ],
     plugins: [
+      virtualWASM(),
       {
         name: 'resolve-template',
         resolveId: {

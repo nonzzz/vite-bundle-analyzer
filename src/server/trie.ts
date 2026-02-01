@@ -9,7 +9,6 @@ export interface ImportedBy {
 }
 
 export interface ChunkMetadata {
-  code: string
   id: string
   importedBy: ImportedBy[]
 }

@@ -14,7 +14,7 @@ const WASM_BINARY_PATH = path.join(defaultWD, 'zig-out', 'scan.wasm')
 
 const WASM_INPUT_PATH = path.join(defaultWD, 'zig', 'index.ts')
 
-const NPM_OUTPUT_PATH = path.join(defaultWD, 'dist', 'zig')
+const NPM_OUTPUT_PATH = path.join(defaultWD, 'zig', 'dist')
 
 const WASM_BINARY_B64 = fs.readFileSync(WASM_BINARY_PATH, 'base64')
 

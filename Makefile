@@ -1,4 +1,4 @@
-ROLLUP = ./node_modules/.bin/rollup --config rollup.config.mts --configPlugin swc3
+ROLLUP = ./node_modules/.bin/rollup --config rollup.config.ts --configPlugin swc3
 TSX = ./node_modules/.bin/tsx
 VERSION += ''
 TAG += ''
@@ -12,7 +12,7 @@ install:
 
 client-analyze:
 	@echo "Analyzing client code..."
-	@pnpm exec vite build src/client --config analyze.config.mts
+	@pnpm exec vite build src/client --config analyze.config.ts
 	awk '{ print }' dist/client/stats.json > src/client/data.json
 
 server-analyze:
