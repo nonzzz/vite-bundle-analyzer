@@ -1,19 +1,16 @@
 const std = @import("std");
 
-/// Import types
 pub const ImportType = enum(u8) {
     static_import,
     dynamic_import,
 };
 
-/// Zero-copy import reference - only stores offsets into source
 pub const ImportRef = struct {
     type: ImportType,
-    start: u32, // Start offset in source
-    len: u32, // Length of the import specifier
+    start: u32,
+    len: u32,
 };
 
-/// Scanner configuration
 pub const ScannerConfig = struct {
     max_imports: usize = 1024,
 
@@ -22,7 +19,6 @@ pub const ScannerConfig = struct {
     pub const large = ScannerConfig{ .max_imports = 4096 };
 };
 
-/// Scanner errors
 pub const ScannerError = error{
     TooManyImports,
     OffsetTooLarge,
@@ -37,7 +33,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
         source: []const u8,
         pos: usize,
 
-        // Pre-allocated fixed-size buffers
         imports: [MAX_IMPORTS]ImportRef,
         count: usize,
 
@@ -50,25 +45,21 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             };
         }
 
-        /// Get import specifier by index (zero-copy slice)
         pub fn get_import(self: *const Self, index: usize) ?[]const u8 {
             if (index >= self.count) return null;
             const ref = self.imports[index];
             return self.source[ref.start..][0..ref.len];
         }
 
-        /// Get import type by index
         pub fn get_type(self: *const Self, index: usize) ?ImportType {
             if (index >= self.count) return null;
             return self.imports[index].type;
         }
 
-        /// Total number of imports found
         pub fn len(self: *const Self) usize {
             return self.count;
         }
 
-        /// Maximum capacity
         pub fn capacity(self: *const Self) usize {
             _ = self;
             return MAX_IMPORTS;
@@ -83,7 +74,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             return result;
         }
 
-        /// Add an import reference
         inline fn add_import(self: *Self, import_type: ImportType, start: usize, length: usize) ScannerError!void {
             if (self.count >= MAX_IMPORTS) return ScannerError.TooManyImports;
             if (start > std.math.maxInt(u32)) return ScannerError.OffsetTooLarge;
@@ -97,18 +87,15 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             self.count += 1;
         }
 
-        /// Skip whitespace and comments (inline for performance)
         inline fn skip_whitespace_and_comments(self: *Self) void {
             while (self.pos < self.source.len) {
                 const ch = self.source[self.pos];
 
-                // Skip whitespace
                 if (ch == ' ' or ch == '\t' or ch == '\n' or ch == '\r') {
                     self.pos += 1;
                     continue;
                 }
 
-                // Skip single-line comment
                 if (self.pos + 1 < self.source.len and
                     self.source[self.pos] == '/' and
                     self.source[self.pos + 1] == '/')
@@ -120,7 +107,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
                     continue;
                 }
 
-                // Skip multi-line comment
                 if (self.pos + 1 < self.source.len and
                     self.source[self.pos] == '/' and
                     self.source[self.pos + 1] == '*')
@@ -140,12 +126,10 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             }
         }
 
-        /// Check if current position matches a keyword
         inline fn match_keyword(self: *const Self, keyword: []const u8) bool {
             if (self.pos + keyword.len > self.source.len) return false;
             if (!std.mem.eql(u8, self.source[self.pos..][0..keyword.len], keyword)) return false;
 
-            // Check word boundary
             if (self.pos + keyword.len < self.source.len) {
                 const next_ch = self.source[self.pos + keyword.len];
                 if (std.ascii.isAlphanumeric(next_ch) or next_ch == '_' or next_ch == '$') {
@@ -156,7 +140,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             return true;
         }
 
-        /// Parse string literal and return its offset/length
         fn parse_string_literal(self: *Self, quote: u8) ?struct { start: usize, len: usize } {
             std.debug.assert(self.source[self.pos] == quote);
             self.pos += 1;
@@ -182,7 +165,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             return null;
         }
 
-        /// Scan for static import: import ... from 'specifier'
         fn scan_static_import(self: *Self) !bool {
             std.debug.assert(self.match_keyword("import"));
 
@@ -190,13 +172,11 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             self.pos += "import".len;
             self.skip_whitespace_and_comments();
 
-            // Check for dynamic import: import(
             if (self.pos < self.source.len and self.source[self.pos] == '(') {
                 self.pos = saved_pos;
                 return false;
             }
 
-            // Skip import bindings to find "from"
             var depth: i32 = 0;
             var found_from = false;
 
@@ -228,7 +208,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
 
             self.skip_whitespace_and_comments();
 
-            // Parse string literal
             if (self.pos < self.source.len) {
                 const ch = self.source[self.pos];
                 if (ch == '"' or ch == '\'') {
@@ -322,7 +301,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             }
         }
 
-        /// Main scan function - truly zero-copy
         pub fn scan(self: *Self) !void {
             self.pos = 0;
             self.count = 0;
@@ -330,7 +308,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             while (self.pos < self.source.len) {
                 const ch = self.source[self.pos];
 
-                // Skip strings and template literals
                 if (ch == '"' or ch == '\'') {
                     self.skip_string();
                     continue;
@@ -341,7 +318,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
                     continue;
                 }
 
-                // Skip comments
                 if (self.pos + 1 < self.source.len and ch == '/') {
                     if (self.source[self.pos + 1] == '/' or self.source[self.pos + 1] == '*') {
                         self.skip_whitespace_and_comments();
@@ -349,12 +325,9 @@ pub fn Scanner(comptime config: ScannerConfig) type {
                     }
                 }
 
-                // Check for import
                 if (self.match_keyword("import")) {
-                    // Try dynamic import first
                     if (try self.scan_dynamic_import()) continue;
 
-                    // Then static import
                     if (try self.scan_static_import()) continue;
                 }
 
@@ -364,7 +337,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
     };
 }
 
-/// Iterator wrapper for convenient access
 pub fn ImportIterator(comptime ScannerType: type) type {
     return struct {
         scanner: *const ScannerType,
