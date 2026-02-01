@@ -17,6 +17,7 @@ export default defineConfig({
     typecheck: {
       enabled: true,
       tsconfig: './tsconfig.test.json'
-    }
+    },
+    setupFiles: ['__tests__/setup.ts']
   }
 })

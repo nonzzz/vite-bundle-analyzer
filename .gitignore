@@ -23,3 +23,7 @@ coverage
 components.d.ts
 
 analysis
+
+.zig-cache
+
+zig-out

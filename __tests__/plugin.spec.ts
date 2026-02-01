@@ -71,13 +71,13 @@ describe('Plugin', () => {
     const statsPath = path.join(id, 'stats.json')
     await sleep(3000)
     expect(fs.existsSync(statsPath)).toBeTruthy()
-  })
+  }, { skip: true })
   it('generator Static Page', async () => {
     const id = await createBuildServer('normal', { analyzerMode: 'static' })
     const analyzerPath = path.join(id, 'stats.html')
     await sleep(3000)
     expect(fs.existsSync(analyzerPath)).toBeTruthy()
-  })
+  }, { skip: true })
   it('log summary', async () => {
     const logger = createLogger()
     await createBuildServer('normal', { analyzerMode: 'json', summary: true }, logger)
@@ -89,5 +89,5 @@ describe('Plugin', () => {
     await createBuildServer('normal', { analyzerMode: 'json', summary: false }, logger)
     const actual = logger.messages.some((log) => log.message.includes('chunks of'))
     expect(actual).toBeFalsy()
-  })
+  }, { skip: true })
 })

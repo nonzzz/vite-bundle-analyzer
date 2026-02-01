@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Zig
+        uses: mlugg/setup-zig@v2
+        with:
+          version: 0.15.2
+      - name: Build zig library
+        run: zig build wasm
       - name: Install Dependencies
         run: make
       - uses: actions/setup-node@v3
