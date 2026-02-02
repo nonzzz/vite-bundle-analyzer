@@ -8,7 +8,6 @@ const BuildSteps = struct {
     client_analyze: *std.Build.Step,
     server_analyze: *std.Build.Step,
     build_all: *std.Build.Step,
-    cleanup_client: *std.Build.Step,
     cleanup: *std.Build.Step,
     build_client: *std.Build.Step,
     build_server: *std.Build.Step,
@@ -32,7 +31,6 @@ pub fn build(b: *std.Build) void {
         .client_analyze = b.step("client_analyze", "Analyze client code"),
         .server_analyze = b.step("server_analyze", "Analyze server code"),
         .build_all = b.step("build_all", "Build all components"),
-        .cleanup_client = b.step("cleanup_client", "Clean up client dist directory"),
         .cleanup = b.step("cleanup", "Clean up dist directory"),
         .build_client = b.step("build_client", "Build client code"),
         .build_server = b.step("build_server", "Build server code"),
@@ -56,15 +54,13 @@ pub fn build(b: *std.Build) void {
 
     build_server_analyze(b, build_steps.server_analyze);
 
-    build_cleanup_client(b, build_steps.cleanup_client);
-
     build_cleanup(b, build_steps.cleanup);
 
     build_client_target(b, build_steps.build_client);
 
     build_server_target(b, build_steps.build_server, build_steps.build_client);
 
-    build_build_all(b, build_steps.build_all, build_steps.cleanup, build_steps.build_server, build_steps.cleanup_client);
+    build_build_all(b, build_steps.build_all, build_steps.cleanup, build_steps.build_server);
 
     build_dev_client(b, build_steps.dev_client);
 
@@ -297,12 +293,16 @@ fn build_build_all(
     step: *std.Build.Step,
     cleanup_step: *std.Build.Step,
     build_server_step: *std.Build.Step,
-    cleanup_client_step: *std.Build.Step,
 ) void {
-    _ = b; // autofix
     step.dependOn(cleanup_step);
+
+    build_server_step.dependOn(cleanup_step);
     step.dependOn(build_server_step);
-    step.dependOn(cleanup_client_step);
+
+    const rm_client = b.addSystemCommand(&.{ "rm", "-rf", "dist/client" });
+    rm_client.has_side_effects = true;
+    rm_client.step.dependOn(build_server_step);
+    step.dependOn(&rm_client.step);
 }
 
 fn build_dev_client(b: *std.Build, step: *std.Build.Step) void {

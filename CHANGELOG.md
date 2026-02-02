@@ -1,3 +1,7 @@
+## 1.3.4
+
+- Deduce size.
+
 ## 1.3.3
 
 - Limit zip tasks and reduce memory usage.
