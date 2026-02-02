@@ -68,7 +68,8 @@
     "vitest": "^2.1.5",
     "workspace-sieve": "^0.3.2",
     "semver": "^7.7.3",
-    "@types/semver": "^7.7.1"
+    "@types/semver": "^7.7.1",
+    "@jridgewell/source-map": "^0.3.11"
   },
   "license": "MIT",
   "author": "kanno",
