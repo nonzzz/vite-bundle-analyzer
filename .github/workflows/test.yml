@@ -18,12 +18,12 @@ jobs:
       - name: Build zig library
         run: zig build wasm
       - name: Install Dependices
-        run: make
+        run: zig build install_npm_deps
 
       - name: Build Library
-        run: make build-all
+        run: zig build build_all
       - name: Run Test
-        run: make test
+        run: zig build test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3

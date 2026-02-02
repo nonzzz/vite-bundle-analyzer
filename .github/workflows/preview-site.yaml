@@ -15,14 +15,14 @@ jobs:
           version: 0.15.2
       - name: Build zig library
         run: zig build wasm
-      - name: Install Dependencies
-        run: make
+
       - uses: actions/setup-node@v3
         with:
           node-version: 24.2
       - name: Build site
         run: |
-          make install
+          zig build install_npm_deps
+          zig build build_all
           export SITE=true && pnpm exec vite build src/client
 
       - name: Deploy site

@@ -22,9 +22,9 @@ jobs:
           node-version: 24.2
           registry-url: "https://registry.npmjs.org"
       - name: Install Dependencies
-        run: make
+        run: zig build install_npm_deps
       - name: Pack and Publish
         run: |
-          make publish
+          zig build publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
