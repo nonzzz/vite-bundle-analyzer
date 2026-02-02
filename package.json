@@ -27,7 +27,6 @@
   "devDependencies": {
     "@eslint-sukka/react": "^6.12.0",
     "@iconify-json/ph": "^1.1.12",
-    "@jridgewell/source-map": "^0.3.6",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-esm-shim": "^0.1.8",
     "@rollup/plugin-node-resolve": "^16.0.1",
@@ -77,9 +76,6 @@
     "overrides": {
       "@types/react": "^18.2.31",
       "is-core-module": "npm:@nolyfill/is-core-module@^1"
-    },
-    "patchedDependencies": {
-      "@jridgewell/source-map@0.3.6": "patches/@jridgewell__source-map@0.3.6.patch"
     }
   },
   "files": [
