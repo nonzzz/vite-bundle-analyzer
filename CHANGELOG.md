@@ -1,3 +1,7 @@
+## 1.3.3
+
+- Limit zip tasks and reduce memory usage.
+
 ## 1.3.2
 
 - Cli mode should resolve the correct module.

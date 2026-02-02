@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -26,7 +26,9 @@
   },
   "devDependencies": {
     "@eslint-sukka/react": "^6.12.0",
+    "@henrygd/queue": "^1.2.0",
     "@iconify-json/ph": "^1.1.12",
+    "@jridgewell/source-map": "^0.3.11",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-esm-shim": "^0.1.8",
     "@rollup/plugin-node-resolve": "^16.0.1",
@@ -41,6 +43,7 @@
     "@types/node": "^20.7.0",
     "@types/react": "^18.2.31",
     "@types/react-dom": "18.2.7",
+    "@types/semver": "^7.7.1",
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/coverage-v8": "^2.1.5",
     "ansis": "^4.1.0",
@@ -59,6 +62,7 @@
     "rollup": "^4.40.1",
     "rollup-plugin-dts": "^6.2.1",
     "rollup-plugin-swc3": "^0.12.1",
+    "semver": "^7.7.3",
     "squarified": "^1.0.0",
     "tinyexec": "^0.3.1",
     "tsx": "^4.19.2",
@@ -66,10 +70,7 @@
     "unplugin-icons": "^0.18.5",
     "vite": "npm:rolldown-vite@6.3.18",
     "vitest": "^2.1.5",
-    "workspace-sieve": "^0.3.2",
-    "semver": "^7.7.3",
-    "@types/semver": "^7.7.1",
-    "@jridgewell/source-map": "^0.3.11"
+    "workspace-sieve": "^0.3.2"
   },
   "license": "MIT",
   "author": "kanno",

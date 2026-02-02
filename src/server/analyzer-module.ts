@@ -1,3 +1,4 @@
+import { newQueue } from '@henrygd/queue/rl'
 import { createFilter } from '@rollup/pluginutils'
 import type { FilterPattern } from '@rollup/pluginutils'
 import path from 'path'
@@ -209,7 +210,9 @@ export class AnalyzerNode {
         const validChunks = Object.entries(chunks)
           .filter(([id]) => matcher(id))
 
-        await Promise.all(validChunks.map(async ([id, { code, importedBy }]) => {
+        const queue = newQueue(6, 3, 1000)
+
+        await queue.all(validChunks.map(async ([id, { code, importedBy }]) => {
           const b = stringToByte(code)
           const parsedSize = b.byteLength
           const compressedSizes = await calcCompressedSize(b, compress)
