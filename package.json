@@ -1,6 +1,6 @@
 {
   "name": "vite-bundle-analyzer",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "a modern vite bundle analyzer tool",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@eslint-sukka/react": "^6.12.0",
-    "@henrygd/queue": "^1.2.0",
     "@iconify-json/ph": "^1.1.12",
     "@jridgewell/source-map": "^0.3.11",
     "@rollup/plugin-commonjs": "^28.0.3",

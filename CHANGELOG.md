@@ -1,3 +1,7 @@
+## 1.3.5
+
+- Revert queue system.
+
 ## 1.3.4
 
 - Deduce size.
