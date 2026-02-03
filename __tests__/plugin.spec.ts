@@ -66,28 +66,28 @@ describe('Plugin', () => {
   afterAll(() => {
     destroy.sync(bundlePath, { quiet: false })
   })
-  it('generator JSON', async () => {
+  it.skip('generator JSON', async () => {
     const id = await createBuildServer('normal', { analyzerMode: 'json' })
     const statsPath = path.join(id, 'stats.json')
     await sleep(3000)
     expect(fs.existsSync(statsPath)).toBeTruthy()
-  }, { skip: true })
-  it('generator Static Page', async () => {
+  })
+  it.skip('generator Static Page', async () => {
     const id = await createBuildServer('normal', { analyzerMode: 'static' })
     const analyzerPath = path.join(id, 'stats.html')
     await sleep(3000)
     expect(fs.existsSync(analyzerPath)).toBeTruthy()
-  }, { skip: true })
+  })
   it('log summary', async () => {
     const logger = createLogger()
     await createBuildServer('normal', { analyzerMode: 'json', summary: true }, logger)
     const actual = logger.messages.find((log) => log.message.includes('chunks of'))
     expect(!!actual).toBeTruthy()
   })
-  it('not log summary', async () => {
+  it.skip('not log summary', async () => {
     const logger = createLogger()
     await createBuildServer('normal', { analyzerMode: 'json', summary: false }, logger)
     const actual = logger.messages.some((log) => log.message.includes('chunks of'))
     expect(actual).toBeFalsy()
-  }, { skip: true })
+  })
 })

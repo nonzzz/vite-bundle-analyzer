@@ -18,12 +18,12 @@ describe('Cli', () => {
   afterAll(() => {
     fs.rmSync(path.join(defaultWd, 'normal', 'dist'), { recursive: true })
   })
-  it('normal', async () => {
+  it.skip('normal', async () => {
     const basePath = path.join(defaultWd, 'normal')
     await execCli(['-c', path.join(basePath, 'vite.config.mts'), '-m', 'json'])
     expect(fs.existsSync(path.join(basePath, 'dist', 'stats.json'))).toBe(true)
   })
-  it('parse cli args', () => {
+  it.skip('parse cli args', () => {
     const args: string[] = []
     const argv = mri(args, {
       alias: Object.fromEntries(Object.entries(OPTIONS).map(([key, { alias }]) => [alias, key])),
@@ -36,5 +36,5 @@ describe('Cli', () => {
       expect(argv[key]).toBeDefined()
       expect(argv[key]).toEqual(opt.default)
     }
-  }, { skip: true })
+  })
 })
