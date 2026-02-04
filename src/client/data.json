@@ -4,189 +4,25 @@
     "label": "assets/index-BixsrqKx.js",
     "parsedSize": 117886,
     "mapSize": 419666,
-    "gzipSize": 51122,
+    "gzipSize": 51128,
     "brotliSize": 45258,
     "source": [
       {
-        "parsedSize": 60959,
-        "gzipSize": 29167,
-        "brotliSize": 25413,
+        "parsedSize": 60961,
+        "gzipSize": 29171,
+        "brotliSize": 25412,
         "label": "src",
         "groups": [
           {
-            "parsedSize": 60784,
-            "gzipSize": 29005,
-            "brotliSize": 25282,
+            "parsedSize": 60786,
+            "gzipSize": 29009,
+            "brotliSize": 25281,
             "label": "client",
             "groups": [
               {
-                "parsedSize": 7197,
-                "gzipSize": 3908,
-                "brotliSize": 3238,
-                "label": "composables",
-                "groups": [
-                  {
-                    "parsedSize": 1454,
-                    "gzipSize": 934,
-                    "brotliSize": 817,
-                    "label": "use-scale",
-                    "groups": [
-                      {
-                        "parsedSize": 235,
-                        "gzipSize": 192,
-                        "brotliSize": 164,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "scale-context.ts",
-                        "filename": "src/client/composables/use-scale/scale-context.ts"
-                      },
-                      {
-                        "parsedSize": 177,
-                        "gzipSize": 140,
-                        "brotliSize": 126,
-                        "importedBy": [
-                          {
-                            "id": "src/client/composables/use-scale/scale-context",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "utils.ts",
-                        "filename": "src/client/composables/use-scale/utils.ts"
-                      },
-                      {
-                        "parsedSize": 1042,
-                        "gzipSize": 602,
-                        "brotliSize": 527,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables/use-scale/scale-context",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables/use-scale/utils",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "with-scale.tsx",
-                        "filename": "src/client/composables/use-scale/with-scale.tsx"
-                      }
-                    ],
-                    "filename": "src/client/composables/use-scale"
-                  },
-                  {
-                    "parsedSize": 3534,
-                    "gzipSize": 1635,
-                    "brotliSize": 1347,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-keyboard/use-keyboard.ts",
-                    "filename": "src/client/composables/use-keyboard/use-keyboard.ts"
-                  },
-                  {
-                    "parsedSize": 853,
-                    "gzipSize": 437,
-                    "brotliSize": 360,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-body-scroll/use-body-scroll.ts",
-                    "filename": "src/client/composables/use-body-scroll/use-body-scroll.ts"
-                  },
-                  {
-                    "parsedSize": 303,
-                    "gzipSize": 238,
-                    "brotliSize": 173,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-portal/use-portal.ts",
-                    "filename": "src/client/composables/use-portal/use-portal.ts"
-                  },
-                  {
-                    "parsedSize": 215,
-                    "gzipSize": 180,
-                    "brotliSize": 152,
-                    "importedBy": [
-                      {
-                        "id": "foxact/use-abortable-effect",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-dom-observer/use-dom-observer.ts",
-                    "filename": "src/client/composables/use-dom-observer/use-dom-observer.ts"
-                  },
-                  {
-                    "parsedSize": 340,
-                    "gzipSize": 225,
-                    "brotliSize": 197,
-                    "importedBy": [
-                      {
-                        "id": "foxact/noop",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-resize/use-resize.ts",
-                    "filename": "src/client/composables/use-resize/use-resize.ts"
-                  },
-                  {
-                    "parsedSize": 95,
-                    "gzipSize": 84,
-                    "brotliSize": 62,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-click-anywhere/use-click-anywhere.ts",
-                    "filename": "src/client/composables/use-click-anywhere/use-click-anywhere.ts"
-                  },
-                  {
-                    "parsedSize": 403,
-                    "gzipSize": 175,
-                    "brotliSize": 130,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-query/use-query.ts",
-                    "filename": "src/client/composables/use-query/use-query.ts"
-                  }
-                ],
-                "filename": "src/client/composables"
-              },
-              {
-                "parsedSize": 48465,
-                "gzipSize": 22565,
-                "brotliSize": 19819,
+                "parsedSize": 48467,
+                "gzipSize": 22568,
+                "brotliSize": 19816,
                 "label": "components",
                 "groups": [
                   {
@@ -281,57 +117,40 @@
                     "filename": "src/client/components/side-bar"
                   },
                   {
+                    "parsedSize": 392,
+                    "gzipSize": 268,
+                    "brotliSize": 222,
+                    "importedBy": [
+                      {
+                        "id": "foxact/noop",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/shared",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/spacer",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/text",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "module-item.tsx",
+                    "filename": "src/client/components/module-item.tsx"
+                  },
+                  {
                     "parsedSize": 5434,
                     "gzipSize": 2580,
                     "brotliSize": 2233,
                     "label": "drawer",
                     "groups": [
-                      {
-                        "parsedSize": 843,
-                        "gzipSize": 447,
-                        "brotliSize": 372,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "content.tsx",
-                        "filename": "src/client/components/drawer/content.tsx"
-                      },
-                      {
-                        "parsedSize": 1227,
-                        "gzipSize": 688,
-                        "brotliSize": 595,
-                        "importedBy": [
-                          {
-                            "id": "@stylex-extend/core",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "@stylexjs/stylex",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "clsx",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/css-transition",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "backdrop.tsx",
-                        "filename": "src/client/components/drawer/backdrop.tsx"
-                      },
                       {
                         "parsedSize": 540,
                         "gzipSize": 345,
@@ -360,6 +179,23 @@
                         ],
                         "label": "drawer.tsx",
                         "filename": "src/client/components/drawer/drawer.tsx"
+                      },
+                      {
+                        "parsedSize": 843,
+                        "gzipSize": 447,
+                        "brotliSize": 372,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "content.tsx",
+                        "filename": "src/client/components/drawer/content.tsx"
                       },
                       {
                         "parsedSize": 2821,
@@ -410,9 +246,51 @@
                         ],
                         "label": "index.ts",
                         "filename": "src/client/components/drawer/index.ts"
+                      },
+                      {
+                        "parsedSize": 1227,
+                        "gzipSize": 688,
+                        "brotliSize": 595,
+                        "importedBy": [
+                          {
+                            "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/css-transition",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "backdrop.tsx",
+                        "filename": "src/client/components/drawer/backdrop.tsx"
                       }
                     ],
                     "filename": "src/client/components/drawer"
+                  },
+                  {
+                    "parsedSize": 859,
+                    "gzipSize": 555,
+                    "brotliSize": 479,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "tooltip.tsx",
+                    "filename": "src/client/components/tooltip.tsx"
                   },
                   {
                     "parsedSize": 4889,
@@ -420,23 +298,6 @@
                     "brotliSize": 2058,
                     "label": "checkbox",
                     "groups": [
-                      {
-                        "parsedSize": 105,
-                        "gzipSize": 119,
-                        "brotliSize": 88,
-                        "importedBy": [
-                          {
-                            "id": "foxact/noop",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "context.ts",
-                        "filename": "src/client/components/checkbox/context.ts"
-                      },
                       {
                         "parsedSize": 1509,
                         "gzipSize": 653,
@@ -492,6 +353,23 @@
                         "filename": "src/client/components/checkbox/checkbox.tsx"
                       },
                       {
+                        "parsedSize": 105,
+                        "gzipSize": 119,
+                        "brotliSize": 88,
+                        "importedBy": [
+                          {
+                            "id": "foxact/noop",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "context.ts",
+                        "filename": "src/client/components/checkbox/context.ts"
+                      },
+                      {
                         "parsedSize": 21,
                         "gzipSize": 41,
                         "brotliSize": 25,
@@ -512,36 +390,15 @@
                     "filename": "src/client/components/checkbox"
                   },
                   {
-                    "parsedSize": 2604,
-                    "gzipSize": 1140,
-                    "brotliSize": 1008,
-                    "label": "text",
+                    "parsedSize": 3919,
+                    "gzipSize": 1379,
+                    "brotliSize": 1224,
+                    "label": "button",
                     "groups": [
                       {
-                        "parsedSize": 546,
-                        "gzipSize": 334,
-                        "brotliSize": 303,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/text/child",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "text.tsx",
-                        "filename": "src/client/components/text/text.tsx"
-                      },
-                      {
-                        "parsedSize": 2058,
-                        "gzipSize": 806,
-                        "brotliSize": 705,
+                        "parsedSize": 3919,
+                        "gzipSize": 1379,
+                        "brotliSize": 1224,
                         "importedBy": [
                           {
                             "id": "@stylex-extend/core",
@@ -564,469 +421,11 @@
                             "kind": "static"
                           }
                         ],
-                        "label": "child.tsx",
-                        "filename": "src/client/components/text/child.tsx"
+                        "label": "button.tsx",
+                        "filename": "src/client/components/button/button.tsx"
                       }
                     ],
-                    "filename": "src/client/components/text"
-                  },
-                  {
-                    "parsedSize": 392,
-                    "gzipSize": 268,
-                    "brotliSize": 222,
-                    "importedBy": [
-                      {
-                        "id": "foxact/noop",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/shared",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/spacer",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/text",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "module-item.tsx",
-                    "filename": "src/client/components/module-item.tsx"
-                  },
-                  {
-                    "parsedSize": 952,
-                    "gzipSize": 557,
-                    "brotliSize": 493,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/interface",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/checkbox",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/module-item",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "file-list.tsx",
-                    "filename": "src/client/components/file-list.tsx"
-                  },
-                  {
-                    "parsedSize": 9435,
-                    "gzipSize": 4906,
-                    "brotliSize": 4246,
-                    "label": "select",
-                    "groups": [
-                      {
-                        "parsedSize": 114,
-                        "gzipSize": 122,
-                        "brotliSize": 89,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "context.ts",
-                        "filename": "src/client/components/select/context.ts"
-                      },
-                      {
-                        "parsedSize": 501,
-                        "gzipSize": 281,
-                        "brotliSize": 240,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "layouts.ts",
-                        "filename": "src/client/components/select/layouts.ts"
-                      },
-                      {
-                        "parsedSize": 52,
-                        "gzipSize": 72,
-                        "brotliSize": 56,
-                        "importedBy": [],
-                        "label": "ellipsis.tsx",
-                        "filename": "src/client/components/select/ellipsis.tsx"
-                      },
-                      {
-                        "parsedSize": 1422,
-                        "gzipSize": 791,
-                        "brotliSize": 680,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react-dom",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/css-transition",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/context",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/layouts",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "dropdown.tsx",
-                        "filename": "src/client/components/select/dropdown.tsx"
-                      },
-                      {
-                        "parsedSize": 1231,
-                        "gzipSize": 706,
-                        "brotliSize": 601,
-                        "importedBy": [
-                          {
-                            "id": "@stylex-extend/core",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "@stylexjs/stylex",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "clsx",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "select-multiple.tsx",
-                        "filename": "src/client/components/select/select-multiple.tsx"
-                      },
-                      {
-                        "parsedSize": 3,
-                        "gzipSize": 23,
-                        "brotliSize": 7,
-                        "importedBy": [
-                          {
-                            "id": "src/client/components/select/select",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/select-option",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "index.ts",
-                        "filename": "src/client/components/select/index.ts"
-                      },
-                      {
-                        "parsedSize": 2635,
-                        "gzipSize": 1129,
-                        "brotliSize": 975,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/context",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/ellipsis",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "select-option.tsx",
-                        "filename": "src/client/components/select/select-option.tsx"
-                      },
-                      {
-                        "parsedSize": 3477,
-                        "gzipSize": 1782,
-                        "brotliSize": 1598,
-                        "importedBy": [
-                          {
-                            "id": "foxact/noop",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/context",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/dropdown",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/ellipsis",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/select-multiple",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/select-option",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "select.tsx",
-                        "filename": "src/client/components/select/select.tsx"
-                      }
-                    ],
-                    "filename": "src/client/components/select"
-                  },
-                  {
-                    "parsedSize": 1250,
-                    "gzipSize": 663,
-                    "brotliSize": 585,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "squarified",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "~icons/ph/file-duotone",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "~icons/ph/folder",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/context",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/interface",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/shared",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/input",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/module-item",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/spacer",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/text",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "search-modules.tsx",
-                    "filename": "src/client/components/search-modules.tsx"
-                  },
-                  {
-                    "parsedSize": 4547,
-                    "gzipSize": 1628,
-                    "brotliSize": 1457,
-                    "label": "input",
-                    "groups": [
-                      {
-                        "parsedSize": 4547,
-                        "gzipSize": 1628,
-                        "brotliSize": 1457,
-                        "importedBy": [
-                          {
-                            "id": "@stylex-extend/core",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "@stylexjs/stylex",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "clsx",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "input.tsx",
-                        "filename": "src/client/components/input/input.tsx"
-                      }
-                    ],
-                    "filename": "src/client/components/input"
-                  },
-                  {
-                    "parsedSize": 859,
-                    "gzipSize": 555,
-                    "brotliSize": 479,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "tooltip.tsx",
-                    "filename": "src/client/components/tooltip.tsx"
-                  },
-                  {
-                    "parsedSize": 6928,
-                    "gzipSize": 3101,
-                    "brotliSize": 2778,
-                    "label": "treemap",
-                    "groups": [
-                      {
-                        "parsedSize": 1226,
-                        "gzipSize": 612,
-                        "brotliSize": 574,
-                        "importedBy": [
-                          {
-                            "id": "@stylex-extend/core",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "@stylexjs/stylex",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "squarified",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "squarified/plugin",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/context",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/special",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/treemap/plugin",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "component.tsx",
-                        "filename": "src/client/components/treemap/component.tsx"
-                      },
-                      {
-                        "parsedSize": 1817,
-                        "gzipSize": 974,
-                        "brotliSize": 844,
-                        "importedBy": [
-                          {
-                            "id": "react-dom/client",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "squarified",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/treemap/component",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/treemap/menu",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "plugin.tsx",
-                        "filename": "src/client/components/treemap/plugin.tsx"
-                      },
-                      {
-                        "parsedSize": 3885,
-                        "gzipSize": 1515,
-                        "brotliSize": 1360,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "react-dom",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "squarified",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "~icons/ph/app-window",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "~icons/ph/bounding-box",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "~icons/ph/x",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "menu.tsx",
-                        "filename": "src/client/components/treemap/menu.tsx"
-                      }
-                    ],
-                    "filename": "src/client/components/treemap"
+                    "filename": "src/client/components/button"
                   },
                   {
                     "parsedSize": 3866,
@@ -1104,158 +503,702 @@
                     "filename": "src/client/components/modal"
                   },
                   {
+                    "parsedSize": 9434,
+                    "gzipSize": 4906,
+                    "brotliSize": 4262,
+                    "label": "select",
+                    "groups": [
+                      {
+                        "parsedSize": 113,
+                        "gzipSize": 122,
+                        "brotliSize": 105,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "context.ts",
+                        "filename": "src/client/components/select/context.ts"
+                      },
+                      {
+                        "parsedSize": 1231,
+                        "gzipSize": 706,
+                        "brotliSize": 601,
+                        "importedBy": [
+                          {
+                            "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "select-multiple.tsx",
+                        "filename": "src/client/components/select/select-multiple.tsx"
+                      },
+                      {
+                        "parsedSize": 3477,
+                        "gzipSize": 1782,
+                        "brotliSize": 1598,
+                        "importedBy": [
+                          {
+                            "id": "foxact/noop",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/dropdown",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/ellipsis",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/select-multiple",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/select-option",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "select.tsx",
+                        "filename": "src/client/components/select/select.tsx"
+                      },
+                      {
+                        "parsedSize": 1422,
+                        "gzipSize": 791,
+                        "brotliSize": 680,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react-dom",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/css-transition",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/layouts",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "dropdown.tsx",
+                        "filename": "src/client/components/select/dropdown.tsx"
+                      },
+                      {
+                        "parsedSize": 52,
+                        "gzipSize": 72,
+                        "brotliSize": 56,
+                        "importedBy": [],
+                        "label": "ellipsis.tsx",
+                        "filename": "src/client/components/select/ellipsis.tsx"
+                      },
+                      {
+                        "parsedSize": 2635,
+                        "gzipSize": 1129,
+                        "brotliSize": 975,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/ellipsis",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "select-option.tsx",
+                        "filename": "src/client/components/select/select-option.tsx"
+                      },
+                      {
+                        "parsedSize": 501,
+                        "gzipSize": 281,
+                        "brotliSize": 240,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "layouts.ts",
+                        "filename": "src/client/components/select/layouts.ts"
+                      },
+                      {
+                        "parsedSize": 3,
+                        "gzipSize": 23,
+                        "brotliSize": 7,
+                        "importedBy": [
+                          {
+                            "id": "src/client/components/select/select",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/select-option",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "index.ts",
+                        "filename": "src/client/components/select/index.ts"
+                      }
+                    ],
+                    "filename": "src/client/components/select"
+                  },
+                  {
+                    "parsedSize": 952,
+                    "gzipSize": 557,
+                    "brotliSize": 493,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/interface",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/checkbox",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/module-item",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "file-list.tsx",
+                    "filename": "src/client/components/file-list.tsx"
+                  },
+                  {
+                    "parsedSize": 6929,
+                    "gzipSize": 3102,
+                    "brotliSize": 2756,
+                    "label": "treemap",
+                    "groups": [
+                      {
+                        "parsedSize": 1227,
+                        "gzipSize": 613,
+                        "brotliSize": 552,
+                        "importedBy": [
+                          {
+                            "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified/plugin",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/special",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/treemap/plugin",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "component.tsx",
+                        "filename": "src/client/components/treemap/component.tsx"
+                      },
+                      {
+                        "parsedSize": 3885,
+                        "gzipSize": 1515,
+                        "brotliSize": 1360,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react-dom",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "~icons/ph/app-window",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "~icons/ph/bounding-box",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "~icons/ph/x",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "menu.tsx",
+                        "filename": "src/client/components/treemap/menu.tsx"
+                      },
+                      {
+                        "parsedSize": 1817,
+                        "gzipSize": 974,
+                        "brotliSize": 844,
+                        "importedBy": [
+                          {
+                            "id": "react-dom/client",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "squarified",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/treemap/component",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/treemap/menu",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "plugin.tsx",
+                        "filename": "src/client/components/treemap/plugin.tsx"
+                      }
+                    ],
+                    "filename": "src/client/components/treemap"
+                  },
+                  {
+                    "parsedSize": 4547,
+                    "gzipSize": 1628,
+                    "brotliSize": 1457,
+                    "label": "input",
+                    "groups": [
+                      {
+                        "parsedSize": 4547,
+                        "gzipSize": 1628,
+                        "brotliSize": 1457,
+                        "importedBy": [
+                          {
+                            "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "input.tsx",
+                        "filename": "src/client/components/input/input.tsx"
+                      }
+                    ],
+                    "filename": "src/client/components/input"
+                  },
+                  {
                     "parsedSize": 386,
                     "gzipSize": 252,
                     "brotliSize": 222,
-                    "importedBy": [
+                    "label": "css-transition",
+                    "groups": [
                       {
-                        "id": "clsx",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "react",
-                        "kind": "static"
+                        "parsedSize": 386,
+                        "gzipSize": 252,
+                        "brotliSize": 222,
+                        "importedBy": [
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "css-transition.ts",
+                        "filename": "src/client/components/css-transition/css-transition.ts"
                       }
                     ],
-                    "label": "css-transition/css-transition.ts",
-                    "filename": "src/client/components/css-transition/css-transition.ts"
+                    "filename": "src/client/components/css-transition"
                   },
                   {
-                    "parsedSize": 3919,
-                    "gzipSize": 1379,
-                    "brotliSize": 1224,
+                    "parsedSize": 2604,
+                    "gzipSize": 1140,
+                    "brotliSize": 1008,
+                    "label": "text",
+                    "groups": [
+                      {
+                        "parsedSize": 2058,
+                        "gzipSize": 806,
+                        "brotliSize": 705,
+                        "importedBy": [
+                          {
+                            "id": "@stylex-extend/core",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "@stylexjs/stylex",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "clsx",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "child.tsx",
+                        "filename": "src/client/components/text/child.tsx"
+                      },
+                      {
+                        "parsedSize": 546,
+                        "gzipSize": 334,
+                        "brotliSize": 303,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/text/child",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "text.tsx",
+                        "filename": "src/client/components/text/text.tsx"
+                      }
+                    ],
+                    "filename": "src/client/components/text"
+                  },
+                  {
+                    "parsedSize": 1252,
+                    "gzipSize": 665,
+                    "brotliSize": 588,
                     "importedBy": [
-                      {
-                        "id": "@stylex-extend/core",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "@stylexjs/stylex",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "clsx",
-                        "kind": "static"
-                      },
                       {
                         "id": "react",
                         "kind": "static"
                       },
                       {
-                        "id": "src/client/composables",
+                        "id": "squarified",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "~icons/ph/file-duotone",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "~icons/ph/folder",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/context",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/interface",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/shared",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/input",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/module-item",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/spacer",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/text",
                         "kind": "static"
                       }
                     ],
-                    "label": "button/button.tsx",
-                    "filename": "src/client/components/button/button.tsx"
+                    "label": "search-modules.tsx",
+                    "filename": "src/client/components/search-modules.tsx"
                   },
                   {
                     "parsedSize": 932,
                     "gzipSize": 442,
                     "brotliSize": 377,
-                    "importedBy": [
+                    "label": "spacer",
+                    "groups": [
                       {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/composables",
-                        "kind": "static"
+                        "parsedSize": 932,
+                        "gzipSize": 442,
+                        "brotliSize": 377,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "spacer.tsx",
+                        "filename": "src/client/components/spacer/spacer.tsx"
                       }
                     ],
-                    "label": "spacer/spacer.tsx",
-                    "filename": "src/client/components/spacer/spacer.tsx"
+                    "filename": "src/client/components/spacer"
                   }
                 ],
                 "filename": "src/client/components"
               },
               {
-                "parsedSize": 535,
-                "gzipSize": 296,
-                "brotliSize": 263,
-                "importedBy": [
-                  {
-                    "id": "foxact/context-state",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "foxact/noop",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "react",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "src/client/components/treemap",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "src/client/interface",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "src/client/special",
-                    "kind": "static"
-                  }
-                ],
-                "label": "context.ts",
-                "filename": "src/client/context.ts"
-              },
-              {
-                "parsedSize": 74,
-                "gzipSize": 94,
-                "brotliSize": 78,
-                "label": "special",
+                "parsedSize": 7197,
+                "gzipSize": 3908,
+                "brotliSize": 3238,
+                "label": "composables",
                 "groups": [
                   {
-                    "parsedSize": 74,
-                    "gzipSize": 94,
-                    "brotliSize": 78,
+                    "parsedSize": 1454,
+                    "gzipSize": 934,
+                    "brotliSize": 817,
+                    "label": "use-scale",
+                    "groups": [
+                      {
+                        "parsedSize": 1042,
+                        "gzipSize": 602,
+                        "brotliSize": 527,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables/use-scale/scale-context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables/use-scale/utils",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "with-scale.tsx",
+                        "filename": "src/client/composables/use-scale/with-scale.tsx"
+                      },
+                      {
+                        "parsedSize": 177,
+                        "gzipSize": 140,
+                        "brotliSize": 126,
+                        "importedBy": [
+                          {
+                            "id": "src/client/composables/use-scale/scale-context",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "utils.ts",
+                        "filename": "src/client/composables/use-scale/utils.ts"
+                      },
+                      {
+                        "parsedSize": 235,
+                        "gzipSize": 192,
+                        "brotliSize": 164,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "scale-context.ts",
+                        "filename": "src/client/composables/use-scale/scale-context.ts"
+                      }
+                    ],
+                    "filename": "src/client/composables/use-scale"
+                  },
+                  {
+                    "parsedSize": 853,
+                    "gzipSize": 437,
+                    "brotliSize": 360,
                     "importedBy": [
                       {
-                        "id": "src/client/interface",
+                        "id": "react",
                         "kind": "static"
                       }
                     ],
-                    "label": "index.ts",
-                    "filename": "src/client/special/index.ts"
-                  }
-                ],
-                "filename": "src/client/special"
-              },
-              {
-                "parsedSize": 258,
-                "gzipSize": 199,
-                "brotliSize": 173,
-                "importedBy": [],
-                "label": "shared.ts",
-                "filename": "src/client/shared.ts"
-              },
-              {
-                "parsedSize": 427,
-                "gzipSize": 236,
-                "brotliSize": 194,
-                "importedBy": [
-                  {
-                    "id": "react",
-                    "kind": "static"
+                    "label": "use-body-scroll/use-body-scroll.ts",
+                    "filename": "src/client/composables/use-body-scroll/use-body-scroll.ts"
                   },
                   {
-                    "id": "src/client/context",
-                    "kind": "static"
+                    "parsedSize": 215,
+                    "gzipSize": 180,
+                    "brotliSize": 152,
+                    "importedBy": [
+                      {
+                        "id": "foxact/use-abortable-effect",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-dom-observer/use-dom-observer.ts",
+                    "filename": "src/client/composables/use-dom-observer/use-dom-observer.ts"
                   },
                   {
-                    "id": "src/client/special",
-                    "kind": "static"
+                    "parsedSize": 95,
+                    "gzipSize": 84,
+                    "brotliSize": 62,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-click-anywhere/use-click-anywhere.ts",
+                    "filename": "src/client/composables/use-click-anywhere/use-click-anywhere.ts"
+                  },
+                  {
+                    "parsedSize": 303,
+                    "gzipSize": 238,
+                    "brotliSize": 173,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-portal/use-portal.ts",
+                    "filename": "src/client/composables/use-portal/use-portal.ts"
+                  },
+                  {
+                    "parsedSize": 340,
+                    "gzipSize": 225,
+                    "brotliSize": 197,
+                    "importedBy": [
+                      {
+                        "id": "foxact/noop",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-resize/use-resize.ts",
+                    "filename": "src/client/composables/use-resize/use-resize.ts"
+                  },
+                  {
+                    "parsedSize": 3534,
+                    "gzipSize": 1635,
+                    "brotliSize": 1347,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-keyboard/use-keyboard.ts",
+                    "filename": "src/client/composables/use-keyboard/use-keyboard.ts"
+                  },
+                  {
+                    "parsedSize": 403,
+                    "gzipSize": 175,
+                    "brotliSize": 130,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-query/use-query.ts",
+                    "filename": "src/client/composables/use-query/use-query.ts"
                   }
                 ],
-                "label": "receiver.tsx",
-                "filename": "src/client/receiver.tsx"
+                "filename": "src/client/composables"
               },
               {
-                "parsedSize": 113,
-                "gzipSize": 123,
+                "parsedSize": 114,
+                "gzipSize": 124,
                 "brotliSize": 92,
                 "importedBy": [
                   {
@@ -1277,6 +1220,14 @@
                 ],
                 "label": "main.tsx",
                 "filename": "src/client/main.tsx"
+              },
+              {
+                "parsedSize": 257,
+                "gzipSize": 199,
+                "brotliSize": 175,
+                "importedBy": [],
+                "label": "shared.ts",
+                "filename": "src/client/shared.ts"
               },
               {
                 "parsedSize": 1150,
@@ -1363,6 +1314,73 @@
                 ],
                 "label": "application.tsx",
                 "filename": "src/client/application.tsx"
+              },
+              {
+                "parsedSize": 427,
+                "gzipSize": 236,
+                "brotliSize": 194,
+                "importedBy": [
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "src/client/context",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "src/client/special",
+                    "kind": "static"
+                  }
+                ],
+                "label": "receiver.tsx",
+                "filename": "src/client/receiver.tsx"
+              },
+              {
+                "parsedSize": 535,
+                "gzipSize": 296,
+                "brotliSize": 263,
+                "importedBy": [
+                  {
+                    "id": "foxact/context-state",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "foxact/noop",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "src/client/components/treemap",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "src/client/interface",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "src/client/special",
+                    "kind": "static"
+                  }
+                ],
+                "label": "context.ts",
+                "filename": "src/client/context.ts"
+              },
+              {
+                "parsedSize": 74,
+                "gzipSize": 94,
+                "brotliSize": 78,
+                "importedBy": [
+                  {
+                    "id": "src/client/interface",
+                    "kind": "static"
+                  }
+                ],
+                "label": "special/index.ts",
+                "filename": "src/client/special/index.ts"
               }
             ],
             "filename": "src/client"
@@ -1379,27 +1397,91 @@
         "filename": "src"
       },
       {
-        "parsedSize": 56927,
-        "gzipSize": 21955,
-        "brotliSize": 19845,
+        "parsedSize": 56925,
+        "gzipSize": 21957,
+        "brotliSize": 19846,
         "label": "node_modules/.pnpm",
         "groups": [
           {
-            "parsedSize": 24320,
+            "parsedSize": 357,
+            "gzipSize": 348,
+            "brotliSize": 265,
+            "label": "foxact@0.2.45_react@18.3.1/node_modules/foxact",
+            "groups": [
+              {
+                "parsedSize": 90,
+                "gzipSize": 100,
+                "brotliSize": 69,
+                "importedBy": [
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  }
+                ],
+                "label": "compose-context-provider/index.mjs",
+                "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
+              },
+              {
+                "parsedSize": 108,
+                "gzipSize": 116,
+                "brotliSize": 92,
+                "importedBy": [
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  }
+                ],
+                "label": "use-abortable-effect/index.mjs",
+                "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
+              },
+              {
+                "parsedSize": 159,
+                "gzipSize": 132,
+                "brotliSize": 104,
+                "importedBy": [
+                  {
+                    "id": "react/jsx-runtime",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "react",
+                    "kind": "static"
+                  },
+                  {
+                    "id": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
+                    "kind": "static"
+                  }
+                ],
+                "label": "context-state/index.mjs",
+                "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/context-state/index.mjs"
+              }
+            ],
+            "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact"
+          },
+          {
+            "parsedSize": 367,
+            "gzipSize": 236,
+            "brotliSize": 195,
+            "importedBy": [],
+            "label": "clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
+            "filename": "node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
+          },
+          {
+            "parsedSize": 24319,
             "gzipSize": 10153,
-            "brotliSize": 9302,
+            "brotliSize": 9301,
             "label": "preact@10.26.5/node_modules/preact",
             "groups": [
               {
-                "parsedSize": 9134,
+                "parsedSize": 9133,
                 "gzipSize": 3758,
-                "brotliSize": 3458,
+                "brotliSize": 3457,
                 "label": "compat",
                 "groups": [
                   {
-                    "parsedSize": 136,
+                    "parsedSize": 135,
                     "gzipSize": 117,
-                    "brotliSize": 103,
+                    "brotliSize": 102,
                     "importedBy": [
                       {
                         "id": "preact/compat",
@@ -1450,14 +1532,23 @@
                 "parsedSize": 3277,
                 "gzipSize": 1318,
                 "brotliSize": 1211,
-                "importedBy": [
+                "label": "hooks/dist",
+                "groups": [
                   {
-                    "id": "preact",
-                    "kind": "static"
+                    "parsedSize": 3277,
+                    "gzipSize": 1318,
+                    "brotliSize": 1211,
+                    "importedBy": [
+                      {
+                        "id": "preact",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "hooks.module.js",
+                    "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist/hooks.module.js"
                   }
                 ],
-                "label": "hooks/dist/hooks.module.js",
-                "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist/hooks.module.js"
+                "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact/hooks/dist"
               },
               {
                 "parsedSize": 751,
@@ -1476,95 +1567,15 @@
             "filename": "node_modules/.pnpm/preact@10.26.5/node_modules/preact"
           },
           {
-            "parsedSize": 2551,
-            "gzipSize": 1154,
-            "brotliSize": 1021,
-            "importedBy": [],
-            "label": "@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
-            "filename": "node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
-          },
-          {
-            "parsedSize": 357,
-            "gzipSize": 348,
-            "brotliSize": 265,
-            "label": "foxact@0.2.45_react@18.3.1/node_modules/foxact",
-            "groups": [
-              {
-                "parsedSize": 90,
-                "gzipSize": 100,
-                "brotliSize": 69,
-                "importedBy": [
-                  {
-                    "id": "react",
-                    "kind": "static"
-                  }
-                ],
-                "label": "compose-context-provider/index.mjs",
-                "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/compose-context-provider/index.mjs"
-              },
-              {
-                "parsedSize": 159,
-                "gzipSize": 132,
-                "brotliSize": 104,
-                "importedBy": [
-                  {
-                    "id": "react/jsx-runtime",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "react",
-                    "kind": "static"
-                  },
-                  {
-                    "id": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/noop/index.mjs",
-                    "kind": "static"
-                  }
-                ],
-                "label": "context-state/index.mjs",
-                "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/context-state/index.mjs"
-              },
-              {
-                "parsedSize": 108,
-                "gzipSize": 116,
-                "brotliSize": 92,
-                "importedBy": [
-                  {
-                    "id": "react",
-                    "kind": "static"
-                  }
-                ],
-                "label": "use-abortable-effect/index.mjs",
-                "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact/use-abortable-effect/index.mjs"
-              }
-            ],
-            "filename": "node_modules/.pnpm/foxact@0.2.45_react@18.3.1/node_modules/foxact"
-          },
-          {
-            "parsedSize": 367,
-            "gzipSize": 236,
-            "brotliSize": 195,
-            "importedBy": [],
-            "label": "clsx@2.1.1/node_modules/clsx/dist/clsx.mjs",
-            "filename": "node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs"
-          },
-          {
-            "parsedSize": 29332,
-            "gzipSize": 10064,
-            "brotliSize": 9062,
+            "parsedSize": 29331,
+            "gzipSize": 10066,
+            "brotliSize": 9064,
             "label": "squarified@1.0.0/node_modules/squarified/dist",
             "groups": [
               {
-                "parsedSize": 21157,
-                "gzipSize": 7010,
-                "brotliSize": 6351,
-                "importedBy": [],
-                "label": "dom-event-DrYYfglv.mjs",
-                "filename": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs"
-              },
-              {
-                "parsedSize": 994,
+                "parsedSize": 993,
                 "gzipSize": 576,
-                "brotliSize": 496,
+                "brotliSize": 497,
                 "importedBy": [
                   {
                     "id": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs",
@@ -1575,9 +1586,17 @@
                 "filename": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/index.mjs"
               },
               {
-                "parsedSize": 7181,
-                "gzipSize": 2478,
-                "brotliSize": 2215,
+                "parsedSize": 21156,
+                "gzipSize": 7011,
+                "brotliSize": 6353,
+                "importedBy": [],
+                "label": "dom-event-DrYYfglv.mjs",
+                "filename": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs"
+              },
+              {
+                "parsedSize": 7182,
+                "gzipSize": 2479,
+                "brotliSize": 2214,
                 "importedBy": [
                   {
                     "id": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist/dom-event-DrYYfglv.mjs",
@@ -1589,6 +1608,14 @@
               }
             ],
             "filename": "node_modules/.pnpm/squarified@1.0.0/node_modules/squarified/dist"
+          },
+          {
+            "parsedSize": 2551,
+            "gzipSize": 1154,
+            "brotliSize": 1021,
+            "importedBy": [],
+            "label": "@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs",
+            "filename": "node_modules/.pnpm/@stylexjs+stylex@0.9.3/node_modules/@stylexjs/stylex/lib/es/stylex.mjs"
           }
         ],
         "filename": "node_modules/.pnpm"

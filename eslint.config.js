@@ -9,7 +9,8 @@ module.exports = nonzzz(
       '**/node_modules',
       '**/dist',
       '**/components.d.ts',
-      '**/analysis'
+      '**/analysis',
+      '**/fixtures'
     ]
   }
 )
