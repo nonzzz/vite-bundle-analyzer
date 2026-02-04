@@ -55,7 +55,6 @@ pub const OriginalPosition = struct {
 pub const SourceMapDecoder = struct {
     mappings: []const Mapping,
     allocator: std.mem.Allocator,
-    // Index by line for faster lookups
     line_starts: []usize,
 
     const Self = @This();
@@ -116,7 +115,6 @@ pub const SourceMapDecoder = struct {
 
             if (original_column < 0) break;
 
-            // Skip name index if present
             if (pos < mappings_str.len and mappings_str[pos] != ',' and mappings_str[pos] != ';') {
                 _ = decode_vlq(mappings_str, &pos);
             }
@@ -134,7 +132,6 @@ pub const SourceMapDecoder = struct {
 
         const mappings_owned = try mappings_list.toOwnedSlice(allocator);
 
-        // Build line index
         var line_starts = try std.ArrayList(usize).initCapacity(allocator, max_line + 2);
         errdefer line_starts.deinit(allocator);
 
@@ -148,7 +145,6 @@ pub const SourceMapDecoder = struct {
             }
         }
 
-        // Fill remaining lines
         while (current_line <= max_line) {
             current_line += 1;
             line_starts.append(allocator, mappings_owned.len) catch {};
@@ -186,7 +182,6 @@ pub const SourceMapDecoder = struct {
         if (cache.last_line == line and cache.last_result != null) {
             const cached_mapping = self.mappings[cache.last_index];
 
-            // 检查下一个映射是否更合适
             const next_idx = cache.last_index + 1;
             if (next_idx < self.mappings.len) {
                 const next_mapping = self.mappings[next_idx];
@@ -203,7 +198,6 @@ pub const SourceMapDecoder = struct {
                 }
             }
 
-            // 当前缓存的映射仍然有效
             if (cached_mapping.generated_line == line and cached_mapping.generated_column <= column) {
                 cache.last_column = column;
                 return cache.last_result;

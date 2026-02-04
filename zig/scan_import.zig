@@ -65,7 +65,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
             return MAX_IMPORTS;
         }
 
-        /// Count imports by type
         pub fn count_by_type(self: *const Self, import_type: ImportType) usize {
             var result: usize = 0;
             for (self.imports[0..self.count]) |ref| {
@@ -214,7 +213,6 @@ pub fn Scanner(comptime config: ScannerConfig) type {
                     if (self.parse_string_literal(ch)) |location| {
                         try self.add_import(.static_import, location.start, location.len);
 
-                        // Skip optional "with" or "assert" attributes
                         self.skip_whitespace_and_comments();
                         if (self.match_keyword("with") or self.match_keyword("assert")) {
                             const keyword_len = if (self.match_keyword("with")) @as(usize, 4) else @as(usize, 6);
@@ -393,7 +391,6 @@ test "error handling with catch" {
     scanner.scan() catch |err| {
         switch (err) {
             ScannerError.TooManyImports => {
-                // Expected error
                 try std.testing.expectEqual(@as(usize, 1), scanner.len());
                 return;
             },
@@ -401,7 +398,7 @@ test "error handling with catch" {
         }
     };
 
-    try std.testing.expect(false); // Should not reach here
+    try std.testing.expect(false);
 }
 
 test "iterator with custom scanner" {
