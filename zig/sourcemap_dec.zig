@@ -1,8 +1,6 @@
 const std = @import("std");
 
-const base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-fn base64Decode(ch: u8) ?i32 {
+fn base64_decode(ch: u8) ?i32 {
     return switch (ch) {
         'A'...'Z' => @as(i32, ch - 'A'),
         'a'...'z' => @as(i32, ch - 'a' + 26),
@@ -21,7 +19,7 @@ fn decode_vlq(mappings: []const u8, pos: *usize) ?i32 {
     var continuation = true;
 
     while (continuation and pos.* < mappings.len) {
-        const digit = base64Decode(mappings[pos.*]) orelse return null;
+        const digit = base64_decode(mappings[pos.*]) orelse return null;
         pos.* += 1;
 
         continuation = (digit & 32) != 0;
@@ -45,9 +43,16 @@ pub const Mapping = struct {
     original_column: u32,
 };
 
+pub const OriginalPosition = struct {
+    source_index: u32,
+    line: u32,
+    column: u32,
+};
+
 pub const SourceMapDecoder = struct {
     mappings: []const Mapping,
     allocator: std.mem.Allocator,
+
     const Self = @This();
 
     pub fn init(allocator: std.mem.Allocator, mappings_str: []const u8, estimated_capacity: usize) !Self {
@@ -117,8 +122,10 @@ pub const SourceMapDecoder = struct {
             });
         }
 
+        const mappings_owned = try mappings_list.toOwnedSlice(allocator);
+
         return .{
-            .mappings = try mappings_list.toOwnedSlice(allocator),
+            .mappings = mappings_owned,
             .allocator = allocator,
         };
     }
@@ -127,39 +134,67 @@ pub const SourceMapDecoder = struct {
         self.allocator.free(self.mappings);
     }
 
-    pub fn original_position_for(self: *const Self, line: u32, column: u32) ?struct { source_index: u32, line: u32, column: u32 } {
+    pub const LookupCache = struct {
+        last_index: usize = 0,
+        last_line: u32 = 0,
+        last_column: u32 = 0,
+        last_result: ?OriginalPosition = null,
+    };
+
+    pub fn original_position_for_cached(
+        self: *const Self,
+        line: u32,
+        column: u32,
+        cache: *LookupCache,
+    ) ?OriginalPosition {
         if (self.mappings.len == 0) return null;
 
         const search_line = if (line > 0) line - 1 else 0;
-        const search_column = column;
 
-        var best: ?usize = null;
+        if (cache.last_line == search_line and cache.last_column == column) {
+            return cache.last_result;
+        }
 
-        for (self.mappings, 0..) |mapping, i| {
-            if (mapping.generated_line > search_line) {
-                break;
-            }
+        var start_idx = cache.last_index;
 
-            if (mapping.generated_line == search_line and mapping.generated_column > search_column) {
-                break;
-            }
+        if (search_line < cache.last_line) {
+            start_idx = 0;
+        }
+
+        var best_idx: ?usize = null;
+
+        var i = start_idx;
+        while (i < self.mappings.len) : (i += 1) {
+            const mapping = self.mappings[i];
+
+            if (mapping.generated_line > search_line) break;
 
             if (mapping.generated_line == search_line) {
-                best = i;
+                if (mapping.generated_column <= column) {
+                    best_idx = i;
+                } else {
+                    break;
+                }
             } else if (mapping.generated_line < search_line) {
-                best = i;
+                best_idx = i;
             }
         }
 
-        if (best) |idx| {
+        cache.last_line = search_line;
+        cache.last_column = column;
+
+        if (best_idx) |idx| {
             const mapping = self.mappings[idx];
-            return .{
+            cache.last_index = idx;
+            cache.last_result = OriginalPosition{
                 .source_index = mapping.source_index,
                 .line = mapping.original_line,
                 .column = mapping.original_column,
             };
+            return cache.last_result;
         }
 
+        cache.last_result = null;
         return null;
     }
 };

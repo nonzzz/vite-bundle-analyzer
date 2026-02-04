@@ -10,7 +10,7 @@ import path from 'path'
 import type { Plugin } from 'rollup'
 import { defineConfig } from 'rollup'
 import { dts } from 'rollup-plugin-dts'
-import { minify, swc } from 'rollup-plugin-swc3'
+import { swc } from 'rollup-plugin-swc3'
 
 const external = [...builtinModules, 'vite', 'rolldown', 'rollup']
 
@@ -74,8 +74,8 @@ export default defineConfig([
       commonjs(),
       nodeResolve(),
       shim(),
-      swc(),
-      minify({ mangle: true, module: true, compress: true, sourceMap: true })
+      swc()
+      // minify({ mangle: true, module: true, compress: true, sourceMap: true })
     ]
   },
   {

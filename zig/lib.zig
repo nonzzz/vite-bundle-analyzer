@@ -8,6 +8,7 @@ const allocator = gpa.allocator();
 
 const Scanner = scan_import.Scanner(.large);
 const SourceMapDecoder = sourcemap_decoder.SourceMapDecoder;
+const OriginalPosition = sourcemap_decoder.OriginalPosition;
 
 pub export fn alloc(size: usize) ?[*]u8 {
     const slice = allocator.alloc(u8, size) catch return null;
@@ -136,6 +137,15 @@ pub export fn scan_source_map_imports(
     return result_data.ptr;
 }
 
+inline fn update_pos(ch: u8, line: *u32, column: *u32) void {
+    if (ch == '\n') {
+        line.* += 1;
+        column.* = 0;
+    } else {
+        column.* += 1;
+    }
+}
+
 pub export fn pickup_mappings_from_code(
     code_ptr: [*]const u8,
     code_len: usize,
@@ -164,6 +174,11 @@ pub export fn pickup_mappings_from_code(
     var decoder = SourceMapDecoder.init(allocator, mappings_data, estimated_capacity) catch return null;
     defer decoder.deinit();
 
+    const avg_size_per_source = if (estimated_capacity > 0)
+        code.len / estimated_capacity
+    else
+        1024;
+
     var grouped = std.StringArrayHashMap(std.ArrayList(u8)).init(allocator);
     defer {
         for (grouped.values()) |*list| {
@@ -180,66 +195,58 @@ pub export fn pickup_mappings_from_code(
         files.deinit(allocator);
     }
 
+    if (decoder.mappings.len == 0) {
+        var json_buf = std.ArrayList(u8).initCapacity(allocator, 4) catch return null;
+        defer json_buf.deinit(allocator);
+        const writer = json_buf.writer(allocator);
+        writer.writeAll("{\"grouped\":{},\"files\":[]}") catch return null;
+        const result_data = json_buf.toOwnedSlice(allocator) catch return null;
+        result_len.* = result_data.len;
+        return result_data.ptr;
+    }
+
+    var cache = SourceMapDecoder.LookupCache{};
+
     var line: u32 = 1;
     var column: u32 = 0;
 
     for (code) |ch| {
-        if (decoder.original_position_for(line, column)) |pos| {
-            const source_name = sources.get(pos.source_index) orelse {
-                if (ch == '\n') {
-                    line += 1;
-                    column = 0;
-                } else {
-                    column += 1;
-                }
+        const pos = decoder.original_position_for_cached(line, column, &cache);
+
+        if (pos) |p| {
+            const source_name = sources.get(p.source_index) orelse {
+                update_pos(ch, &line, &column);
                 continue;
             };
 
             const gop = grouped.getOrPut(source_name) catch {
-                if (ch == '\n') {
-                    line += 1;
-                    column = 0;
-                } else {
-                    column += 1;
-                }
+                update_pos(ch, &line, &column);
                 continue;
             };
 
             if (!gop.found_existing) {
-                gop.key_ptr.* = allocator.dupe(u8, source_name) catch {
-                    if (ch == '\n') {
-                        line += 1;
-                        column = 0;
-                    } else {
-                        column += 1;
-                    }
+                gop.value_ptr.* = std.ArrayList(u8).initCapacity(
+                    allocator,
+                    avg_size_per_source,
+                ) catch {
+                    update_pos(ch, &line, &column);
                     continue;
                 };
-                gop.value_ptr.* = std.ArrayList(u8).initCapacity(allocator, source_name.len) catch return null;
 
-                const file_copy = allocator.dupe(u8, source_name) catch {
-                    if (ch == '\n') {
-                        line += 1;
-                        column = 0;
-                    } else {
-                        column += 1;
-                    }
+                const key_copy = allocator.dupe(u8, source_name) catch {
+                    gop.value_ptr.deinit(allocator);
+                    update_pos(ch, &line, &column);
                     continue;
                 };
-                files.append(allocator, file_copy) catch {
-                    allocator.free(file_copy);
-                };
+                gop.key_ptr.* = key_copy;
+
+                files.append(allocator, key_copy) catch {};
             }
 
             gop.value_ptr.append(allocator, ch) catch {};
         }
 
-        if (ch == '\n') {
-            line += 1;
-            column = 0;
-        } else {
-            column += 1;
-        }
+        update_pos(ch, &line, &column);
     }
 
     var json_buf = std.ArrayList(u8).initCapacity(allocator, code.len) catch return null;

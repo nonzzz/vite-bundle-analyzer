@@ -116,7 +116,7 @@ interface SourceMapV3 {
   mappings: string
 }
 
-function encodeSourceMapV3AsPascalString(rawSourceMap: string): Uint8Array {
+export function encodeSourceMapV3AsPascalString(rawSourceMap: string): Uint8Array {
   const entries: PascalStringEntry[] = []
   const sourceMap = JSON.parse(rawSourceMap) as unknown as SourceMapV3
 
