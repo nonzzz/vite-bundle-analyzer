@@ -1,3 +1,7 @@
+## 1.3.6
+
+- Optimize parsing speed.
+
 ## 1.3.5
 
 - Revert queue system.
