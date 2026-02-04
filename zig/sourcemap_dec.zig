@@ -1,31 +1,34 @@
 const std = @import("std");
 
-fn base64_decode(ch: u8) ?i32 {
+inline fn base64_decode(ch: u8) i32 {
     return switch (ch) {
         'A'...'Z' => @as(i32, ch - 'A'),
         'a'...'z' => @as(i32, ch - 'a' + 26),
         '0'...'9' => @as(i32, ch - '0' + 52),
         '+' => 62,
         '/' => 63,
-        else => null,
+        else => -1,
     };
 }
 
-fn decode_vlq(mappings: []const u8, pos: *usize) ?i32 {
+inline fn decode_vlq(mappings: []const u8, pos: *usize) ?i32 {
     if (pos.* >= mappings.len) return null;
 
     var result: i32 = 0;
     var shift: u5 = 0;
-    var continuation = true;
 
-    while (continuation and pos.* < mappings.len) {
-        const digit = base64_decode(mappings[pos.*]) orelse return null;
+    while (pos.* < mappings.len) {
+        const digit = base64_decode(mappings[pos.*]);
+        if (digit < 0) return null;
+
         pos.* += 1;
 
-        continuation = (digit & 32) != 0;
+        const continuation = (digit & 32) != 0;
         const value = digit & 31;
 
         result += value << shift;
+
+        if (!continuation) break;
         shift += 5;
     }
 
@@ -52,6 +55,8 @@ pub const OriginalPosition = struct {
 pub const SourceMapDecoder = struct {
     mappings: []const Mapping,
     allocator: std.mem.Allocator,
+    // Index by line for faster lookups
+    line_starts: []usize,
 
     const Self = @This();
 
@@ -69,6 +74,7 @@ pub const SourceMapDecoder = struct {
         var original_column: i32 = 0;
 
         var pos: usize = 0;
+        var max_line: u32 = 0;
 
         while (pos < mappings_str.len) {
             const ch = mappings_str[pos];
@@ -77,6 +83,7 @@ pub const SourceMapDecoder = struct {
                 generated_line += 1;
                 generated_column = 0;
                 pos += 1;
+                if (generated_line > max_line) max_line = generated_line;
                 continue;
             }
 
@@ -109,6 +116,7 @@ pub const SourceMapDecoder = struct {
 
             if (original_column < 0) break;
 
+            // Skip name index if present
             if (pos < mappings_str.len and mappings_str[pos] != ',' and mappings_str[pos] != ';') {
                 _ = decode_vlq(mappings_str, &pos);
             }
@@ -120,18 +128,44 @@ pub const SourceMapDecoder = struct {
                 .original_line = @intCast(original_line),
                 .original_column = @intCast(original_column),
             });
+
+            if (generated_line > max_line) max_line = generated_line;
         }
 
         const mappings_owned = try mappings_list.toOwnedSlice(allocator);
 
+        // Build line index
+        var line_starts = try std.ArrayList(usize).initCapacity(allocator, max_line + 2);
+        errdefer line_starts.deinit(allocator);
+
+        var current_line: u32 = 0;
+        line_starts.append(allocator, 0) catch {};
+
+        for (mappings_owned, 0..) |mapping, i| {
+            while (current_line < mapping.generated_line) {
+                current_line += 1;
+                line_starts.append(allocator, i) catch {};
+            }
+        }
+
+        // Fill remaining lines
+        while (current_line <= max_line) {
+            current_line += 1;
+            line_starts.append(allocator, mappings_owned.len) catch {};
+        }
+
+        const line_starts_owned = try line_starts.toOwnedSlice(allocator);
+
         return .{
             .mappings = mappings_owned,
             .allocator = allocator,
+            .line_starts = line_starts_owned,
         };
     }
 
     pub fn deinit(self: *Self) void {
         self.allocator.free(self.mappings);
+        self.allocator.free(self.line_starts);
     }
 
     pub const LookupCache = struct {
@@ -141,7 +175,7 @@ pub const SourceMapDecoder = struct {
         last_result: ?OriginalPosition = null,
     };
 
-    pub fn original_position_for_cached(
+    pub inline fn original_position_for_cached(
         self: *const Self,
         line: u32,
         column: u32,
@@ -149,52 +183,126 @@ pub const SourceMapDecoder = struct {
     ) ?OriginalPosition {
         if (self.mappings.len == 0) return null;
 
-        const search_line = if (line > 0) line - 1 else 0;
+        if (cache.last_line == line and cache.last_result != null) {
+            const cached_mapping = self.mappings[cache.last_index];
 
-        if (cache.last_line == search_line and cache.last_column == column) {
-            return cache.last_result;
+            // 检查下一个映射是否更合适
+            const next_idx = cache.last_index + 1;
+            if (next_idx < self.mappings.len) {
+                const next_mapping = self.mappings[next_idx];
+                if (next_mapping.generated_line == line and next_mapping.generated_column <= column) {
+                    cache.last_index = next_idx;
+                    cache.last_column = column;
+                    const result = OriginalPosition{
+                        .source_index = next_mapping.source_index,
+                        .line = next_mapping.original_line,
+                        .column = next_mapping.original_column,
+                    };
+                    cache.last_result = result;
+                    return result;
+                }
+            }
+
+            // 当前缓存的映射仍然有效
+            if (cached_mapping.generated_line == line and cached_mapping.generated_column <= column) {
+                cache.last_column = column;
+                return cache.last_result;
+            }
         }
 
-        var start_idx = cache.last_index;
+        const start_idx = if (line < self.line_starts.len)
+            self.line_starts[line]
+        else
+            self.mappings.len;
 
-        if (search_line < cache.last_line) {
-            start_idx = 0;
+        if (start_idx >= self.mappings.len) {
+            cache.last_line = line;
+            cache.last_column = column;
+            cache.last_result = null;
+            cache.last_index = 0;
+            return null;
         }
 
         var best_idx: ?usize = null;
-
         var i = start_idx;
+
         while (i < self.mappings.len) : (i += 1) {
             const mapping = self.mappings[i];
 
-            if (mapping.generated_line > search_line) break;
+            if (mapping.generated_line > line) break;
 
-            if (mapping.generated_line == search_line) {
-                if (mapping.generated_column <= column) {
-                    best_idx = i;
-                } else {
-                    break;
-                }
-            } else if (mapping.generated_line < search_line) {
+            if (mapping.generated_line == line and mapping.generated_column <= column) {
                 best_idx = i;
             }
         }
 
-        cache.last_line = search_line;
+        cache.last_line = line;
         cache.last_column = column;
 
         if (best_idx) |idx| {
-            const mapping = self.mappings[idx];
             cache.last_index = idx;
-            cache.last_result = OriginalPosition{
+            const mapping = self.mappings[idx];
+            const result = OriginalPosition{
                 .source_index = mapping.source_index,
                 .line = mapping.original_line,
                 .column = mapping.original_column,
             };
-            return cache.last_result;
+            cache.last_result = result;
+            return result;
         }
 
         cache.last_result = null;
+        cache.last_index = 0;
         return null;
     }
 };
+
+test "sourcemap decoder basic" {
+    const allocator = std.testing.allocator;
+
+    const mappings = "AAAA";
+    var decoder = try SourceMapDecoder.init(allocator, mappings, 10);
+    defer decoder.deinit();
+
+    try std.testing.expectEqual(@as(usize, 1), decoder.mappings.len);
+
+    const mapping = decoder.mappings[0];
+    try std.testing.expectEqual(@as(u32, 0), mapping.generated_line);
+    try std.testing.expectEqual(@as(u32, 0), mapping.generated_column);
+    try std.testing.expectEqual(@as(u32, 0), mapping.source_index);
+    try std.testing.expectEqual(@as(u32, 0), mapping.original_line);
+    try std.testing.expectEqual(@as(u32, 0), mapping.original_column);
+}
+
+test "full code mapping" {
+    const allocator = std.testing.allocator;
+
+    const code = "const normal = 'vite-bundle-analyzer'";
+    const mappings = "AAAA";
+
+    var decoder = try SourceMapDecoder.init(allocator, mappings, 10);
+    defer decoder.deinit();
+
+    var cache = SourceMapDecoder.LookupCache{};
+    var line: u32 = 0;
+    var column: u32 = 0;
+
+    var mapped_count: usize = 0;
+
+    for (code) |ch| {
+        const pos = decoder.original_position_for_cached(line, column, &cache);
+
+        if (pos != null) {
+            mapped_count += 1;
+        }
+
+        if (ch == '\n') {
+            line += 1;
+            column = 0;
+        } else {
+            column += 1;
+        }
+    }
+
+    try std.testing.expectEqual(code.len, mapped_count);
+}
