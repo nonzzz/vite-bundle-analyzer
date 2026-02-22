@@ -10,7 +10,9 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
       - name: Extra Changelog
         run: |
           CHANGELOG=$(awk -v ver=$(awk -F'"' '/"version": ".+"/{ print $4; exit; }' package.json) '/^## / { if (p) { exit }; if ($2 == ver) { p=1; next} } p' CHANGELOG.md)

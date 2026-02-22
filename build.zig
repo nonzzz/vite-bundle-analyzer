@@ -111,7 +111,7 @@ fn build_wasm_lib(
     });
 
     const wasm_generate = b.addExecutable(.{
-        .name = "candle",
+        .name = "scan",
         .root_module = wasm_mod,
     });
 

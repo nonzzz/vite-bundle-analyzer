@@ -16,22 +16,24 @@ Fork, then clone the repo:
 git clone https://github.com/your-username/vite-bundle-analyzer.git
 ```
 
-Make sure you have Node.js installed at version equal to or greater than the one specified in `.node-version` file and have Make tool. Then install the package dependencies:
+Make sure you have Node.js installed at version equal to or greater than the one specified in `.node-version` file and have zig environment.Then install `git lfs` you can follow the [document](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage). Then install the package dependencies:
 
 ```shell
-make
+zig build install_npm_deps
+zig build wasm
 ```
 
 ## Run test
 
 ```shell
-make test
+zig build test
 ```
 
 ## Compile and build
 
 ```shell
-make build-all
+zig build wasm 
+zig build build_all
 ```
 
 ## Typical Editor setup

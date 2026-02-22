@@ -1,0 +1,2 @@
+__tests__/fixtures/source-map/* filter=lfs diff=lfs merge=lfs -text
+__tests__/fixtures/source-map/**/* filter=lfs diff=lfs merge=lfs -text

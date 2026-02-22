@@ -4,7 +4,7 @@
 
 interface WASMInstance {
   memory: WebAssembly.Memory
-  scan_source_map_imports_binary: (sourcemap_pascal_ptr: number, sourcemap_pascal_len: number, result_len_ptr: number) => number
+  scan_import_stmts_from_code: (code_ptr: number, code_len: number, result_len_ptr: number) => number
   scan_source_map_imports: (sourcemap_pascal_ptr: number, sourcemap_pascal_len: number, result_len_ptr: number) => number
   pickup_mappings_from_code: (
     code_ptr: number,
@@ -28,16 +28,11 @@ const encoder = new TextEncoder()
 
 const decoder = new TextDecoder()
 
-const writeBuffer = new ArrayBuffer(4)
-const writeView = new DataView(writeBuffer)
-const writeArray = new Uint8Array(writeBuffer)
-
 function write(target: Uint8Array, offset: number, value: number): number {
-  writeView.setUint32(0, value >>> 0, true)
-  target[offset] = writeArray[0]
-  target[offset + 1] = writeArray[1]
-  target[offset + 2] = writeArray[2]
-  target[offset + 3] = writeArray[3]
+  target[offset] = value & 0xff
+  target[offset + 1] = (value >> 8) & 0xff
+  target[offset + 2] = (value >> 16) & 0xff
+  target[offset + 3] = (value >> 24) & 0xff
   return 4
 }
 
@@ -166,6 +161,10 @@ export function init() {
   loadWASM()
 }
 
+export interface ScanImportStatmentResult {
+  static: string[]
+  dynamic: string[]
+}
 export interface ScanSourceMapImportEntry {
   index: number
   source: string
@@ -195,6 +194,47 @@ export function parse(rawSourceMap: string): void {
   SHARED_SOURCEMAP_LEN = pascalData.byteLength
 
   new Uint8Array(WASM_CTX.memory.buffer, SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN).set(pascalData)
+}
+
+export function scanImportStatements(generateCode: string): ScanImportStatmentResult {
+  if (!WASM_CTX) {
+    throw new Error('WASM not initialized. Call init() first.')
+  }
+
+  const codeBytes = encoder.encode(generateCode)
+  const codePtr = WASM_CTX.alloc(codeBytes.byteLength)
+
+  if (codePtr === 0) {
+    throw new Error('WASM alloc failed for code')
+  }
+
+  new Uint8Array(WASM_CTX.memory.buffer, codePtr, codeBytes.byteLength).set(codeBytes)
+
+  const lenPtr = WASM_CTX.alloc(4)
+
+  if (lenPtr === 0) {
+    WASM_CTX.free(codePtr, codeBytes.byteLength)
+    throw new Error('WASM alloc failed for length pointer')
+  }
+
+  try {
+    const outPtr = WASM_CTX.scan_import_stmts_from_code(codePtr, codeBytes.byteLength, lenPtr)
+    if (outPtr === 0) {
+      return { static: [], dynamic: [] }
+    }
+
+    const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
+    const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
+    const copy = new Uint8Array(outBytes)
+
+    WASM_CTX.free(outPtr, outLen)
+
+    const str = decoder.decode(copy)
+    return JSON.parse(str) as ScanImportStatmentResult
+  } finally {
+    WASM_CTX.free(codePtr, codeBytes.byteLength)
+    WASM_CTX.free(lenPtr, 4)
+  }
 }
 
 export function scanSourceMapImportsForSourceContent(): ScanSourceMapImportEntry[] {

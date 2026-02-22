@@ -20,21 +20,6 @@ export function calculateImportPath(sourcePath: string, identifierPath: string) 
   return identifierPath
 }
 
-export function scanImportStatments(code: string) {
-  const staticImports = []
-  const dynamicImports = []
-  const staticRegex = /import\s+(?:(?:[^{}*'"\s,]+)\s*,?\s*)?(?:{(?:[^{}]*)})?\s*from\s+['"]([^'"]+)['"]/g
-  let match
-  while ((match = staticRegex.exec(code)) !== null) {
-    staticImports.push(match[1])
-  }
-  const dynamicRegex = /import\s*\(\s*['"]([^'"]+)['"]\s*\)/g
-  while ((match = dynamicRegex.exec(code)) !== null) {
-    dynamicImports.push(match[1])
-  }
-  return { staticImports, dynamicImports }
-}
-
 export function pickupMappingsFromCodeStr(
   code: string,
   rawSourcemap: string
