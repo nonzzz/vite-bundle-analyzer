@@ -26,6 +26,35 @@
                 "label": "components",
                 "groups": [
                   {
+                    "parsedSize": 392,
+                    "gzipSize": 268,
+                    "brotliSize": 222,
+                    "importedBy": [
+                      {
+                        "id": "foxact/noop",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/shared",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/spacer",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/text",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "module-item.tsx",
+                    "filename": "src/client/components/module-item.tsx"
+                  },
+                  {
                     "parsedSize": 2072,
                     "gzipSize": 1125,
                     "brotliSize": 1014,
@@ -115,35 +144,6 @@
                       }
                     ],
                     "filename": "src/client/components/side-bar"
-                  },
-                  {
-                    "parsedSize": 392,
-                    "gzipSize": 268,
-                    "brotliSize": 222,
-                    "importedBy": [
-                      {
-                        "id": "foxact/noop",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/shared",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/spacer",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/text",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "module-item.tsx",
-                    "filename": "src/client/components/module-item.tsx"
                   },
                   {
                     "parsedSize": 5434,
@@ -629,31 +629,6 @@
                         "filename": "src/client/components/select/ellipsis.tsx"
                       },
                       {
-                        "parsedSize": 2635,
-                        "gzipSize": 1129,
-                        "brotliSize": 975,
-                        "importedBy": [
-                          {
-                            "id": "react",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/composables",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/context",
-                            "kind": "static"
-                          },
-                          {
-                            "id": "src/client/components/select/ellipsis",
-                            "kind": "static"
-                          }
-                        ],
-                        "label": "select-option.tsx",
-                        "filename": "src/client/components/select/select-option.tsx"
-                      },
-                      {
                         "parsedSize": 501,
                         "gzipSize": 281,
                         "brotliSize": 240,
@@ -682,34 +657,34 @@
                         ],
                         "label": "index.ts",
                         "filename": "src/client/components/select/index.ts"
+                      },
+                      {
+                        "parsedSize": 2635,
+                        "gzipSize": 1129,
+                        "brotliSize": 975,
+                        "importedBy": [
+                          {
+                            "id": "react",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/composables",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/context",
+                            "kind": "static"
+                          },
+                          {
+                            "id": "src/client/components/select/ellipsis",
+                            "kind": "static"
+                          }
+                        ],
+                        "label": "select-option.tsx",
+                        "filename": "src/client/components/select/select-option.tsx"
                       }
                     ],
                     "filename": "src/client/components/select"
-                  },
-                  {
-                    "parsedSize": 952,
-                    "gzipSize": 557,
-                    "brotliSize": 493,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/interface",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/checkbox",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/module-item",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "file-list.tsx",
-                    "filename": "src/client/components/file-list.tsx"
                   },
                   {
                     "parsedSize": 6929,
@@ -828,6 +803,31 @@
                     "filename": "src/client/components/treemap"
                   },
                   {
+                    "parsedSize": 952,
+                    "gzipSize": 557,
+                    "brotliSize": 493,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/interface",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/checkbox",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/module-item",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "file-list.tsx",
+                    "filename": "src/client/components/file-list.tsx"
+                  },
+                  {
                     "parsedSize": 4547,
                     "gzipSize": 1628,
                     "brotliSize": 1457,
@@ -892,6 +892,59 @@
                     "filename": "src/client/components/css-transition"
                   },
                   {
+                    "parsedSize": 1252,
+                    "gzipSize": 665,
+                    "brotliSize": 588,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "squarified",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "~icons/ph/file-duotone",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "~icons/ph/folder",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/context",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/interface",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/shared",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/input",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/module-item",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/spacer",
+                        "kind": "static"
+                      },
+                      {
+                        "id": "src/client/components/text",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "search-modules.tsx",
+                    "filename": "src/client/components/search-modules.tsx"
+                  },
+                  {
                     "parsedSize": 2604,
                     "gzipSize": 1140,
                     "brotliSize": 1008,
@@ -949,59 +1002,6 @@
                       }
                     ],
                     "filename": "src/client/components/text"
-                  },
-                  {
-                    "parsedSize": 1252,
-                    "gzipSize": 665,
-                    "brotliSize": 588,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "squarified",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "~icons/ph/file-duotone",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "~icons/ph/folder",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/context",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/interface",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/shared",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/input",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/module-item",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/spacer",
-                        "kind": "static"
-                      },
-                      {
-                        "id": "src/client/components/text",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "search-modules.tsx",
-                    "filename": "src/client/components/search-modules.tsx"
                   },
                   {
                     "parsedSize": 932,
@@ -1108,6 +1108,19 @@
                     "filename": "src/client/composables/use-body-scroll/use-body-scroll.ts"
                   },
                   {
+                    "parsedSize": 95,
+                    "gzipSize": 84,
+                    "brotliSize": 62,
+                    "importedBy": [
+                      {
+                        "id": "react",
+                        "kind": "static"
+                      }
+                    ],
+                    "label": "use-click-anywhere/use-click-anywhere.ts",
+                    "filename": "src/client/composables/use-click-anywhere/use-click-anywhere.ts"
+                  },
+                  {
                     "parsedSize": 215,
                     "gzipSize": 180,
                     "brotliSize": 152,
@@ -1123,19 +1136,6 @@
                     ],
                     "label": "use-dom-observer/use-dom-observer.ts",
                     "filename": "src/client/composables/use-dom-observer/use-dom-observer.ts"
-                  },
-                  {
-                    "parsedSize": 95,
-                    "gzipSize": 84,
-                    "brotliSize": 62,
-                    "importedBy": [
-                      {
-                        "id": "react",
-                        "kind": "static"
-                      }
-                    ],
-                    "label": "use-click-anywhere/use-click-anywhere.ts",
-                    "filename": "src/client/composables/use-click-anywhere/use-click-anywhere.ts"
                   },
                   {
                     "parsedSize": 303,

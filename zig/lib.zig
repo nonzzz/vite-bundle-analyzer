@@ -40,6 +40,68 @@ fn write_json_string(writer: anytype, str: []const u8) !void {
     try writer.writeByte('"');
 }
 
+fn try_scan(source_code: []const u8) ?Scanner {
+    var scanner = Scanner.init(source_code);
+    scanner.scan() catch return null;
+    if (scanner.len() == 0) return null;
+    return scanner;
+}
+
+fn write_imports_from_scanner(scanner: *Scanner, writer: anytype) bool {
+    writer.writeAll("\"static\":[") catch return false;
+
+    var static_first = true;
+    for (0..scanner.len()) |i| {
+        if (scanner.get_type(i).? != .static_import) continue;
+        if (!static_first) writer.writeByte(',') catch return false;
+        static_first = false;
+        write_json_string(writer, scanner.get_import(i).?) catch return false;
+    }
+
+    writer.writeAll("],\"dynamic\":[") catch return false;
+
+    var dynamic_first = true;
+    for (0..scanner.len()) |i| {
+        if (scanner.get_type(i).? != .dynamic_import) continue;
+        if (!dynamic_first) writer.writeByte(',') catch return false;
+        dynamic_first = false;
+        write_json_string(writer, scanner.get_import(i).?) catch return false;
+    }
+
+    writer.writeByte(']') catch return false;
+    return true;
+}
+
+/// Scan imports from a single code string
+/// Input: code pointer and length
+/// Output: JSON object {"static":["foo"],"dynamic":["bar"]}
+pub export fn scan_import_stmts_from_code(
+    code_ptr: [*]const u8,
+    code_len: usize,
+    result_len: *usize,
+) ?[*]const u8 {
+    const code = code_ptr[0..code_len];
+
+    var scanner = try_scan(code) orelse {
+        const empty = allocator.dupe(u8, "{\"static\":[],\"dynamic\":[]}") catch return null;
+        result_len.* = empty.len;
+        return empty.ptr;
+    };
+
+    var json_buf = std.ArrayList(u8).initCapacity(allocator, 256) catch return null;
+    defer json_buf.deinit(allocator);
+
+    const writer = json_buf.writer(allocator);
+
+    writer.writeByte('{') catch return null;
+    if (!write_imports_from_scanner(&scanner, writer)) return null;
+    writer.writeByte('}') catch return null;
+
+    const result_data = json_buf.toOwnedSlice(allocator) catch return null;
+    result_len.* = result_data.len;
+    return result_data.ptr;
+}
+
 /// Scan imports from entire source map
 /// Input: Pascal-encoded source map
 /// Output: JSON array of results
@@ -78,13 +140,7 @@ pub export fn scan_source_map_imports(
     var first = true;
 
     while (iter.next()) |source_code| : (source_index += 1) {
-        var scanner = Scanner.init(source_code);
-
-        scanner.scan() catch {
-            continue;
-        };
-
-        if (scanner.len() == 0) continue;
+        var scanner = try_scan(source_code) orelse continue;
 
         if (!first) {
             writer.writeByte(',') catch return null;
@@ -95,39 +151,11 @@ pub export fn scan_source_map_imports(
 
         writer.print("{{\"index\":{d},\"source\":", .{source_index}) catch return null;
         write_json_string(writer, source_name) catch return null;
-        writer.writeAll(",\"static\":[") catch return null;
+        writer.writeByte(',') catch return null;
 
-        var static_first = true;
-        for (0..scanner.len()) |i| {
-            const import_type = scanner.get_type(i).?;
-            if (import_type != .static_import) continue;
+        if (!write_imports_from_scanner(&scanner, writer)) return null;
 
-            if (!static_first) {
-                writer.writeByte(',') catch return null;
-            }
-            static_first = false;
-
-            const import_spec = scanner.get_import(i).?;
-            write_json_string(writer, import_spec) catch return null;
-        }
-
-        writer.writeAll("],\"dynamic\":[") catch return null;
-
-        var dynamic_first = true;
-        for (0..scanner.len()) |i| {
-            const import_type = scanner.get_type(i).?;
-            if (import_type != .dynamic_import) continue;
-
-            if (!dynamic_first) {
-                writer.writeByte(',') catch return null;
-            }
-            dynamic_first = false;
-
-            const import_spec = scanner.get_import(i).?;
-            write_json_string(writer, import_spec) catch return null;
-        }
-
-        writer.writeAll("]}") catch return null;
+        writer.writeByte('}') catch return null;
     }
 
     writer.writeByte(']') catch return null;
@@ -229,7 +257,6 @@ pub export fn pickup_mappings_from_code(
             }
         }
 
-        // Update position
         if (ch == '\n') {
             line += 1;
             column = 0;

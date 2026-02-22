@@ -6,9 +6,9 @@ import { init, parse, pickupMappingsFromCode } from '../zig/dist'
 
 const defaultWd = process.cwd()
 
-const BIG_SOURCE_MAP = fs.readFileSync(path.resolve(defaultWd, '__tests__/fixtures/source-map/big-map.json'), 'utf-8')
+const BIG_SOURCE_MAP = fs.readFileSync(path.resolve(defaultWd, '__tests__/fixtures/source-map/babylon/babylon.js.map'), 'utf-8')
 
-const BIG_SOURCE_MAP_JS = fs.readFileSync(path.resolve(defaultWd, '__tests__/fixtures/source-map/big.js'), 'utf-8')
+const BIG_SOURCE_MAP_JS = fs.readFileSync(path.resolve(defaultWd, '__tests__/fixtures/source-map/babylon/babylon.js'), 'utf-8')
 
 function pickupMappingsFromCodeStrJavascript(
   code: string,

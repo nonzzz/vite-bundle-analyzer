@@ -1,10 +1,11 @@
 import { createFilter } from '@rollup/pluginutils'
 import type { FilterPattern } from '@rollup/pluginutils'
 import path from 'path'
+import { scanImportStatements } from 'zig'
 import type { BrotliOptions, ZlibOptions } from 'zlib'
 import type { Module, OutputAsset, OutputBundle, OutputChunk, PathFormatter, PluginContext } from './interface'
 import { byteToString, createBrotil, createGzip, slash, stringToByte } from './shared'
-import { calculateImportPath, pickupMappingsFromCodeStr, scanImportStatments } from './source-map'
+import { calculateImportPath, pickupMappingsFromCodeStr } from './source-map'
 import { Trie } from './trie'
 import type { GroupWithNode, ImportedBy } from './trie'
 
@@ -196,12 +197,13 @@ export class AnalyzerNode {
 
         if (!files.size) {
           // maybe binary
-          const { staticImports, dynamicImports } = scanImportStatments(s)
+          const imports = scanImportStatements(s)
+
           chunks[this.originalId] = {
             code: s,
             importedBy: generateImportedBy(
-              staticImports.map((i) => calculateImportPath(this.originalId, i)),
-              dynamicImports.map((i) => calculateImportPath(this.originalId, i))
+              imports.static.map((i) => calculateImportPath(this.originalId, i)),
+              imports.dynamic.map((i) => calculateImportPath(this.originalId, i))
             )
           }
           files.add(this.originalId)
