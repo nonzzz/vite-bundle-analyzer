@@ -1,5 +1,5 @@
-import { analyzer } from './dist'
-import conf from './src/client/vite.config.mts'
+import { analyzer } from '../dist'
+import conf from '../src/client/vite.config.mts'
 
 // Use mergeConfig seems bug.
 

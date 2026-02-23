@@ -15,17 +15,17 @@ jobs:
       - uses: mlugg/setup-zig@v2
         with:
           version: 0.15.2
-      - name: Zig Testing
-        run: zig build unit_test
-      - name: Build zig library
-        run: zig build wasm
       - name: Install Dependices
         run: zig build install_npm_deps
+      - name: Zig Testing
+        run: zig build zig_test
+      - name: Build zig library
+        run: zig build wasm_bindings
 
       - name: Build Library
         run: zig build build_all
       - name: Run Test
-        run: zig build test
+        run: zig build all_test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
