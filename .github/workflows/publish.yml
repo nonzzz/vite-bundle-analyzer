@@ -18,7 +18,7 @@ jobs:
         with:
           version: 0.15.2
       - name: Build zig library
-        run: zig build wasm
+        run: zig build wasm_bindings
       - uses: actions/setup-node@v4
         with:
           node-version: 24.2
