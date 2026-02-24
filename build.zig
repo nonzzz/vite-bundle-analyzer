@@ -90,6 +90,7 @@ const BuildSteps = BuildStepsType(&.{
     .{ .name = "build_all", .desc = "Build all" },
     .{ .name = "server_analyze", .desc = "Analyze server code" },
     .{ .name = "client_analyze", .desc = "Analyze client code" },
+    .{ .name = "dev_client", .desc = "Start client in dev mode" },
     .{ .name = "lint", .desc = "Lint code" },
     .{ .name = "format", .desc = "Format code" },
     .{ .name = "publish", .desc = "Publish package" },
@@ -119,6 +120,12 @@ pub fn build(b: *std.Build) void {
 
     const build_all_step = build_steps.get(.build_all);
 
+    const server_analyze_step = build_steps.get(.server_analyze);
+
+    const client_analyze_step = build_steps.get(.client_analyze);
+
+    const dev_client_step = build_steps.get(.dev_client);
+
     const publish_step = build_steps.get(.publish);
 
     const installer_step = install_npm_deps(b);
@@ -138,13 +145,13 @@ pub fn build(b: *std.Build) void {
 
     add_npm_dependencies(build_steps, npm_ready_step);
 
-    build_zig_test(b, zig_test_step);
+    const zig_test_last = build_zig_test(b, zig_test_step);
 
-    build_wasm_bindings(b, &build_steps, build_wasm_bindings_step, wasm_options);
+    const wasm_last = build_wasm_bindings(b, &build_steps, build_wasm_bindings_step, wasm_options);
 
-    build_typescript_typings_test(b, &build_steps, typescript_typings_test_step);
+    const ts_typings_last = build_typescript_typings_test(b, &build_steps, typescript_typings_test_step);
 
-    build_all_test(b, &build_steps);
+    build_all_test(b, &build_steps, zig_test_last, wasm_last, ts_typings_last);
 
     build_client(b, &build_steps, build_client_step);
 
@@ -157,9 +164,14 @@ pub fn build(b: *std.Build) void {
     format(b, &build_steps, format_step);
 
     build_publish(b, &build_steps, publish_step);
+
+    dev_client(b, &build_steps, dev_client_step);
+
+    server_analyze(b, &build_steps, server_analyze_step);
+    client_analyze(b, &build_steps, client_analyze_step);
 }
 
-fn build_zig_test(b: *std.Build, step: *std.Build.Step) void {
+fn build_zig_test(b: *std.Build, step: *std.Build.Step) *std.Build.Step {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
@@ -176,9 +188,11 @@ fn build_zig_test(b: *std.Build, step: *std.Build.Step) void {
     const run_step = b.addRunArtifact(zig_unit_test);
 
     step.dependOn(&run_step.step);
+
+    return &run_step.step;
 }
 
-fn build_typescript_typings_test(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step) void {
+fn build_typescript_typings_test(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step) *std.Build.Step {
     const tsc_cmd = build_steps.add_npm_command(b, &.{
         "sh",
         "-c",
@@ -186,9 +200,11 @@ fn build_typescript_typings_test(b: *std.Build, build_steps: *const BuildSteps, 
     });
 
     step.dependOn(&tsc_cmd.step);
+
+    return &tsc_cmd.step;
 }
 
-fn build_wasm_bindings(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step, options: WasmOptions) void {
+fn build_wasm_bindings(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step, options: WasmOptions) *std.Build.Step {
     const wasm_target = b.resolveTargetQuery(.{
         .cpu_arch = .wasm32,
         .os_tag = .freestanding,
@@ -213,7 +229,7 @@ fn build_wasm_bindings(b: *std.Build, build_steps: *const BuildSteps, step: *std
     step.dependOn(&wasm_install_file.step);
 
     if (!options.emit_javascript) {
-        return;
+        return &wasm_install_file.step;
     }
 
     const js_bindings_cmd = build_steps.add_npm_command(b, &.{
@@ -228,27 +244,39 @@ fn build_wasm_bindings(b: *std.Build, build_steps: *const BuildSteps, step: *std
 
     js_bindings_cmd.step.dependOn(&wasm_install_file.step);
     step.dependOn(&js_bindings_cmd.step);
+
+    return &js_bindings_cmd.step;
 }
 
-fn build_all_test(b: *std.Build, build_steps: *const BuildSteps) void {
+fn build_all_test(
+    b: *std.Build,
+    build_steps: *const BuildSteps,
+    zig_test_last: *std.Build.Step,
+    wasm_last: *std.Build.Step,
+    ts_typings_last: *std.Build.Step,
+) void {
     const all_test = build_steps.get(.all_test);
 
-    const zig_test_step = build_steps.get(.zig_test);
+    const echo1 = b.addSystemCommand(&.{ "echo", "Running Zig tests..." });
+    zig_test_last.dependOn(&echo1.step);
 
-    const typescript_typings_test_step = build_steps.get(.typescript_typings_test);
+    const echo2 = b.addSystemCommand(&.{ "echo", "Generating WASM bindings..." });
+    echo2.step.dependOn(zig_test_last);
+    wasm_last.dependOn(&echo2.step);
 
-    const build_wasm_bindings_step = build_steps.get(.wasm_bindings);
+    const echo3 = b.addSystemCommand(&.{ "echo", "Running TypeScript typings tests..." });
+    echo3.step.dependOn(wasm_last);
+    ts_typings_last.dependOn(&echo3.step);
 
-    all_test.dependOn(zig_test_step);
-    all_test.dependOn(build_wasm_bindings_step);
-    all_test.dependOn(typescript_typings_test_step);
-
+    const echo_vitest_cmd = b.addSystemCommand(&.{ "echo", "Running Vitest tests..." });
+    echo_vitest_cmd.step.dependOn(ts_typings_last);
     const vitest_cmd = build_steps.add_npm_command(b, &.{
         "pnpm",
         "exec",
         "vitest",
         "--coverage",
     });
+    vitest_cmd.step.dependOn(&echo_vitest_cmd.step);
 
     all_test.dependOn(&vitest_cmd.step);
 }
@@ -345,6 +373,7 @@ fn build_server(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.
     step.dependOn(build_client_step);
 
     const echo_cmd = b.addSystemCommand(&.{ "echo", "Building server code..." });
+    echo_cmd.step.dependOn(build_client_step);
     step.dependOn(&echo_cmd.step);
 
     const tsx_cmd = build_steps.add_npm_command(b, &.{
@@ -386,15 +415,15 @@ fn build_server(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.
 }
 
 fn build_all(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step) void {
-    const build_client_step = build_steps.get(.build_client);
     const build_server_step = build_steps.get(.build_server);
-
-    step.dependOn(build_client_step);
 
     step.dependOn(build_server_step);
 
+    const echo_cmd = b.addSystemCommand(&.{ "echo", "Build complete!" });
+    echo_cmd.step.dependOn(build_server_step);
+
     const rm_client = b.addSystemCommand(&.{ "rm", "-rf", "dist/client" });
-    rm_client.step.dependOn(build_server_step);
+    rm_client.step.dependOn(&echo_cmd.step);
 
     step.dependOn(&rm_client.step);
 }
@@ -419,6 +448,46 @@ fn build_publish(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build
     publish_cmd.step.dependOn(&echo_cmd.step);
 
     step.dependOn(&publish_cmd.step);
+}
+
+fn dev_client(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step) void {
+    const vite_dev_cmd = build_steps.add_npm_command(b, &.{ "pnpm", "exec", "vite", "src/client" });
+
+    step.dependOn(&vite_dev_cmd.step);
+}
+
+fn server_analyze(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step) void {
+    const analyze_cmd = build_steps.add_npm_command(b, &.{
+        "pnpm",
+        "exec",
+        "rolldown",
+        "-c",
+        "./configs/analyze.server.ts",
+    });
+
+    step.dependOn(&analyze_cmd.step);
+}
+
+fn client_analyze(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.Step) void {
+    const analyze_cmd = build_steps.add_npm_command(b, &.{
+        "pnpm",
+        "exec",
+        "vite",
+        "build",
+        "src/client",
+        "--config",
+        "./configs/analyze.client.ts",
+    });
+
+    const awk_cmd = b.addSystemCommand(&.{
+        "sh",
+        "-c",
+        "awk '{ print }' dist/client/stats.json > src/client/data.json",
+    });
+
+    awk_cmd.step.dependOn(&analyze_cmd.step);
+
+    step.dependOn(&awk_cmd.step);
 }
 
 fn add_npm_dependencies(
