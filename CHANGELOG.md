@@ -1,3 +1,8 @@
+## 1.3.7
+
+- Update client treemap version.
+- Reduce package size.
+
 ## 1.3.6
 
 - Optimize parsing speed.

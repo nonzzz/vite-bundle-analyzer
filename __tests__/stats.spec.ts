@@ -3,6 +3,7 @@ import { createAnalyzerModule } from '../src/server/analyzer-module'
 import type { Module, OutputAsset, PluginContext } from '../src/server/interface'
 import { pick } from '../src/shared'
 
+import { prepare } from '../src/server/source-map'
 import { createMockStats } from './stats/helper'
 import normal from './stats/normal'
 
@@ -17,6 +18,7 @@ function assert(act: Module, exp: Module, fields: (keyof Module)[]) {
 }
 
 async function runStatTest(data: ReturnType<typeof createMockStats>) {
+  await prepare()
   const analyzerModule = createAnalyzerModule()
   const { chunk, chunkName, expect, sourceMapFileName, map } = data
 
