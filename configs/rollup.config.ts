@@ -4,7 +4,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { defineConfig } from 'rollup'
 import { dts } from 'rollup-plugin-dts'
 import { minify, swc } from 'rollup-plugin-swc3'
-import { addTsIgnoreCommentForRolldown, external as _external, resolveTemplate, virtualWASM } from './shared'
+import { addTsIgnoreCommentForRolldown, external as _external, resolveTemplate, resolveZigModule, virtualWASM } from './shared'
 
 const external = [..._external, 'vite', 'rolldown', 'rollup']
 
@@ -32,6 +32,7 @@ export default defineConfig([
     ],
     plugins: [
       virtualWASM(),
+      resolveZigModule(),
       resolveTemplate(),
       commonjs(),
       nodeResolve(),

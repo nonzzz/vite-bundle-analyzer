@@ -1,6 +1,6 @@
 import { defineConfig } from 'rollup'
 import { dts } from 'rollup-plugin-dts'
-import { swc } from 'rollup-plugin-swc3'
+import { minify, swc } from 'rollup-plugin-swc3'
 import { NPM_OUTPUT_PATH, WASM_INPUT_PATH, external, virtualWASM } from './shared'
 
 export default defineConfig([
@@ -23,7 +23,7 @@ export default defineConfig([
         chunkFileNames: '[name]-[hash].js'
       }
     ],
-    plugins: [virtualWASM(), swc()]
+    plugins: [virtualWASM(), swc(), minify({ mangle: true, module: true, compress: true, sourceMap: true })]
   },
   {
     input: WASM_INPUT_PATH,

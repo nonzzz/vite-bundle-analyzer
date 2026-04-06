@@ -98,7 +98,7 @@ const BuildSteps = BuildStepsType(&.{
 
 pub fn build(b: *std.Build) void {
     const wasm_options = WasmOptions{
-        .emit_javascript = b.option(bool, "emit-javascript", "Emit javascript bindings for custom tests") orelse false,
+        .emit_javascript = b.option(bool, "emit-javascript", "Emit javascript bindings for custom tests") orelse true,
     };
 
     var build_steps = BuildSteps.init(b);
@@ -385,6 +385,31 @@ fn build_server(b: *std.Build, build_steps: *const BuildSteps, step: *std.Build.
     tsx_cmd.step.dependOn(&echo_cmd.step);
 
     step.dependOn(&tsx_cmd.step);
+
+    const wasm_bindings_step = build_steps.get(.wasm_bindings);
+
+    const cp_zig_mjs_cmd = build_steps.add_npm_command(b, &.{
+        "cp",
+        "./zig//dist/index.mjs",
+        "dist/zig.mjs",
+    });
+    const cp_zig_dts_cmd = build_steps.add_npm_command(b, &.{
+        "cp",
+        "./zig/dist/index.d.ts",
+        "dist/zig.d.ts",
+    });
+
+    cp_zig_dts_cmd.has_side_effects = true;
+    cp_zig_mjs_cmd.has_side_effects = true;
+
+    cp_zig_dts_cmd.step.dependOn(wasm_bindings_step);
+
+    cp_zig_mjs_cmd.step.dependOn(wasm_bindings_step);
+
+    step.dependOn(wasm_bindings_step);
+
+    step.dependOn(&cp_zig_mjs_cmd.step);
+    step.dependOn(&cp_zig_dts_cmd.step);
 
     const rollup_cmd = build_steps.add_npm_command(b, &.{
         "pnpm",

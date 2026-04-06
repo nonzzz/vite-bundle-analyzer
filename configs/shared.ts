@@ -54,6 +54,16 @@ export const resolveTemplate = definePlugin(() => ({
   }
 }))
 
+export const resolveZigModule = definePlugin(() => ({
+  name: 'resolve-zig-module',
+  resolveId: {
+    filter: { id: /zig$/ },
+    handler() {
+      return { id: './zig.mjs', external: true }
+    }
+  }
+}))
+
 export const addTsIgnoreCommentForRolldown = definePlugin(() => ({
   name: 'add-ts-ignore-comment',
   generateBundle(_, bundle) {

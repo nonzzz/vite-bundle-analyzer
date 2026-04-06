@@ -1,7 +1,7 @@
 import { defineConfig } from 'rolldown'
 import { minify } from 'rollup-plugin-swc3'
 import { analyzer, unstableRolldownAdapter } from 'vite-bundle-analyzer'
-import { external as _external, resolveTemplate, virtualWASM } from './shared'
+import { external as _external, resolveTemplate, resolveZigModule, virtualWASM } from './shared'
 
 const external = [..._external, 'vite']
 
@@ -18,6 +18,7 @@ export default defineConfig({
   ],
   plugins: [
     virtualWASM(),
+    resolveZigModule(),
     resolveTemplate(),
     minify({ mangle: true, module: true, compress: true, sourceMap: true }),
     unstableRolldownAdapter(analyzer({ exclude: [/\.mjs$/], openAnalyzer: true, analyzerMode: 'static' }))

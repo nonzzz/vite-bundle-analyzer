@@ -1,10 +1,7 @@
 import path from 'path'
-import { dispose, init, parse, pickupMappingsFromCode, scanSourceMapImportsForSourceContent } from '../../zig'
 import { generateImportedBy } from './analyzer-module'
 import { slash } from './shared'
 import type { ImportedBy } from './trie'
-
-init()
 
 export function removeAllParentDirectory(id: string) {
   return id.replace(/^((\.\.\/)+|(\.\.\\)+)/, '')
@@ -20,10 +17,24 @@ export function calculateImportPath(sourcePath: string, identifierPath: string) 
   return identifierPath
 }
 
+let Z: typeof import('../../zig') | undefined = undefined
+
+export async function prepare() {
+  const zig = await import('../../zig')
+  zig.init()
+  if (!Z) {
+    Z = zig
+  }
+}
+
 export function pickupMappingsFromCodeStr(
   code: string,
   rawSourcemap: string
 ) {
+  if (!Z) {
+    throw new Error('Zig module not initialized. Call prepare() first.')
+  }
+  const { parse, pickupMappingsFromCode, scanSourceMapImportsForSourceContent, dispose } = Z
   try {
     parse(rawSourcemap)
 

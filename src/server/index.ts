@@ -10,6 +10,7 @@ import { getFileURL, opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
 import type { Middleware } from './render'
 import { analyzerDebug, arena, convertBytes, fsp } from './shared'
+import { prepare } from './source-map'
 
 export const isCI = !!process.env.CI
 
@@ -266,6 +267,7 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     },
     async generateBundle(_, outputBundle) {
       // this.meta.watchMode
+      await prepare()
       analyzerModule.installPluginContext(this)
       analyzerModule.setupRollupChunks(outputBundle, this.meta.watchMode)
       // const cleanup: Array<{ bundle: OutputChunk | OutputAsset, sourcemapFileName: string | undefined }> = []
