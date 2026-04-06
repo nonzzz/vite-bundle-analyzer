@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
     "outDir": "dist",
     "noImplicitThis": true,
     "esModuleInterop": true,

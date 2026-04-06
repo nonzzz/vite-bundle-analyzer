@@ -1,7 +1,7 @@
 import { ComposeContextProvider } from 'foxact/compose-context-provider'
 import { useRef, useState } from 'react'
 import type { RefObject } from 'react'
-import type { NativeModule, PrimitiveEventMetadata } from 'squarified'
+import type { LayoutModule, NativeModule, PrimitiveEventMetadata } from 'squarified'
 import File from '~icons/ph/file-duotone'
 import { Sidebar, SidebarProvider } from './components/side-bar'
 import { Text } from './components/text'
@@ -11,12 +11,14 @@ import type { TreemapComponentInstance } from './components/treemap'
 import { ApplicationProvider, TreemapProvider } from './context'
 import { convertBytes } from './shared'
 import './css-baseline'
-import 'virtual:stylex.css'
 import type { ImportedBy } from '../server/trie'
 import { Modal } from './components/modal'
 import { Spacer } from './components/spacer'
 import { Receiver } from './receiver'
 import { TextWithTooltip } from './text-tips'
+
+// @ts-expect-error safe
+import 'virtual:stylex.css'
 
 type TooltipContent = NativeModule & { importedBy: ImportedBy[], filename: string, label: string }
 
@@ -39,8 +41,9 @@ export function App() {
     }
     setTooltipVisible(!!data.module)
     if (data.module) {
+      const mod = data.module.__widget__ as LayoutModule
       // @ts-expect-error safe
-      setTooltipContent(() => data.module.node)
+      setTooltipContent(() => mod.node)
     }
   }
 

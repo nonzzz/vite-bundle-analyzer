@@ -46,7 +46,6 @@ export type DOMEvent = Parameters<Exclude<Plugin['onDOMEventTriggered'], undefin
 export function menuPlugin() {
   let menu: HTMLDivElement | null = null
   let reactRoot: ReturnType<typeof createRoot> | null = null
-  let currentModule: LayoutModule | null = null
   let treemap: TreemapComponentInstance | null = null
   let domEvent: DOMEvent | null = null
 
@@ -96,13 +95,12 @@ export function menuPlugin() {
         if (!domEvent) {
           domEvent = DOMEvent
         }
-        currentModule = DOMEvent.findRelativeNode({
+        const graphic = DOMEvent.findRelativeGraphicNode({
           native: event.native,
-          kind: undefined
+          kind: 'click'
         })
-        // this.instance.render.ctx
 
-        if (reactRoot && menu && currentModule) {
+        if (reactRoot && menu && graphic) {
           DOMEvent.emit('__exposed__', 'close:tooltip', { state: true })
 
           const canvasContext = this.instance.render.ctx
@@ -111,7 +109,7 @@ export function menuPlugin() {
             <Menu
               x={event.native.clientX}
               y={event.native.clientY}
-              currentModule={currentModule}
+              currentModule={graphic.__widget__ as LayoutModule}
               onAction={onAction}
               container={menu}
               canvasContext={canvasContext}
@@ -131,65 +129,4 @@ export function menuPlugin() {
       treemap = null
     }
   })
-}
-
-export type OnModuleInitResult = Exclude<ReturnType<Exclude<Plugin['onModuleInit'], undefined>>, void>
-
-export type ColorMappings = Exclude<OnModuleInitResult['colorMappings'], undefined>
-
-export type ColorDecoratorResult = ColorMappings[keyof ColorMappings]
-
-export function colorPlugin() {
-  return definePlugin({
-    name: 'treemap:module-color',
-    onModuleInit(modules) {
-      const colorMappings: ColorMappings = {}
-
-      function assignColorsByWeight(
-        mods: LayoutModule[],
-        startAngle = 0,
-        sweepAngle = Math.PI * 2,
-        depth = 0
-      ) {
-        const totalWeight = mods.reduce((sum, m) => sum + m.node.weight, 0)
-
-        for (const mod of mods) {
-          const childSweepAngle = totalWeight ? (mod.node.weight / totalWeight * sweepAngle) : 0
-          const midAngle = startAngle + childSweepAngle / 2
-
-          colorMappings[mod.node.id] = angleToColor(midAngle, depth)
-
-          if (mod.children && mod.children.length > 0) {
-            assignColorsByWeight(mod.children, startAngle, childSweepAngle, depth + 1)
-          }
-
-          startAngle += childSweepAngle
-        }
-      }
-
-      assignColorsByWeight(modules)
-
-      return { colorMappings }
-    }
-  })
-}
-
-function angleToColor(hueAngle: number, depth = 0): ColorDecoratorResult {
-  const baseHue = hueAngle * 180 / Math.PI
-  const hue = (baseHue + depth * 30) % 360
-
-  const baseSaturation = 0.6 + 0.4 * Math.max(0, Math.cos(hueAngle))
-  const saturation = Math.max(30, Math.round(100 * baseSaturation) - depth * 2)
-
-  const baseLightness = 0.5 + 0.2 * Math.max(0, Math.cos(hueAngle + Math.PI * 2 / 3))
-  const lightness = Math.min(75, Math.round(100 * baseLightness) + depth * 0.5)
-
-  return {
-    mode: 'hsl',
-    desc: {
-      h: hue,
-      s: saturation,
-      l: lightness
-    }
-  }
 }

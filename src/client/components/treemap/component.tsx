@@ -4,23 +4,29 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRe
 import type { Ref } from 'react'
 import { c2m, createTreemap as _createTreemap, sortChildrenByKey } from 'squarified'
 import type { ExposedEventCallback, LayoutModule } from 'squarified'
-import { presetDragElementPlugin, presetHighlightPlugin, presetScalePlugin, presetZoomablePlugin } from 'squarified/plugin'
+import {
+  presetColorPlugin,
+  presetDragElementPlugin,
+  presetHighlightPlugin,
+  presetScalePlugin,
+  presetZoomablePlugin
+} from 'squarified/plugin'
 import { useQueryParams, useResize } from '../../composables'
 import { useApplicationContext, useToggleSize } from '../../context'
 import { createMagicEvent } from '../../special'
 import type { QueryKind } from '../../special'
-import { colorPlugin, filterLayoutDataPlugin, menuPlugin } from './plugin'
+import { filterLayoutDataPlugin, menuPlugin } from './plugin'
 
 function createTreemap() {
   return _createTreemap({
     plugins: [
-      colorPlugin(),
+      presetColorPlugin,
       menuPlugin(),
       presetHighlightPlugin,
       presetDragElementPlugin,
       presetZoomablePlugin,
       filterLayoutDataPlugin,
-      presetScalePlugin()
+      presetScalePlugin({ min: 1 })
     ]
   })
 }

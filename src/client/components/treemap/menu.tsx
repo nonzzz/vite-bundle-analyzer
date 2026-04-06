@@ -21,7 +21,7 @@ const ResetIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <polyline points="23 4 23 10 17 10" />
     <polyline points="1 20 1 14 7 14" />
-    <path d="20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+    <path d="M20.49 9 A9 9 0 0 0 5.64 5.64 L1 10 m22 4 l-4.64 4.36 A9 9 0 0 1 3.51 15" />
   </svg>
 )
 
@@ -79,7 +79,6 @@ function calculateMenuPosition(
   }
 
   if (menuY + MENU_HEIGHT > viewport.height) {
-    // 如果超出下边界，显示在鼠标上方
     menuY = rawY - MENU_HEIGHT - MENU_OFFSET
   }
 
