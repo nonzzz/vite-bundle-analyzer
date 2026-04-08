@@ -144,6 +144,22 @@ export function encodeSourceMapV3AsPascalString(rawSourceMap: string): Uint8Arra
   return pascal.string(entries)
 }
 
+export interface BundleModule {
+  path: string
+  parsedSize: number
+  gzipSize: number
+  brotliSize: number
+}
+
+export function encodeModuleAsPascalString(module: BundleModule): Uint8Array {
+  const entries: PascalStringEntry[] = []
+  entries.push(['path', module.path])
+  entries.push(['parsed_size', module.parsedSize + ''])
+  entries.push(['gzip_size', module.gzipSize + ''])
+  entries.push(['brotli_size', module.brotliSize + ''])
+  return pascal.string(entries)
+}
+
 function loadWASM() {
   if (WASM_CTX) {
     return WASM_CTX
@@ -334,5 +350,11 @@ export function dispose() {
     WASM_CTX.free(SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN)
     SHARED_SOURCEMAP_PTR = 0
     SHARED_SOURCEMAP_LEN = 0
+  }
+}
+
+export function buildModuleGroup(modules: BundleModule[]) {
+  if (!WASM_CTX) {
+    throw new Error('WASM not initialized. Call init() first.')
   }
 }

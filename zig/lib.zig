@@ -2,6 +2,7 @@ const std = @import("std");
 const pascal = @import("./pascal_string.zig");
 const scan_import = @import("./scan_import.zig");
 const sourcemap_decoder = @import("./sourcemap_dec.zig");
+const trie_mod = @import("./trie.zig");
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 const allocator = gpa.allocator();
@@ -312,4 +313,11 @@ pub export fn pickup_mappings_from_code(
     const result_data = json_buf.toOwnedSlice(allocator) catch return null;
     result_len.* = result_data.len;
     return result_data.ptr;
+}
+
+pub export fn build_module_tree(input_ptr: [*]const u8, input_len: usize, result_len: *usize) ?[*]const u8 {
+    _ = input_ptr; // autofix
+    _ = input_len; // autofix
+    _ = result_len; // autofix
+
 }
