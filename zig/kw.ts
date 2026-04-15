@@ -51,7 +51,7 @@ function readULEB128(bytes: Uint8Array, offset: number): [number, number] {
   return [result, currentOffset]
 }
 
-class Writer {
+export class Writer {
   private capacity: number
   private bytes: Uint8Array
   private length: number
@@ -208,6 +208,10 @@ class Writer {
     }
     return this.bytes.slice(0, this.length)
   }
+
+  dupe() {
+    return this.bytes.slice(0, this.length)
+  }
 }
 
 class Reader {
@@ -296,7 +300,7 @@ function decode(bytes: Uint8Array) {
   return r.decode()
 }
 
-export const binary = {
+export const kw = {
   encode,
   decode
 }

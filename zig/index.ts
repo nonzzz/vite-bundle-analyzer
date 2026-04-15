@@ -1,16 +1,17 @@
 // This is a experminal implementation of Zig's version
 // Is to replace the previous TypeScript implementation with a memory-friendly design.
-// Note: we using little endian throughout this implementation.
+
+import { Writer, kw } from './kw'
 
 interface WASMInstance {
   memory: WebAssembly.Memory
   scan_import_stmts_from_code: (code_ptr: number, code_len: number, result_len_ptr: number) => number
-  scan_source_map_imports: (sourcemap_pascal_ptr: number, sourcemap_pascal_len: number, result_len_ptr: number) => number
+  scan_source_map_imports: (sourcemap_ptr: number, sourcemap_len: number, result_len_ptr: number) => number
   pickup_mappings_from_code: (
     code_ptr: number,
     code_len: number,
-    sourcemap_pascal_ptr: number,
-    sourcemap_pascal_len: number,
+    sourcemap_ptr: number,
+    sourcemap_len: number,
     result_len_ptr: number
   ) => number
   alloc(size: number): number
@@ -26,80 +27,6 @@ let SHARED_SOURCEMAP_LEN: number = 0
 
 const encoder = new TextEncoder()
 
-const decoder = new TextDecoder()
-
-function write(target: Uint8Array, offset: number, value: number): number {
-  target[offset] = value & 0xff
-  target[offset + 1] = (value >> 8) & 0xff
-  target[offset + 2] = (value >> 16) & 0xff
-  target[offset + 3] = (value >> 24) & 0xff
-  return 4
-}
-
-type EncodedPair = { key: Uint8Array, val: Uint8Array }
-
-type PascalStringEntry = [string, Uint8Array | string]
-
-// [count:u32][(len:u32, bytes)...]
-const pascal = {
-  string(entries: PascalStringEntry[]) {
-    const cache = new Array(entries.length) as EncodedPair[]
-    let total = 0
-
-    for (let i = 0; i < entries.length; i++) {
-      const [k, v] = entries[i]
-      const key = encoder.encode(k)
-      const val = typeof v === 'string' ? encoder.encode(v) : v
-      cache[i] = { key, val }
-      total += 8 + key.byteLength + val.byteLength
-    }
-
-    const out = new Uint8Array(total)
-    let pos = 0
-
-    for (const { key, val } of cache) {
-      pos += write(out, pos, key.byteLength)
-      out.set(key, pos)
-      pos += key.byteLength
-
-      pos += write(out, pos, val.byteLength)
-      out.set(val, pos)
-      pos += val.byteLength
-    }
-
-    return out
-  },
-
-  array(data: (string | Uint8Array | null | undefined)[]) {
-    const encoded = new Array(data.length) as Uint8Array[]
-    let bodyLen = 0
-
-    for (let i = 0; i < data.length; i++) {
-      const it = data[i]
-      const bytes = typeof it === 'string'
-        ? encoder.encode(it)
-        : it instanceof Uint8Array
-        ? it
-        : new Uint8Array(0)
-      encoded[i] = bytes
-      bodyLen += 4 + bytes.byteLength
-    }
-
-    const out = new Uint8Array(4 + bodyLen)
-    let pos = 0
-
-    pos += write(out, pos, data.length)
-
-    for (const bytes of encoded) {
-      pos += write(out, pos, bytes.byteLength)
-      out.set(bytes, pos)
-      pos += bytes.byteLength
-    }
-
-    return out
-  }
-}
-
 interface SourceMapV3 {
   file?: string | null
   names: string[]
@@ -111,37 +38,20 @@ interface SourceMapV3 {
   mappings: string
 }
 
-export function encodeSourceMapV3AsPascalString(rawSourceMap: string): Uint8Array {
-  const entries: PascalStringEntry[] = []
-  const sourceMap = JSON.parse(rawSourceMap) as unknown as SourceMapV3
+// field order must same with sourcemap struct in lib.zig for correct encoding/decoding
+export function encodeSourceMapV3(rawSourceMap: string): Uint8Array {
+  const sm = JSON.parse(rawSourceMap) as unknown as SourceMapV3
 
-  if (sourceMap.version === 3) {
-    entries.push(['version', '3'])
-  }
+  const writer = new Writer(rawSourceMap.length)
 
-  if (sourceMap.file) {
-    entries.push(['file', sourceMap.file])
-  }
-
-  if (sourceMap.sourceRoot) {
-    entries.push(['sourceRoot', sourceMap.sourceRoot])
-  }
-  if (sourceMap.mappings) {
-    entries.push(['mappings', sourceMap.mappings])
-  }
-
-  if (sourceMap.sources && Array.isArray(sourceMap.sources)) {
-    entries.push(['sources', pascal.array(sourceMap.sources)])
-  }
-
-  if (sourceMap.names && Array.isArray(sourceMap.names)) {
-    entries.push(['names', pascal.array(sourceMap.names)])
-  }
-
-  if (sourceMap.sourcesContent && Array.isArray(sourceMap.sourcesContent)) {
-    entries.push(['sourcesContent', pascal.array(sourceMap.sourcesContent)])
-  }
-  return pascal.string(entries)
+  writer.encode(sm.version ?? 3)
+  writer.encode(sm.file ?? '')
+  writer.encode(sm.sourceRoot ?? '')
+  writer.encode(sm.mappings ?? '')
+  writer.encode(sm.sources ?? [])
+  writer.encode(sm.sourcesContent ?? [])
+  writer.encode(sm.names ?? [])
+  return writer.dupe()
 }
 
 export interface BundleModule {
@@ -149,15 +59,6 @@ export interface BundleModule {
   parsedSize: number
   gzipSize: number
   brotliSize: number
-}
-
-export function encodeModuleAsPascalString(module: BundleModule): Uint8Array {
-  const entries: PascalStringEntry[] = []
-  entries.push(['path', module.path])
-  entries.push(['parsed_size', module.parsedSize + ''])
-  entries.push(['gzip_size', module.gzipSize + ''])
-  entries.push(['brotli_size', module.brotliSize + ''])
-  return pascal.string(entries)
 }
 
 function loadWASM() {
@@ -199,7 +100,7 @@ export function parse(rawSourceMap: string): void {
     SHARED_SOURCEMAP_LEN = 0
   }
 
-  const pascalData = encodeSourceMapV3AsPascalString(rawSourceMap)
+  const pascalData = encodeSourceMapV3(rawSourceMap)
 
   SHARED_SOURCEMAP_PTR = WASM_CTX.alloc(pascalData.byteLength)
 
@@ -241,12 +142,10 @@ export function scanImportStatements(generateCode: string): ScanImportStatmentRe
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-    const copy = new Uint8Array(outBytes)
-
+    const result = kw.decode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
-    const str = decoder.decode(copy)
-    return JSON.parse(str) as ScanImportStatmentResult
+    return result as unknown as ScanImportStatmentResult
   } finally {
     WASM_CTX.free(codePtr, codeBytes.byteLength)
     WASM_CTX.free(lenPtr, 4)
@@ -277,12 +176,10 @@ export function scanSourceMapImportsForSourceContent(): ScanSourceMapImportEntry
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-    const copy = new Uint8Array(outBytes)
-
+    const result = kw.decode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
-    const str = decoder.decode(copy)
-    return JSON.parse(str) as ScanSourceMapImportEntry[]
+    return result as unknown as ScanSourceMapImportEntry[]
   } finally {
     WASM_CTX.free(lenPtr, 4)
   }
@@ -333,12 +230,10 @@ export function pickupMappingsFromCode(generatedCode: string): PickupMappingsRes
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-    const copy = new Uint8Array(outBytes)
-
+    const result = kw.decode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
-    const str = decoder.decode(copy)
-    return JSON.parse(str) as PickupMappingsResult
+    return result as unknown as PickupMappingsResult
   } finally {
     WASM_CTX.free(codePtr, codeBytes.byteLength)
     WASM_CTX.free(lenPtr, 4)
@@ -350,11 +245,5 @@ export function dispose() {
     WASM_CTX.free(SHARED_SOURCEMAP_PTR, SHARED_SOURCEMAP_LEN)
     SHARED_SOURCEMAP_PTR = 0
     SHARED_SOURCEMAP_LEN = 0
-  }
-}
-
-export function buildModuleGroup(modules: BundleModule[]) {
-  if (!WASM_CTX) {
-    throw new Error('WASM not initialized. Call init() first.')
   }
 }

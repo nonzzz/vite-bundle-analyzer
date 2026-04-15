@@ -1,48 +1,48 @@
 import { describe, expect, it } from 'vitest'
-import { binary } from '../zig/kw'
+import { kw } from '../zig/kw'
 
 describe('kw', () => {
   it('bool', () => {
-    const output = binary.encode(true)
-    expect(binary.decode(output)).toBe(true)
-    const output2 = binary.encode(false)
-    expect(binary.decode(output2)).toBe(false)
+    const output = kw.encode(true)
+    expect(kw.decode(output)).toBe(true)
+    const output2 = kw.encode(false)
+    expect(kw.decode(output2)).toBe(false)
   })
   it('nil', () => {
-    const ouput = binary.encode(null)
-    expect(binary.decode(ouput)).toBe(null)
-    const ouput2 = binary.encode(undefined)
-    expect(binary.decode(ouput2)).toBe(undefined)
+    const ouput = kw.encode(null)
+    expect(kw.decode(ouput)).toBe(null)
+    const ouput2 = kw.encode(undefined)
+    expect(kw.decode(ouput2)).toBe(undefined)
   })
   it('int32/uint32', () => {
-    const output = binary.encode(42)
-    expect(binary.decode(output)).toBe(42)
-    const output2 = binary.encode(-42)
-    expect(binary.decode(output2)).toBe(-42)
+    const output = kw.encode(42)
+    expect(kw.decode(output)).toBe(42)
+    const output2 = kw.encode(-42)
+    expect(kw.decode(output2)).toBe(-42)
   })
   it('float32', () => {
-    const output = binary.encode(3.14)
-    expect(binary.decode(output)).toBe(3.14)
+    const output = kw.encode(3.14)
+    expect(kw.decode(output)).toBe(3.14)
   })
   it('bytes', () => {
     const data = new Uint8Array([1, 2, 3, 4])
-    const output = binary.encode(data)
-    expect(binary.decode(output)).toStrictEqual(data)
+    const output = kw.encode(data)
+    expect(kw.decode(output)).toStrictEqual(data)
   })
   it('string', () => {
     const data = 'Hello, 世界'
-    const output = binary.encode(data)
-    expect(binary.decode(output)).toBe(data)
+    const output = kw.encode(data)
+    expect(kw.decode(output)).toBe(data)
   })
   it('object', () => {
     const data = { name: 'kanno' }
-    const output = binary.encode(data)
-    expect(binary.decode(output)).toStrictEqual(data)
+    const output = kw.encode(data)
+    expect(kw.decode(output)).toStrictEqual(data)
   })
   it('array', () => {
     const data = [1, 'two', true, null]
-    const output = binary.encode(data)
-    expect(binary.decode(output)).toStrictEqual(data)
+    const output = kw.encode(data)
+    expect(kw.decode(output)).toStrictEqual(data)
   })
 
   it('complex object', () => {
@@ -54,7 +54,7 @@ describe('kw', () => {
         createdAt: '2024-06-01T00:00:00Z'
       }
     }
-    const output = binary.encode(data)
-    expect(binary.decode(output)).toStrictEqual(data)
+    const output = kw.encode(data)
+    expect(kw.decode(output)).toStrictEqual(data)
   })
 })
