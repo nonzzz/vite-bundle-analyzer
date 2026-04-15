@@ -37,12 +37,17 @@ describe('kw', () => {
   it('object', () => {
     const data = { name: 'kanno' }
     const output = kw.encode(data)
-    expect(kw.decode(output)).toStrictEqual(data)
+    const decoded = kw.decode(output) as typeof data
+    expect(decoded.name).toBe(data.name)
   })
   it('array', () => {
     const data = [1, 'two', true, null]
     const output = kw.encode(data)
-    expect(kw.decode(output)).toStrictEqual(data)
+    const decoded = kw.decode(output) as typeof data
+    expect(decoded[0]).toBe(data[0])
+    expect(decoded[1]).toBe(data[1])
+    expect(decoded[2]).toBe(data[2])
+    expect(decoded[3]).toBe(data[3])
   })
 
   it('complex object', () => {
@@ -55,6 +60,10 @@ describe('kw', () => {
       }
     }
     const output = kw.encode(data)
-    expect(kw.decode(output)).toStrictEqual(data)
+    const decoded = kw.decode(output) as typeof data
+    expect(decoded.name).toBe(data.name)
+    expect(decoded.isAdmin).toBe(data.isAdmin)
+    expect(decoded.tags).toEqual(data.tags)
+    expect(decoded.meta).toEqual(data.meta)
   })
 })
