@@ -9,8 +9,7 @@ export const Tag = {
   bytes: 0x06,
   string: 0x07,
   array: 0x08,
-  object: 0x09,
-  map: 0x0a
+  object: 0x09
 }
 
 const textDecoder = new TextDecoder()
@@ -174,24 +173,6 @@ class Writer {
     }
   }
 
-  writeMap(input: Map<unknown, unknown>) {
-    this.grow(1)
-    this.bytes.set([Tag.map], this.length)
-    this.length += 1
-
-    const zigZagged = zigZagEncode(input.size | 0)
-    const encoded = writeULEB128(zigZagged)
-
-    this.grow(encoded.length)
-    this.bytes.set(encoded, this.length)
-    this.length += encoded.length
-
-    for (const [key, value] of input) {
-      this.encode(key)
-      this.encode(value)
-    }
-  }
-
   encode(data: unknown) {
     switch (typeof data) {
       case 'boolean':
@@ -205,8 +186,6 @@ class Writer {
           this.writeNil(null)
         } else if (data instanceof Uint8Array) {
           this.writeBytes(data)
-        } else if (data instanceof Map) {
-          this.writeMap(data)
         } else if (Array.isArray(data)) {
           this.writeArray(data)
         } else {
@@ -301,17 +280,6 @@ class Reader {
         }
         return obj
       }
-      case Tag.map: {
-        const length = this.readLength()
-        const map = new Map<unknown, unknown>()
-        for (let i = 0; i < length; i++) {
-          const key = this.decode()
-          const value = this.decode()
-          map.set(key, value)
-        }
-        return map
-      }
-
       default:
         throw new Error(`Unsupported tag: ${tag}`)
     }

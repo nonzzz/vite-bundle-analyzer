@@ -44,11 +44,7 @@ describe('kw', () => {
     const output = binary.encode(data)
     expect(binary.decode(output)).toStrictEqual(data)
   })
-  it('map', () => {
-    const data = new Map<unknown, unknown>([['key1', 'value1'], ['key2', 42]])
-    const output = binary.encode(data)
-    expect(binary.decode(output)).toStrictEqual(data)
-  })
+
   it('complex object', () => {
     const data = {
       name: 'kanno',
