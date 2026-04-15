@@ -145,7 +145,7 @@ export function scanImportStatements(generateCode: string): ScanImportStatmentRe
     const result = kw.decode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
-    return result as unknown as ScanImportStatmentResult
+    return result as ScanImportStatmentResult
   } finally {
     WASM_CTX.free(codePtr, codeBytes.byteLength)
     WASM_CTX.free(lenPtr, 4)
@@ -179,7 +179,7 @@ export function scanSourceMapImportsForSourceContent(): ScanSourceMapImportEntry
     const result = kw.decode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
-    return result as unknown as ScanSourceMapImportEntry[]
+    return result as ScanSourceMapImportEntry[]
   } finally {
     WASM_CTX.free(lenPtr, 4)
   }
@@ -233,7 +233,7 @@ export function pickupMappingsFromCode(generatedCode: string): PickupMappingsRes
     const result = kw.decode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
-    return result as unknown as PickupMappingsResult
+    return result as PickupMappingsResult
   } finally {
     WASM_CTX.free(codePtr, codeBytes.byteLength)
     WASM_CTX.free(lenPtr, 4)

@@ -1,15 +1,13 @@
 const std = @import("std");
-const pascal = @import("./pascal_string.zig");
+const kw_mod = @import("./kw.zig");
 const scan_import = @import("./scan_import.zig");
 const sourcemap_decoder = @import("./sourcemap_dec.zig");
-const trie_mod = @import("./trie.zig");
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 const allocator = gpa.allocator();
 
 const Scanner = scan_import.Scanner(.large);
 const SourceMapDecoder = sourcemap_decoder.SourceMapDecoder;
-const OriginalPosition = sourcemap_decoder.OriginalPosition;
 
 pub export fn alloc(size: usize) ?[*]u8 {
     const slice = allocator.alloc(u8, size) catch return null;
@@ -20,62 +18,126 @@ pub export fn free(ptr: [*]u8, size: usize) void {
     allocator.free(ptr[0..size]);
 }
 
-fn write_json_string(writer: anytype, str: []const u8) !void {
-    try writer.writeByte('"');
-    for (str) |ch| {
-        switch (ch) {
-            '"' => try writer.writeAll("\\\""),
-            '\\' => try writer.writeAll("\\\\"),
-            '\n' => try writer.writeAll("\\n"),
-            '\r' => try writer.writeAll("\\r"),
-            '\t' => try writer.writeAll("\\t"),
-            else => {
-                if (ch < 32) {
-                    try writer.print("\\u{x:0>4}", .{ch});
-                } else {
-                    try writer.writeByte(ch);
-                }
-            },
-        }
+// ---------------------------------------------------------------------------
+// kw-encoded sourcemap input helpers
+// ---------------------------------------------------------------------------
+
+/// Decoded view of the kw-encoded sourcemap passed from JS.
+/// All slices are zero-copy views into the original input bytes.
+/// The `sources` and `sources_content` slices are heap-allocated arrays
+/// of those views and must be freed with `deinit`.
+///
+/// JS side encodes the sourcemap as a flat sequence of 7 kw values
+/// (see `encodeSourceMapV3` in index.ts):
+///   int(version), string(file), string(sourceRoot), string(mappings),
+///   array(sources), array(sourcesContent), array(names)
+const KwSourceMap = struct {
+    mappings: []const u8,
+    sources: []const []const u8,
+    sources_content: []const []const u8,
+
+    pub fn deinit(self: *KwSourceMap, alloc_: std.mem.Allocator) void {
+        alloc_.free(self.sources);
+        alloc_.free(self.sources_content);
     }
-    try writer.writeByte('"');
+};
+
+fn decode_sourcemap_kw(alloc_: std.mem.Allocator, data: []const u8) !KwSourceMap {
+    var reader = kw_mod.Reader.init(data);
+
+    // version, file, sourceRoot – not needed, skip
+    try reader.skip_value();
+    try reader.skip_value();
+    try reader.skip_value();
+
+    const mappings = try reader.read_string_slice();
+
+    const sources_count = try reader.read_array_count();
+    const sources = try alloc_.alloc([]const u8, sources_count);
+    errdefer alloc_.free(sources);
+    for (0..sources_count) |i| {
+        sources[i] = try reader.read_string_slice();
+    }
+
+    const sc_count = try reader.read_array_count();
+    const sources_content = try alloc_.alloc([]const u8, sc_count);
+    errdefer alloc_.free(sources_content);
+    for (0..sc_count) |i| {
+        sources_content[i] = try reader.read_string_slice();
+    }
+
+    return KwSourceMap{
+        .mappings = mappings,
+        .sources = sources,
+        .sources_content = sources_content,
+    };
 }
 
-fn try_scan(source_code: []const u8) ?Scanner {
-    var scanner = Scanner.init(source_code);
-    scanner.scan() catch return null;
-    if (scanner.len() == 0) return null;
-    return scanner;
-}
+// ---------------------------------------------------------------------------
+// kw output helpers
+// ---------------------------------------------------------------------------
 
-fn write_imports_from_scanner(scanner: *Scanner, writer: anytype) bool {
-    writer.writeAll("\"static\":[") catch return false;
+/// Write the `"static"` and `"dynamic"` key-value pairs of a scan result
+/// into an already-opened kw object (caller must have called write_object_start
+/// with a count that includes these 2 pairs).
+fn write_scanner_imports_kw(scanner: *Scanner, w: *kw_mod.Writer) !void {
+    const static_count = scanner.count_by_type(.static_import);
+    const dynamic_count = scanner.count_by_type(.dynamic_import);
 
-    var static_first = true;
+    try w.write_string("static");
+    try w.write_array_start(static_count);
     for (0..scanner.len()) |i| {
         if (scanner.get_type(i).? != .static_import) continue;
-        if (!static_first) writer.writeByte(',') catch return false;
-        static_first = false;
-        write_json_string(writer, scanner.get_import(i).?) catch return false;
+        try w.write_string(scanner.get_import(i).?);
     }
 
-    writer.writeAll("],\"dynamic\":[") catch return false;
-
-    var dynamic_first = true;
+    try w.write_string("dynamic");
+    try w.write_array_start(dynamic_count);
     for (0..scanner.len()) |i| {
         if (scanner.get_type(i).? != .dynamic_import) continue;
-        if (!dynamic_first) writer.writeByte(',') catch return false;
-        dynamic_first = false;
-        write_json_string(writer, scanner.get_import(i).?) catch return false;
+        try w.write_string(scanner.get_import(i).?);
     }
-
-    writer.writeByte(']') catch return false;
-    return true;
 }
 
-/// Scan imports from a single code string
-/// Input: code pointer and length
-/// Output: JSON object {"static":["foo"],"dynamic":["bar"]}
+/// Build and return an owned kw-encoded `{static:[], dynamic:[]}` object.
+fn make_empty_scan_result(alloc_: std.mem.Allocator) ?[]const u8 {
+    var w = kw_mod.Writer.init(alloc_, 32) catch return null;
+    defer w.deinit();
+    w.write_object_start(2) catch return null;
+    w.write_string("static") catch return null;
+    w.write_array_start(0) catch return null;
+    w.write_string("dynamic") catch return null;
+    w.write_array_start(0) catch return null;
+    return alloc_.dupe(u8, w.get_bytes()) catch null;
+}
+
+/// Build and return an owned kw-encoded empty array `[]`.
+fn make_empty_array_result(alloc_: std.mem.Allocator) ?[]const u8 {
+    var w = kw_mod.Writer.init(alloc_, 8) catch return null;
+    defer w.deinit();
+    w.write_array_start(0) catch return null;
+    return alloc_.dupe(u8, w.get_bytes()) catch null;
+}
+
+/// Build and return an owned kw-encoded `{grouped:{}, files:[]}` object.
+fn make_empty_mappings_result(alloc_: std.mem.Allocator) ?[]const u8 {
+    var w = kw_mod.Writer.init(alloc_, 32) catch return null;
+    defer w.deinit();
+    w.write_object_start(2) catch return null;
+    w.write_string("grouped") catch return null;
+    w.write_object_start(0) catch return null;
+    w.write_string("files") catch return null;
+    w.write_array_start(0) catch return null;
+    return alloc_.dupe(u8, w.get_bytes()) catch null;
+}
+
+// ---------------------------------------------------------------------------
+// Exported WASM functions
+// ---------------------------------------------------------------------------
+
+/// Scan imports from a single code string.
+/// Input:  raw UTF-8 code bytes
+/// Output: kw-encoded object  { static: string[], dynamic: string[] }
 pub export fn scan_import_stmts_from_code(
     code_ptr: [*]const u8,
     code_len: usize,
@@ -83,134 +145,131 @@ pub export fn scan_import_stmts_from_code(
 ) ?[*]const u8 {
     const code = code_ptr[0..code_len];
 
-    var scanner = try_scan(code) orelse {
-        const empty = allocator.dupe(u8, "{\"static\":[],\"dynamic\":[]}") catch return null;
+    var scanner = Scanner.init(code);
+    scanner.scan() catch {
+        const empty = make_empty_scan_result(allocator) orelse return null;
         result_len.* = empty.len;
         return empty.ptr;
     };
 
-    var json_buf = std.ArrayList(u8).initCapacity(allocator, 256) catch return null;
-    defer json_buf.deinit(allocator);
-
-    const writer = json_buf.writer(allocator);
-
-    writer.writeByte('{') catch return null;
-    if (!write_imports_from_scanner(&scanner, writer)) return null;
-    writer.writeByte('}') catch return null;
-
-    const result_data = json_buf.toOwnedSlice(allocator) catch return null;
-    result_len.* = result_data.len;
-    return result_data.ptr;
-}
-
-/// Scan imports from entire source map
-/// Input: Pascal-encoded source map
-/// Output: JSON array of results
-/// Format: [{"index":0,"source":"src/foo.js","static":["foo"],"dynamic":["bar"]}, ...]
-pub export fn scan_source_map_imports(
-    sourcemap_pascal_ptr: [*]const u8,
-    sourcemap_pascal_len: usize,
-    result_len: *usize,
-) ?[*]const u8 {
-    const sourcemap_data = sourcemap_pascal_ptr[0..sourcemap_pascal_len];
-    const sourcemap = pascal.PascalString.decode(sourcemap_data);
-
-    const sources_data = sourcemap.get("sources") orelse {
-        const empty = allocator.dupe(u8, "[]") catch return null;
+    if (scanner.len() == 0) {
+        const empty = make_empty_scan_result(allocator) orelse return null;
         result_len.* = empty.len;
         return empty.ptr;
-    };
-    const sources = pascal.PascalArray.decode(sources_data);
-
-    const sources_content_data = sourcemap.get("sourcesContent") orelse {
-        const empty = allocator.dupe(u8, "[]") catch return null;
-        result_len.* = empty.len;
-        return empty.ptr;
-    };
-    const sources_content = pascal.PascalArray.decode(sources_content_data);
-
-    var json_buf = std.ArrayList(u8).initCapacity(allocator, 1024) catch return null;
-    defer json_buf.deinit(allocator);
-
-    const writer = json_buf.writer(allocator);
-
-    writer.writeByte('[') catch return null;
-
-    var source_index: u32 = 0;
-    var iter = sources_content.iterator();
-    var first = true;
-
-    while (iter.next()) |source_code| : (source_index += 1) {
-        var scanner = try_scan(source_code) orelse continue;
-
-        if (!first) {
-            writer.writeByte(',') catch return null;
-        }
-        first = false;
-
-        const source_name = sources.get(source_index) orelse "";
-
-        writer.print("{{\"index\":{d},\"source\":", .{source_index}) catch return null;
-        write_json_string(writer, source_name) catch return null;
-        writer.writeByte(',') catch return null;
-
-        if (!write_imports_from_scanner(&scanner, writer)) return null;
-
-        writer.writeByte('}') catch return null;
     }
 
-    writer.writeByte(']') catch return null;
+    const static_count = scanner.count_by_type(.static_import);
+    const dynamic_count = scanner.count_by_type(.dynamic_import);
+    const estimated = 32 + (static_count + dynamic_count) * 32;
 
-    const result_data = json_buf.toOwnedSlice(allocator) catch return null;
+    var w = kw_mod.Writer.init(allocator, estimated) catch return null;
+    defer w.deinit();
+
+    w.write_object_start(2) catch return null;
+    write_scanner_imports_kw(&scanner, &w) catch return null;
+
+    const result_data = allocator.dupe(u8, w.get_bytes()) catch return null;
     result_len.* = result_data.len;
     return result_data.ptr;
 }
 
+/// Scan imports from every source in a kw-encoded source map.
+/// Input:  kw-encoded source map (see encodeSourceMapV3 in index.ts)
+/// Output: kw-encoded array of { index: int, source: string, static: string[], dynamic: string[] }
+pub export fn scan_source_map_imports(
+    sourcemap_ptr: [*]const u8,
+    sourcemap_len: usize,
+    result_len: *usize,
+) ?[*]const u8 {
+    const sourcemap_data = sourcemap_ptr[0..sourcemap_len];
+
+    var sm = decode_sourcemap_kw(allocator, sourcemap_data) catch {
+        const empty = make_empty_array_result(allocator) orelse return null;
+        result_len.* = empty.len;
+        return empty.ptr;
+    };
+    defer sm.deinit(allocator);
+
+    // First pass: count entries that actually have imports.
+    var result_count: usize = 0;
+    for (sm.sources_content) |source_code| {
+        if (source_code.len == 0) continue;
+        var scanner = Scanner.init(source_code);
+        scanner.scan() catch continue;
+        if (scanner.len() == 0) continue;
+        result_count += 1;
+    }
+
+    const estimated = 64 + result_count * 128;
+    var w = kw_mod.Writer.init(allocator, estimated) catch return null;
+    defer w.deinit();
+
+    w.write_array_start(result_count) catch return null;
+
+    // Second pass: write entries.
+    for (sm.sources_content, 0..) |source_code, i| {
+        if (source_code.len == 0) continue;
+        var scanner = Scanner.init(source_code);
+        scanner.scan() catch continue;
+        if (scanner.len() == 0) continue;
+
+        const source_name = if (i < sm.sources.len) sm.sources[i] else "";
+
+        // { index, source, static, dynamic } = 4 fields
+        w.write_object_start(4) catch return null;
+        w.write_string("index") catch return null;
+        w.write_int(@as(i64, @intCast(i))) catch return null;
+        w.write_string("source") catch return null;
+        w.write_string(source_name) catch return null;
+        write_scanner_imports_kw(&scanner, &w) catch return null;
+    }
+
+    const result_data = allocator.dupe(u8, w.get_bytes()) catch return null;
+    result_len.* = result_data.len;
+    return result_data.ptr;
+}
+
+/// Map generated-code positions back to original source files using the source map.
+/// Input:  raw UTF-8 generated code, kw-encoded source map
+/// Output: kw-encoded object { grouped: { [file]: { code: string } }, files: string[] }
 pub export fn pickup_mappings_from_code(
     code_ptr: [*]const u8,
     code_len: usize,
-    sourcemap_pascal_ptr: [*]const u8,
-    sourcemap_pascal_len: usize,
+    sourcemap_ptr: [*]const u8,
+    sourcemap_len: usize,
     result_len: *usize,
 ) ?[*]const u8 {
     const code = code_ptr[0..code_len];
-    const sourcemap_data = sourcemap_pascal_ptr[0..sourcemap_pascal_len];
-    const sourcemap = pascal.PascalString.decode(sourcemap_data);
+    const sourcemap_data = sourcemap_ptr[0..sourcemap_len];
 
-    const sources_data = sourcemap.get("sources") orelse {
-        const empty = allocator.dupe(u8, "{\"grouped\":{},\"files\":[]}") catch return null;
+    var sm = decode_sourcemap_kw(allocator, sourcemap_data) catch {
+        const empty = make_empty_mappings_result(allocator) orelse return null;
         result_len.* = empty.len;
         return empty.ptr;
     };
-    const sources = pascal.PascalArray.decode(sources_data);
+    defer sm.deinit(allocator);
 
-    const mappings_data = sourcemap.get("mappings") orelse {
-        const empty = allocator.dupe(u8, "{\"grouped\":{},\"files\":[]}") catch return null;
+    const estimated_capacity = sm.sources.len;
+
+    var decoder = SourceMapDecoder.init(allocator, sm.mappings, estimated_capacity * 100) catch {
+        const empty = make_empty_mappings_result(allocator) orelse return null;
         result_len.* = empty.len;
         return empty.ptr;
     };
-
-    const estimated_capacity = sources.len();
-    var decoder = SourceMapDecoder.init(allocator, mappings_data, estimated_capacity * 100) catch return null;
     defer decoder.deinit();
 
     if (decoder.mappings.len == 0) {
-        const empty = allocator.dupe(u8, "{\"grouped\":{},\"files\":[]}") catch return null;
+        const empty = make_empty_mappings_result(allocator) orelse return null;
         result_len.* = empty.len;
         return empty.ptr;
     }
 
-    const avg_size_per_source = if (estimated_capacity > 0)
-        code.len / estimated_capacity
-    else
-        4096;
+    const avg_size_per_source = if (estimated_capacity > 0) code.len / estimated_capacity else 4096;
 
     var source_buffers = std.ArrayList(?std.ArrayList(u8)).initCapacity(allocator, estimated_capacity) catch return null;
     defer {
         for (source_buffers.items) |*opt_buf| {
-            if (opt_buf.*) |*buf| {
-                buf.deinit(allocator);
-            }
+            if (opt_buf.*) |*buf| buf.deinit(allocator);
         }
         source_buffers.deinit(allocator);
     }
@@ -224,14 +283,10 @@ pub export fn pickup_mappings_from_code(
     defer files_set.deinit();
 
     var cache = SourceMapDecoder.LookupCache{};
-
     var line: u32 = 0;
     var column: u32 = 0;
 
-    var idx: usize = 0;
-    while (idx < code.len) : (idx += 1) {
-        const ch = code[idx];
-
+    for (code) |ch| {
         const pos = decoder.original_position_for_cached(line, column, &cache);
 
         if (pos) |p| {
@@ -251,7 +306,6 @@ pub export fn pickup_mappings_from_code(
                     ) catch null;
                     files_set.put(source_idx, {}) catch {};
                 }
-
                 if (source_buffers.items[source_idx]) |*buf| {
                     buf.append(allocator, ch) catch {};
                 }
@@ -266,58 +320,44 @@ pub export fn pickup_mappings_from_code(
         }
     }
 
-    const estimated_json_size = code.len + (estimated_capacity * 128);
-    var json_buf = std.ArrayList(u8).initCapacity(allocator, estimated_json_size) catch return null;
-    defer json_buf.deinit(allocator);
+    const hit_count = files_set.count();
+    const estimated_out = code.len + estimated_capacity * 128;
+    var w = kw_mod.Writer.init(allocator, estimated_out) catch return null;
+    defer w.deinit();
 
-    const writer = json_buf.writer(allocator);
-    writer.writeAll("{\"grouped\":{") catch return null;
+    // { grouped: { ... }, files: [...] }
+    w.write_object_start(2) catch return null;
 
-    var first = true;
+    w.write_string("grouped") catch return null;
+    w.write_object_start(hit_count) catch return null;
+
     var file_iter = files_set.keyIterator();
     while (file_iter.next()) |source_idx_ptr| {
         const source_idx = source_idx_ptr.*;
-
         if (source_idx >= source_buffers.items.len) continue;
         const opt_buf = source_buffers.items[source_idx];
         if (opt_buf == null) continue;
-
-        const source_name = sources.get(source_idx) orelse continue;
+        const source_name = if (source_idx < sm.sources.len) sm.sources[source_idx] else continue;
         const value = opt_buf.?.items;
 
-        if (!first) writer.writeByte(',') catch return null;
-        first = false;
-
-        write_json_string(writer, source_name) catch return null;
-        writer.writeAll(":{\"code\":") catch return null;
-        write_json_string(writer, value) catch return null;
-        writer.writeByte('}') catch return null;
+        // key = source_name, value = { code: "..." }
+        w.write_string(source_name) catch return null;
+        w.write_object_start(1) catch return null;
+        w.write_string("code") catch return null;
+        w.write_string(value) catch return null;
     }
 
-    writer.writeAll("},\"files\":[") catch return null;
+    w.write_string("files") catch return null;
+    w.write_array_start(hit_count) catch return null;
 
-    first = true;
     file_iter = files_set.keyIterator();
     while (file_iter.next()) |source_idx_ptr| {
         const source_idx = source_idx_ptr.*;
-        const source_name = sources.get(source_idx) orelse continue;
-
-        if (!first) writer.writeByte(',') catch return null;
-        first = false;
-
-        write_json_string(writer, source_name) catch return null;
+        const source_name = if (source_idx < sm.sources.len) sm.sources[source_idx] else continue;
+        w.write_string(source_name) catch return null;
     }
 
-    writer.writeAll("]}") catch return null;
-
-    const result_data = json_buf.toOwnedSlice(allocator) catch return null;
+    const result_data = allocator.dupe(u8, w.get_bytes()) catch return null;
     result_len.* = result_data.len;
     return result_data.ptr;
-}
-
-pub export fn build_module_tree(input_ptr: [*]const u8, input_len: usize, result_len: *usize) ?[*]const u8 {
-    _ = input_ptr; // autofix
-    _ = input_len; // autofix
-    _ = result_len; // autofix
-
 }

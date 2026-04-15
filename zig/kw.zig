@@ -128,6 +128,20 @@ pub const Writer = struct {
         try self.write_bytes_like(.string, input);
     }
 
+    /// Write the array tag + element count.  Caller must then write `count` values.
+    pub fn write_array_start(self: *Self, count: usize) !void {
+        try self.buffer.append(self.allocator, @intFromEnum(Tag.array));
+        const zig_zagged = zig_zag_encode(@intCast(count));
+        try write_uleb128(zig_zagged, self.buffer.writer(self.allocator));
+    }
+
+    /// Write the object tag + field count.  Caller must then write `count` key-value pairs.
+    pub fn write_object_start(self: *Self, count: usize) !void {
+        try self.buffer.append(self.allocator, @intFromEnum(Tag.object));
+        const zig_zagged = zig_zag_encode(@intCast(count));
+        try write_uleb128(zig_zagged, self.buffer.writer(self.allocator));
+    }
+
     pub fn get_bytes(self: *const Self) []const u8 {
         return self.buffer.items;
     }
@@ -153,6 +167,80 @@ pub const Reader = struct {
     fn read_length(self: *Self) !i64 {
         const zig_zagged = try self.read_uleb128_internal();
         return zig_zag_decode(zig_zagged);
+    }
+
+    /// Skip over one kw value without allocating.
+    pub fn skip_value(self: *Self) !void {
+        if (self.offset >= self.bytes.len) return error.UnexpectedEndOfBuffer;
+        const tag_byte = self.bytes[self.offset];
+        self.offset += 1;
+        const tag: Tag = @enumFromInt(tag_byte);
+        switch (tag) {
+            .null, .undefined, .true, .false => {},
+            .int => _ = try self.read_uleb128_internal(),
+            .float => {
+                if (self.offset + 8 > self.bytes.len) return error.UnexpectedEndOfBuffer;
+                self.offset += 8;
+            },
+            .bytes, .string => {
+                const length = try self.read_length();
+                if (length < 0) return error.InvalidLength;
+                const len: usize = @intCast(length);
+                if (self.offset + len > self.bytes.len) return error.UnexpectedEndOfBuffer;
+                self.offset += len;
+            },
+            .array => {
+                const count = try self.read_length();
+                if (count < 0) return error.InvalidLength;
+                const n: usize = @intCast(count);
+                for (0..n) |_| try self.skip_value();
+            },
+            .object => {
+                const count = try self.read_length();
+                if (count < 0) return error.InvalidLength;
+                const n: usize = @intCast(count);
+                for (0..n) |_| {
+                    try self.skip_value();
+                    try self.skip_value();
+                }
+            },
+            _ => return error.InvalidTag,
+        }
+    }
+
+    /// Read a string or bytes value as a zero-copy slice into the source bytes.
+    /// null/undefined tags return an empty slice instead of an error.
+    pub fn read_string_slice(self: *Self) ![]const u8 {
+        if (self.offset >= self.bytes.len) return error.UnexpectedEndOfBuffer;
+        const tag_byte = self.bytes[self.offset];
+        self.offset += 1;
+        const tag: Tag = @enumFromInt(tag_byte);
+        switch (tag) {
+            .string, .bytes => {
+                const length = try self.read_length();
+                if (length < 0) return error.InvalidLength;
+                const len: usize = @intCast(length);
+                if (self.offset + len > self.bytes.len) return error.UnexpectedEndOfBuffer;
+                const slice = self.bytes[self.offset..][0..len];
+                self.offset += len;
+                return slice;
+            },
+            .null, .undefined => return "",
+            else => return error.InvalidTag,
+        }
+    }
+
+    /// Expect an array tag, read its element count, and position the reader at the
+    /// first element.  The caller must then read exactly `count` values.
+    pub fn read_array_count(self: *Self) !usize {
+        if (self.offset >= self.bytes.len) return error.UnexpectedEndOfBuffer;
+        const tag_byte = self.bytes[self.offset];
+        self.offset += 1;
+        const tag: Tag = @enumFromInt(tag_byte);
+        if (tag != .array) return error.InvalidTag;
+        const count = try self.read_length();
+        if (count < 0) return error.InvalidLength;
+        return @intCast(count);
     }
 
     pub fn decode(self: *Self, allocator: Allocator) !Value {
