@@ -108,3 +108,7 @@ export function arena() {
     }
   }
 }
+
+export function isSourceMap(filename: string) {
+  return filename.endsWith('.map')
+}

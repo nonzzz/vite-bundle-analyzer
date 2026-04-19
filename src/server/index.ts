@@ -5,6 +5,7 @@ import type { Logger, Plugin } from 'vite'
 import { searchForWorkspaceRoot } from 'workspace-sieve'
 import zlib from 'zlib'
 import { AnalyzerNode, JS_EXTENSIONS, createAnalyzerModule } from './analyzer-module'
+import { creatConnect } from './connect'
 import type { AnalyzerMode, AnalyzerPluginInternalAPI, AnalyzerPluginOptions, AnalyzerStore, Module } from './interface'
 import { getFileURL, opener } from './opener'
 import { createServer, ensureEmptyPort, renderView } from './render'
@@ -180,6 +181,16 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     pathFormatter: opts.pathFormatter
   })
 
+  const connect = creatConnect({
+    zlib: {
+      gzip: opts.gzipOptions,
+      brotli: opts.brotliOptions
+    },
+    include: opts.include,
+    exclude: opts.exclude,
+    pathFormatter: opts.pathFormatter
+  })
+
   let defaultWd = process.cwd()
   let hasViteReporter = true
   let logger: Logger
@@ -267,15 +278,19 @@ function analyzer(opts?: AnalyzerPluginOptions) {
     },
     async generateBundle(_, outputBundle) {
       // this.meta.watchMode
+
+      await connect.init()
       await prepare()
       analyzerModule.installPluginContext(this)
       analyzerModule.setupRollupChunks(outputBundle, this.meta.watchMode)
+      connect.prepareChunks(outputBundle, this.meta.watchMode)
       // const cleanup: Array<{ bundle: OutputChunk | OutputAsset, sourcemapFileName: string | undefined }> = []
       // After consider. I trust process chunk is enough. (If you don't think it's right. PR welcome.)
       // A funny thing is that 'Import with Query Suffixes' vite might think the worker is assets
       // So we should wrapper them as a chunk node.
       for (const bundleName in outputBundle) {
         const bundle = outputBundle[bundleName]
+        connect.append(bundle)
         await analyzerModule.addModule(bundle)
       }
       if (!store.lastSourcemapOption) {

@@ -1,7 +1,7 @@
 // This is a experminal implementation of Zig's version
 // Is to replace the previous TypeScript implementation with a memory-friendly design.
 
-import { Writer, kw } from './kw'
+import { Writer, kwDecode } from './kw'
 
 interface WASMInstance {
   memory: WebAssembly.Memory
@@ -142,7 +142,7 @@ export function scanImportStatements(generateCode: string): ScanImportStatmentRe
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-    const result = kw.decode(outBytes)
+    const result = kwDecode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
     return result as ScanImportStatmentResult
@@ -176,7 +176,7 @@ export function scanSourceMapImportsForSourceContent(): ScanSourceMapImportEntry
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-    const result = kw.decode(outBytes)
+    const result = kwDecode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
     return result as ScanSourceMapImportEntry[]
@@ -230,7 +230,7 @@ export function pickupMappingsFromCode(generatedCode: string): PickupMappingsRes
 
     const outLen = new DataView(WASM_CTX.memory.buffer, lenPtr, 4).getUint32(0, true)
     const outBytes = new Uint8Array(WASM_CTX.memory.buffer, outPtr, outLen)
-    const result = kw.decode(outBytes)
+    const result = kwDecode(outBytes)
     WASM_CTX.free(outPtr, outLen)
 
     return result as PickupMappingsResult
@@ -247,3 +247,5 @@ export function dispose() {
     SHARED_SOURCEMAP_LEN = 0
   }
 }
+
+// export function

@@ -259,8 +259,3 @@ export function kwEncode(data: unknown, initCapacity = 256): Uint8Array {
 export function kwDecode(bytes: Uint8Array): unknown {
   return new Reader(bytes).decode()
 }
-
-export const kw = {
-  encode: kwEncode,
-  decode: kwDecode
-}
