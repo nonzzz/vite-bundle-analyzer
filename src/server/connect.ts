@@ -49,7 +49,7 @@ export const JS_EXTENSIONS = /\.(c|m)?js$/
 // Note: we process module with kw protocol
 // isChunk: bool
 // filename: string
-// code: string
+// code(resource): string
 // isEntry: bool (optional, only for chunk)
 // map: struct (optional, only for chunk)
 // map: mappings, sources, sourcesContent, names
@@ -100,7 +100,7 @@ function createUnifiedModule(chunk: ChunkLike, chunks: OutputBundle) {
 }
 
 export function creatConnect(options: ConnectOptions = {}) {
-  let z: typeof import('../../zig') | undefined = undefined
+  let z: ReturnType<typeof import('../../zig/bindings').create> | undefined = undefined
 
   const algorithm = createZlibAlgorithm(options)
 
@@ -112,13 +112,13 @@ export function creatConnect(options: ConnectOptions = {}) {
 
   const init = async () => {
     if (z) { return }
-    const zig = await import('../../zig')
-    zig.init()
-    z = zig
+    const zig = await import('../../zig/bindings')
+    z = zig.create({
+      algorithm,
+      matcher,
+      pathFormatter
+    })
   }
-
-  //   const addModule = () => {
-  //   }
 
   const append = (chunk: ChunkLike) => {
     if (!z) { throw new Error('Zig module is not initialized.') }
@@ -127,6 +127,8 @@ export function creatConnect(options: ConnectOptions = {}) {
     }
 
     const module = createUnifiedModule(chunk, chunks)
+
+    z.process(module)
   }
 
   const prepareChunks = (outputChunks: OutputBundle, watchMode: boolean) => {
@@ -136,10 +138,16 @@ export function creatConnect(options: ConnectOptions = {}) {
     Object.assign(chunks, outputChunks)
   }
 
+  const generateResult = () => {
+    if (!z) { throw new Error('Zig module is not initialized.') }
+    return z.generate()
+  }
+
   return {
     init,
     append,
-    prepareChunks
+    prepareChunks,
+    generateResult
   }
 }
 

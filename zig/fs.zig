@@ -3,6 +3,7 @@ const std = @import("std");
 pub fn read_file(allocator: std.mem.Allocator, file_path: []const []const u8) ![]const u8 {
     const full_path = try std.fs.path.join(allocator, file_path);
     defer allocator.free(full_path);
+    std.debug.print("Reading file: {s}\n", .{full_path});
 
     const file = try std.fs.openFileAbsolute(full_path, .{ .mode = .read_only });
     defer file.close();

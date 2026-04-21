@@ -46,6 +46,13 @@ pub const Mapping = struct {
     original_column: u32,
 };
 
+pub const SourceMapV3 = struct {
+    file: []const u8,
+    mappings: []const u8,
+    sources: []const []const u8,
+    sourcesContent: []const []const u8,
+};
+
 pub const OriginalPosition = struct {
     source_index: u32,
     line: u32,
