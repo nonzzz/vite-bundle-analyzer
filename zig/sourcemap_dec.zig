@@ -55,6 +55,8 @@ pub const OriginalPosition = struct {
 pub const SourceMapDecoder = struct {
     mappings: []const Mapping,
     allocator: std.mem.Allocator,
+    /// line_starts[L]   = index of first mapping for line L
+    /// line_starts[L+1] = exclusive end index for line L  (sentinel always present)
     line_starts: []usize,
 
     const Self = @This();
@@ -132,23 +134,32 @@ pub const SourceMapDecoder = struct {
 
         const mappings_owned = try mappings_list.toOwnedSlice(allocator);
 
+        // Build line_starts.
+        // Size = max_line + 2:
+        //   indices 0..=max_line  → start of each line
+        //   index   max_line + 1  → sentinel = mappings_owned.len
         var line_starts = try std.ArrayList(usize).initCapacity(allocator, max_line + 2);
         errdefer line_starts.deinit(allocator);
 
         var current_line: u32 = 0;
-        line_starts.append(allocator, 0) catch {};
+        try line_starts.append(allocator, 0);
 
         for (mappings_owned, 0..) |mapping, i| {
             while (current_line < mapping.generated_line) {
                 current_line += 1;
-                line_starts.append(allocator, i) catch {};
+                try line_starts.append(allocator, i);
             }
         }
 
+        // Fill any remaining lines up to max_line that have no mappings
         while (current_line <= max_line) {
             current_line += 1;
-            line_starts.append(allocator, mappings_owned.len) catch {};
+            try line_starts.append(allocator, mappings_owned.len);
         }
+
+        // Sentinel: line_starts[max_line + 1] = mappings_owned.len
+        // This lets binary search safely read line_starts[line + 1] for any line <= max_line
+        try line_starts.append(allocator, mappings_owned.len);
 
         const line_starts_owned = try line_starts.toOwnedSlice(allocator);
 
@@ -179,6 +190,7 @@ pub const SourceMapDecoder = struct {
     ) ?OriginalPosition {
         if (self.mappings.len == 0) return null;
 
+        // Fast path (unchanged from original)
         if (cache.last_line == line and cache.last_result != null) {
             const cached_mapping = self.mappings[cache.last_index];
 
@@ -204,6 +216,14 @@ pub const SourceMapDecoder = struct {
             }
         }
 
+        // Slow path: binary search within the line's mapping range
+        // line_starts[line]     = first mapping index for this line
+        // line_starts[line + 1] = exclusive end  (sentinel guarantees this exists)
+        //
+        // All mappings in [start_idx, end_idx) have generated_line == line and
+        // are sorted by generated_column ascending (VLQ delta encoding guarantee).
+        // We want the rightmost entry with generated_column <= column.
+
         const start_idx = if (line < self.line_starts.len)
             self.line_starts[line]
         else
@@ -217,16 +237,22 @@ pub const SourceMapDecoder = struct {
             return null;
         }
 
+        const end_idx = if (line + 1 < self.line_starts.len)
+            self.line_starts[line + 1]
+        else
+            self.mappings.len;
+
+        var lo: usize = start_idx;
+        var hi: usize = end_idx;
         var best_idx: ?usize = null;
-        var i = start_idx;
 
-        while (i < self.mappings.len) : (i += 1) {
-            const mapping = self.mappings[i];
-
-            if (mapping.generated_line > line) break;
-
-            if (mapping.generated_line == line and mapping.generated_column <= column) {
-                best_idx = i;
+        while (lo < hi) {
+            const mid = lo + (hi - lo) / 2;
+            if (self.mappings[mid].generated_column <= column) {
+                best_idx = mid;
+                lo = mid + 1;
+            } else {
+                hi = mid;
             }
         }
 
@@ -246,7 +272,7 @@ pub const SourceMapDecoder = struct {
         }
 
         cache.last_result = null;
-        cache.last_index = 0;
+        cache.last_index = start_idx;
         return null;
     }
 };
@@ -299,4 +325,29 @@ test "full code mapping" {
     }
 
     try std.testing.expectEqual(code.len, mapped_count);
+}
+
+test "binary search correctness on multi-column line" {
+    const allocator = std.testing.allocator;
+    const mappings = "AAAA,IAAA,IAAA,IAAA";
+    var decoder = try SourceMapDecoder.init(allocator, mappings, 16);
+    defer decoder.deinit();
+
+    var cache = SourceMapDecoder.LookupCache{};
+    var col: u32 = 0;
+    while (col <= 13) : (col += 1) {
+        _ = decoder.original_position_for_cached(0, col, &cache);
+    }
+
+    cache = SourceMapDecoder.LookupCache{};
+    const p7 = decoder.original_position_for_cached(0, 7, &cache);
+    try std.testing.expect(p7 != null);
+
+    cache = SourceMapDecoder.LookupCache{};
+    const p12 = decoder.original_position_for_cached(0, 12, &cache);
+    try std.testing.expect(p12 != null);
+
+    cache = SourceMapDecoder.LookupCache{};
+    const p1 = decoder.original_position_for_cached(0, 1, &cache);
+    try std.testing.expect(p1 != null);
 }

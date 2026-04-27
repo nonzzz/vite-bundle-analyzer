@@ -18,10 +18,6 @@ pub export fn free(ptr: [*]u8, size: usize) void {
     allocator.free(ptr[0..size]);
 }
 
-// ---------------------------------------------------------------------------
-// kw-encoded sourcemap input helpers
-// ---------------------------------------------------------------------------
-
 /// Decoded view of the kw-encoded sourcemap passed from JS.
 /// All slices are zero-copy views into the original input bytes.
 /// The `sources` and `sources_content` slices are heap-allocated arrays
@@ -72,10 +68,6 @@ fn decode_sourcemap_kw(alloc_: std.mem.Allocator, data: []const u8) !KwSourceMap
         .sources_content = sources_content,
     };
 }
-
-// ---------------------------------------------------------------------------
-// kw output helpers
-// ---------------------------------------------------------------------------
 
 /// Write the `"static"` and `"dynamic"` key-value pairs of a scan result
 /// into an already-opened kw object (caller must have called write_object_start
@@ -130,10 +122,6 @@ fn make_empty_mappings_result(alloc_: std.mem.Allocator) ?[]const u8 {
     w.write_array_start(0) catch return null;
     return alloc_.dupe(u8, w.get_bytes()) catch null;
 }
-
-// ---------------------------------------------------------------------------
-// Exported WASM functions
-// ---------------------------------------------------------------------------
 
 /// Scan imports from a single code string.
 /// Input:  raw UTF-8 code bytes

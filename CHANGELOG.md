@@ -1,3 +1,7 @@
+## 1.3.8
+
+Improve generate result performance.
+
 ## 1.3.7
 
 - Update client treemap version.
