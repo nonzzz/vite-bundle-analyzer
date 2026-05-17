@@ -26,7 +26,7 @@ fn zig_zag_decode(n: u64) i64 {
     return signed ^ -@as(i64, @intCast(n & 1));
 }
 
-fn write_uleb128(value: u64, writer: anytype) !void {
+fn write_uleb128(value: u64, writer: *std.Io.Writer) !void {
     var val = value;
     while (true) {
         var byte: u8 = @intCast(val & 0x7f);
@@ -64,47 +64,52 @@ fn read_uleb128(bytes: []const u8, offset: *usize) !u64 {
 pub const Writer = struct {
     const Self = @This();
 
-    buffer: ArrayList(u8),
     allocator: Allocator,
+    alloc_writer: std.Io.Writer.Allocating,
 
     pub fn init(allocator: Allocator, init_capacity: usize) !Self {
-        var buffer = try ArrayList(u8).initCapacity(allocator, init_capacity);
-        errdefer buffer.deinit(allocator);
+        var alloc_writer = try std.Io.Writer.Allocating.initCapacity(allocator, init_capacity);
+
+        errdefer alloc_writer.deinit();
+
         return Self{
-            .buffer = buffer,
             .allocator = allocator,
+            .alloc_writer = alloc_writer,
         };
     }
 
     pub fn deinit(self: *Self) void {
-        self.buffer.deinit(self.allocator);
+        self.alloc_writer.deinit();
+    }
+
+    inline fn write_tag(self: *Self, tag: Tag) !void {
+        try self.get_bytes_writer().writeByte(@intFromEnum(tag));
     }
 
     pub fn write_bool(self: *Self, input: bool) !void {
-        const tag: u8 = if (input) @intFromEnum(Tag.true) else @intFromEnum(Tag.false);
-        try self.buffer.append(self.allocator, tag);
+        const tag = if (input) Tag.true else Tag.false;
+        try self.write_tag(tag);
     }
 
     pub fn write_null(self: *Self) !void {
-        try self.buffer.append(self.allocator, @intFromEnum(Tag.null));
+        try self.write_tag(.null);
     }
 
     pub fn write_undefined(self: *Self) !void {
-        try self.buffer.append(self.allocator, @intFromEnum(Tag.undefined));
+        try self.write_tag(.undefined);
     }
 
     pub fn write_int(self: *Self, input: i64) !void {
-        try self.buffer.append(self.allocator, @intFromEnum(Tag.int));
-
+        try self.write_tag(.int);
         const zig_zagged = zig_zag_encode(input);
-        try write_uleb128(zig_zagged, self.buffer.writer(self.allocator));
+        const w = self.get_bytes_writer();
+        try write_uleb128(zig_zagged, w);
     }
 
     pub fn write_float(self: *Self, input: f64) !void {
-        try self.buffer.append(self.allocator, @intFromEnum(Tag.float));
-
+        try self.write_tag(.float);
         const bytes_value: [8]u8 = @bitCast(input);
-        try self.buffer.appendSlice(self.allocator, &bytes_value);
+        try self.get_bytes_writer().writeAll(&bytes_value);
     }
 
     fn write_bytes_like(self: *Self, comptime tag: Tag, input: []const u8) !void {
@@ -113,11 +118,12 @@ pub const Writer = struct {
                 @compileError("tag must be .bytes or .string");
             }
         }
-        try self.buffer.append(self.allocator, @intFromEnum(tag));
+        try self.write_tag(tag);
 
         const zig_zagged = zig_zag_encode(@intCast(input.len));
-        try write_uleb128(zig_zagged, self.buffer.writer(self.allocator));
-        try self.buffer.appendSlice(self.allocator, input);
+        const w = self.get_bytes_writer();
+        try write_uleb128(zig_zagged, w);
+        try w.writeAll(input);
     }
 
     pub fn write_bytes(self: *Self, input: []const u8) !void {
@@ -130,20 +136,23 @@ pub const Writer = struct {
 
     /// Write the array tag + element count.  Caller must then write `count` values.
     pub fn write_array_start(self: *Self, count: usize) !void {
-        try self.buffer.append(self.allocator, @intFromEnum(Tag.array));
+        try self.write_tag(.array);
         const zig_zagged = zig_zag_encode(@intCast(count));
-        try write_uleb128(zig_zagged, self.buffer.writer(self.allocator));
+        try write_uleb128(zig_zagged, self.get_bytes_writer());
     }
 
     /// Write the object tag + field count.  Caller must then write `count` key-value pairs.
     pub fn write_object_start(self: *Self, count: usize) !void {
-        try self.buffer.append(self.allocator, @intFromEnum(Tag.object));
+        try self.write_tag(.object);
         const zig_zagged = zig_zag_encode(@intCast(count));
-        try write_uleb128(zig_zagged, self.buffer.writer(self.allocator));
+        try write_uleb128(zig_zagged, self.get_bytes_writer());
     }
 
-    pub fn get_bytes(self: *const Self) []const u8 {
-        return self.buffer.items;
+    pub fn get_bytes(self: *Self) []const u8 {
+        return self.alloc_writer.written();
+    }
+    inline fn get_bytes_writer(self: *Self) *std.Io.Writer {
+        return &self.alloc_writer.writer;
     }
 };
 
@@ -251,6 +260,7 @@ pub const Reader = struct {
 
         const tag: Tag = @enumFromInt(tag_byte);
 
+        // std.debug.print("offset: {d}, tag_byte: {x}, tag: {any}\n", .{ self.offset, tag_byte, tag });
         switch (tag) {
             .true => return Value{ .bool_value = true },
             .false => return Value{ .bool_value = false },
@@ -392,20 +402,22 @@ fn encode_value(writer: *Writer, data: Value) !void {
         .bytes => |b| try writer.write_bytes(b),
         .string => |s| try writer.write_string(s),
         .array => |arr| {
-            try writer.buffer.append(writer.allocator, @intFromEnum(Tag.array));
+            try writer.write_tag(.array);
 
             const zig_zagged = zig_zag_encode(@intCast(arr.len));
-            try write_uleb128(zig_zagged, writer.buffer.writer(writer.allocator));
+            const w = writer.get_bytes_writer();
+            try write_uleb128(zig_zagged, w);
 
             for (arr) |item| {
                 try encode_value(writer, item);
             }
         },
         .object => |obj| {
-            try writer.buffer.append(writer.allocator, @intFromEnum(Tag.object));
+            try writer.write_tag(.object);
 
             const zig_zagged = zig_zag_encode(@intCast(obj.count()));
-            try write_uleb128(zig_zagged, writer.buffer.writer(writer.allocator));
+            const w = writer.get_bytes_writer();
+            try write_uleb128(zig_zagged, w);
 
             var it = obj.iterator();
             while (it.next()) |entry| {
@@ -441,13 +453,18 @@ test "uleb128 encode and decode" {
     const test_cases = [_]u64{ 0, 1, 127, 128, 255, 256, 16383, 16384, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF };
 
     for (test_cases) |val| {
-        var buf = try ArrayList(u8).initCapacity(allocator, 16);
-        defer buf.deinit(allocator);
+        var alloc_writer = std.Io.Writer.Allocating.init(allocator);
+        defer alloc_writer.deinit();
 
-        try write_uleb128(val, buf.writer(allocator));
+        try write_uleb128(val, &alloc_writer.writer);
+
+        var arr_list = alloc_writer.toArrayList();
+        defer arr_list.deinit(allocator);
+        const written_bytes = arr_list.items;
 
         var offset: usize = 0;
-        const decoded = try read_uleb128(buf.items, &offset);
+
+        const decoded = try read_uleb128(written_bytes, &offset);
 
         try std.testing.expectEqual(val, decoded);
     }

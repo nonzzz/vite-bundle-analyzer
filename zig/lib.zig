@@ -3,8 +3,7 @@ const kw_mod = @import("./kw.zig");
 const scan_import = @import("./scan_import.zig");
 const sourcemap_decoder = @import("./sourcemap_dec.zig");
 
-var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-const allocator = gpa.allocator();
+var allocator = std.heap.wasm_allocator;
 
 const Scanner = scan_import.Scanner(.large);
 const SourceMapDecoder = sourcemap_decoder.SourceMapDecoder;

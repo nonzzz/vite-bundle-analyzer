@@ -10,21 +10,17 @@ fn BuildStepsType(comptime step_defs: []const StepDef) type {
         const Self = @This();
 
         pub const StepType = blk: {
-            var fields: [step_defs.len]std.builtin.Type.EnumField = undefined;
+            var names: [step_defs.len][]const u8 = undefined;
+            var values: [step_defs.len]u32 = undefined;
+
             for (step_defs, 0..) |def, i| {
-                fields[i] = .{
-                    .name = def.name,
-                    .value = i,
-                };
+                names[i] = def.name;
+                values[i] = @intCast(i);
             }
-            break :blk @Type(.{
-                .@"enum" = .{
-                    .tag_type = u32,
-                    .fields = &fields,
-                    .decls = &.{},
-                    .is_exhaustive = true,
-                },
-            });
+
+            const final_names = names;
+            const final_values = values;
+            break :blk @Enum(u32, .exhaustive, &final_names, &final_values);
         };
 
         steps: std.EnumArray(StepType, *std.Build.Step),
@@ -134,7 +130,7 @@ pub fn build(b: *std.Build) void {
 
     const npm_ready_step = b.step("_npm_ready", "Ensure npm deps are ready");
     // install npm dependencies
-    const exist = check_npm_deps_exist();
+    const exist = check_npm_deps_exist(b);
 
     if (!exist) {
         std.log.warn("⚠️  node_modules not found, will install on first use", .{});
@@ -281,9 +277,18 @@ fn build_all_test(
     all_test.dependOn(&vitest_cmd.step);
 }
 
-fn check_npm_deps_exist() bool {
-    const stat = std.fs.cwd().statFile("node_modules") catch return false;
-    return stat.kind == .directory;
+fn check_npm_deps_exist(b: *std.Build) bool {
+    const io = b.graph.io;
+    const root_path = b.pathFromRoot(".");
+
+    var project_dir = std.Io.Dir.cwd().openDir(io, root_path, .{}) catch return false;
+    defer project_dir.close(io);
+    project_dir.access(io, "node_modules", .{}) catch |err| {
+        if (err == error.FileNotFound) return false;
+        return false;
+    };
+
+    return true;
 }
 
 fn install_npm_deps(b: *std.Build) *std.Build.Step {

@@ -14,7 +14,7 @@ jobs:
           node-version: 24.2
       - uses: mlugg/setup-zig@v2
         with:
-          version: 0.15.2
+          version: 0.16.0
       - name: Install Dependices
         run: zig build install_npm_deps
       - name: Zig Testing
