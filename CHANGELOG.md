@@ -1,3 +1,7 @@
+## 1.3.9
+
+Opener shouldn't panic. If the corresponding tools for the platform can't be found, a user-friendly message should be provided.
+
 ## 1.3.8
 
 Improve generate result performance.

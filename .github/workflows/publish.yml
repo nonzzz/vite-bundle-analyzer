@@ -21,12 +21,10 @@ jobs:
         run: zig build wasm_bindings
       - uses: actions/setup-node@v4
         with:
-          node-version: 24.2
+          node-version: 24.18
           registry-url: "https://registry.npmjs.org"
       - name: Install Dependencies
         run: zig build install_npm_deps
       - name: Pack and Publish
         run: |
           zig build publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
