@@ -23,8 +23,53 @@ const defaultOptions: AnalyzerPluginOptions = {
   exclude: []
 }
 
+function getOpenBrowserHelp(err: NodeJS.ErrnoException) {
+  switch (err.code) {
+    case 'ENOENT':
+      return {
+        reason: 'Unable to find a browser opener command.',
+        solution: process.platform === 'linux'
+          ? 'Install xdg-open, for example: `sudo apt install xdg-utils`, `sudo dnf install xdg-utils`, or `sudo pacman -S xdg-utils`.'
+          : process.platform === 'darwin'
+          ? 'Make sure the `open` command is available in your PATH.'
+          : process.platform === 'win32'
+          ? 'Make sure `cmd.exe` is available and your Windows shell is working.'
+          : 'Install a system opener such as xdg-open.'
+      }
+
+    case 'EACCES':
+      return {
+        reason: 'The browser opener command exists but is not executable.',
+        solution: 'Check the command permissions or reinstall the opener package.'
+      }
+
+    default:
+      return {
+        reason: err.message
+          ? `Unable to open the browser: ${err.message}`
+          : 'Unable to open the browser.',
+        solution: process.platform === 'linux'
+          ? 'Make sure xdg-open is installed and a default browser is configured.'
+          : 'Make sure a default browser is configured on your system.'
+      }
+  }
+}
+
 export function openBrowser(address: string) {
-  opener([address])
+  const onError = (err: NodeJS.ErrnoException) => {
+    const { reason, solution } = getOpenBrowserHelp(err)
+
+    console.warn(`vite-bundle-analyzer: ${reason}`)
+    console.warn(`vite-bundle-analyzer: ${solution}`)
+    console.warn(`vite-bundle-analyzer: Open this URL manually: ${address}`)
+  }
+
+  try {
+    const cp = opener([address])
+    cp.once('error', onError)
+  } catch (err) {
+    onError(err as NodeJS.ErrnoException)
+  }
 }
 
 const formatNumber = (number: number | string) => ansis.dim(ansis.bold(number + ''))

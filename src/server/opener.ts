@@ -8,11 +8,14 @@
 
 import child_process from 'child_process'
 import os from 'os'
+import path from 'path'
 import { slash } from './shared'
 
 const MS = 'microsoft'
 // WSL path to Windows explorer.exe
-const WSL_IEXPLORER = '/mnt/c/Windows/explorer.exe'
+// https://github.com/nonzzz/vite-bundle-analyzer/issues/86#issuecomment-4885956746
+// We can't hard code WSL explorer.exe path.
+const WSL_IEXPLORER = 'explorer.exe'
 
 function isWSL() {
   return os.release().toLocaleLowerCase().indexOf(MS) !== -1
@@ -22,7 +25,8 @@ function ensureCommander(platform: NodeJS.Platform): [NodeJS.Platform, string] {
   switch (platform) {
     case 'linux': {
       if (isWSL()) {
-        return ['win32', WSL_IEXPLORER]
+        const explorer = child_process.execSync(`wslpath -u "C:\\Windows"`, { encoding: 'utf-8' }).trim()
+        return ['win32', slash(path.join(explorer, WSL_IEXPLORER))]
       }
       return ['linux', 'xdg-open']
     }
